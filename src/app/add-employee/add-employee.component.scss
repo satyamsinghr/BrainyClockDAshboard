@@ -1,0 +1,25 @@
+.error{
+  position: absolute;
+  left: 130px;
+  top: 45px;
+  color: red;
+  font-size: 16px;
+  text-align: left;
+
+}
+.labelName
+{
+  font-size: 18px;
+}
+.row_container{
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+.text-muted {
+    font-size: 16px !important;
+    color: red;
+    color: red !important;
+    /* margin-bottom: 44px; */
+}

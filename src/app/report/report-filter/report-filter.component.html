@@ -1,0 +1,298 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <section class="report_filter bg-white">
+    <div class="row g-3">
+      <div
+        class="col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-center">
+        <div class="filterheader brand_info font_light">
+          <h2 class="d-flex align-items-center gap-4">
+            <span style="width: 40px;height: 40px;top:-5px;position: relative;"
+              class="d-flex align-items-center justify-content-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                viewBox="0 0 16 16" fill="none"
+                (click)="goto_report()">
+                <path d="M15 1L1 15M15 15L1 1" stroke="#061D23" stroke-width="2"
+                  stroke-linecap="round" />
+              </svg>
+            </span>
+            New report
+          </h2>
+        </div>
+      </div>
+      <div
+        class="col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-center justify-content-end">
+        <div class="btn_group d-flex align-items-center gap-4 flex-wrap">
+          <button class="btn btn-outline-primary" style="height: 56px;"
+            (click)="goto_report()">Cancel</button>
+          <!-- <button class="btn btn-primary" style="height: 56px;" type="submit"
+          data-bs-toggle="modal"
+          data-bs-target="#processing_reportModal">Run Reports</button> -->
+          <button class="btn btn-primary" style="height: 56px;" type="submit"
+            (click)="onSubmit()">Run
+            Reports</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="config_form bg-white pt-4 mt-lg-3 mt-md-3">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-10 col-sm-12">
+          <div class="report_filter_form">
+            <div class="col-12 mb-5">
+              <div class="report_title">
+                <h2>Configuration</h2>
+              </div>
+            </div>
+
+            <div class="row g-5">
+              <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                <div class="form-group mb-4 pb-lg-3 filter_input">
+                  <label for="reportName">Report Name:</label>
+                  <input type="text" id="reportName"
+                    formControlName="reportName" class="form-control"
+                    (input)="onReportNameChange()">
+                  <div *ngIf="reportNameError" class="text-danger">
+                    Report Name is required.
+                  </div>
+                </div>
+
+                <div class="form-group mb-4 pb-lg-3">
+                  <label for="reportType">Report Type:</label>
+                  <div class="select_box dropdown_select_box">
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle"
+                        type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        {{ selectedReportType }}
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item"
+                            (click)="onReportTypeChange('attendance')">Attendance
+                            Report</a>
+                        </li>
+                        <li><a class="dropdown-item"
+                            (click)="onReportTypeChange('expense')">Expense
+                            Report</a></li>
+                        <li><a class="dropdown-item"
+                            (click)="onReportTypeChange('overtime')">Overtime
+                            Report</a></li>
+                      </ul>
+                    </div>
+                    <div class="down_arrow">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M16.7998 9.6L11.9998 14.4L7.19981 9.6"
+                          stroke="black" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group mb-4 pb-lg-3">
+                  <label for="location">Location:</label>
+                  <div class="select_box dropdown_select_box">
+
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle"
+                        type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        {{locationName}}
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li *ngFor="let office of allOffice">
+                          <a class="dropdown-item"
+                            (click)="onLocationChange(office.id,office.location_name)">{{
+                            office.location_name }}</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="down_arrow">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M16.7998 9.6L11.9998 14.4L7.19981 9.6"
+                          stroke="black" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="configure_dropdown">
+                  <label for="location">Report period :</label>
+                  <!-- <mat-form-field>
+                         <mat-date-range-input [rangePicker]="picker">
+                           <input matStartDate placeholder="From date"
+                             (dateChange)="onDateRangeSelection($event,'startDate')">
+                           <input matEndDate placeholder="To date" (dateChange)="onDateRangeSelection($event, 'endDate')">
+                         </mat-date-range-input>
+                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                         <mat-date-range-picker #picker></mat-date-range-picker>
+                       </mat-form-field> -->
+                  <div class="dropdown_input">
+                  <div class="calender">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                      height="24" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M12 14C12.1978 14 12.3911 13.9414 12.5556 13.8315C12.72 13.7216 12.8482 13.5654 12.9239 13.3827C12.9996 13.2 13.0194 12.9989 12.9808 12.8049C12.9422 12.6109 12.847 12.4327 12.7071 12.2929C12.5673 12.153 12.3891 12.0578 12.1951 12.0192C12.0011 11.9806 11.8 12.0004 11.6173 12.0761C11.4346 12.1518 11.2784 12.28 11.1685 12.4444C11.0586 12.6089 11 12.8022 11 13C11 13.2652 11.1054 13.5196 11.2929 13.7071C11.4804 13.8946 11.7348 14 12 14ZM17 14C17.1978 14 17.3911 13.9414 17.5556 13.8315C17.72 13.7216 17.8482 13.5654 17.9239 13.3827C17.9996 13.2 18.0194 12.9989 17.9808 12.8049C17.9422 12.6109 17.847 12.4327 17.7071 12.2929C17.5673 12.153 17.3891 12.0578 17.1951 12.0192C17.0011 11.9806 16.8 12.0004 16.6173 12.0761C16.4346 12.1518 16.2784 12.28 16.1685 12.4444C16.0586 12.6089 16 12.8022 16 13C16 13.2652 16.1054 13.5196 16.2929 13.7071C16.4804 13.8946 16.7348 14 17 14ZM12 18C12.1978 18 12.3911 17.9414 12.5556 17.8315C12.72 17.7216 12.8482 17.5654 12.9239 17.3827C12.9996 17.2 13.0194 16.9989 12.9808 16.8049C12.9422 16.6109 12.847 16.4327 12.7071 16.2929C12.5673 16.153 12.3891 16.0578 12.1951 16.0192C12.0011 15.9806 11.8 16.0004 11.6173 16.0761C11.4346 16.1518 11.2784 16.28 11.1685 16.4444C11.0586 16.6089 11 16.8022 11 17C11 17.2652 11.1054 17.5196 11.2929 17.7071C11.4804 17.8946 11.7348 18 12 18ZM17 18C17.1978 18 17.3911 17.9414 17.5556 17.8315C17.72 17.7216 17.8482 17.5654 17.9239 17.3827C17.9996 17.2 18.0194 16.9989 17.9808 16.8049C17.9422 16.6109 17.847 16.4327 17.7071 16.2929C17.5673 16.153 17.3891 16.0578 17.1951 16.0192C17.0011 15.9806 16.8 16.0004 16.6173 16.0761C16.4346 16.1518 16.2784 16.28 16.1685 16.4444C16.0586 16.6089 16 16.8022 16 17C16 17.2652 16.1054 17.5196 16.2929 17.7071C16.4804 17.8946 16.7348 18 17 18ZM7 14C7.19778 14 7.39112 13.9414 7.55557 13.8315C7.72002 13.7216 7.84819 13.5654 7.92388 13.3827C7.99957 13.2 8.01937 12.9989 7.98079 12.8049C7.9422 12.6109 7.84696 12.4327 7.70711 12.2929C7.56725 12.153 7.38907 12.0578 7.19509 12.0192C7.00111 11.9806 6.80004 12.0004 6.61732 12.0761C6.43459 12.1518 6.27841 12.28 6.16853 12.4444C6.05865 12.6089 6 12.8022 6 13C6 13.2652 6.10536 13.5196 6.29289 13.7071C6.48043 13.8946 6.73478 14 7 14ZM19 4H18V3C18 2.73478 17.8946 2.48043 17.7071 2.29289C17.5196 2.10536 17.2652 2 17 2C16.7348 2 16.4804 2.10536 16.2929 2.29289C16.1054 2.48043 16 2.73478 16 3V4H8V3C8 2.73478 7.89464 2.48043 7.70711 2.29289C7.51957 2.10536 7.26522 2 7 2C6.73478 2 6.48043 2.10536 6.29289 2.29289C6.10536 2.48043 6 2.73478 6 3V4H5C4.20435 4 3.44129 4.31607 2.87868 4.87868C2.31607 5.44129 2 6.20435 2 7V19C2 19.7956 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7956 22 19V7C22 6.20435 21.6839 5.44129 21.1213 4.87868C20.5587 4.31607 19.7956 4 19 4ZM20 19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V10H20V19ZM20 8H4V7C4 6.73478 4.10536 6.48043 4.29289 6.29289C4.48043 6.10536 4.73478 6 5 6H19C19.2652 6 19.5196 6.10536 19.7071 6.29289C19.8946 6.48043 20 6.73478 20 7V8ZM7 18C7.19778 18 7.39112 17.9414 7.55557 17.8315C7.72002 17.7216 7.84819 17.5654 7.92388 17.3827C7.99957 17.2 8.01937 16.9989 7.98079 16.8049C7.9422 16.6109 7.84696 16.4327 7.70711 16.2929C7.56725 16.153 7.38907 16.0578 7.19509 16.0192C7.00111 15.9806 6.80004 16.0004 6.61732 16.0761C6.43459 16.1518 6.27841 16.28 6.16853 16.4444C6.05865 16.6089 6 16.8022 6 17C6 17.2652 6.10536 17.5196 6.29289 17.7071C6.48043 17.8946 6.73478 18 7 18Z"
+                        fill="#061D23" />
+                    </svg>
+                  </div>
+                    <input type="text"
+                      ngxDaterangepickerMd
+                      [(ngModel)]="selected"
+                      [showCustomRangeLabel]="true"
+                      [alwaysShowCalendars]="true"
+                      [ranges]="ranges"
+                      [linkedCalendars]="true"
+                      [isInvalidDate]="isInvalidDate"
+                      [showClearButton]="true"
+                      [locale]="locale"
+                      placeholder="Last 30 days "
+                      (change)="onChangeDate($event)" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                <div class="mb-4 pb-lg-2 position-relative"
+                  style="z-index: 99;">
+                  <label for="location">Departments :</label>
+                  <div class="select_box select_department modal_select"
+                    data-bs-toggle="modal" data-bs-target="#departmentModal">
+                    <span *ngFor="let departmentName of selectedDepartmentNames"
+                      class="department_badge">
+                      {{ departmentName }}</span>
+                    <div class="down_arrow">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M16.7998 9.6L11.9998 14.4L7.19981 9.6"
+                          stroke="black" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group shift_checkbox">
+                  <label for="shifts">Shifts:</label>
+                  <div class="shif_check">
+                    <div *ngFor="let shift of shifts">
+                      <label
+                        class="m-0 d-flex align-items-center mb-3 gap-lg-4 gap-md-4 gap-3">
+                        <label class="custom_checkbox">
+                          <input type="checkbox"
+                            [checked]="selectedShift.includes(shift.id)"
+                            (click)="onCheckboxChange(shift.id, $event)">
+                          <label></label>
+                        </label>
+                        <span>{{ shift.name }}</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>
+
+<div
+  class="modal fade department_modal align-items-lg-center align-items-md-start align-items-start"
+  id="departmentModal" tabindex="-1" aria-labelledby="departmentModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="modal_title">
+          <h2>Select Departments</h2>
+        </div>
+        <div class="header_search d-flex my-4">
+          <div class="search_box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M5 11C5 7.691 7.691 5 11 5C14.309 5 17 7.691 17 11C17 14.309 14.309 17 11 17C7.691 17 5 14.309 5 11ZM20.707 19.293L17.312 15.897C18.365 14.543 19 12.846 19 11C19 6.589 15.411 3 11 3C6.589 3 3 6.589 3 11C3 15.411 6.589 19 11 19C12.846 19 14.543 18.365 15.897 17.312L19.293 20.707C19.488 20.902 19.744 21 20 21C20.256 21 20.512 20.902 20.707 20.707C21.098 20.316 21.098 19.684 20.707 19.293Z"
+                fill="#061D23" />
+            </svg>
+            <!-- <input type="search" placeholder="Search"> -->
+            <input type="search" placeholder="Search" [(ngModel)]="searchInput"
+              (input)="filterDepartments()">
+          </div>
+        </div>
+        <div class="d-flex gap-lg-4 gap-md-4 gap-3 align-items-center">
+          <h6 class="m-0" (click)="toggleSelectAll()"
+            style="cursor: pointer !important;">Select all</h6>
+        </div>
+        <ul class="mt-4">
+          <li *ngFor="let department of filteredDepartments">
+            <label
+              class="m-0 d-flex align-items-center mb-4 gap-lg-4 gap-md-4 gap-3">
+              <label class="custom_checkbox"><input type="checkbox"
+                  [checked]="selectedDepartmentIds.includes(department.id)"
+                  (change)="toggleDepartmentSelection(department.id)">
+                <label></label>
+              </label>
+              <span>{{ department.department_name }}</span>
+            </label>
+          </li>
+        </ul>
+        <div
+          class="mt-4 pt-2 d-flex align-items-center flex-wrap justify-content-between gap-4">
+          <button class="btn btn-outline-primary" data-bs-dismiss="modal"
+            aria-label="Close"
+            style="height: 56px;">Cancel</button>
+          <button class="btn btn-primary" style="height: 56px;"
+            data-bs-dismiss="modal" aria-label="Close">Confirm
+            selection</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="department_modal modal fade align-items-lg-center align-items-md-start align-items-start {{show_modal}}"
+  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body p-0" *ngIf="loading">
+        <div class="modal_title">
+          <h2>Processing report</h2>
+        </div>
+        <div>
+          <img src="../../../assets/img/processing.gif" width="100%" />
+        </div>
+        <div class="processing">
+          <p class="m-0">Please wait while we prepare the report for you.</p>
+        </div>
+      </div>
+
+      <div class="modal-body p-0" *ngIf="!loading">
+        <div class="modal_title text-center">
+          <h2 class="text-nowrap">Your report is ready!</h2>
+        </div>
+        <div class="pt-4">
+          <img src="../../../assets/img/success_img.gif" width="100%" />
+        </div>
+        <div class="processing mt-4 pt-lg-2">
+          <p class="m-0 text-center">The report {{reportNameValue}} is ready and
+            available for download.</p>
+        </div>
+        <div
+          class="btn_grp d-flex align-items-center gap-lg-4 gap-md-4 gap-4 mt-4 pt-lg-2">
+          <button class="btn btn-primary px-3" style="height: 56px;"
+            (click)="downloadExcelReport()"
+            data-bs-dismiss="modal" aria-label="Close">Download XLS</button>
+          <button class="btn btn-outline-primary px-3" style="height: 56px;"
+            data-bs-dismiss="modal"
+            aria-label="Close" (click)="downloadCSVReport()">Download
+            CSV</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

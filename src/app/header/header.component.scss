@@ -1,0 +1,88 @@
+ @import "../../global_theme/variable.scss";
+// html,
+// mat-toolbar {
+//   position: absolute;
+//   top: 0;
+//   z-index: 100;
+//   background-color: white;
+//   .header {
+//     display: flex;
+//     flex-direction: row;
+//     width: 100%;
+//     justify-content: space-between;
+//     .margin_right {
+//       margin-right: 15px;
+//     }
+//     ul {
+//       li {
+//         list-style: none;
+//         float: left;
+//         margin-right: 20px;
+//         a {
+//           display: block;
+//           color: $color_blue;
+//           text-align: center;
+//           padding: 0px;
+//           text-decoration: none;
+//           span {
+//             margin-left: 10px;
+//             color: $color_blue;
+//             font-family: $font_DMSans;
+//             font-size: 15px;
+//             font-weight: 700;
+//             line-height: 25px;
+//           }
+//         }
+//         // &:hover{
+//         //   background-color: #111111;
+//         // }
+//       }
+//     }
+//   }
+// }
+// ::ng-deep {
+//   .mat-menu-content {
+//     width: 400px;
+//   }
+// }
+// .mat-icon-right-space {
+//   margin-right: 20px;
+// }
+
+
+  /*=== header ===*/
+  header.header {
+    position: relative;
+    padding: 40px 0 30px;
+    overflow: hidden;
+}
+
+.brand h2 {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0;
+    line-height: normal;
+    color: #403D39;
+}
+
+.user_ingo h4 {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    cursor: pointer;
+    color: #403D39;
+}
+
+.day_time ul li {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    color: #403D39;
+}

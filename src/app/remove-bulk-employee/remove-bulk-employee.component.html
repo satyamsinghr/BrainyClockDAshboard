@@ -1,0 +1,47 @@
+<div class="container-fluid page ">
+  <div class="page_box p-3 mt-2">
+    <button type="button" class="btn btnSubmit float-end" (click)="goto_BackPage()">Back</button>
+   <h1>Corrupt Bulk Add Employee Data</h1>
+  </div>
+  <ng-container *ngIf="employeeData!=undefined">
+    <div class="page_content shadow p-3">
+      <div class="page_content-data">
+        <div class="scrollClass">
+          <table class="table table-borderless">
+            <mat-table #table [dataSource]="employeeData" matSort>
+              <ng-container matColumnDef="companyId">
+                <mat-header-cell class="table-heading" *matHeaderCellDef mat-sort-header>
+                  Company Id
+                </mat-header-cell>
+                <mat-cell class="table-content" *matCellDef="let element"> {{ element.companyId }} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="name">
+                <mat-header-cell class="table-heading black-heading" *matHeaderCellDef mat-sort-header>
+                  Name
+                </mat-header-cell>
+                <mat-cell class="table-content" *matCellDef="let element"> {{ element.name }} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="email">
+                <mat-header-cell class="table-heading" *matHeaderCellDef mat-sort-header>
+                  Email
+                </mat-header-cell>
+                <mat-cell class="table-content" *matCellDef="let element"> {{ element.email }} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="shifts">
+                <mat-header-cell class="table-heading" *matHeaderCellDef mat-sort-header>
+                  Shift Clock In Time
+                </mat-header-cell>
+                <mat-cell class="table-content" *matCellDef="let element"> {{ element.shifts }}
+                </mat-cell>
+              </ng-container>
+              >
+              <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+</div>

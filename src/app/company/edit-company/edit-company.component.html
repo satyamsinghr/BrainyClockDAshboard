@@ -1,0 +1,106 @@
+<div class="container-fluid page">
+  <div class="page_box p-3 mt-2">
+    <h2 class="mt-5">Edit Company Form</h2>
+  </div>
+  <div class="page_content shadow p-3 position-relative">
+    <div class="page_content-data">
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="text-center">
+            <form [formGroup]="editCompanyForm" (ngSubmit)="editCompany()">
+              <div class="row row_container">
+                <div class="col-4 col_container">
+                  <label for="email" class="labelName">Email</label>
+                </div>
+                <div class="col-8">
+                  <input
+                    asp-for="email"
+                    type="text"
+                    class="form-control"
+                    formControlName="email"
+                    placeholder="Enter Email"
+                    required="required"
+                  />
+                  <small
+                    *ngIf="
+                      (editCompanyFormControl['email'].touched || submitted) &&
+                      editCompanyFormControl['email'].invalid
+                    "
+                    class="form-text text-muted"
+                  >
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        editCompanyFormControl['email'].errors &&
+                        editCompanyFormControl['email'].errors['required']
+                      "
+                    >
+                      Email is required
+                    </div>
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        editCompanyFormControl['email'].errors &&
+                        editCompanyFormControl['email'].errors['email']
+                      "
+                    >
+                      Enter Valid Format for Email
+                    </div>
+                  </small>
+                </div>
+              </div>
+
+              <div class="row row_container">
+                <div class="col-4 col_container">
+                  <label for="name" class="labelName">Name</label>
+                </div>
+                <div class="col-8">
+                  <input
+                    asp-for="name"
+                    type="text"
+                    class="form-control"
+                    formControlName="name"
+                    placeholder="Enter Name"
+                    required="required"
+                  />
+                  <small
+                    *ngIf="
+                      (editCompanyFormControl['name'].touched || submitted) &&
+                      editCompanyFormControl['name'].invalid
+                    "
+                    class="form-text text-muted"
+                  >
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        editCompanyFormControl['name'].errors &&
+                        editCompanyFormControl['name'].errors['required']
+                      "
+                    >
+                      Name is required
+                    </div>
+                    <!-- <div
+                          *ngIf="editCompanyFormControl['name'].errors && editCompanyFormControl['name'].errors['pattern']">
+                          Enter Only Alphabetic Value</div> -->
+                  </small>
+                </div>
+              </div>
+
+              <div>
+                <button
+                  type="button"
+                  class="btn btnCancel"
+                  style="margin: 0 20px"
+                  (click)="gotoEmpPage()"
+                >
+                  Cancel
+                </button>
+                <button type="submit" class="btn btnSubmit">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

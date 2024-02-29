@@ -1,0 +1,26 @@
+// i.far.fa-eye-slash.eye-hide {
+//     display: flex-end;
+//     display: flex;
+//     justify-content: end;
+//     position: relative;
+//     bottom: 26px;
+//     margin-right: 20px;
+// }
+.text{
+    color: rgba(var(--bs-danger-rgb),var(--bs-text-opacity))!important;
+}
+.right_top_text {
+    color: #DCCBFB;
+    font-weight: 700;
+    font-family: "Roboto";
+    font-size: 35px;
+    margin-top: 35px;
+    line-height: 40px;
+  }
+  @media(max-width:1198px)
+{
+  .right_top_text{
+    margin-top:0px !important;
+    font-size: 30px;
+  }
+}

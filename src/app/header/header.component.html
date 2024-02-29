@@ -1,0 +1,40 @@
+<header class="d-flex align-items-center justify-content-between">
+  <div class="user_icon d-lg-block d-md-block d-none">
+    <div class="options">
+      <div class="dropdown user_icon">
+        <button class="btn btn-secondary dropdown-toggle " type="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path
+              d="M18.6667 14.6667C21.6122 14.6667 24 12.2789 24 9.33333C24 6.38781 21.6122 4 18.6667 4C15.7212 4 13.3334 6.38781 13.3334 9.33333C13.3334 12.2789 15.7212 14.6667 18.6667 14.6667Z"
+              fill="#FF6528" />
+            <path
+              d="M15.1026 14.6923C18.326 14.6923 20.9488 12.0695 20.9488 8.84615C20.9488 5.62277 18.326 3 15.1026 3C11.8792 3 9.25645 5.62277 9.25645 8.84615C9.25645 12.0695 11.8792 14.6923 15.1026 14.6923ZM15.1026 4.84615C17.3081 4.84615 19.1026 6.64062 19.1026 8.84615C19.1026 11.0517 17.3081 12.8462 15.1026 12.8462C12.8971 12.8462 11.1026 11.0517 11.1026 8.84615C11.1026 6.64062 12.8971 4.84615 15.1026 4.84615ZM18.7949 16.5385H11.4103C7.50876 16.5385 4.33337 19.7138 4.33337 23.6154C4.33337 25.4825 5.85091 27 7.71799 27H22.4872C24.3543 27 25.8718 25.4825 25.8718 23.6154C25.8718 19.7138 22.6965 16.5385 18.7949 16.5385ZM22.4872 25.1538H7.71799C6.86999 25.1538 6.17953 24.4634 6.17953 23.6154C6.17953 20.7317 8.52661 18.3846 11.4103 18.3846H18.7949C21.6786 18.3846 24.0257 20.7317 24.0257 23.6154C24.0257 24.4634 23.3352 25.1538 22.4872 25.1538Z"
+              fill="#061D23" />
+          </svg>
+        </button>
+        <a class="user_icon">{{name}}</a>
+        <ul class="dropdown-menu"> 
+          <li><a class="dropdown-item" routerLink="/dashboard/profile">Profile</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="user_icon ms-4 d-lg-flex d-md-flex d-none">
+    <!-- <a href="https://brainyclock.com" class="user_icon"> -->
+      <span class="user_icon" (click)="openNewWindow()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#FF6528" class="bi bi-x-diamond-fill"
+        viewBox="0 0 16 16">
+        <path
+          d="M9.05.435c-.58-.58-1.52-.58-2.1 0L4.047 3.339 8 7.293l3.954-3.954L9.049.435zm3.61 3.611L8.708 8l3.954 3.954 2.904-2.905c.58-.58.58-1.519 0-2.098l-2.904-2.905zm-.706 8.614L8 8.708l-3.954 3.954 2.905 2.904c.58.58 1.519.58 2.098 0l2.905-2.904zm-8.614-.706L7.292 8 3.339 4.046.435 6.951c-.58.58-.58 1.519 0 2.098l2.904 2.905z" />
+      </svg></span>
+    <!-- </a> -->
+      Manage Plan
+  </div>
+  <div class="harmburger ms-3">
+    <button class="nav_menu_open">
+      <img src="../../assets/img/hamburger.png" style="width: 20px;" alt>
+    </button>
+  </div>
+</header>

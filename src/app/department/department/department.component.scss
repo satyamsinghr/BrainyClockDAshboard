@@ -1,0 +1,354 @@
+// body {
+//     margin: 0;
+//     padding: 0;
+//     box-sizing: border-box;
+//     font-family: 'DM Sans', sans-serif;
+//     background: #fff;
+//     position: relative;
+//     overflow-x: hidden;
+//     overflow-y: auto;
+// }
+
+// a {
+//     text-decoration: none !important;
+// }
+
+// ul {
+//     padding: 0;
+//     margin: 0;
+//     list-style-type: none;
+// }
+
+// ::-webkit-scrollbar {
+//     width: 4px;
+// }
+
+// .test_table::-webkit-scrollbar {
+//     height: 2px;
+// }
+
+// /* Track */
+// ::-webkit-scrollbar-track {
+//     background: #fff;
+// }
+
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//     background: #0096FF;
+// }
+
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//     background: #0096FF;
+// }
+
+
+
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'DM Sans', sans-serif;
+    background: #fff;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+.test_table::-webkit-scrollbar {
+    height: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #0096FF;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #0096FF;
+}
+
+/*=== header ===*/
+header.header {
+    position: relative;
+    padding: 40px 0 30px;
+    overflow: hidden;
+}
+
+.brand h2 {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0;
+    line-height: normal;
+    color: #403D39;
+}
+
+.user_ingo h4 {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    cursor: pointer;
+    color: #403D39;
+}
+
+.day_time ul li {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    color: #403D39;
+}
+
+/*=== page sidebar ===*/
+
+.sidebar_menu .nav .nav-items .nav-link {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: #A7A4A0;
+}
+
+.sidebar_menu .nav .nav-items.active .nav-link,
+.sidebar_menu .nav .nav-items.active .nav-link svg path,
+.sidebar_menu .nav .nav-items:hover .nav-link,
+.sidebar_menu .nav .nav-items:hover .nav-link svg path {
+    color: #403D39;
+    stroke: #403D39;
+}
+
+.sidebar_menu {
+    position: fixed;
+    top: 32px;
+}
+
+.map img {
+    height: calc(100vh - 94px);
+}
+
+.student_table table thead tr th {
+    font-size: 14px;
+    border: none;
+    font-style: normal;
+    font-weight: 700;
+    color: #403D39;
+    line-height: 24px;
+    vertical-align: middle;
+}
+
+.student_table table tbody tr td {
+    color: #4E4E4E;
+    vertical-align: middle;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    border-color: #CCC5B9;
+}
+
+.btn.btn-primary,
+.btn.btn-primary:hover,
+.btn.btn-primary:active,
+.btn.btn-primary:focus {
+    background: #EF8257;
+    width: 100%;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    border-radius: 8px;
+    border-color: #EF8257;
+    outline: none;
+    padding: 8px 20px;
+    box-shadow: 0px 4px 4px 0px rgba(78, 78, 78, 0.25);
+}
+
+.btn.btn-primary.bg-white {
+    color: #403D39;
+    border-color: #fff;
+}
+
+.page_sidebar_filter h4 {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    color: #403D39;
+    margin: 0;
+}
+
+.page_sidebar_filter {
+    border-radius: 8px;
+    border: 1px solid #A7A4A0;
+    background: #FFF;
+    padding: 20px;
+}
+
+.clear_all {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    cursor: pointer;
+    gap: 10px;
+    color: #A7A4A0;
+}
+
+.checbox_list .form-check label {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: #403D39;
+    margin-left: 16px;
+}
+
+.checbox_list .form-check input {
+    border-radius: 50px;
+    border: 2px solid #A7A4A0;
+    height: 20px;
+    box-shadow: none;
+    width: 20px;
+}
+
+.checbox_list .form-check input:checked {
+    background-color: #EF8257 !important;
+    border: 2px solid #EF8257;
+}
+
+.page_title h2 {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    color: #000;
+}
+
+.shift_dropdown select {
+    width: auto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    border: none;
+    padding: 0 34px 0px 0px;
+    outline: none;
+    box-shadow: none;
+    color: #403D39;
+    // background-image: url(../images/shift-angel.png);
+    background-repeat: no-repeat;
+    background-position: right;
+    appearance: none;
+    background-size: 24px 24px;
+}
+
+.quality_table table tr th,
+.quality_table table tr td {
+    width: 10%;
+}
+
+.shift_sidebar {
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 4px 4px 0px rgba(78, 78, 78, 0.25);
+}
+
+.shift_sidebar h4 {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    color: #000;
+    margin: 0;
+}
+
+.shift_sidebar ul {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.shift_sidebar ul li {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    color: #000;
+}
+
+.shift_sidebar ul li.active,
+.shift_sidebar ul li:hover {
+    font-weight: 700;
+}
+
+.shift_sidebar ul li:after {
+    position: absolute;
+    transition: 0.5s;
+    content: "";
+    left: -14px;
+    height: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 4px;
+    background: #EF8257;
+    border-radius: 2px;
+}
+
+.shift_sidebar ul li:hover:after,
+.shift_sidebar ul li.active:after {
+    height: 24px;
+}
+
+button.btn.btn-primary.bg-dark {
+    background-color: #403D39;
+    border-color: #403D39;
+    box-shadow: none;
+}
+
+.badge.bg-white {
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.10);
+    padding: 16px 24px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    color: #313131;
+    border-radius: 16px;
+}
+
+.shift_table table tbody tr td:nth-child(3),
+.shift_table table tbody tr td:nth-child(4) {
+    width: 10%;
+    padding: 8px 12px;
+}

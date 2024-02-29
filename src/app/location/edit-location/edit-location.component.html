@@ -1,0 +1,271 @@
+
+
+<section class="px-lg-0">
+  <div class="d-flex align-items-center justify-content-between">
+    <div class="brand_info">
+      <h2>Edit Office</h2>
+    </div>
+    <app-header></app-header>
+  </div>
+  <div class="container-fluid p-0">
+    <div class="row m-0 justify-content-center mt-4">
+      <div class="col-lg-6 col-md-10 col-sm-12 col-12 ps-lg-0 px-3 pt-lg-3">
+        <div class="department_card">
+
+          <form [formGroup]="editLocationForm" (ngSubmit)="editLocation()">
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="location_name" class="labelName">Company
+                  Name</label>
+              </div>
+              <div class="col-12">
+                <select
+                  class="form-control"
+                  formControlName="companyId"
+                  [attr.disabled]="isCompanyLoggedIn == true ? true : null">
+                  <option value>Select Company</option>
+                  <option
+                    *ngFor="let company of companyData"
+                    [value]="company.id">
+                    {{ company.name }}
+                  </option>
+                </select>
+                <div class="col-12">
+                  <small
+                    *ngIf="
+                      (editLocationFormControl['companyId'].touched ||
+                        submitted) &&
+                      editLocationFormControl['companyId'].invalid
+                    "
+                    class="form-text text-muted mt-2">
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        editLocationFormControl['companyId'].errors &&
+                        editLocationFormControl['companyId'].errors[
+                          'required'
+                        ]
+                      ">
+                      Company Name is required
+                    </div>
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="location_name" class="labelName">Office
+                  Name</label>
+              </div>
+              <div class="col-12">
+                <input
+                  asp-for="location_name"
+                  type="text"
+                  class="form-control"
+                  formControlName="location_name"
+                  placeholder="Enter Name"
+                  required="required" />
+                <small
+                  *ngIf="
+                    (editLocationFormControl['location_name'].touched ||
+                      submitted) &&
+                    editLocationFormControl['location_name'].invalid
+                  "
+                  class="form-text text-muted">
+                  <div
+                    class="text-danger"
+                    *ngIf="
+                      editLocationFormControl['location_name'].errors &&
+                      editLocationFormControl['location_name'].errors[
+                        'required'
+                      ]
+                    ">
+                    Office Name is required
+                  </div>
+                  <!-- <div class="text-danger"
+                        *ngIf="editLocationFormControl['location_name'].errors && editLocationFormControl['location_name'].errors['pattern']">
+                        Enter Only Alphabetic Value</div> -->
+                </small>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="address" class="labelName">Address</label>
+              </div>
+              <div class="col-12">
+                <input
+                  asp-for="address"
+                  type="text"
+                  #addresstext
+                  class="form-control"
+                  formControlName="address"
+                  placeholder="Enter Address"
+                  required="required" />
+                <small
+                  *ngIf="
+                    (editLocationFormControl['address'].touched ||
+                      submitted) &&
+                      editLocationFormControl['address'].invalid
+                  "
+                  class="form-text text-muted">
+                  <div
+                    class="text-danger"
+                    *ngIf="
+                    editLocationFormControl['address'].errors &&
+                      editLocationFormControl['address'].errors['required']
+                    ">
+                    Address is required
+                  </div>
+                </small>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="city" class="labelName">City</label>
+              </div>
+              <div class="col-12">
+                <input
+                  asp-for="city"
+                  type="text"
+                  #citytext
+                  class="form-control"
+                  formControlName="city"
+                  placeholder="Enter City"
+                  required="required" />
+                <small
+                  *ngIf="
+                    (editLocationFormControl['city'].touched ||
+                      submitted) &&
+                      editLocationFormControl['city'].invalid
+                  "
+                  class="form-text text-muted">
+                  <div
+                    class="text-danger"
+                    *ngIf="
+                    editLocationFormControl['city'].errors &&
+                      editLocationFormControl['city'].errors['required']
+                    ">
+                    City is required
+                  </div>
+                </small>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="state" class="labelName">State</label>
+              </div>
+              <div class="col-12">
+                <input
+                  asp-for="state"
+                  type="text"
+                  #statetext
+                  class="form-control"
+                  formControlName="state"
+                  placeholder="Enter Address"
+                  required="required" />
+                <small
+                  *ngIf="
+                    (editLocationFormControl['state'].touched ||
+                      submitted) &&
+                      editLocationFormControl['state'].invalid
+                  "
+                  class="form-text text-muted">
+                  <div
+                    class="text-danger"
+                    *ngIf="
+                    editLocationFormControl['state'].errors &&
+                      editLocationFormControl['state'].errors['required']
+                    ">
+                    State is required
+                  </div>
+                </small>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="country" class="labelName">Country</label>
+              </div>
+              <div class="col-12">
+                <input
+                  asp-for="country"
+                  type="text"
+                  #countrytext
+                  class="form-control"
+                  formControlName="country"
+                  placeholder="Enter Country"
+                  required="required" />
+                <small
+                  *ngIf="
+                    (editLocationFormControl['country'].touched ||
+                      submitted) &&
+                      editLocationFormControl['country'].invalid
+                  "
+                  class="form-text text-muted">
+                  <div
+                    class="text-danger"
+                    *ngIf="
+                    editLocationFormControl['country'].errors &&
+                      editLocationFormControl['country'].errors['required']
+                    ">
+                    Country is required
+                  </div>
+                </small>
+              </div>
+            </div>
+
+            <div>
+              <div class="row mb-3">
+                <div class="col-12">
+                  <label for="pinCode" class="labelName">Pin Code</label>
+                </div>
+                <div class="col-12">
+                  <input
+                    asp-for="pinCode"
+                    type="text"
+                    class="form-control"
+                    formControlName="pinCode"
+                    placeholder="Enter pin Code"
+                    required="required" />
+                  <small
+                    *ngIf="
+                      (editLocationFormControl['pinCode'].touched ||
+                        submitted) &&
+                      editLocationFormControl['pinCode'].invalid
+                    "
+                    class="form-text text-muted">
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        editLocationFormControl['pinCode'].errors &&
+                        editLocationFormControl['pinCode'].errors['required']
+                      ">
+                      Pin code is required
+                    </div>
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        (editLocationFormControl['pinCode'].errors &&
+                        editLocationFormControl['pinCode'].errors['pattern'])
+                      ">
+                      Pin code should be numeric
+                    </div>
+                  </small>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="btn btn-outline-primary me-3"
+                (click)="gotoEmpPage()">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

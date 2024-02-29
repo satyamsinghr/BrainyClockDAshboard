@@ -1,0 +1,56 @@
+// :host{
+//   display: flex;
+//   flex-direction: column;
+//   height:100%
+// }
+// mat-drawer{
+//   width:260px;
+//   background-color: #332545;
+// }
+// mat-drawer-container{
+//   height:100%;
+// }
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'DM Sans', sans-serif;
+  background: #fff;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+.test_table::-webkit-scrollbar {
+  height: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #0096FF;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #0096FF;
+}

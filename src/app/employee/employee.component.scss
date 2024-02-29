@@ -1,0 +1,72 @@
+.department_select {
+    select, input {
+        border: 1px solid #cdcdcd;
+        border-radius: 10px;
+        height: 40px;
+    }
+
+    ul.suggestions {
+        margin: 0;
+        list-style-type: none;
+        height: 170px;
+        position: absolute;
+        top: 100%;
+        overflow: auto;
+        width: 100%;
+        background: #fff;
+        z-index: 999;
+        box-shadow: 4px 0px 16px -1px #00000034;
+        padding: 10px;
+        border-radius: 0 0 5px 5px;
+
+        li {
+            font-size: 14px;
+            padding: 5px 0;
+        }
+    }
+}
+
+// body {
+//     margin: 0;
+//     padding: 0;
+//     box-sizing: border-box;
+//     font-family: 'DM Sans', sans-serif;
+//     background: #fff;
+//     position: relative;
+//     overflow-x: hidden;
+//     overflow-y: auto;
+// }
+
+// a {
+//     text-decoration: none !important;
+// }
+
+// ul {
+//     padding: 0;
+//     margin: 0;
+//     list-style-type: none;
+// }
+
+// ::-webkit-scrollbar {
+//     width: 4px;
+// }
+
+// .test_table::-webkit-scrollbar {
+//     height: 2px;
+// }
+
+// /* Track */
+// ::-webkit-scrollbar-track {
+//     background: #fff;
+// }
+
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//     background: #0096FF;
+// }
+
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//     background: #0096FF;
+// }
+

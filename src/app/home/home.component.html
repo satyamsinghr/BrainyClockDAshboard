@@ -1,0 +1,394 @@
+<!-- <div #map style="height: 485px; width: 100%;"></div> -->
+<div class="d-flex align-items-center justify-content-between">
+    <div class="brand_info">
+        <!-- <h2>CleanCorp Solutions</h2> -->
+        <h2>Dashboard</h2>
+        <!-- <h2>{{locationData?.location_name}}</h2> -->
+    </div>
+    <!-- <div class="header_search d-lg-block d-md-block d-none">
+        <div class="search_box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M5 11C5 7.691 7.691 5 11 5C14.309 5 17 7.691 17 11C17 14.309 14.309 17 11 17C7.691 17 5 14.309 5 11ZM20.707 19.293L17.312 15.897C18.365 14.543 19 12.846 19 11C19 6.589 15.411 3 11 3C6.589 3 3 6.589 3 11C3 15.411 6.589 19 11 19C12.846 19 14.543 18.365 15.897 17.312L19.293 20.707C19.488 20.902 19.744 21 20 21C20.256 21 20.512 20.902 20.707 20.707C21.098 20.316 21.098 19.684 20.707 19.293Z"
+                    fill="#061D23" />
+            </svg>
+            <input type="search" placeholder="Search">
+        </div>
+    </div> -->
+    <app-header></app-header>
+</div>
+<div class="row mt-4 g-4">
+    <div class="col-lg-7 col-md-12 col-sm-12 col-12 mt-0">
+        <div class="cards manhattan_card h-100">
+            <div class="card_header d-flex align-items-start justify-content-between">
+                <div class="card_header">
+                    <!-- <h3>CleanCorp Solutions -
+                        Manhattan</h3>
+                    <p>123 Park Avenue, Suite
+                        500 New York, NY 10017</p> -->
+                        <h3>department</h3>
+                        <!-- <h3>{{locationData?.location_name}}</h3> -->
+                        <p>{{locationData?.address}}</p>
+                </div>
+                <div class="arrow d-flex align-items-center gap-3">
+                    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+            </div>
+            <div class="card_body mt-4  pt-2">
+                <table class="table card_table">
+                    <mat-table #table [dataSource]="dataSource" matSort>
+                        <ng-container matColumnDef="department">
+                            <mat-header-cell *matHeaderCellDef mat-sort-headerS>
+                                DEPARTMENT
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{ element.deptName }}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="currentShift">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header
+                                class="text-center justify-content-center">
+                                CURRENT SHIFT
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element" class="text-center justify-content-center">
+                                {{ element.shiftName
+                                }}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="shiftStatus">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header
+                                class="text-center justify-content-center">
+                                SHIFT STATUS
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element" class="text-center justify-content-center">
+                                {{ (element.InProgress && element.InProgress.toLowerCase()) === "yes" ? "In Progress" : "Pending" }}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="attendance">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header class="justify-content-start">
+                                ATTENDANCE
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element" class="text-nowrap">
+                                {{ element.attendedEmp}} / {{employeelength}}
+
+                                <!-- <mat-progress-bar mode="determinate" class="ms-4 me-3 progress-bar"
+                                    [value]="element.progressBar"></mat-progress-bar>
+                            </mat-cell> -->
+                            <mat-progress-bar mode="determinate" class="ms-4 me-3 progress-bar"
+                            [value]="calculateProgressBarValue(element.attendedEmp, employeelength)">
+          </mat-progress-bar>
+        </mat-cell> 
+                        </ng-container>
+
+                        <ng-container matColumnDef="progressBar">
+                            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="noData">
+                            <mat-footer-cell classs="justify-content-center" *matFooterCellDef
+                                [attr.colspan]="dataSource.data.length == 0">
+                                No data found
+                            </mat-footer-cell>
+                        </ng-container>
+                        <mat-footer-row *matFooterRowDef="['noData']"
+                            [hidden]="dataSource && dataSource.data.length > 0">
+                        </mat-footer-row>
+                        <mat-header-row *matHeaderRowDef="displayedColumn; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumn"></mat-row>
+                    </mat-table>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5 col-md-12 col-sm-12 col-12 mt-lg-0">
+        <div class="row g-4">
+            <div class="col-lg-5 col-md-5 col-sm-12 col-12">
+                <div class="cards attendance_week_card">
+                    <div class="card_header d-flex flex-column align-items-start justify-content-between">
+                        <!-- <h3 class="mb-0">November
+                            16, 2023</h3>
+                        <h3 class="mb-0">Thursday</h3> -->
+                        <h3 class="mb-0">{{ formattedDate }}</h3>
+                        <h3 class="mb-0">{{ dayName }}</h3>
+                    </div>
+                    <div class="mt-4 card_body week_days">
+                        <ul class="d-flex align-items-center justify-content-between">
+                            <li  [class.current_day]="dayName === 'Sunday'">
+                                <div class="week_days" (click)="onSelectWeek('Sunday')">
+                                    S
+                                </div>
+                            </li>
+                            <li [class.current_day]="dayName === 'Monday'" >
+                                <div class="week_days" (click)="onSelectWeek('Monday')">
+                                    M
+                                </div>
+                            </li>
+                            <li [class.current_day]="dayName === 'Tuesday'">
+                                <div class="week_days" (click)="onSelectWeek('Tuesday')">
+                                    T
+                                </div>
+                            </li>
+                            <li [class.current_day]="dayName === 'Wednesday'">
+                                <div class="week_days" (click)="onSelectWeek('Wednesday')">
+                                    W
+                                </div>
+                            </li>
+                            <li [class.current_day]="dayName === 'Thursday'">
+                                <div class="week_days" (click)="onSelectWeek('Thursday')">
+                                    T
+                                </div>
+                            </li>
+                            <li [class.current_day]="dayName === 'Friday'">
+                                <div class="week_days" (click)="onSelectWeek('Friday')">
+                                    F
+                                </div>
+                            </li>
+                            <li [class.current_day]="dayName === 'Saturday'">
+                                <div class="week_days" (click)="onSelectWeek('Saturday')">
+                                    S
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="cards ration_card mt-4">
+                    <div class="card_header d-flex align-items-start justify-content-between">
+                        <h3>Attendance ratio</h3>
+                        <div class="options">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none">
+                                        <g opacity="0.2">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M3 12C3 10.896 3.896 10 5 10C6.104 10 7 10.896 7 12C7 13.104 6.104 14 5 14C3.896 14 3 13.104 3 12ZM12 10C10.896 10 10 10.896 10 12C10 13.104 10.896 14 12 14C13.104 14 14 13.104 14 12C14 10.896 13.104 10 12 10ZM19 10C17.896 10 17 10.896 17 12C17 13.104 17.896 14 19 14C20.104 14 21 13.104 21 12C21 10.896 20.104 10 19 10Z"
+                                                fill="black" />
+                                        </g>
+                                    </svg>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another
+                                            action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something
+                                            else
+                                            here</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card_body mt-4">
+                        <div class="d-flex align-items-center justify-content-center" [chart]="donutChart">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-12 col-12">
+                <div class="cards record_card">
+                    <div class="card_header d-flex align-items-start justify-content-between">
+                        <div>
+                            <h3>Attendance
+                                record
+                                for the week</h3>
+                            <div class="d-flex align-items-center gap-3">
+                                <!-- <p class="d-flex align-items-center gap-3">
+                                    CleanCorp
+                                    Solutions -
+                                    Manhattan
+                                </p> -->
+                                <!-- <p class="d-flex align-items-center gap-3">
+                                    record -->
+                                    <!-- {{locationData?.location_name}} -->
+                                <!-- </p> -->
+                                <!-- <div class="options">
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none">
+                                                <path d="M16.8 9.59999L12 14.4L7.20005 9.59999" stroke="#061D23"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Action</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#">Another
+                                                    action</a></li>
+                                            <li><a class="dropdown-item" href="#">Something
+                                                    else
+                                                    here</a></li>
+                                        </ul>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="options">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none">
+                                        <g opacity="0.2">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M3 12C3 10.896 3.896 10 5 10C6.104 10 7 10.896 7 12C7 13.104 6.104 14 5 14C3.896 14 3 13.104 3 12ZM12 10C10.896 10 10 10.896 10 12C10 13.104 10.896 14 12 14C13.104 14 14 13.104 14 12C14 10.896 13.104 10 12 10ZM19 10C17.896 10 17 10.896 17 12C17 13.104 17.896 14 19 14C20.104 14 21 13.104 21 12C21 10.896 20.104 10 19 10Z"
+                                                fill="black" />
+                                        </g>
+                                    </svg>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another
+                                            action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something
+                                            else
+                                            here</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card_body mt-lg-5 mt-md-4 mt-4">
+                        <ul class="record_progress">
+                            <li [ngClass]="'d-flex ' + getDayClass('Sunday') + ' align-items-center gap-5'">
+                                <span>Sunday</span>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" [style.width]="dayRatios['Sunday'] + '%'" aria-valuenow="0"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </li>
+                            <li [ngClass]="'d-flex ' + getDayClass('Monday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
+                                <span>Monday</span>
+                                <div class="progress">
+                                  <div class="progress-bar" role="progressbar" [style.width]="dayRatios['Monday'] + '%'" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </li>
+                              
+                            <li [ngClass]="'d-flex ' + getDayClass('Tuesday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
+                                <span>Tuesday</span>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" [style.width]="dayRatios['Tuesday'] + '%'" aria-valuenow="100"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </li>
+                            <li [ngClass]="'d-flex ' + getDayClass('Wednesday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
+                                <span>Wednesday</span>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" [style.width]="dayRatios['Wednesday'] + '%'" aria-valuenow="65"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </li>
+                            <li [ngClass]="'d-flex ' + getDayClass('Thursday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
+                                <span>Thursday</span>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar"  [style.width]="dayRatios['Thursday'] + '%'"aria-valuenow="80"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </li>
+                            <li [ngClass]="'d-flex ' + getDayClass('Friday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
+                                <span>Friday</span>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" [style.width]="dayRatios['Friday'] + '%'" aria-valuenow="80"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </li>
+                            <li [ngClass]="'d-flex ' + getDayClass('Saturday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
+                                <span>Saturday</span>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" [style.width]="dayRatios['Saturday'] + '%'" aria-valuenow="0"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </li>
+                           
+                        </ul>
+                    </div>
+                      
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-12 col-sm-12 col-12">
+        <div class="dashboard_map">
+            <div #map style="height: 485px; width: 100%;"></div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-12 col-sm-12 col-12">
+        <div class="cards operaions_card h-100">
+            <div class="card_header d-flex align-items-start justify-content-between">
+                <div class="card_header">
+                    <h3>Operations (<span>{{dataSourceOperations.data.length}}</span>)</h3>
+                    <!-- <p>CleanCorp Solutions |
+                        9:30 AM to 5:30 PM</p> -->
+                    <!-- <p>{{locationData?.location_name}} |
+                        9:30 AM to 5:30 PM</p> -->
+                        <p>Operations |
+                            9:30 AM to 5:30 PM</p>
+                </div>
+                <div class="arrow d-flex align-items-center gap-3">
+                    <mat-paginator #paginatorOperations [pageSize]="5"
+                        [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+            </div>
+            <div class="card_body operations_card_body mt-0  pt-2">
+                <table class="table card_table m-0">
+                    <mat-table #table [dataSource]="dataSourceOperations" matSort>
+                        <ng-container matColumnDef="employee">
+                            <mat-header-cell *matHeaderCellDef mat-sort-headerS>
+                                EMPLOYEE
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{ element.firstName +" " +element.lastName }}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="shiftName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-headerS>
+                                ShiftName
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{ element.shiftName }}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                STATUS
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element" class="text-nowrap">
+                                <!-- {{ element.status }} -->
+                                {{ getStatus(element.created_at) }}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="clock-in">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                CLOCK-IN
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{ element.clock_in_time ? element.clock_in_time : 'N/A' }}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="noData">
+                            <mat-footer-cell classs="justify-content-center" *matFooterCellDef
+                                [attr.colspan]="dataSourceOperations.data.length == 0">
+                                No data found
+                            </mat-footer-cell>
+                        </ng-container>
+                        <mat-footer-row *matFooterRowDef="['noData']"
+                            [hidden]="dataSourceOperations && dataSourceOperations.data.length > 0">
+                        </mat-footer-row>
+                        <mat-header-row *matHeaderRowDef="displayedOprationsColumn; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedOprationsColumn" [ngClass]="getRowClass(row)"></mat-row>
+                    </mat-table>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,266 @@
+<section class="px-lg-5">
+  <div class="container-fluid p-0">
+    <div class="row m-0">
+      <div
+        class="col-lg-12 col-md-12 col-sm-12 col-12 ps-lg-0 px-3 pt-lg-5 mt-lg-4 pt-md-4 pt-4">
+        <form [formGroup]="addShiftForm">
+          <div class="row ps-lg-5">
+            <div
+              class="col-lg-1 col-md-1 col-sm-12 col-12 d-lg-flex d-md-flex d-none">
+              <div class="back_to_home" (click)="back_to_shift()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"
+                  viewBox="0 0 64 64" fill="none">
+                  <path
+                    d="M28.6957 43.8871C29.4028 44.7357 30.664 44.8503 31.5125 44.1432C32.3611 43.4361 32.4757 42.1749 31.7686 41.3264L28.6957 43.8871ZM21.3932 32.0001L19.8568 30.7197C19.2387 31.4614 19.2387 32.5387 19.8568 33.2804L21.3932 32.0001ZM31.7686 22.6738C32.4757 21.8252 32.3611 20.5641 31.5125 19.857C30.664 19.1498 29.4028 19.2645 28.6957 20.113L31.7686 22.6738ZM42.6066 34.0001C43.7112 34.0001 44.6066 33.1046 44.6066 32.0001C44.6066 30.8955 43.7112 30.0001 42.6066 30.0001V34.0001ZM31.7686 41.3264L22.9297 30.7197L19.8568 33.2804L28.6957 43.8871L31.7686 41.3264ZM22.9297 33.2804L31.7686 22.6738L28.6957 20.113L19.8568 30.7197L22.9297 33.2804ZM21.3932 34.0001H42.6066V30.0001H21.3932V34.0001ZM16.4437 16.4437C25.0352 7.85212 38.9648 7.85212 47.5563 16.4437L50.3848 13.6152C40.2311 3.46159 23.7689 3.46159 13.6152 13.6152L16.4437 16.4437ZM47.5563 16.4437C56.1479 25.0352 56.1479 38.9648 47.5563 47.5563L50.3848 50.3848C60.5384 40.2311 60.5384 23.7689 50.3848 13.6152L47.5563 16.4437ZM47.5563 47.5563C38.9648 56.1479 25.0352 56.1479 16.4437 47.5563L13.6152 50.3848C23.7689 60.5384 40.2311 60.5384 50.3848 50.3848L47.5563 47.5563ZM16.4437 47.5563C7.85212 38.9648 7.85212 25.0352 16.4437 16.4437L13.6152 13.6152C3.46159 23.7689 3.46159 40.2311 13.6152 50.3848L16.4437 47.5563Z"
+                    fill="#4E4E4E" />
+                </svg>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12 col-12">
+              <div class="shift_page_detail">
+                <h2>Add a shift</h2>
+                <h6 class="my-lg-5 my-md-4 my-4">Shift
+                  details</h6>
+                <div class="form-group row mb-lg-4 pb--lg-2 mb-md-4 mb-4">
+                  <div
+                    class="col-lg-4 col-md-12 col-sm-12 col-12 d-flex align-items-center">
+                    <label for>Company Name :</label>
+                  </div>
+                  <div
+                    class="col-lg-8 col-md-12 col-sm-12 col-12 ps-lg-0 ps-lg-3">
+                    <select id="department" formControlName="companyId"
+                      (change)="onCompanySelect($event)"
+                      [attr.disabled]="isCompanyLoggedIn == true ? true : null">
+                      <option value defaultSelected>
+                        Select Company Name
+                      </option>
+                      <option *ngFor="let  company of companyData"
+                        [value]=" company.id">
+                        {{ company.name }}
+                      </option>
+                    </select>
+                    <small *ngIf="
+                                              (addShiftFormControl['companyId'].touched ||
+                                                submitted) &&
+                                              addShiftFormControl['companyId'].invalid
+                                            " class="form-text text-muted mt-2">
+                      <div class="text-danger" *ngIf="
+                                                addShiftFormControl['companyId'].errors &&
+                                                addShiftFormControl['companyId'].errors['required']
+                                              ">
+                        Company Name is required
+                      </div>
+                      <div *ngIf="
+                                                addShiftFormControl['companyId'].errors &&
+                                                addShiftFormControl['companyId'].errors['pattern']
+                                              ">
+                        Enter Only Numeric Value
+                      </div>
+                    </small>
+                  </div>
+                </div>
+                <div class="form-group row mb-lg-4 pb--lg-2 mb-md-4 mb-4">
+                  <div
+                    class="col-lg-4 col-md-12 col-sm-12 col-12 d-flex align-items-center">
+                    <label for>Department :</label>
+                  </div>
+                  <div
+                    class="col-lg-8 col-md-12 col-sm-12 col-12 ps-lg-0 ps-lg-3">
+                    <select id="department" formControlName="department_id">
+                      <option value defaultSelected>
+                        Select Department
+                      </option>
+                      <option *ngFor="let department of departmentData"
+                        [value]="department.id">
+                        {{ department.department_name }}
+                      </option>
+                    </select>
+                    <small *ngIf="
+                                            (addShiftFormControl['department_id'].touched ||
+                                              submitted) &&
+                                            addShiftFormControl['department_id'].invalid
+                                          " class="form-text text-muted mt-2">
+                      <div class="text-danger" *ngIf="
+                                              addShiftFormControl['department_id'].errors &&
+                                              addShiftFormControl['department_id'].errors['required']
+                                            ">
+                        Department Name is required
+                      </div>
+                      <div *ngIf="
+                                              addShiftFormControl['department_id'].errors &&
+                                              addShiftFormControl['department_id'].errors['pattern']
+                                            ">
+                        Enter Only Numeric Value
+                      </div>
+                    </small>
+                  </div>
+                </div>
+                <div class="form-group row mb-lg-4 pb--lg-2 mb-md-4 mb-4">
+                  <div
+                    class="col-lg-4 col-md-12 col-sm-12 col-12 d-flex align-items-center">
+                    <label for>Shift name :</label>
+                  </div>
+                  <div
+                    class="col-lg-8 col-md-12 col-sm-12 col-12 ps-lg-0 ps-lg-3">
+                    <input type="text" id="department" placeholder="Shift Name"
+                      formControlName="name" />
+                    <small
+                      *ngIf="
+                      (addShiftFormControl['name'].touched || submitted) &&
+                      addShiftFormControl['name'].invalid
+                    "
+                      class="form-text text-muted mt-2">
+                      <div
+                        class="text-danger"
+                        *ngIf="
+                        addShiftFormControl['name'].errors &&
+                        addShiftFormControl['name'].errors['required']
+                      ">
+                        Name is required
+                      </div>
+                    </small>
+                  </div>
+                </div>
+                <div class="form-group row mb-lg-4 pb--lg-2 mb-md-4 mb-4">
+                  <div
+                    class="col-lg-4 col-md-12 col-sm-12 col-12 d-flex align-items-center">
+                    <label for>Office :</label>
+                  </div>
+                  <div
+                    class="col-lg-8 col-md-12 col-sm-12 col-12 ps-lg-0 ps-lg-3">
+                    <div class="select_input position-relative">
+                      <select name="location" formControlName="locationId">
+                        <option value defaultSelected>
+                          Select Office
+                        </option>
+                        <option *ngFor="let location of locationData"
+                          [value]="location.id">
+                          {{ location.location_name }}
+                        </option>
+                      </select>
+                      <small *ngIf="
+                                            (addShiftFormControl['locationId'].touched ||
+                                              submitted) &&
+                                            addShiftFormControl['locationId'].invalid
+                                          " class="form-text text-muted mt-2">
+                        <div class="text-danger" *ngIf="
+                                              addShiftFormControl['locationId'].errors &&
+                                              addShiftFormControl['locationId'].errors['required']
+                                            ">
+                          Location Name is required
+                        </div>
+                        <div *ngIf="
+                                              addShiftFormControl['locationId'].errors &&
+                                              addShiftFormControl['locationId'].errors['locationId']
+                                            ">
+                          Enter Only Numeric Value
+                        </div>
+                      </small>
+                      <span class="down_arrow">
+                        <img src="images/down_arrow.png" alt>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12 col-12 offset-lg-1">
+              <div class="add_shift_schedule shift_page_detail">
+                <div class="d-flex justify-content-end">
+
+                  <div class="position-relative">
+                    <button class="btn btn-primary" (click)="addShift()">Add new
+                      shift</button>
+                    <div class="tooltip_manual">
+                      Add new
+                      shift
+                    </div>
+                  </div>
+                </div>
+                <h6 class="my-lg-5 my-md-4 my-4">Schedule</h6>
+                <div class="row">
+                  <div class="col-lg-10 col-md-12 col-sm-12 col-12">
+                    <div
+                      class="clock_in_out d-flex align-items-center justify-content-between">
+                      <div class="form-group">
+                        <label for="clockIn">Clock in :</label>
+
+                        <input asp-for="clockInTime" type="time"
+                          class="form-control" formControlName="clockInTime"
+                          placeholder="Choose Clock In Time"
+                          required="required" />
+                        <small
+                          *ngIf="
+                      (addShiftFormControl['clockInTime'].touched ||
+                        submitted) &&
+                      addShiftFormControl['clockInTime'].invalid
+                    "
+                          class="form-text text-muted mt-2">
+                          <div
+                            class="text-danger"
+                            *ngIf="
+                        addShiftFormControl['clockInTime'].errors &&
+                        addShiftFormControl['clockInTime'].errors['required']
+                      ">
+                            Clock In Time is required
+                          </div>
+                        </small>
+                      </div>
+                      <div class="form-group">
+                        <label for="clockOut">Clock out :</label>
+                        <input asp-for="clockOutTime" type="time"
+                          class="form-control" formControlName="clockOutTime"
+                          placeholder="Choose Clock In Time"
+                          required="required" />
+                        <small
+                          *ngIf="
+                      (addShiftFormControl['clockOutTime'].touched ||
+                        submitted) &&
+                      addShiftFormControl['clockOutTime'].invalid
+                    "
+                          class="form-text text-muted mt-2">
+                          <div
+                            class="text-danger"
+                            *ngIf="
+                        addShiftFormControl['clockOutTime'].errors &&
+                        addShiftFormControl['clockOutTime'].errors['required']
+                      ">
+                            Clock Out Time is required
+                          </div>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+
+                    <div
+                      class="checkbox day_checkbox mt-lg-5 pt-lg-4 mt-md-4 mt-4">
+                      <label for>Select days :</label>
+                      <div class="row mt-3 g-3">
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-6"
+                          *ngFor="let days of dayName">
+                          <div
+                            class="checkbox_outer justify-content-center w-100"
+                            [class.active]="selectedDays.includes(days)"
+                            (click)="toggleDaySelection(days)">
+                            <input type="checkbox"
+                              [checked]="selectedDays.includes(days)">
+                            {{ days }}
+                          </div>
+                        </div>
+                        <!-- <div  class="text-danger justify-content-center" *ngIf="selectedDays.length== 0">
+                          Day is required
+                          </div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

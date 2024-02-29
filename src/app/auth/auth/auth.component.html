@@ -1,0 +1,75 @@
+<div class="container w-100" style="background-color:#F8F8F8;">
+<div class="row ">
+<div class="col-md-7 col-sm-12 col-xs-12">
+<img src="../../assets/img/login_left_img.png" alt="login left image not found" class="w-100" style="height: auto;"/>
+</div>
+<div class="col-md-5 col-sm-12 col-xs-12">
+  <div class="rgt-container-padding">
+    <p class="right_top_text mb-5">
+      Maximize productivity and efficiency with our digital gatekeeper.
+    </p>
+
+     <form class="form-container mb-5" [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="form-group mb-4">
+        <label class="label" for="exampleInputEmail1">Email</label>
+        <input formControlName="email" type="email" class="form-control" placeholder="Enter your e-mail ID" required>
+        
+      <small
+      *ngIf="(loginFormControl['email'].touched || submitted) &&loginFormControl['email'].invalid"
+      class="form-text text-muted mt-2">
+      <div class="text-danger" *ngIf="loginFormControl['email'].errors && loginFormControl['email'].errors['required']"
+      > Email is required
+      </div>
+      <div class="text-danger" *ngIf=" loginFormControl['email'].value && loginFormControl['email'].errors['email']"
+      >Please enter valid email
+      </div>
+    </small>
+      </div>
+      <div class="form-group mb-4 position-relative">
+        <label class="label" for="exampleInputPassword1">Password</label>
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control"
+          placeholder="Enter your password" required>
+        <small
+        *ngIf="(loginFormControl['password'].touched || submitted) &&loginFormControl['password'].invalid"
+        class="form-text text-muted mt-2">
+        <div class="text-danger" *ngIf="loginFormControl['password'].errors && loginFormControl['password'].errors['required']"
+        > Password is required
+        </div>
+        <div class="text-danger" *ngIf=" loginFormControl['password'].value && loginFormControl['password'].errors['pattern']"
+        > Password should be atleast 8 digits
+        </div>
+      </small>
+        <div class="password_icon">
+          <i alt="hide" class="far fa-eye-slash eye-hide" (click)="showPassword = !showPassword"
+            [class.hide]="showPassword"></i>
+          <i alt="show" class="far fa-eye eye-show" (click)="showPassword = !showPassword"
+            [class.hide]="!showPassword"></i>
+        </div>
+      </div>
+      <div class="form-option-container d-flex flex-row w-100 justify-content-between mb-4">
+        <!-- <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label label remember" for="exampleCheck1">Remember Me</label>
+        </div> -->
+        <!-- <div>
+          <a href="#" class="forgotPassword">Forgot password?</a>
+        </div> -->
+      </div>
+      <div class="d-flex justify-content-center px-4 position-relative login_loader">
+        <button type="submit" class="btn btnSubmit w-100">Login</button>
+        <div *ngIf="spinner == true" class="loader_img">
+          <img src="assets/img/site_loader.gif" alt="">
+        </div>
+      </div>
+      
+    </form>
+    <!-- <div class="d-flex justify-content-center brainyLogo">
+      <p (click)="register()">Register Here</p>
+     </div> -->
+     <div class="d-flex justify-content-center brainyLogo">
+      <img src="../../assets/img/brainyclocklogo.png" alt="login left image not found" />
+     </div>
+  </div>
+</div>
+</div>
+</div>

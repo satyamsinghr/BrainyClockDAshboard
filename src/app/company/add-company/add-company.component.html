@@ -1,0 +1,112 @@
+<div class="container-fluid page">
+  <div class="page_box p-3 mt-2">
+    <h2 class="mt-5">Add Company Form</h2>
+  </div>
+  <div class="page_content shadow p-3 position-relative">
+    <div class="page_content-data">
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="text-center">
+            <form [formGroup]="addCompanyForm" (ngSubmit)="addCompany()">
+              <div class="row row_container">
+                <div class="col-4 col_container">
+                  <label for="email" class="labelName">Email</label>
+                </div>
+                <div class="col-8">
+                  <input
+                    asp-for="email"
+                    type="text"
+                    class="form-control"
+                    formControlName="email"
+                    placeholder="Enter Email"
+                    required="required"
+                  />
+                  <small
+                    *ngIf="
+                      (addCompanyFormControl['email'].touched || submitted) &&
+                      addCompanyFormControl['email'].invalid
+                    "
+                    class="form-text text-muted"
+                  >
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        addCompanyFormControl['email'].errors &&
+                        addCompanyFormControl['email'].errors['required']
+                      "
+                    >
+                      Email is required
+                    </div>
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        addCompanyFormControl['email'].errors &&
+                        addCompanyFormControl['email'].errors['email']
+                      "
+                    >
+                      Enter Valid Format for Email
+                    </div>
+                  </small>
+                </div>
+              </div>
+
+              <div class="row row_container">
+                <div class="col-4 col_container">
+                  <label for="name" class="labelName">Name</label>
+                </div>
+                <div class="col-8">
+                  <input
+                    asp-for="name"
+                    type="text"
+                    class="form-control"
+                    formControlName="name"
+                    placeholder="Enter Name"
+                    required="required"
+                  />
+                  <small
+                    *ngIf="
+                      (addCompanyFormControl['name'].touched || submitted) &&
+                      addCompanyFormControl['name'].invalid
+                    "
+                    class="form-text text-muted"
+                  >
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        addCompanyFormControl['name'].errors &&
+                        addCompanyFormControl['name'].errors['required']
+                      "
+                    >
+                      Name is required
+                    </div>
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        addCompanyFormControl['name'].errors &&
+                        addCompanyFormControl['name'].errors['pattern']
+                      "
+                    >
+                      Enter Only Alphabetic Value
+                    </div>
+                  </small>
+                </div>
+              </div>
+
+              <div>
+                <button
+                  type="button"
+                  class="btn btnCancel"
+                  style="margin: 0 20px"
+                  (click)="gotoEmpPage()"
+                >
+                  Cancel
+                </button>
+                <button type="submit" class="btn btnSubmit">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

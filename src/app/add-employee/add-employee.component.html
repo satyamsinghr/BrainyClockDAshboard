@@ -1,0 +1,290 @@
+<section class="px-lg-0">
+  <div class="d-flex align-items-center justify-content-between">
+    <div class="brand_info">
+      <h2>Add Employee Form</h2>
+    </div>
+    <app-header></app-header>
+  </div>
+  <div class="container-fluid p-0">
+    <div class="row m-0 justify-content-center mt-4">
+      <div class="col-lg-6 col-md-10 col-sm-12 col-12 ps-lg-0 px-3 pt-lg-3">
+        <div class="department_card">
+
+          <form [formGroup]="addEmployeeForm" (ngSubmit)="addEmployee()">
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="company_id" class="labelName">Company Name</label>
+              </div>
+              <div class="col-12">
+                <select class="form-control" formControlName="company_id" required (change)="onCompanySelect($event)"
+                  [attr.disabled]="isCompanyLoggedIn == true ? true : null">
+                  <option value>Select Company</option>
+                  <option *ngFor="let company of companyData" [value]="company.id">
+                    {{ company.name }}
+                  </option>
+                </select>
+                <small *ngIf="
+                    (addEmployeeFormControl['company_id'].touched ||
+                      submitted) &&
+                    addEmployeeFormControl['company_id'].invalid
+                  " class="form-text text-muted mt-2">
+                  <div class="text-danger" *ngIf="
+                      addEmployeeFormControl['company_id'].errors &&
+                      addEmployeeFormControl['company_id'].errors['required']
+                    ">
+                    Company Name is required
+                  </div>
+                </small>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="name" class="labelName">First Name</label>
+              </div>
+              <div class="col-12">
+                <input asp-for="name" type="text" class="form-control" formControlName="firstName"
+                  placeholder="Enter First Name" required="required" />
+                <small *ngIf="
+                    (addEmployeeFormControl['firstName'].touched ||
+                      submitted) &&
+                    addEmployeeFormControl['firstName'].invalid
+                  " class="form-text text-muted mt-2">
+                  <div class="text-danger" *ngIf="
+                      addEmployeeFormControl['firstName'].errors &&
+                      addEmployeeFormControl['firstName'].errors['required']
+                    ">
+                    First name is required
+                  </div>
+                  <div class="text-danger" *ngIf="
+                      addEmployeeFormControl['firstName'].errors &&
+                      addEmployeeFormControl['firstName'].errors['pattern']
+                    ">
+                    First name should be alhabetic
+                  </div>
+                </small>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="name" class="labelName">Last Name</label>
+              </div>
+              <div class="col-12">
+                <input asp-for="name" type="text" class="form-control" formControlName="lastName"
+                  placeholder="Enter Last Name" required="required" />
+                <small *ngIf="
+                    (addEmployeeFormControl['lastName'].touched ||
+                      submitted) &&
+                    addEmployeeFormControl['lastName'].invalid
+                  " class="form-text text-muted mt-2">
+                  <div class="text-danger" *ngIf="
+                      addEmployeeFormControl['lastName'].errors &&
+                      addEmployeeFormControl['lastName'].errors['required']
+                    ">
+                    Last name is required
+                  </div>
+                  <div class="text-danger" *ngIf="
+                      addEmployeeFormControl['lastName'].errors &&
+                      addEmployeeFormControl['lastName'].errors['pattern']
+                    ">
+                    Last name should be alhabetic
+                  </div>
+                </small>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="email" class="labelName">Email</label>
+              </div>
+              <div class="col-12">
+                <input asp-for="email" type="text" class="form-control" formControlName="email"
+                  placeholder="Enter Email" required="required" />
+                <small *ngIf="
+                    (addEmployeeFormControl['email'].touched || submitted) &&
+                    addEmployeeFormControl['email'].invalid
+                  " class="form-text text-muted mt-2">
+                  <div class="text-danger" *ngIf="
+                      addEmployeeFormControl['email'].errors &&
+                      addEmployeeFormControl['email'].errors['required']
+                    ">
+                    Email is required
+                  </div>
+                  <div class="text-danger" *ngIf="
+                      addEmployeeFormControl['email'].errors &&
+                      addEmployeeFormControl['email'].errors['email']
+                    ">
+                    Please enter valid email
+                  </div>
+                </small>
+              </div>
+            </div>
+            <!-- Employee hr Rate -->
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="hourlyRate" class="labelName">Hour Rate</label>
+              </div>
+              <div class="col-12">
+                <input type="number" class="form-control" formControlName="hourlyRate"
+                  placeholder="Enter Employee Hr Rate" required />
+                <small *ngIf="
+                (addEmployeeFormControl['hourlyRate'].touched || submitted) && addEmployeeFormControl['hourlyRate'].invalid"
+                 class="form-text text-muted mt-2">
+              <div class="text-danger" *ngIf="addEmployeeFormControl['hourlyRate'].errors &&
+                  addEmployeeFormControl['hourlyRate'].errors['required']">
+                   HourlyRate is required
+              </div>
+            </small>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="OverTime" class="labelName">Overtime</label>
+              </div>
+              <div class="col-12">
+                <input type="number" class="form-control" formControlName="overTime"
+                  placeholder="Enter Overtime" required />
+                <!-- <small *ngIf="addEmployeeFormControl['employeeOverTime'].invalid" class="form-text text-danger mt-2">
+                  Employee Overtime is required
+                </small> -->
+                <small *ngIf="
+                (addEmployeeFormControl['overTime'].touched || submitted) && addEmployeeFormControl['overTime'].invalid"
+                 class="form-text text-muted mt-2">
+              <div class="text-danger" *ngIf="addEmployeeFormControl['overTime'].errors &&
+                  addEmployeeFormControl['overTime'].errors['required']">
+                Overtime is required
+              </div>
+            </small>
+              </div>
+            </div>
+            <!-- //Shift1 -->
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="shifts1" class="labelName">Shift1</label>
+              </div>
+              <div class="col-12">
+                <select class="form-select form-select-md form-control" aria-label=".form-select-sm example"
+                  formControlName="shifts1" (change)="changeShift1($event)">
+                  <option value>Select Shift1</option>
+                  <option *ngFor="let shift of matchingShifts" [value]="shift.id">
+                    {{ shift.name }}
+                  </option>
+                </select>
+                <small *ngIf="
+                    (addEmployeeFormControl['shifts1'].touched ||
+                      submitted) &&
+                    addEmployeeFormControl['shifts1'].invalid
+                  " class="form-text text-muted mt-2">
+                  <div class="text-danger" *ngIf="
+                      addEmployeeFormControl['shifts1'].errors &&
+                      addEmployeeFormControl['shifts1'].errors['required']
+                    ">
+                    Shift1 is required
+                  </div>
+                </small>
+              </div>
+            </div>
+
+            <!-- shift2 -->
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="shifts2" class="labelName">Shift2</label>
+              </div>
+              <div class="col-12">
+                <select class="form-select form-select-md form-control" aria-label=".form-select-sm example"
+                  formControlName="shifts2" (change)="changeShift2($event)">
+                  <option value>Select Shift2</option>
+                  <option *ngFor="let shift of matchingShifts" [value]="shift.id"
+                    [disabled]="shift.id === selectedShift1">
+                    {{ shift.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <!-- shift3 -->
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="shifts3" class="labelName">Shift3</label>
+              </div>
+              <div class="col-12">
+                <select class="form-select form-select-md form-control" aria-label=".form-select-sm example"
+                  formControlName="shifts3" (change)="changeShift3($event)">
+                  <option value>Select Shift3</option>
+                  <option *ngFor="let shift of matchingShifts" [value]="shift.id" [disabled]="
+                      shift.id === selectedShift1 ||
+                      shift.id === selectedShift2
+                    ">
+                    {{ shift.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="department_id" class="labelName">Department
+                  Name</label>
+              </div>
+              <div class="col-12">
+                <select class="form-control" formControlName="department_id" required>
+                  <option value>Select Department</option>
+                  <option *ngFor="let department of departmentData" [value]="department.id">
+                    {{ department.department_name }}
+                  </option>
+                </select>
+                <small *ngIf="
+                    (addEmployeeFormControl['department_id'].touched ||
+                      submitted) &&
+                    addEmployeeFormControl['department_id'].invalid
+                  " class="form-text text-muted mt-2">
+                  <div class="text-danger" *ngIf="
+                      addEmployeeFormControl['department_id'].errors &&
+                      addEmployeeFormControl['department_id'].errors[
+                        'required'
+                      ]
+                    ">
+                    Department name is required
+                  </div>
+                </small>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="location_id" class="labelName">Office Name</label>
+              </div>
+              <div class="col-12">
+                <select class="form-control" formControlName="location_id" required>
+                  <option value>Select Office</option>
+                  <option *ngFor="let location of locations" [value]="location.id">
+                    {{ location.location_name }}
+                  </option>
+                </select>
+                <small *ngIf="
+                    (addEmployeeFormControl['location_id'].touched ||
+                      submitted) &&
+                    addEmployeeFormControl['location_id'].invalid
+                  " class="form-text text-muted mt-2">
+                  <div class="text-danger" *ngIf="
+                      addEmployeeFormControl['location_id'].errors &&
+                      addEmployeeFormControl['location_id'].errors['required']
+                    ">
+                    Office name is required
+                  </div>
+                </small>
+              </div>
+            </div>
+
+            <div>
+              <button type="button" class="btn btn-outline-primary me-3" (click)="gotoEmpPage()">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,223 @@
+<div class="container w-100" style="background-color: #f8f8f8">
+  <div class="row">
+    <div class="col-md-7 col-sm-12 col-xs-12">
+      <img
+        src="../../assets/img/login_left_img.png"
+        alt="login left image not found"
+        class="w-100"
+        style="height: auto"
+      />
+    </div>
+    <div class="col-md-5 col-sm-12 col-xs-12">
+      <div class="rgt-container-padding">
+        <p class="right_top_text mb-5">
+          Maximize productivity and efficiency with our digital gatekeeper.
+        </p>
+        <form
+          class="form-container mb-5"
+          (ngSubmit)="register()"
+        >
+          <div class="form-group mb-4">
+            <label class="label" for="exampleInputEmail1">FirstName</label>
+            <input
+              asp-for="name"
+              type="text"
+              class="form-control"
+              formControlName="firstName"
+              placeholder="Enter Name"
+              required="required"
+            />
+            <small
+              *ngIf="
+                (registerFormControl['firstName'].touched || submitted) &&
+                registerFormControl['firstName'].invalid
+              "
+              class="form-text text-muted"
+            >
+              <div
+                class="text-danger"
+                *ngIf="
+                  registerFormControl['firstName'].errors &&
+                  registerFormControl['firstName'].errors['required']
+                "
+              >
+                First Name is required
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  registerFormControl['firstName'].errors &&
+                  registerFormControl['firstName'].errors['pattern']
+                "
+              >
+                Enter Only Alphabetic Value
+              </div>
+            </small>
+          </div>
+
+          <div class="form-group mb-4">
+            <label class="label" for="exampleInputEmail1">LastName</label>
+            <input
+              asp-for="name"
+              type="text"
+              class="form-control"
+              formControlName="lastName"
+              placeholder="Enter lastName"
+              required="required"
+            />
+            <small
+              *ngIf="
+                (registerFormControl['lastName'].touched || submitted) &&
+                registerFormControl['lastName'].invalid
+              "
+              class="text-danger"
+              >LastName is required
+              <div
+                class="text-danger"
+                *ngIf="
+                  registerFormControl['lastName'].errors &&
+                  registerFormControl['lastName'].errors['lastName']
+                "
+              >
+                <span class="text">Last Name is required</span>
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  registerFormControl['lastName'].errors &&
+                  registerFormControl['lastName'].errors['pattern']
+                "
+              >
+                Enter Only Alphabetic Value
+              </div>
+            </small>
+          </div>
+
+          <div class="form-group mb-4">
+            <label class="label" for="exampleInputEmail1">Email</label>
+            <input
+              asp-for="email"
+              type="text"
+              class="form-control"
+              formControlName="email"
+              placeholder="Enter Email"
+              required="required"
+            />
+            <!-- <small *ngIf="(registerFormControl['email'].touched||submitted) && registerFormControl['email'].invalid"
+            class="form-text text-muted">
+            <div class="text-danger" *ngIf="registerFormControl['email'].errors && registerFormControl['email'].errors['required']">Email is required
+            </div>
+            <div class="text-danger"   *ngIf="registerFormControl['email'].errors && registerFormControl['email'].errors['email']"> Enter Valid Format for Email
+            </div>
+          </small> -->
+            <small
+              *ngIf="
+                (registerFormControl['email'].touched || submitted) &&
+                registerFormControl['email'].invalid
+              "
+              class="form-text text-muted mt-2"
+            >
+              <div
+                class="text-danger"
+                *ngIf="
+                  registerFormControl['email'].errors &&
+                  registerFormControl['email'].errors['required']
+                "
+              >
+                Email is required
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  registerFormControl['email'].value &&
+                  registerFormControl['email'].errors['email']
+                "
+              >
+                Please enter valid email
+              </div>
+            </small>
+          </div>
+          <div class="form-group mb-4">
+            <label class="label" for="exampleInputPassword1">Password</label>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              class="form-control"
+              placeholder="Type in your password"
+            />
+            <small
+              *ngIf="
+                (registerFormControl['password'].touched || submitted) &&
+                registerFormControl['password'].invalid
+              "
+              class="form-text text-muted mt-2"
+            >
+              <div
+                class="text-danger"
+                *ngIf="
+                  registerFormControl['password'].errors &&
+                  registerFormControl['password'].errors['required']
+                "
+              >
+                Password is required
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  registerFormControl['password'].value &&
+                  registerFormControl['password'].errors['pattern']
+                "
+              >
+                Password should be atleast 8 digits
+              </div>
+            </small>
+            <div class="password_icon">
+              <i
+                alt="hide"
+                class="far fa-eye-slash eye-hide"
+                (click)="showPassword = !showPassword"
+                [class.hide]="showPassword"
+              ></i>
+              <i
+                alt="show"
+                class="far fa-eye eye-show"
+                (click)="showPassword = !showPassword"
+                [class.hide]="!showPassword"
+              ></i>
+            </div>
+          </div>
+
+          <div
+            class="form-option-container d-flex flex-row w-100 justify-content-between mb-4"
+          >
+            <div class="form-group form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="exampleCheck1"
+              />
+              <label class="form-check-label label remember" for="exampleCheck1"
+                >Remember Me</label
+              >
+            </div>
+            <div>
+              <a href="#" class="forgotPassword">Forgot password?</a>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center px-4">
+            <button type="submit" class="btn btnSubmit w-100">Register</button>
+          </div>
+        </form>
+        <!-- <div class="d-flex justify-content-center brainyLogo">
+          <p (click)="login()">Login Here</p>
+        </div> -->
+        <div class="d-flex justify-content-center brainyLogo">
+          <img
+            src="../../assets/img/brainyclocklogo.png"
+            alt="login left image not found"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

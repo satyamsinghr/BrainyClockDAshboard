@@ -1,0 +1,147 @@
+// @import "../../global_theme/variable.scss";
+// @mixin menuItem {
+//   font-size: 18px !important;
+//   line-height: 21px;
+//   font-family: $font_DMSans;
+// }
+// .logo {
+//   padding-left: 35px;
+//   img {
+//     width: 100px;
+//   }
+// }
+
+// .mat-list-item {
+//   @include menuItem;
+//   color: #b39ddb !important;
+//   .sidebar-icon {
+//     padding-left: 50px;
+//     img {
+//       left: 0;
+//       filter: invert(65%) sepia(67%) saturate(200%) hue-rotate(219deg)
+//         brightness(102%) contrast(92%);
+//     }
+//     &:hover {
+//       filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(288deg)
+//         brightness(150%) contrast(102%);
+//     }
+//   }
+// }
+// .active {
+//   @include menuItem;
+//   color: #fff !important;
+//   .sidebar-icon img {
+//     filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(288deg)
+//       brightness(150%) contrast(102%);
+//   }
+// }
+
+/*=== page sidebar ===*/
+
+.sidebar_menu .nav .nav-items .nav-link {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  color: #A7A4A0;
+}
+
+.sidebar_menu .nav .nav-items.active .nav-link,
+.sidebar_menu .nav .nav-items.active .nav-link svg path,
+.sidebar_menu .nav .nav-items:hover .nav-link,
+.sidebar_menu .nav .nav-items:hover .nav-link svg path {
+  color: #403D39;
+  stroke: #403D39;
+}
+
+.sidebar_menu {
+  position: fixed;
+  top: 32px;
+}
+
+.map img {
+  height: calc(100vh - 94px);
+}
+
+.sidebar_menu ul.navmenu li {
+  justify-content: center !important;
+  gap: 0px;
+  transition: 0.5s;
+}
+
+.sidebar_menu.nav_active ul.navmenu li {
+  justify-content: start !important;
+  gap: 10px;
+  transition: 0.5s;
+}
+
+
+.sidebar_menu .harmburger {
+  justify-content: center !important;
+  transition: 0.5s;
+  width: 40px;
+}
+
+@media (max-width:1200px) {
+  .sidebar_menu {
+    position: relative;
+    top: 0px;
+  }
+}
+
+.active {
+  color: black;
+}
+
+a[routerLink="/dashboard"] {
+  color: black;
+}
+
+.active {
+  color: black;
+}
+
+a[routerLink="/dashboard/department"] {
+  color: black;
+}
+
+
+.active {
+  color: black;
+}
+
+a[routerLink="/dashboard/location"] {
+  color: black;
+}
+
+.active {
+  color: black;
+}
+
+a[routerLink="/dashboard/shift"] {
+  color: black;
+}
+
+.active {
+  color: black;
+}
+
+a[routerLink="/dashboard/company"] {
+  color: black;
+}
+
+.active {
+  color: black;
+}
+
+a[routerLink="/dashboard/employee"] {
+  color: black;
+}
+
+.active {
+  color: black;
+}
+
+a[routerLink="/dashboard/report"] {
+  color: black;
+}

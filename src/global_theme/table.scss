@@ -1,0 +1,62 @@
+table {
+  width: 100%;
+  .mat-table {
+    font-family: $font_DMSans;
+  }
+}
+mat-header-row,
+mat-row {
+  border-style: none !important;
+  border-bottom-width: 0px !important;
+  min-height: 45px;
+  margin-bottom: 10px;
+}
+mat-row {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 8px;
+  border-radius: 10px;
+}
+.mat-header-cell {
+  color: #999898;
+  font-weight: 700;
+  font-size: 14px;
+}
+.mat-cell {
+  color: #313131;
+  font-weight: 400;
+  font-size: 14px;
+}
+.mat-mini-fab {
+  border-radius: 10px !important;
+}
+.mat-paginator-navigator-first {
+  display: none !important;
+}
+.mat-paginator-container {
+  justify-content: flex-start !important;
+  padding: 0px !important;
+}
+.mat-paginator-range-label {
+  width: 120px;
+}
+.mat-column-select {
+  flex: 0 0 100px;
+}
+.mat-column-shifts {
+  flex: 0 0 150px;
+}
+.mat-column-email {
+  flex: 0 0 250px;
+}
+.mat-column-name {
+  flex: 0 0 200px;
+}
+mat-cell:last-of-type,mat-header-cell:last-of-type {
+  display: flex;
+  justify-content: space-evenly;
+}
+.mat-paginator-container {
+  font-size: 12px;
+}
+.mat-paginator-page-size {
+  display: none !important;
+}

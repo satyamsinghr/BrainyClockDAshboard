@@ -1,0 +1,196 @@
+<section class="px-lg-5">
+  <div class="d-flex align-items-center justify-content-between">
+    <div class="brand_info">
+      <!-- <h2>CleanCorp Solutions</h2> -->
+      <h2>Shifts</h2>
+      <!-- <h2>{{locationData?.location_name}}</h2> -->
+    </div>
+    <div class="header_search d-lg-block d-md-block d-none">
+      <div class="search_box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          viewBox="0 0 24 24" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M5 11C5 7.691 7.691 5 11 5C14.309 5 17 7.691 17 11C17 14.309 14.309 17 11 17C7.691 17 5 14.309 5 11ZM20.707 19.293L17.312 15.897C18.365 14.543 19 12.846 19 11C19 6.589 15.411 3 11 3C6.589 3 3 6.589 3 11C3 15.411 6.589 19 11 19C12.846 19 14.543 18.365 15.897 17.312L19.293 20.707C19.488 20.902 19.744 21 20 21C20.256 21 20.512 20.902 20.707 20.707C21.098 20.316 21.098 19.684 20.707 19.293Z"
+            fill="#061D23" />
+        </svg>
+        <input type="search" placeholder="Search"
+          (keyup)="filterShiftData($event)">
+      </div>
+    </div>
+    <div class="header_add_button d-lg-none d-md-none d-flex">
+
+      <div class="position-relative">
+        <a href="javascript:void" class="btn btn-primary w-100"
+          (click)="goto_addShift()">Add shift</a>
+        <div class="tooltip_manual">
+          Add shift
+        </div>
+      </div>
+      <!-- <button class="btn btn-outline-primary">Import</button> -->
+    </div>
+    <app-header></app-header>
+  </div>
+  <div class="container-fluid p-0">
+    <div class="row m-0">
+      <div
+        class="col-lg-12 col-md-12 col-sm-12 col-12 ps-lg-0 px-0 mt-lg-0 mt-md-0 mt-4 pt-lg-3">
+        <div class="row">
+          <div class="col-lg-10 col-md-12 col-sm-12 col-12 pe-lg-5 pe-md-5">
+            <div class="student_table  shift_table pe-lg-4 pe-md-4 pb-0">
+              <table class="table m-0">
+                <mat-table [dataSource]="dataSource" matSort>
+                  <ng-container matColumnDef="select">
+                    <mat-header-cell *matHeaderCellDef>
+                      <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+                      </mat-checkbox>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                      <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)">
+                      </mat-checkbox>
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="shiftId">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Shift ID
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.id }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Shift Name
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                      {{ element.name }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="days">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Days
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.days }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="clock_in_time">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      clock_in_time
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                      {{ element.clock_in_time }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="clock_out_time">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      clock_out_time
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                      {{ element.clock_out_time }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="lunch_in_time">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      lunch_in_time
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                      {{ element.lunch_in_time }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="lunch_out_time">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      lunch_out_time
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                      {{ element.lunch_out_time }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef
+                      class="justify-content-end">Action</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+
+                      <div class="position-relative">
+                        <a class="action"
+                          routerLink="/dashboard/edit-shift/{{ row.id }}"><img
+                            src="../../assets/img/edit_black.png" alt
+                            width="24px"
+                            height="24px" /></a>
+                        <div class="tooltip_manual">
+                          Edit
+                        </div>
+                      </div>
+                      <div class="position-relative">
+                        <a class="action"
+                          (click)="ConfirmDeleteEmp(row.id)"><img
+                            src="../../assets/img/delete_gray.png"
+                            alt width="24px" height="24px" /></a>
+                        <div class="tooltip_manual">
+                          Delete
+                        </div>
+                      </div>
+
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="noData">
+                    <mat-footer-cell *matFooterCellDef
+                      [attr.colspan]="dataSource.data.length == 0">
+                      No data found
+                    </mat-footer-cell>
+                  </ng-container>
+                  <mat-footer-row *matFooterRowDef="['noData']"
+                    [hidden]="dataSource && dataSource.data.length > 0">
+                  </mat-footer-row>
+                  <mat-header-row
+                    *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                  <mat-row
+                    *matRowDef="let row; columns: displayedColumns"></mat-row>
+                </mat-table>
+                <!-- <div class="site_loader" *ngIf="this.spinner">
+                    <img src="assets/img/Site_loader.gif" alt="">
+                </div> -->
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium"
+                  color="#fff" type="pacman" [fullScreen]="true"><p
+                    style="color: white" class="loader_img"> <img
+                      src="assets/img/site_loader.gif" alt></p></ngx-spinner>
+                <!-- <ngx-spinner type="square-jelly-box" color = "#fff" [fullScreen]="false"></ngx-spinner> -->
+              </table>
+            </div>
+          </div>
+
+          <div
+            class="col-lg-2 col-md-3 col-sm-12 col-12 px-3 ps-lg-0 ps-md-0 pt-lg-2 d-lg-flex d-md-flex d-none">
+            <div class="add-employe">
+              <!-- <a href="javascript:void" class="btn btn-primary bg-white mt-3" (click)="goto_addbulkEmployee()">Add
+                in bulk</a> -->
+              <div class="position-relative">
+                <a href="javascript:void" class="btn btn-primary w-100"
+                  (click)="goto_addShift()">Add shift</a>
+                <div class="tooltip_manual">
+                  Add shift
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-10 pe-lg-5">
+            <mat-paginator #paginator [pageSize]="5" style-paginator
+              [length]="getAllShifts.length"
+              showFirstLastButtons>
+            </mat-paginator>
+          </div>
+          <!-- <div class="col-5 col-lg-4">
+            <button type="button" class="btn btn_add_bulk my-3 mx-4" (click)="goto_addbulkEmployee()">
+              Add in bulk
+            </button>
+            <button type="button" class="btn btn_add_emp" (click)="goto_addShift()">
+              + Add shift
+            </button>
+          </div> -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
