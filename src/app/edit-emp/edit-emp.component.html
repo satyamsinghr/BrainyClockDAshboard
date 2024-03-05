@@ -213,6 +213,31 @@
     </div>
   </div>
 
+       <!-- Type -->
+       <div class="row mb-3">
+        <div class="col-12">
+          <label for="type" class="labelName">Type</label>
+        </div>
+        <div class="col-12">
+          <!-- Change input type to select and add options -->
+          <select class="form-select form-control" formControlName="type" required>
+            <option value>Select Type</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+
+          <small
+            *ngIf="(editEmployeeFormControl['type'].touched || submitted) && editEmployeeFormControl['type'].invalid"
+            class="form-text text-muted mt-2">
+            <div class="text-danger" *ngIf="editEmployeeFormControl['type'].errors &&
+             editEmployeeFormControl['type'].errors['required']">
+              Type is required
+            </div>
+          </small>
+        </div>
+      </div>
+
             <div class="row mb-3">
               <div class="col-12">
                 <label for="shifts1" class="labelName">Select Shifts1</label>

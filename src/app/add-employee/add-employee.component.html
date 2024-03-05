@@ -125,14 +125,15 @@
               <div class="col-12">
                 <input type="number" class="form-control" formControlName="hourlyRate"
                   placeholder="Enter Employee Hr Rate" required />
-                <small *ngIf="
+                <small
+                  *ngIf="
                 (addEmployeeFormControl['hourlyRate'].touched || submitted) && addEmployeeFormControl['hourlyRate'].invalid"
-                 class="form-text text-muted mt-2">
-              <div class="text-danger" *ngIf="addEmployeeFormControl['hourlyRate'].errors &&
+                  class="form-text text-muted mt-2">
+                  <div class="text-danger" *ngIf="addEmployeeFormControl['hourlyRate'].errors &&
                   addEmployeeFormControl['hourlyRate'].errors['required']">
-                   HourlyRate is required
-              </div>
-            </small>
+                    HourlyRate is required
+                  </div>
+                </small>
               </div>
             </div>
 
@@ -141,21 +142,48 @@
                 <label for="OverTime" class="labelName">Overtime</label>
               </div>
               <div class="col-12">
-                <input type="number" class="form-control" formControlName="overTime"
-                  placeholder="Enter Overtime" required />
+                <input type="number" class="form-control" formControlName="overTime" placeholder="Enter Overtime"
+                  required />
                 <!-- <small *ngIf="addEmployeeFormControl['employeeOverTime'].invalid" class="form-text text-danger mt-2">
                   Employee Overtime is required
                 </small> -->
-                <small *ngIf="
+                <small
+                  *ngIf="
                 (addEmployeeFormControl['overTime'].touched || submitted) && addEmployeeFormControl['overTime'].invalid"
-                 class="form-text text-muted mt-2">
-              <div class="text-danger" *ngIf="addEmployeeFormControl['overTime'].errors &&
+                  class="form-text text-muted mt-2">
+                  <div class="text-danger" *ngIf="addEmployeeFormControl['overTime'].errors &&
                   addEmployeeFormControl['overTime'].errors['required']">
-                Overtime is required
-              </div>
-            </small>
+                    Overtime is required
+                  </div>
+                </small>
               </div>
             </div>
+
+            <!-- Type -->
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="type" class="labelName">Type</label>
+              </div>
+              <div class="col-12">
+                <!-- Change input type to select and add options -->
+                <select class="form-select form-control" formControlName="type" required>
+                  <option value>Select Type</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+
+                <small
+                  *ngIf="(addEmployeeFormControl['type'].touched || submitted) && addEmployeeFormControl['type'].invalid"
+                  class="form-text text-muted mt-2">
+                  <div class="text-danger" *ngIf="addEmployeeFormControl['type'].errors &&
+          addEmployeeFormControl['type'].errors['required']">
+                    Type is required
+                  </div>
+                </small>
+              </div>
+            </div>
+
             <!-- //Shift1 -->
             <div class="row mb-3">
               <div class="col-12">

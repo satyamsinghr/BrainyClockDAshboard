@@ -109,7 +109,8 @@ export class AppService {
       "department_id": data.department_id,
       "location_id": data.location_id,
       "hourlyRate":data.hourlyRate,
-      "overTime":data.overTime
+      "overTime":data.overTime,
+      "type":data.type
       // "created_by": userId,
     };
     return this.http.post<APIResponse>(this.apiConfig + routes.Post_AddEmployee, modifiedData, { headers });
@@ -146,6 +147,7 @@ export class AppService {
       overTime: (data.overTime != null && data.overTime !== "") ? data.overTime : "",
       hourlyRate: (data.hourlyRate != null && data.hourlyRate !== "") ? data.hourlyRate : "",
       shifts: shifts,
+      type:data.type
 
       // officeId: data.
     };

@@ -65,6 +65,7 @@ export class EditEmpComponent implements OnInit {
       shifts1: ['', [Validators.required]],
       shifts2: [''],
       shifts3: [''],
+      type: ['', [Validators.required]],
     });
   }
   get shiftName() {
@@ -155,6 +156,7 @@ export class EditEmpComponent implements OnInit {
               email:  this.employeeResponse.data.email,
               hourlyRate: (this.employeeResponse.data.hourlyRate === null || this.employeeResponse.data.hourlyRate === undefined) ? '' : this.employeeResponse.data.hourlyRate,
               overTime: (this.employeeResponse.data.overTime === null || this.employeeResponse.data.overTime === undefined) ? '' : this.employeeResponse.data.overTime,
+              type: (this.employeeResponse.data.type === null || this.employeeResponse.data.type === undefined) ? '' : this.employeeResponse.data.type,
               firstName: firstName,
               lastName: lastName,
               shifts1: this.matchshift1[0] == undefined ? null: this.matchshift1[0].id,

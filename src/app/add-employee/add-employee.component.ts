@@ -78,6 +78,7 @@ export class AddEmployeeComponent implements OnInit {
       shifts3: [''],
       department_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')],],
       location_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      type: ['', Validators.required],
     });
   }
 
