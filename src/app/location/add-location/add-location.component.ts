@@ -1,10 +1,11 @@
 import { LoaderService } from 'src/app/@shared/pipes';
 import { ToastrService } from 'ngx-toastr';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from 'src/app/auth/credentials.service';
 import { Subject } from 'rxjs';
+import { } from 'googlemaps'
 import { AppService } from '../../app.service';
 @Component({
   selector: 'app-add-location',
@@ -14,9 +15,15 @@ import { AppService } from '../../app.service';
 export class AddLocationComponent implements OnInit {
   isLoading = false;
   submitted = false;
+  address: string = '';
   addLocationForm!: FormGroup;
   protected _onDestroy = new Subject<void>();
   @ViewChild('addresstext') addresstext: any;
+  @ViewChild('map') mapElement: ElementRef;
+  map: google.maps.Map;
+  marker: google.maps.Marker;
+  zoomLat: any;
+  zoomLong: any;
   // @ViewChild('citytext') citytext: any;
   // @ViewChild('statetext') statetext: any;
   // @ViewChild('countrytext') countrytext: any;
@@ -52,31 +59,124 @@ export class AddLocationComponent implements OnInit {
       });
     } else {
       this.getAllCompany();
+     
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.getPlaceAutocomplete();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const mapProperties = {
+          center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+          zoom: 14,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        this.map = new google.maps.Map(this.mapElement.nativeElement, mapProperties);
+        // Initialize marker here
+        this.marker = new google.maps.Marker({
+          map: this.map,
+          position: mapProperties.center,
+          draggable: true // if you want the marker to be draggable
+        });
+        // Listen to marker drag end event
+        google.maps.event.addListener(this.marker, 'dragend', (event) => {
+          this.onMarkerDragEnd(event);
+        });
+      }, () => {
+        // Handle errors here
+        console.error("Error: The Geolocation service failed.");
+      });
+    } else {
+      console.error("Error: Your browser doesn't support Geolocation.");
+    }
   }
+  
+
+  onAddressChange(): void {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: this.address }, (results, status) => {
+      if (status === 'OK' && results[0]) {
+        const location = results[0].geometry.location;
+        this.map.setCenter(location);
+        // Update marker position
+        this.marker.setPosition(location);
+      } else {
+        console.error('Geocode was not successful for the following reason:', status);
+      }
+    });
+  }
+  
+
+    // Update marker position based on address
+    geocodeAddress(address: string): void {
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ address }, (results, status) => {
+        if (status === 'OK' && results[0]) {
+          const location = results[0].geometry.location;
+          this.marker.setPosition(location);
+          this.map.setCenter(location);
+          // Update form fields if needed
+        } else {
+          console.error('Geocode was not successful for the following reason:', status);
+        }
+      });
+    }
+     // Listen to marker position change
+     onMarkerDragEnd(event: google.maps.MouseEvent): void {
+      const position = event.latLng;
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ location: position }, (results, status) => {
+        if (status === 'OK' && results[0]) {
+          // Update address field
+          this.address = results[0].formatted_address;
+          // Update form fields based on the address
+          for (const component of results[0].address_components) {
+            const types = component.types;
+            if (types.includes('locality')) {
+              // Update city
+              this.addLocationForm.get('city').setValue(component.long_name);
+            } else if (types.includes('administrative_area_level_1')) {
+              // Update state
+              this.addLocationForm.get('state').setValue(component.long_name);
+            } else if (types.includes('postal_code')) {
+              // Update pin code
+              this.addLocationForm.get('pinCode').setValue(component.long_name);
+            } else if (types.includes('country')) {
+              // Update country
+              this.addLocationForm.get('country').setValue(component.long_name);
+            }
+          }
+        } else {
+          console.error('Reverse geocode was not successful for the following reason:', status);
+        }
+      });
+    }
+    
+
+
 
   private getPlaceAutocomplete() {
     const autocomplete = new google.maps.places.Autocomplete(this.addresstext.nativeElement);
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       const place = autocomplete.getPlace();
+      this.address = place.formatted_address;
+      // Call onAddressChange() function
+      this.onAddressChange();
       let address1 = "";
       let postcode = "";
-
+  
       for (const component of place.address_components as google.maps.GeocoderAddressComponent[]) {
         // @ts-ignore remove once typings fixed
         const componentType = component.types[0];
     
         switch (componentType) {
-
+  
           case "postal_code": {
             this.addLocationForm.controls['pinCode'].patchValue(component.long_name);
             break;
           }
-
+  
           case "administrative_area_level_3": {
             this.addLocationForm.controls['city'].patchValue(component.long_name);
             break;
@@ -91,11 +191,13 @@ export class AddLocationComponent implements OnInit {
             break;
         }
       }
-
+  
       this.addLocationForm.controls['latitude'].setValue(place.geometry.location.lat().toString());
       this.addLocationForm.controls['longitude'].setValue(place.geometry.location.lng().toString());
+  
     });
   }
+  
 
   initializeForm() {
     this.addLocationForm = this.fb.group({
@@ -108,6 +210,7 @@ export class AddLocationComponent implements OnInit {
       pinCode: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       latitude: ['', [Validators.required]],
       longitude: ['', [Validators.required]],
+      geofence: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     });
   }
   get shiftName() {
@@ -146,6 +249,7 @@ export class AddLocationComponent implements OnInit {
       this.service.addLocation(this.addLocationForm.value).subscribe(
         (response: any) => {
           this.toastr.success(response.msg);
+          console.log("res",response);
           this.router.navigate(['/dashboard/location']);
         },
         (error) => {

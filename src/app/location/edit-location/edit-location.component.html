@@ -94,13 +94,17 @@
               </div>
               <div class="col-12">
                 <input
-                  asp-for="address"
-                  type="text"
-                  #addresstext
-                  class="form-control"
-                  formControlName="address"
-                  placeholder="Enter Address"
-                  required="required" />
+                asp-for="address"
+                type="text"
+                #addresstext
+                [(ngModel)]="address"
+                class="form-control"
+                formControlName="address"
+                placeholder="Enter Address"
+                required="required" 
+                (change)="onAddressChange()"
+                (input)="onAddressChange()" 
+                (blur)="onAddressChange()"/>
                 <small
                   *ngIf="
                     (editLocationFormControl['address'].touched ||
@@ -119,6 +123,12 @@
                 </small>
               </div>
             </div>
+
+            <div class="col-lg-8 col-md-12 col-sm-12 col-12">
+              <div class="dashboard_map">
+                  <div #map style="height: 485px; width: 100%;"></div>
+              </div>
+          </div>
 
             <div class="row mb-3">
               <div class="col-12">
@@ -249,6 +259,44 @@
                       *ngIf="
                         (editLocationFormControl['pinCode'].errors &&
                         editLocationFormControl['pinCode'].errors['pattern'])
+                      ">
+                      Pin code should be numeric
+                    </div>
+                  </small>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-12">
+                  <label for="geofence" class="labelName">Geofence Radius </label>
+                </div>
+                <div class="col-12">
+                  <input
+                    asp-for="pinCode"
+                    type="text"
+                    class="form-control"
+                    formControlName="geofence"
+                    placeholder="Enter Geofence Radius"
+                    required="required" />
+                  <small
+                    *ngIf="
+                      (editLocationFormControl['geofence'].touched ||
+                        submitted) &&
+                        editLocationFormControl['geofence'].invalid
+                    "
+                    class="form-text text-muted">
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        editLocationFormControl['geofence'].errors &&
+                        editLocationFormControl['geofence'].errors['required']
+                      ">
+                      Geofence Radius is required
+                    </div>
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        editLocationFormControl['geofence'].errors &&
+                        editLocationFormControl['geofence'].errors['pattern']
                       ">
                       Pin code should be numeric
                     </div>

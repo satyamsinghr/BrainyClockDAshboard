@@ -205,6 +205,7 @@ export class AppService {
       state: data.state,
       country: data.country,
       pincode: data.pinCode,
+      geofence_radius:data.geofence,
       latitude: data.latitude,
       longitude: data.longitude
     }
@@ -223,7 +224,8 @@ export class AppService {
       country: data.country,
       pincode: data.pinCode,
       latitude: data.latitude,
-      longitude: data.longitude
+      longitude: data.longitude,
+      geofence_radius:data.geofence,
     }
     return this.http.put<APIResponse>(this.apiConfig + routes.Post_EditLocation(id), companyData, { headers });
   }
