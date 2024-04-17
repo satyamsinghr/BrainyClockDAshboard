@@ -18,7 +18,7 @@ export class SidenavComponent implements OnInit {
   isEmployeeActive: boolean;
   isProfileActive: boolean;
   public currentURL: any = "";
-  nav_open: any = false;
+  nav_open: any = true;
   isReportFilterActive: boolean;
   constructor(private router: Router, public service: AppService) {
     this.currentURL = window.location.pathname;

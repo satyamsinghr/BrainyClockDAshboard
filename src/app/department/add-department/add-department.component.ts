@@ -1,11 +1,15 @@
 import { LoaderService } from 'src/app/@shared/pipes';
 import { ToastrService } from 'ngx-toastr';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Inject} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from 'src/app/auth/credentials.service';
 import { Subject } from 'rxjs';
 import { AppService } from '../../app.service';
+import { Location } from '@angular/common';
+import { MatDialogRef } from '@angular/material/dialog';
+import {DepartmentComponent} from '../department/department.component'
+import {DepartmentService} from 'src/app/department.service';
 @Component({
   selector: 'app-add-department',
   templateUrl: './add-department.component.html',
@@ -22,9 +26,13 @@ export class AddDepartmentComponent implements OnInit {
   protected _onDestroy = new Subject<void>();
   constructor(
     private router: Router,
+    // private location: Location,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private service: AppService
+    private service: AppService,
+     public dialogRef: MatDialogRef<AddDepartmentComponent> ,
+    //  @Inject(DepartmentComponent) private departmentComponent: DepartmentComponent 
+    private departmentService: DepartmentService
   ) {}
   name:any
   ngOnInit(): void {
@@ -46,6 +54,7 @@ export class AddDepartmentComponent implements OnInit {
     } else {
       this.getAllCompany();
     }
+    // this.departmentService.getAllDepartment();
   }
 
   initializeForm() {
@@ -96,7 +105,10 @@ export class AddDepartmentComponent implements OnInit {
       this.service.addDepartment(this.addDepartmentForm.value).subscribe(
         (response: any) => {
           this.toastr.success(response.msg);
-          this.router.navigate(['/dashboard/department']);
+          this.dialogRef.close();
+          this.departmentService.getAllDepartment();
+          // this.location.replaceState(this.location.path());
+    
         },
         (error) => {
           this.service.handleError(error);
@@ -104,5 +116,11 @@ export class AddDepartmentComponent implements OnInit {
       );
     }
   }
+  onCancel(): void {
+    // Close the dialog when Cancel button is clicked
+    this.dialogRef.close();
+  }
+
+
   
 }

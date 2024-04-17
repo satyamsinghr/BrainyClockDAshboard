@@ -1,141 +1,170 @@
-@import "../../../global_theme/variable.scss";
+// @import "../../../global_theme/variable.scss";
 
-.login-page {
-  width: 40%;
-  margin: auto;
-  padding-top: 10%;
-}
+// .login-page {
+//   width: 40%;
+//   margin: auto;
+//   padding-top: 10%;
+// }
 
-.form {
-  position: relative;
-  z-index: 1;
-  background: #ffffff;
-  margin: 0 auto 100px;
-  padding: 45px;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-  border-radius: 3px;
-  // .password_icon {
-  //   display: block;
-  //   width: 10%;
-  //   padding: 0.375rem 0.75rem;
-  //   font-size: 1rem;
-  //   color: #495057;
-  //   background-color: #fff;
-  //   background-clip: padding-box;
-  //   // border: 1px solid #311b92;
-  //   border-top-right-radius: 0.25rem;
-  //   border-bottom-right-radius: 0.25rem;
-  //   border-left: 0px;
-  // }
-}
+// .form {
+//   position: relative;
+//   z-index: 1;
+//   background: #ffffff;
+//   margin: 0 auto 100px;
+//   padding: 45px;
+//   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+//   border-radius: 3px;
+//   // .password_icon {
+//   //   display: block;
+//   //   width: 10%;
+//   //   padding: 0.375rem 0.75rem;
+//   //   font-size: 1rem;
+//   //   color: #495057;
+//   //   background-color: #fff;
+//   //   background-clip: padding-box;
+//   //   // border: 1px solid #311b92;
+//   //   border-top-right-radius: 0.25rem;
+//   //   border-bottom-right-radius: 0.25rem;
+//   //   border-left: 0px;
+//   // }
+// }
 
-.hide {
-  display: none;
-}
+// .hide {
+//   display: none;
+// }
 
-.password-container {
-  position: relative;
-}
+// .password-container {
+//   position: relative;
+// }
 
-.password-i {
-  color: #a6a6a6;
-}
+// .password-i {
+//   color: #a6a6a6;
+// }
 
-// .password_icon i {
+// // .password_icon i {
+// //   position: absolute;
+// //   top: 8px;
+// //   right: 15px;
+// //   cursor: pointer;
+// // }
+// .w-100 {
+//   width: 100%;
+// }
+
+// .password_icon {
 //   position: absolute;
-//   top: 8px;
-//   right: 15px;
+//   top: 0;
+//   right: 0;
+//   bottom: 0;
+//   display: flex;
+//   align-items: center;
+//   padding-top: 25px;
+// }
+
+// .right_top_text {
+//   color: $color_lightBlue;
+//   font-weight: 700;
+//   font-family: "Roboto";
+//   font-size: 35px;
+//   margin-top: 35px;
+//   line-height: 40px;
+// }
+
+// .form-control {
+//   border: none;
+//   border-radius: 0px !important;
+//   border-bottom: 1px solid #b39ddb;
+//   background: none;
+// }
+
+// .label {
+//   color: #999898;
+//   font-size: 12px;
+//   margin-left: 6px;
+//   font-weight: 400;
+//   margin-left: 12px;
+// }
+
+// input {
+//   color: #999898;
+//   font-weight: 400;
+//   font-size: 16px;
+// }
+
+// .rgt-container-padding {
+//   padding-left: 15%;
+// }
+
+// .form-container {
+//   width: 75%;
+// }
+
+// @media (max-width: 1023px) {
+//   .rgt-container-padding {
+//     padding-left: 0;
+//   }
+
+//   .form-container {
+//     width: 100%;
+//   }
+
+//   .brainyLogo {
+//     width: 75%;
+//   }
+// }
+
+// .brainyLogo {
+//   width: 75%;
+// }
+
+// @media (max-width: 1019px) {
+//   .brainyLogo {
+//     width: 100%;
+//   }
+// }
+
+// @media(max-width:1198px) {
+//   .right_top_text {
+//     margin-top: 0px !important;
+//     font-size: 30px;
+//   }
+// }
+
+// .password_icon[_ngcontent-wcy-c170] i[_ngcontent-wcy-c170] {
+//   position: absolute;
+//   top: 319px;
+//   right: 428px;
 //   cursor: pointer;
 // }
-.w-100 {
-  width: 100%;
-}
 
-.password_icon {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  padding-top: 25px;
-}
+// .login_loader .loader_img {
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+//   bottom: 0;
+//   margin: auto;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   background: #351d95 !important;
+//   left: 0;
+//   right: 0;
+//   min-width: 150px;
+//   max-width: 150px;
+// }
 
-.right_top_text {
-  color: $color_lightBlue;
-  font-weight: 700;
-  font-family: "Roboto";
-  font-size: 35px;
-  margin-top: 35px;
-  line-height: 40px;
-}
+// .login_loader .loader_img img {
+//   height: 30px;
+//   width: 30px !important;
+// }
 
-.form-control {
-  border: none;
-  border-radius: 0px !important;
-  border-bottom: 1px solid #b39ddb;
-  background: none;
-}
+// .login_loader .loader_img img {
+//   height: 30px;
+//   width: 30px !important;
+//   filter: brightness(100);
+// }
 
-.label {
-  color: #999898;
-  font-size: 12px;
-  margin-left: 6px;
-  font-weight: 400;
-  margin-left: 12px;
-}
 
-input {
-  color: #999898;
-  font-weight: 400;
-  font-size: 16px;
-}
-
-.rgt-container-padding {
-  padding-left: 15%;
-}
-
-.form-container {
-  width: 75%;
-}
-
-@media (max-width: 1023px) {
-  .rgt-container-padding {
-    padding-left: 0;
-  }
-
-  .form-container {
-    width: 100%;
-  }
-
-  .brainyLogo {
-    width: 75%;
-  }
-}
-
-.brainyLogo {
-  width: 75%;
-}
-
-@media (max-width: 1019px) {
-  .brainyLogo {
-    width: 100%;
-  }
-}
-
-@media(max-width:1198px) {
-  .right_top_text {
-    margin-top: 0px !important;
-    font-size: 30px;
-  }
-}
-
-.password_icon[_ngcontent-wcy-c170] i[_ngcontent-wcy-c170] {
-  position: absolute;
-  top: 319px;
-  right: 428px;
-  cursor: pointer;
-}
 
 .login_loader .loader_img {
   position: absolute;
@@ -146,7 +175,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #351d95 !important;
+  background: #FF6528 !important;
   left: 0;
   right: 0;
   min-width: 150px;
@@ -162,4 +191,56 @@ input {
   height: 30px;
   width: 30px !important;
   filter: brightness(100);
+}
+
+.login_page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login_bg {
+  background-image: url(../../../assets/img/login_bg.png);
+  min-height: calc(100vh - 0px);
+  display: flex;
+  align-items: end;
+  justify-content: start;
+  padding: 0 0 60px 60px;
+}
+
+.hide {
+  display: none;
+}
+
+.password_icon {
+  position: absolute;
+  top: 32px;
+  bottom: 0px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.forgotPassword a {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: #03529C;
+}
+
+button.btn.btn-primary {
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+@media (max-width:767px) {
+  .login_bg {
+    min-height: calc(50vh - 0px);
+  }
 }

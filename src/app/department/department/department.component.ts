@@ -9,6 +9,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
+import {DepartmentService} from 'src/app/department.service';
 import {
   ConfirmDialogComponent,
   ConfirmDialogModel,
@@ -17,6 +18,8 @@ import { Emp_Data } from '../../@shared/models/dataSource';
 import { finalize } from 'rxjs';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { AppService } from '../../app.service';
+import {AddDepartmentComponent} from '../add-department/add-department.component'
+import {EditDepartmentComponent} from '../edit-department/edit-department.component'
 const log = new Logger('Employee');
 @Component({
   selector: 'app-department',
@@ -53,7 +56,8 @@ export class DepartmentComponent implements OnInit {
     private loader: LoaderService,
     private toastr: ToastrService,
     private service: AppService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private departmentService: DepartmentService
   ) {
     paginator1.itemsPerPageLabel = 'The amount of data displayed';
   }
@@ -68,6 +72,7 @@ export class DepartmentComponent implements OnInit {
   searchData: any
   token:any
   ngOnInit(): void {
+    this.departmentService.getAllDepartment = this.getAllDepartment.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if(this.token == null){
       this.router.navigateByUrl('/');
@@ -142,9 +147,6 @@ export class DepartmentComponent implements OnInit {
         department.id.toString().toLowerCase().includes(this.searchData)
     );
   }
-  
- 
-
   getDepartmentById() {
     this.spinner.show();
     this.service.getDepartmentById(this.comapnyId).subscribe(
@@ -179,13 +181,14 @@ export class DepartmentComponent implements OnInit {
       }
     );
 }
+
 departmentId: number = 0;
 activeDepartment: string = '';
 getEmployeeNames(departmentName: string,departmentId:number) {
   // this.activeDepartment = departmentName;
   this.activeDepartmentId = departmentId
   this.selectedDepartment = departmentName;
-  this.service.getEmployeeNamesForDepartment(departmentId).subscribe(
+  this.service.getAllDepartment().subscribe(
     (response: any) => {
       // this.employeeList = response.data; 
       this.dataSource.data = response.data;
@@ -196,6 +199,24 @@ getEmployeeNames(departmentName: string,departmentId:number) {
     }
   );
 }
+
+// departmentId: number = 0;
+// activeDepartment: string = '';
+// getEmployeeNames(departmentName: string,departmentId:number) {
+//   // this.activeDepartment = departmentName;
+//   this.activeDepartmentId = departmentId
+//   this.selectedDepartment = departmentName;
+//   this.service.getEmployeeNamesForDepartment(departmentId).subscribe(
+//     (response: any) => {
+//       // this.employeeList = response.data; 
+//       this.dataSource.data = response.data;
+//     },
+//     (error) => {
+//       this.service.handleError(error);
+//       this.dataSource.data = [];
+//     }
+//   );
+// }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
@@ -235,6 +256,34 @@ getEmployeeNames(departmentName: string,departmentId:number) {
         this.service.handleError(error);
       }
     );
+  }
+
+
+  openAddDepartmentModal() {4
+    const dialogRef = this.dialog.open(AddDepartmentComponent, {
+      width: '100%', maxWidth: '420px' // adjust width as needed
+      // You can pass data to the modal if needed
+      // data: { anyData: yourData },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle modal close event if needed
+      console.log('The modal was closed');
+    });
+  }
+
+  openEditDepartmentModal(departmentId: number,departmentName:string) {
+    const dialogRef = this.dialog.open(EditDepartmentComponent, {
+      width: '100%', maxWidth: '420px' , // adjust width as needed
+      // Pass department ID to the modal if needed
+      data: { departmentId: departmentId ,
+          departmentName:departmentName
+      }
+    }); 
+    // this.getAllDepartment() ;
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle modal close event if needed
+      console.log('The edit department modal was closed');
+    });
   }
   
   

@@ -64,7 +64,7 @@
 }
 
 .sidebar_menu ul.navmenu li {
-  justify-content: center !important;
+  justify-content: start !important;
   gap: 0px;
   transition: 0.5s;
 }
@@ -145,3 +145,27 @@ a[routerLink="/dashboard/employee"] {
 a[routerLink="/dashboard/report"] {
   color: black;
 }
+
+
+
+.nav-items a.active,
+      .nav-items a:hover {
+        color: #403D39;
+      font-weight:600;}
+
+
+
+      .sidebar_menu .nav_menu .nav-item a {
+        font-weight: 400;
+        color: #000;
+        transition: 0.3s;
+      }
+      
+      .sidebar_menu .nav_menu .nav-item.active a.active,
+      .sidebar_menu .nav_menu .nav-item:hover a,
+      .sidebar_menu .nav_menu .nav-item:hover span {
+        font-weight: 600;
+        color: #FF6528;
+        transition: 0.3s;
+        cursor: pointer;
+      }

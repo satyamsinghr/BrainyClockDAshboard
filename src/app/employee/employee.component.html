@@ -20,7 +20,7 @@
     <div class="header_add_button d-flex align-items-center gap-4">
 
         <div class="position-relative">
-            <button class="btn btn-primary" (click)="goto_addEmployee()">Add
+            <button class="btn btn-primary" (click)="openAddEmployeeModal()">Add
                 employee</button>
             <div class="tooltip_manual">
                 Add employee
@@ -196,12 +196,13 @@
                             class="justify-content-end">Action</mat-header-cell>
                         <mat-cell *matCellDef="let row">
                             <div class="position-relative">
-                                <a class="action"
-                                    routerLink="/dashboard/edit-employee/{{ row.id }}">
+                                <a class="action" (click)="openEditEmployeeModal(row)"
+                                >
                                     <img src="../../assets/img/edit_black.png"
                                         alt
                                         width="24px" height="24px" />
                                 </a>
+                                <!-- routerLink="/dashboard/edit-employee/{{ row.id }}" -->
                                 <div class="tooltip_manual">
                                     Edit
                                 </div>

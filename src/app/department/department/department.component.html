@@ -18,7 +18,7 @@
   <div class="header_add_button d-flex align-items-center gap-4">
     <div class="position-relative">
       <button class="btn btn-primary"
-        (click)="goto_addDepartment()">Add Department</button>
+        (click)="openAddDepartmentModal()">Add Department</button>
       <div class="tooltip_manual">
         Add Department
       </div>
@@ -141,11 +141,12 @@
             <mat-cell *matCellDef="let row">
 
               <div class="position-relative">
-                <a class="action"
-                  routerLink="/dashboard/edit-department/{{ row.id }}/{{row.department_name}}">
+                <a class="action"  (click)="openEditDepartmentModal(row.id,row.department_name)"
+               >
                   <img src="../../assets/img/edit_black.png" alt width="24px"
                     height="24px" />
                 </a>
+                <!-- routerLink="/dashboard/edit-department/{{ row.id }}/{{row.department_name}}" -->
                 <div class="tooltip_manual">
                   Edit
                 </div>

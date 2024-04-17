@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild('paginatorOperations') paginatorOperations: MatPaginator;
   dataSource = new MatTableDataSource<any>([]);
-  displayedColumn: string[] = ['department', 'currentShift', 'shiftStatus', 'attendance'];
+  displayedColumn: string[] = ['department', 'shiftStatus', 'attendance'];
   dataSourceOperations = new MatTableDataSource<any>([]);
   displayedOprationsColumn: string[] = ['employee','shiftName' ,'status', 'clock-in']
   @ViewChild('map') mapElement: any;
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
     if (createdDate == formattedCreatedDate && createdDate == null) {
       return 'Inprogress';
     } else {
-      return 'Not in progress';
+      return 'NA';
     }
   }
 
@@ -293,7 +293,7 @@ export class HomeComponent implements OnInit {
           name: 'Browsers',
           data: [
             {
-              name: 'One Time',
+              name: 'On Time',
               // y: 43
               y: this.attandanceCount?.onTime ? this.attandanceCount?.onTime : 0,
             },

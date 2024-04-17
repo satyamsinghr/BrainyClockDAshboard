@@ -61,89 +61,11 @@
   </div>
 </div> -->
 
-<!-- <div class="container-fluid page">
-  <div class="page_box p-3 mt-2">
-    <h2 class="mt-5">Add Department Form</h2>
-  </div>
-  <div class="page_content shadow p-3 position-relative">
-    <div class="page_content-data">
-      <div class="row">
-        <div class="col-6 mx-auto">
-          <div class="text-center">
-            <form (ngSubmit)="addDepartment()" [formGroup]="addDepartmentForm">
-              <div class="row row_container">
-                <div class="col-4 col_container">
-                  <label for="company_id" class="labelName">Company Name</label>
-                </div>
-                <div class="col-8">
-                  <select id="company_id" formControlName="company_id"
-                    class="form-control" (change)="onCompanySelect($event)"
-                    [attr.disabled]="isCompanyLoggedIn == true ? true : null">
-                    <option value defaultSelected>
-                      Select Company Name
-                    </option>
-                    <option *ngFor="let  company of companyData"
-                      [value]="company.id">
-                      {{ company.name }}
-                    </option>
-                  </select>
-                  <small
-                    *ngIf="(addDepartmentFormControl['company_id'].touched || submitted) &&
-                      addDepartmentFormControl['company_id'].invalid"
-                    class="form-text text-muted">
-                    <div class="text-danger"
-                      *ngIf=" addDepartmentFormControl['company_id'].errors &&
-                        addDepartmentFormControl['company_id'].errors['required' ]">
-                      *company Name is required
-                    </div>
-                  </small>
-                </div>
-              </div>
-
-              <div class="row row_container">
-                <div class="col-4 col_container">
-                  <label for="department" class="labelName">Department
-                    Name</label>
-                </div>
-                <div class="col-8">
-                  <input asp-for="department" type="text" class="form-control"
-                    formControlName="department" placeholder="Enter Name"
-                    required="required" />
-                  <small
-                    *ngIf="(addDepartmentFormControl['department'].touched || submitted) &&
-                      addDepartmentFormControl['department'].invalid"
-                    class="form-text text-muted">
-                    <div class="text-danger"
-                      *ngIf=" addDepartmentFormControl['department'].errors &&
-                        addDepartmentFormControl['department'].errors['required' ]">
-                      *Department Name is required
-                    </div>
-                  </small>
-                </div>
-              </div>
-
-              <div>
-                <button type="button" class="btn btnCancel"
-                  style="margin: 0 20px" (click)="gotoEmpPage()">
-                  Cancel
-                </button>
-                <button type="submit" class="btn btnSubmit">Submit</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<section class="px-lg-0">
+<!-- <section class="px-lg-0">
   <div class="d-flex align-items-center justify-content-between">
     <div class="brand_info">
-      <!-- <h2>CleanCorp Solutions</h2> -->
       <h2>Edit Department Form</h2>
     </div>
-    <app-header></app-header>
   </div>
   <div class="container-fluid p-0">
     <div class="row m-0 justify-content-center mt-4">
@@ -190,15 +112,101 @@
               <button
                 type="button"
                 class="btn btn-outline-primary me-3"
-                (click)="gotoEmpPage()">
+                (click)="onCancel()">
                 Cancel
               </button>
               <button type="submit" class="btn btn-primary">Submit</button>
             </div>
           </form>
-
         </div>
       </div>
     </div>
+  </div>
+</section> -->
+
+
+
+
+
+<!-- <section class="add_department">
+  <div class="department_card p-3 brand_info">
+    <h2 class="text-center">New department</h2>
+    <form  (ngSubmit)="editDepartment()" [formGroup]="editDepartmentForm">
+    
+      <div class="row row_container">
+  
+        <div class="col-12 mt-3">
+          <input
+          asp-for="department"
+          type="text"
+          class="form-control"
+          formControlName="department"
+          [(ngModel)]="departmentName"
+          placeholder="Enter department"
+          required="required" />
+        <small
+          *ngIf="
+          editDepartmentFormControl['department'].touched &&
+          editDepartmentFormControl['department'].invalid
+        "
+          class="form-text text-muted">
+          <div
+            class="text-danger"
+            *ngIf="
+            editDepartmentFormControl['department'].errors &&
+            editDepartmentFormControl['department'].errors[
+              'required'
+            ]
+          ">
+            *Department is required
+          </div>
+        </small>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <button type="button" class="btn btn-outline-primary py-3 h-auto px-4"
+          (click)="onCancel()">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary py-3 px-4 h-auto w-100">Submit</button>
+      </div>
+    </form>
+  </div>
+</section> -->
+
+
+
+
+<section class="add_department">
+  <div class="department_card p-3 brand_info">
+    <h2 class="text-center">Edit Department</h2>
+    <form (ngSubmit)="editDepartment()" [formGroup]="editDepartmentForm">
+      <div class="row row_container">
+        <div class="col-12 mt-3">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="department"
+            placeholder="Enter department"
+            [(ngModel)]="departmentName"
+            required
+          />
+          <small
+            *ngIf="editDepartmentFormControl['department'].touched && editDepartmentFormControl['department'].invalid"
+            class="form-text text-muted">
+            <div class="text-danger"
+              *ngIf="editDepartmentFormControl['department'].errors && editDepartmentFormControl['department'].errors['required']">
+              *Department is required
+            </div>
+          </small>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <button type="button" class="btn btn-outline-primary py-3 h-auto px-4" (click)="onCancel()">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary py-3 px-4 h-auto w-100">Submit</button>
+      </div>
+    </form>
   </div>
 </section>

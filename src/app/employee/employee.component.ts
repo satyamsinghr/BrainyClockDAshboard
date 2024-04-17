@@ -10,6 +10,9 @@ import { MatSort }                from '@angular/material/sort';
 import { MatTableDataSource }     from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
+import { AddEmployeeComponent } from '../add-employee/add-employee.component';
+import {EditEmpComponent} from '../edit-emp/edit-emp.component';
+import {EmployeeService} from 'src/app/employee.service';
 import {
   ConfirmDialogComponent,
   ConfirmDialogModel,
@@ -58,7 +61,8 @@ export class EmployeeComponent implements OnInit {
     private loader: LoaderService,
     private toastr: ToastrService,
     private service: AppService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private employeeService: EmployeeService
   ) {
     paginator1.itemsPerPageLabel = 'The amount of data displayed';
   }
@@ -71,6 +75,7 @@ export class EmployeeComponent implements OnInit {
   comapanyId:any
   token: any
   ngOnInit(): void {
+    this.employeeService.getAllEmployee = this.getAllEmployee.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if(this.token == null){
       this.router.navigateByUrl('/');
@@ -377,4 +382,36 @@ this.filterEmployee(
       }
     );
   }
+
+
+  
+  openAddEmployeeModal() {
+    const dialogRef = this.dialog.open(AddEmployeeComponent, {
+      width: '728px',
+      height:'600px' // adjust width as needed
+      // You can pass data to the modal if needed
+      // data: { anyData: yourData },
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle modal close event if needed
+      console.log('The modal was closed');
+    });
+  }
+
+
+  openEditEmployeeModal(row: any,) {
+    const dialogRef = this.dialog.open(EditEmpComponent, {
+      height:'600px',
+      width: '728px' ,
+      data: { row: row}
+      
+    }); 
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle modal close event if needed
+      console.log('The edit department modal was closed');
+    });
+  }
+  
 }

@@ -2896,7 +2896,7 @@ aside {
 /*== page body ==*/
 .page_body {
   width: 94.79100vw;
-  margin-left: 5.5vw;
+  margin-left: 8vw;
   transition: 0.5s;
 }
 
@@ -3001,7 +3001,8 @@ aside {
 }
 
 .cards {
-  background: #FCFCFC;
+  // background: #FCFCFC;
+  background: #EFF1F3;
   border-radius: 24px;
   padding: 24px;
 }
@@ -4135,10 +4136,11 @@ button.mat-custom-page[disabled] {
   margin-right: 24px !important;
   min-height: 443px;
 }
-.md-drppicker .ranges ul li button.active
-{
+
+.md-drppicker .ranges ul li button.active {
   font-weight: 700 !important;
 }
+
 .md-drppicker .calendar {
   margin: 0 !important;
 }
@@ -4210,23 +4212,106 @@ th.month.drp-animate {
 .ranges ul li:not(:last-child) {
   margin-bottom: 24px !important;
 }
+
 .md-drppicker .btn {
   margin-left: 24px !important;
   margin-top: 24px;
   height: 56px !important;
 }
-.md-drppicker th.month
-{
+
+.md-drppicker th.month {
   text-align: right;
 }
+
 .calendar.right th.month {
   text-align: right !important;
   font-size: 16px;
-font-style: normal;
-font-weight: 700;
-line-height: 24px;
-color: #000 !important;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  color: #000 !important;
 }
+
+.add_department {
+  .dropdown_select_box {
+    position: relative;
+  }
+
+  label {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    color:  #031A40;
+    width: 100%;
+  }
+
+  input {
+    height: 60px;
+    border-radius: 8px;
+    border: 2px solid #031A40;
+    background: #fff;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #000;
+  }
+
+  select {
+    height: 60px;
+    border-radius: 8px;
+    border: 2px solid #031A40;
+    background: #fff;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #000;
+  }
+
+  input::placeholder {
+    color: #000;
+  }
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .down_arrow {
+    position: absolute;
+    top: 0;
+    right: 16px;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .dropdown {
+    .btn.btn-secondary {
+      border-radius: 8px;
+      background: var(--Colors-Anti-flash-white, #F1F2F6);
+      height: 56px;
+      width: 100%;
+      color: #000;
+      outline: none !important;
+      box-shadow: none !important;
+      text-align: left;
+      padding: 0 16px;
+      border: none;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      color: #000;
+    }
+  }
+}
+
+mat-dialog-container#mat-dialog-0 {
+  border-radius: 32px;
+}
+
 @media (max-width:1700px) {
   table.table.card_table tbody tr td {
     padding: 14px 0 14px 0;

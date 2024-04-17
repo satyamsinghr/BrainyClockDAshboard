@@ -1,6 +1,6 @@
 import { LoaderService } from 'src/app/@shared/pipes';
 import { ToastrService } from 'ngx-toastr';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from 'src/app/auth/credentials.service';
@@ -9,6 +9,8 @@ import { untilDestroyed } from '../../@shared/pipes/until-destroyed';
 import { finalize, Subject } from 'rxjs';
 import { Logger } from '../../@shared/logger.service';
 import { AppService } from '../../app.service';
+import { MatDialogRef,MAT_DIALOG_DATA, } from '@angular/material/dialog';
+import {DepartmentService} from 'src/app/department.service';
 const log = new Logger('AddEmployee');
 @Component({
   selector: 'app-edit-department',
@@ -29,14 +31,18 @@ export class EditDepartmentComponent implements OnInit {
     private credentialsService: CredentialsService,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private service: AppService
+    private service: AppService,
+    public dialogRef: MatDialogRef<EditDepartmentComponent>, 
+    @Inject(MAT_DIALOG_DATA) private data: any,
+    private departmentService: DepartmentService
   ) {}
 
   departmentId: any;
   departmentName: any;
+
   ngOnInit(): void {
-    this.departmentId = this.route.snapshot.params['departmentId'];
-    this.departmentName = this.route.snapshot.params['departmentName'];
+    this.departmentId=this.data.departmentId;
+    this.departmentName=this.data.departmentName;
     this.getDepartmentById(this.departmentId);
     this.initializeForm();
   }
@@ -83,7 +89,9 @@ export class EditDepartmentComponent implements OnInit {
         .subscribe(
           (response: any) => {
             this.toastr.success(response.msg);
-            this.router.navigate(['/dashboard/department']);
+            // this.router.navigate(['/dashboard/department']);
+            this.dialogRef.close();
+            this.departmentService.getAllDepartment();
           },
           (error) => {
             this.service.handleError(error);
@@ -91,5 +99,9 @@ export class EditDepartmentComponent implements OnInit {
         );
     }
   }
-  
+  onCancel(): void {
+    // Close the dialog when Cancel button is clicked
+    this.dialogRef.close();
+  }
+
 }

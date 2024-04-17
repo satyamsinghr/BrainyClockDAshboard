@@ -7,6 +7,8 @@ import { CredentialsService } from 'src/app/auth/credentials.service';
 import { Subject } from 'rxjs';
 import { Logger } from '../@shared/logger.service';
 import { AppService } from './../app.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import {EmployeeService} from 'src/app/employee.service';
 const log = new Logger('AddEmployee');
 @Component({
   selector: 'app-add-employee',
@@ -26,7 +28,9 @@ export class AddEmployeeComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private service: AppService
+    private service: AppService,
+    public dialogRef: MatDialogRef<AddEmployeeComponent> ,
+    private employeeService: EmployeeService
   ) { }
   companyName: any
   name: any
@@ -258,7 +262,9 @@ export class AddEmployeeComponent implements OnInit {
             if (response.data) {
               this.toastr.success(response.msg);
               this.addEmployeeForm.reset();
-              this.router.navigate(['/dashboard/employee']);
+              this.dialogRef.close();
+              this.employeeService.getAllEmployee();
+              // this.router.navigate(['/dashboard/employee']);
             }
           },
           (error) => {
@@ -286,6 +292,11 @@ export class AddEmployeeComponent implements OnInit {
       this.toastr.error("Please Upgrade Your Plan to add more employees");
 
     }
-
   }
+  onCancel(): void {
+    // Close the dialog when Cancel button is clicked
+    this.dialogRef.close();
+  }
+
+
 }
