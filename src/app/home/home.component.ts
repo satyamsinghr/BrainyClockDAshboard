@@ -5,7 +5,7 @@ import { } from 'googlemaps'
 import { ToastrService } from 'ngx-toastr';
 import { Chart } from 'angular-highcharts';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { AppService } from '../app.service';
 import * as moment from 'moment';
 
@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
     Friday : 0,
     Saturday : 0
   };
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -59,18 +60,23 @@ export class HomeComponent implements OnInit {
     this.dayName = dayNames[dayIndex];
     //  this.selectedDays.push(this.dayName);
   }
+  
   token: any;
   selectedDays: string[] = [];
   presentDate: any;
+  selectedCompanyId:number;
   ngOnInit(): void {
     this.token = JSON.parse(localStorage.getItem('loginToken'));
+    this.selectedCompanyId = JSON.parse(localStorage.getItem('comapnyId'));
     if(this.token == null){
       this.router.navigateByUrl('/');
     }
     else{
       this.role = this.service.getRole();
       this.companyId = this.service.getCompanyId();
-       this.getEmployeeCount();
+
+      this.getEmployeeCount();
+      this.getDepaetmentById();
       this.getEmployeeByCompanyId();
       this.getAllLocation();
       this.getLocationByCompanyId();
@@ -79,6 +85,8 @@ export class HomeComponent implements OnInit {
       this.getAttendanceByCompanyId(this.presentDate);
     }
   }
+
+  
 
   getStatus(createdDate: any) {
     const currentTime = new Date();
@@ -155,7 +163,7 @@ export class HomeComponent implements OnInit {
           }
           this.attandanceCount = this.getCountsOfClockInTime();
           this.initDonut();
-          this.dataSourceOperations.data = formattedData;
+          // this.dataSourceOperations.data = formattedData;
 
         },
         (error) => {
@@ -182,13 +190,55 @@ export class HomeComponent implements OnInit {
     const ratio = totalEmployees !== 0 ? (attendedEmp / totalEmployees) * 100 : 0;
     return ratio;
   }
+  
+  // pageEvent: PageEvent;
 
+  // onPageChange(event: any) {
+
+  //   if (event.previousPageIndex < event.pageIndex) {
+  //     // User clicked on next button
+  //     this.index++;
+  //   } else {
+  //     // User clicked on previous button
+  //     this.index--;
+  //   }
+  //   // Ensure index does not go out of bounds
+  //   this.index = Math.max(0, Math.min(this.dataSourceOperations.data.length - 1, this.index));
+  //   // Update paginator
+  //   this.paginatorOperations.pageIndex = this.index;
+  // }
+
+  departmentId:any
+  departmentData: any;
+  departmentName:any;
+  departmentName1:any;
+  index :any = 0;
+  newFilteredArray: [] 
+  getDepaetmentById() {
+    this.service.getDepartmentById(this.selectedCompanyId).subscribe(
+      (response: any) => {
+        this.departmentData = response;
+        this.departmentId=this.departmentData[this.index].id;
+        console.log("departmenytId",this.departmentId);
+        this.departmentName=this.departmentData[this.index].department_name;
+        this.departmentName1=this.departmentData[this.index1].department_name;
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
+  }
+  
   employeelength: any
+  employee:[]
+  department_id:any
   getEmployeeByCompanyId() {
     if (this.role != 'SA') {
       this.service.getAllEmployeeByCompany().subscribe(
         (response: any) => {
           this.employeelength = response.data.length;
+          this.employee=response.data;
+         this.filterEmployeeDataByDepartmentId() ;
         },
         (error) => {
           this.service.handleError(error);
@@ -197,7 +247,62 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  employeeCount: any
+  filteredEmployees: any[] = [];
+  filterEmployeeDataByDepartmentId() {
+    if (this.departmentId && this.employee) {
+     this.filteredEmployees = this.employee.filter((emp:any) => parseInt(emp.department_id) == this.departmentId);
+     console.log("hshshshhshhsjs",this.filteredEmployees)
+     this.dataSourceOperations.data = this.filteredEmployees;
+    }
+  }
+
+
+
+forwardButtonClick() {
+    if (this.index < this.departmentData.length-1) {
+        this.index++;
+        this.updateDepartmentName();
+        this.departmentId=this.departmentData[this.index].id;
+        this.filterEmployeeDataByDepartmentId();
+    }
+}
+
+backwardButtonClick() {
+    if (this.index > 0) {
+        this.index--;
+        this.updateDepartmentName();
+        this.departmentId=this.departmentData[this.index].id;
+        this.filterEmployeeDataByDepartmentId()
+    }
+}
+
+updateDepartmentName() {
+    // Update the department name based on the current index
+    this.departmentName = this.departmentData[this.index]?.department_name || '';
+}
+
+
+index1:number=0;
+
+forwardButtonClick1() {
+  if (this.index1 < this.departmentData.length-1) {
+      this.index1++;
+      this.updateDepartmentName1();
+  }
+}
+
+backwardButtonClick1() {
+  if (this.index1 > 0) {
+      this.index1--;
+      this.updateDepartmentName1();
+  }
+}
+
+updateDepartmentName1() {
+  this.departmentName1 = this.departmentData[this.index1]?.department_name || '';
+}
+
+employeeCount: any
   getEmployeeCount() {
     if (this.role != 'SA') {
       this.service.getEmployeeCount().subscribe(

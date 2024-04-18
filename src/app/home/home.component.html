@@ -25,15 +25,18 @@
                     <!-- <h3>CleanCorp Solutions -
                         Manhattan</h3>
                     <p>123 Park Avenue, Suite
-                        500 New York, NY 10017</p> -->
-                        <h3>department</h3>
-                        <!-- <h3>{{locationData?.location_name}}</h3> -->
-                        <p>{{locationData?.address}}</p>
-                </div>
-                <div class="arrow d-flex align-items-center gap-3">
-                    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-                </div>
-            </div>
+                                500 New York, NY 10017</p> -->
+                            <h3>{{departmentName1}}</h3>
+                            <!-- <h3>{{locationData?.location_name}}</h3> -->
+                            <p>{{locationData?.address}}</p>
+                        </div>
+                        <div class="arrow d-flex align-items-center gap-3">
+                            <!-- <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+                            <button (click)="backwardButtonClick1()">&lt;</button>
+                            <button (click)="forwardButtonClick1()">&gt;</button>
+                           
+                        </div>
+                    </div>
             <div class="card_body mt-4  pt-2">
                 <table class="table card_table">
                     <mat-table #table [dataSource]="dataSource" matSort>
@@ -63,7 +66,8 @@
                                 SHIFT STATUS
                             </mat-header-cell>
                             <mat-cell *matCellDef="let element" class="text-center justify-content-center">
-                                {{ (element.InProgress && element.InProgress.toLowerCase()) === "yes" ? "In Progress" : "Pending" }}
+                                {{ (element.InProgress && element.InProgress.toLowerCase()) === "yes" ? "In Progress" :
+                                "Pending" }}
                             </mat-cell>
                         </ng-container>
 
@@ -77,10 +81,10 @@
                                 <!-- <mat-progress-bar mode="determinate" class="ms-4 me-3 progress-bar"
                                     [value]="element.progressBar"></mat-progress-bar>
                             </mat-cell> -->
-                            <mat-progress-bar mode="determinate" class="ms-4 me-3 progress-bar"
-                            [value]="calculateProgressBarValue(element.attendedEmp, employeelength)">
-          </mat-progress-bar>
-        </mat-cell> 
+                                <mat-progress-bar mode="determinate" class="ms-4 me-3 progress-bar"
+                                    [value]="calculateProgressBarValue(element.attendedEmp, employeelength)">
+                                </mat-progress-bar>
+                            </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="progressBar">
@@ -101,6 +105,7 @@
                         <mat-header-row *matHeaderRowDef="displayedColumn; sticky: true"></mat-header-row>
                         <mat-row *matRowDef="let row; columns: displayedColumn"></mat-row>
                     </mat-table>
+                    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
                 </table>
             </div>
         </div>
@@ -118,12 +123,12 @@
                     </div>
                     <div class="mt-4 card_body week_days">
                         <ul class="d-flex align-items-center justify-content-between">
-                            <li  [class.current_day]="dayName === 'Sunday'">
+                            <li [class.current_day]="dayName === 'Sunday'">
                                 <div class="week_days" (click)="onSelectWeek('Sunday')">
                                     S
                                 </div>
                             </li>
-                            <li [class.current_day]="dayName === 'Monday'" >
+                            <li [class.current_day]="dayName === 'Monday'">
                                 <div class="week_days" (click)="onSelectWeek('Monday')">
                                     M
                                 </div>
@@ -205,7 +210,7 @@
                                 </p> -->
                                 <!-- <p class="d-flex align-items-center gap-3">
                                     record -->
-                                    <!-- {{locationData?.location_name}} -->
+                                <!-- {{locationData?.location_name}} -->
                                 <!-- </p> -->
                                 <!-- <div class="options">
                                     <div class="dropdown">
@@ -260,56 +265,70 @@
                             <li [ngClass]="'d-flex ' + getDayClass('Sunday') + ' align-items-center gap-5'">
                                 <span>Sunday</span>
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" [style.width]="dayRatios['Sunday'] + '%'" aria-valuenow="0"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar"
+                                        [style.width]="dayRatios['Sunday'] + '%'" aria-valuenow="0" aria-valuemin="0"
+                                        aria-valuemax="100"></div>
                                 </div>
                             </li>
-                            <li [ngClass]="'d-flex ' + getDayClass('Monday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
+                            <li
+                                [ngClass]="'d-flex ' + getDayClass('Monday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
                                 <span>Monday</span>
                                 <div class="progress">
-                                  <div class="progress-bar" role="progressbar" [style.width]="dayRatios['Monday'] + '%'" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar"
+                                        [style.width]="dayRatios['Monday'] + '%'" aria-valuenow="75" aria-valuemin="0"
+                                        aria-valuemax="100"></div>
                                 </div>
-                              </li>
-                              
-                            <li [ngClass]="'d-flex ' + getDayClass('Tuesday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
+                            </li>
+
+                            <li
+                                [ngClass]="'d-flex ' + getDayClass('Tuesday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
                                 <span>Tuesday</span>
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" [style.width]="dayRatios['Tuesday'] + '%'" aria-valuenow="100"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar"
+                                        [style.width]="dayRatios['Tuesday'] + '%'" aria-valuenow="100" aria-valuemin="0"
+                                        aria-valuemax="100"></div>
                                 </div>
                             </li>
-                            <li [ngClass]="'d-flex ' + getDayClass('Wednesday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
+                            <li
+                                [ngClass]="'d-flex ' + getDayClass('Wednesday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
                                 <span>Wednesday</span>
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" [style.width]="dayRatios['Wednesday'] + '%'" aria-valuenow="65"
+                                    <div class="progress-bar" role="progressbar"
+                                        [style.width]="dayRatios['Wednesday'] + '%'" aria-valuenow="65"
                                         aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </li>
-                            <li [ngClass]="'d-flex ' + getDayClass('Thursday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
+                            <li
+                                [ngClass]="'d-flex ' + getDayClass('Thursday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
                                 <span>Thursday</span>
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar"  [style.width]="dayRatios['Thursday'] + '%'"aria-valuenow="80"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar"
+                                        [style.width]="dayRatios['Thursday'] + '%'" aria-valuenow="80" aria-valuemin="0"
+                                        aria-valuemax="100"></div>
                                 </div>
                             </li>
-                            <li [ngClass]="'d-flex ' + getDayClass('Friday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
+                            <li
+                                [ngClass]="'d-flex ' + getDayClass('Friday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
                                 <span>Friday</span>
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" [style.width]="dayRatios['Friday'] + '%'" aria-valuenow="80"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar"
+                                        [style.width]="dayRatios['Friday'] + '%'" aria-valuenow="80" aria-valuemin="0"
+                                        aria-valuemax="100"></div>
                                 </div>
                             </li>
-                            <li [ngClass]="'d-flex ' + getDayClass('Saturday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
+                            <li
+                                [ngClass]="'d-flex ' + getDayClass('Saturday') + ' align-items-center gap-5 mt-4 pt-lg-3'">
                                 <span>Saturday</span>
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" [style.width]="dayRatios['Saturday'] + '%'" aria-valuenow="0"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar"
+                                        [style.width]="dayRatios['Saturday'] + '%'" aria-valuenow="0" aria-valuemin="0"
+                                        aria-valuemax="100"></div>
                                 </div>
                             </li>
-                           
+
                         </ul>
                     </div>
-                      
+
                 </div>
             </div>
         </div>
@@ -323,18 +342,24 @@
         <div class="cards operaions_card h-100">
             <div class="card_header d-flex align-items-start justify-content-between">
                 <div class="card_header">
-                    <h3>Operations (<span>{{dataSourceOperations.data.length}}</span>)</h3>
+                    <!-- <h3>Operations (<span>{{dataSourceOperations.data.length}}</span>)</h3> -->
+                    <!-- <h3>{{ filteredEmployees.length > 0 ? filteredEmployees[index]?.departmentName : '' }} -->
+                        <h3>{{departmentName}}
+                        (<span>{{dataSourceOperations.data.length }}</span>)</h3>
+
+
                     <!-- <p>CleanCorp Solutions |
                         9:30 AM to 5:30 PM</p> -->
-                    <!-- <p>{{locationData?.location_name}} |
+                    <!-- <p>{{locationData?.location_name}} |   
                         9:30 AM to 5:30 PM</p> -->
-                        <p>Operations |
-                            9:30 AM to 5:30 PM</p>
+                    <!-- <p>{{ filteredEmployees.length > 0 ? filteredEmployees[index].department_name : 'Department' }}  | -->
+                    <p>{{departmentName }} |
+                        9:30 AM to 5:30 PM</p>
                 </div>
                 <div class="arrow d-flex align-items-center gap-3">
-                    <mat-paginator #paginatorOperations [pageSize]="5"
-                        [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-                </div>
+                    <button (click)="backwardButtonClick()">&lt;</button> <!-- Left arrow -->
+                    <button (click)="forwardButtonClick()">&gt;</button> <!-- Right arrow -->
+                </div>              
             </div>
             <div class="card_body operations_card_body mt-0  pt-2">
                 <table class="table card_table m-0">
@@ -385,8 +410,13 @@
                             [hidden]="dataSourceOperations && dataSourceOperations.data.length > 0">
                         </mat-footer-row>
                         <mat-header-row *matHeaderRowDef="displayedOprationsColumn; sticky: true"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: displayedOprationsColumn" [ngClass]="getRowClass(row)"></mat-row>
+                        <mat-row *matRowDef="let row; columns: displayedOprationsColumn" [ngClass]="getRowClass(row)">
+                        </mat-row>
                     </mat-table>
+                    <mat-paginator #paginatorOperations [pageSize]="5" [length]="100" [pageIndex]="0"
+                        [pageSizeOptions]="[5, 10, 25, 100]" 
+                        >
+                    </mat-paginator>
                 </table>
             </div>
         </div>

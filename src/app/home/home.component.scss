@@ -5,3 +5,18 @@
     font-size: 11px !important;
     min-height: 65.6px;
 }
+
+
+.arrow button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em; /* Adjust font size as needed */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    outline: none; /* Remove outline */
+}
+
+.arrow button:hover {
+    text-decoration: underline; /* Underline on hover */
+}
