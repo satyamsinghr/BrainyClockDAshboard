@@ -16,6 +16,7 @@ export class EditEmpComponent implements OnInit {
   employeeId!: number;
   editEmployeeForm!: FormGroup;
   submitted = false;
+  spinner:boolean = false;
   shiftsName: any = ['[2,3]', '[3,4]', '[4,5]', '[5,6]', '[7,8]', '[8,9]'];
   constructor(
     private service: AppService,
@@ -236,6 +237,7 @@ export class EditEmpComponent implements OnInit {
   editEmployee() {
     this.submitted = true;
     if (this.editEmployeeForm.valid) {
+      this.spinner = true;
       this.submitted = false;
       this.service.updateEmployee(this.editEmployeeForm.value, this.id).subscribe((response: any) => {
         if ((response as any).success == true) {
@@ -243,6 +245,7 @@ export class EditEmpComponent implements OnInit {
           this.editEmployeeForm.reset();
           this.dialogRef.close();
           this.employeeService.getAllEmployee();
+          this.spinner = false;
           // this.router.navigate(['/dashboard/employee']);
         }
       });

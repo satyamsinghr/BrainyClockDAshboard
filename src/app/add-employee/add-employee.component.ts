@@ -18,6 +18,7 @@ const log = new Logger('AddEmployee');
 export class AddEmployeeComponent implements OnInit {
   isLoading = false;
   submitted = false;
+  spinner:boolean = false;
   addEmployeeForm!: FormGroup;
   role: string = '';
   companyData: any;
@@ -256,6 +257,7 @@ export class AddEmployeeComponent implements OnInit {
     // }
     if (this.role !== 'SA' && this.noOfEmployees > this.employeeLength) {
       if (this.addEmployeeForm.valid) {
+       this.spinner = true
         this.submitted = false;
         this.service.addEmployee(this.addEmployeeForm.value).subscribe(
           (response: any) => {
@@ -264,11 +266,13 @@ export class AddEmployeeComponent implements OnInit {
               this.addEmployeeForm.reset();
               this.dialogRef.close();
               this.employeeService.getAllEmployee();
+              this.spinner = false;
               // this.router.navigate(['/dashboard/employee']);
             }
           },
           (error) => {
             this.service.handleError(error);
+            this.spinner = false;
           }
         );
       }

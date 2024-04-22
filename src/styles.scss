@@ -3629,6 +3629,20 @@ table.table.card_table.employee_table.operations tbody tr td:not(:first-child) {
   object-fit: cover;
 }
 
+.location_map {
+  height: 485px;
+  width: 150%; /* Adjust this value to increase the width */
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.location_map img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+
 .operaions_card {
   height: 485px;
   max-height: 485px;

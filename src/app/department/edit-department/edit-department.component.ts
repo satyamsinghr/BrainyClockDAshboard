@@ -19,7 +19,7 @@ const log = new Logger('AddEmployee');
 })
 export class EditDepartmentComponent implements OnInit {
   // getDepartmentById();
-
+  spinner : boolean = false
   isLoading = false;
   editDepartmentForm!: FormGroup;
   protected _onDestroy = new Subject<void>();
@@ -84,6 +84,7 @@ export class EditDepartmentComponent implements OnInit {
 
   editDepartment() {
     if (this.editDepartmentForm.valid) {
+      this.spinner = true
       this.service
         .editDepartment(this.editDepartmentForm.value, this.departmentId)
         .subscribe(
@@ -92,9 +93,11 @@ export class EditDepartmentComponent implements OnInit {
             // this.router.navigate(['/dashboard/department']);
             this.dialogRef.close();
             this.departmentService.getAllDepartment();
+            this.spinner = false
           },
           (error) => {
             this.service.handleError(error);
+            this.spinner = false
           }
         );
     }

@@ -16,6 +16,7 @@ import {DepartmentService} from 'src/app/department.service';
   styleUrls: ['./add-department.component.scss'],
 })
 export class AddDepartmentComponent implements OnInit {
+  spinner : boolean = false
   isLoading = false;
   isCompanyLoggedIn: boolean = false;
   submitted = false;
@@ -101,17 +102,20 @@ export class AddDepartmentComponent implements OnInit {
   addDepartment() {
     this.submitted = true;
     if (this.addDepartmentForm.valid) {
+      this.spinner = true
       this.submitted = false;
       this.service.addDepartment(this.addDepartmentForm.value).subscribe(
         (response: any) => {
           this.toastr.success(response.msg);
           this.dialogRef.close();
           this.departmentService.getAllDepartment();
+          this.spinner = false
           // this.location.replaceState(this.location.path());
     
         },
         (error) => {
           this.service.handleError(error);
+          this.spinner = false
         }
       );
     }
