@@ -46,13 +46,11 @@ const routes = {
 export class AppService {
 
   nav_active_class: any;
-  public apiConfig = 'https://8m02o9way6.execute-api.us-east-1.amazonaws.com/prod/api';
-  // public apiConfig=environment.local_url;
-  //public apiConfig=environment.base_url;
+  
+  // public apiConfig = environment.local_url;
+  public apiConfig=environment.base_url;
 
-  constructor(private http: HttpClient,private toastr: ToastrService,private router: Router) { }
-  //  base_url = 'http://localhost:3000/api';
-  base_url = 'https://8m02o9way6.execute-api.us-east-1.amazonaws.com/prod/api';
+  constructor(private http: HttpClient, private toastr: ToastrService, private router: Router) { }
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -66,7 +64,7 @@ export class AppService {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       //'Accept': 'text/plain',
-     // 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('loginToken'))}`
+      // 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('loginToken'))}`
     }),
   };
 
@@ -108,9 +106,9 @@ export class AppService {
       "shifts": shifts,
       "department_id": data.department_id,
       "location_id": data.location_id,
-      "hourlyRate":data.hourlyRate,
-      "overTime":data.overTime,
-      "type":data.type
+      "hourlyRate": data.hourlyRate,
+      "overTime": data.overTime,
+      "type": data.type
       // "created_by": userId,
     };
     return this.http.post<APIResponse>(this.apiConfig + routes.Post_AddEmployee, modifiedData, { headers });
@@ -121,7 +119,7 @@ export class AppService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const formData = new FormData();
     formData.append('file', emoloyeeFileUpload);
-    const url = this.base_url + '/admin/upload-excel';
+    const url = this.apiConfig + '/admin/upload-excel';
     return this.http.post<APIResponse>(url, formData, { headers });
   }
 
@@ -147,7 +145,7 @@ export class AppService {
       overTime: (data.overTime != null && data.overTime !== "") ? data.overTime : "",
       hourlyRate: (data.hourlyRate != null && data.hourlyRate !== "") ? data.hourlyRate : "",
       shifts: shifts,
-      type:data.type
+      type: data.type
 
       // officeId: data.
     };
@@ -205,7 +203,7 @@ export class AppService {
       state: data.state,
       country: data.country,
       pincode: data.pinCode,
-      geofence_radius:data.geofence,
+      geofence_radius: data.geofence,
       latitude: data.latitude,
       longitude: data.longitude
     }
@@ -225,7 +223,7 @@ export class AppService {
       pincode: data.pinCode,
       latitude: data.latitude,
       longitude: data.longitude,
-      geofence_radius:data.geofence,
+      geofence_radius: data.geofence,
     }
     return this.http.put<APIResponse>(this.apiConfig + routes.Post_EditLocation(id), companyData, { headers });
   }
@@ -358,27 +356,14 @@ export class AppService {
       email: body.email,
       password: body.password,
     };
-    // let url_ = this.base_url + '/company/login';  
-    let url_ = this.base_url + '/admin/adminlogin';
+
+    let url_ = this.apiConfig + '/admin/adminlogin';
     return this.http.post<any>(url_, data, this.httpOptions1)
   }
   register(body: any) {
-    let url_ = this.base_url + '/admin/adminSignup';
+    let url_ = this.apiConfig + '/admin/adminSignup';
     return this.http.post<any>(url_, body)
   }
-
-  // updatePassword(body: any, email:any) {
-  //   const token = JSON.parse(localStorage.getItem('loginToken'));
-  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  //   const data = {
-  //     email: email,
-  //     currentPassword: body.currentPassword,
-  //     newPassword: body.newPassword
-  //   };
-  //   let url_ = this.base_url + '/company/change-password';
-  //   return this.http.post<any>(url_, data,  {headers})
-  // }
-
 
   updatePassword(body: any, email: any): Observable<any> {
     const token = JSON.parse(localStorage.getItem('loginToken'));
@@ -395,39 +380,39 @@ export class AppService {
   getAllShift() {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    let url_ = this.base_url + '/admin/allshifts';
+    let url_ = this.apiConfig + '/admin/allshifts';
     return this.http.get(url_, { headers });
   }
   getAllCompany() {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    let url_ = this.base_url + '/company/all';
+    let url_ = this.apiConfig + '/company/all';
     return this.http.get(url_, { headers });
   }
   getAllLocation() {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    let url_ = this.base_url + '/admin/all-location';
+    let url_ = this.apiConfig + '/admin/all-location';
     return this.http.get(url_, { headers });
   }
   getAllDepartment() {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    let url_ = this.base_url + '/admin/alldepartments';
+    let url_ = this.apiConfig + '/admin/alldepartments';
     return this.http.get(url_, { headers });
   }
 
   getEmployeeNamesForDepartment(departmentId: any): Observable<any> {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url_ = this.base_url + `/admin/get-employee-depdartmentid/${departmentId}`;
+    const url_ = this.apiConfig + `/admin/get-employee-depdartmentid/${departmentId}`;
     return this.http.get(url_, { headers });
   }
 
   deleteShift(shiftId: any): Observable<any> {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url_ = `${this.base_url}/admin/shift/${shiftId}`;
+    const url_ = `${this.apiConfig}/admin/shift/${shiftId}`;
     return this.http.delete(url_, { headers });
   }
 
@@ -444,7 +429,7 @@ export class AppService {
     if (departmentIdParam !== '') {
       queryParams = queryParams.set('departmentId', departmentIdParam);
     }
-    const url_ = `${this.base_url}/admin/filtershifts`;
+    const url_ = `${this.apiConfig}/admin/filtershifts`;
     return this.http.get<any>(url_, { headers: headers, params: queryParams, observe: 'response' })
   }
   filterEmployee(selectedCompanyId: any, selectedDepartmentId: any, name: any, locationId: any) {
@@ -455,39 +440,39 @@ export class AppService {
       .set("department_id", selectedDepartmentId !== undefined && selectedDepartmentId !== null ? selectedDepartmentId : "")
       .set("location_id", locationId !== undefined && locationId !== null ? locationId : "")
       .set("name", name !== undefined && name !== null ? name : "")
-    const url_ = `${this.base_url}/admin/filteremployees`;
+    const url_ = `${this.apiConfig}/admin/filteremployees`;
     return this.http.get<any>(url_, { headers: headers, params: queryParams, observe: 'response' })
   }
-  filterReport(reportNameValue:any,selectedCompanyId: any, selectedReportType: any, startDate: any,endDate:any,selectedLocation:any,selectedDepartmentIds:any,selectedShift:any) {
+  filterReport(reportNameValue: any, selectedCompanyId: any, selectedReportType: any, startDate: any, endDate: any, selectedLocation: any, selectedDepartmentIds: any, selectedShift: any) {
 
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     let queryParams = new HttpParams()
-    .set("reportName", reportNameValue || "")
-    .set("companyId", selectedCompanyId || "")
-    .set("reportType", selectedReportType || "")
-    .set("startDate", startDate || "")
-    .set("endDate", endDate || "")
-    .set("locationId", selectedLocation || "");
+      .set("reportName", reportNameValue || "")
+      .set("companyId", selectedCompanyId || "")
+      .set("reportType", selectedReportType || "")
+      .set("startDate", startDate || "")
+      .set("endDate", endDate || "")
+      .set("locationId", selectedLocation || "");
 
-  if (selectedDepartmentIds && selectedDepartmentIds.length > 0) {
-    queryParams = queryParams.set("departmentIds", selectedDepartmentIds.join(','));
-  }
+    if (selectedDepartmentIds && selectedDepartmentIds.length > 0) {
+      queryParams = queryParams.set("departmentIds", selectedDepartmentIds.join(','));
+    }
 
-  if (selectedShift && selectedShift.length > 0) {
-    queryParams = queryParams.set("shiftIds", selectedShift.join(','));
-  }
+    if (selectedShift && selectedShift.length > 0) {
+      queryParams = queryParams.set("shiftIds", selectedShift.join(','));
+    }
 
-    const url_ = `${this.base_url}/admin/attendencefilter`;
+    const url_ = `${this.apiConfig}/admin/attendencefilter`;
     return this.http.get<any>(url_, { headers: headers, params: queryParams, observe: 'response' })
   }
-  filterByReportsId(id:any) {
+  filterByReportsId(id: any) {
 
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     let queryParams = new HttpParams()
-    .set("id", id || "")
-    const url_ = `${this.base_url}/admin/attendencefilter`;
+      .set("id", id || "")
+    const url_ = `${this.apiConfig}/admin/attendencefilter`;
     return this.http.get<any>(url_, { headers: headers, params: queryParams, observe: 'response' })
   }
   filterAllReports(selectedCompanyId: any) {
@@ -495,8 +480,8 @@ export class AppService {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     let queryParams = new HttpParams()
-    .set("companyId", selectedCompanyId || "")
-    const url_ = `${this.base_url}/admin/reportsCriteriasByCompanyId`;
+      .set("companyId", selectedCompanyId || "")
+    const url_ = `${this.apiConfig}/admin/reportsCriteriasByCompanyId`;
     return this.http.get<any>(url_, { headers: headers, params: queryParams, observe: 'response' })
   }
 
@@ -506,7 +491,7 @@ export class AppService {
     let queryParams = new HttpParams()
       .set("name", suggestionName !== undefined && suggestionName !== null ? suggestionName : "")
       .set("email", suggestionEmail !== undefined && suggestionEmail !== null ? suggestionEmail : "")
-    const url_ = `${this.base_url}/admin/filtercopmay`;
+    const url_ = `${this.apiConfig}/admin/filtercopmay`;
     return this.http.get<any>(url_, { headers: headers, params: queryParams, observe: 'response' })
   }
   getRole() {
@@ -522,20 +507,20 @@ export class AppService {
   getAttendanceByCreatedDate() {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    let url_ = this.base_url + '/admin/attandanceByDate';
+    let url_ = this.apiConfig + '/admin/attandanceByDate';
     return this.http.get(url_, { headers });
   }
   getAttendanceByCompanyId(comapanyId: any) {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    let url_ = this.base_url + `/admin/attandance/${comapanyId}`;
+    let url_ = this.apiConfig + `/admin/attandance/${comapanyId}`;
     return this.http.get(url_, { headers });
   }
   getEmployeeCount() {
     const companyId = this.getCompanyId()
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    let url_ = this.base_url + `/admin/attandance/empoyeeCount/${companyId}`;
+    let url_ = this.apiConfig + `/admin/attandance/empoyeeCount/${companyId}`;
     return this.http.get(url_, { headers });
   }
 }
