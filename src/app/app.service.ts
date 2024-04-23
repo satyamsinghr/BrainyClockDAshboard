@@ -40,7 +40,8 @@ const routes = {
   Get_companyOfficeById: (id: number) => `/admin/location/companyid/${id}`,
   Get_Schudle: (id: number) => `/company/get-schedule?companyId=${id}`,
   Post_updateSchudle:`/company/update-schedule`,
-  Post_Schudle:`/company/create-schedule`
+  Post_Schudle:`/company/create-schedule`,
+  Delete_Schudle: `/company/delete-schedule`,
 };
 
 
@@ -541,41 +542,59 @@ export class AppService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(this.apiConfig + routes.Get_Schudle(id), { headers });
   }
-
-  SheduleData:any
   updateSchudle(data: any) {
     const token = JSON.parse(localStorage.getItem('loginToken'));
-    this.SheduleData = JSON.parse(localStorage.getItem('SchudleGetData'));
+    // this.SheduleData = JSON.parse(localStorage.getItem('SchudleGetData'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const companyId = localStorage.getItem('companyId');
     const updateSchudleData = {
-      id: this.SheduleData.Id,
-      companyId: this.SheduleData.CompanyId,
+      id: data.id,
+      companyId: data.companyId,
       timezone: data.timezone,
       timeInterval: data.interval
     };
-    // const updateSchudleData = {
-    //   id: "ed873c66-1083-4f14-8ee6-0effee6cee1f",
-    //   companyId: 304,
-    //   timezone:  "Asia/Calcutta",
-    //   timeInterval: "1 day"
-    // };
     return this.http.put<APIResponse>(this.apiConfig + routes.Post_updateSchudle, updateSchudleData, { headers });
   }
 
 
   
   createScheudle(data: any) {
+    debugger
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     let comapnyId = localStorage.getItem('comapnyId')
     let createScheudleData = {
       companyId: parseInt(comapnyId),
-      timezone: data.timezone,
+      timezone: data.timezone,  
       timeInterval: data.interval,
   
     }
     return this.http.post<APIResponse>(this.apiConfig + routes.Post_Schudle, createScheudleData, { headers });
+  }
+  // deleteSchudle(data:any) {
+  //   const token = JSON.parse(localStorage.getItem('loginToken'));
+  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  //   let deleteData = {
+  //     id: data.id,
+  //     comapnyId: data.comapnyId,
+  //   }
+  //   return this.http.delete(this.apiConfig + routes.Delete_Schudle,deleteData);
+  // }
+
+
+  deleteSchudle(data: any) {
+    const token = JSON.parse(localStorage.getItem('loginToken'));
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }),
+      body: {
+        id: data.id,
+        companyId: data.companyId
+      }
+    };
+    return this.http.delete(this.apiConfig + routes.Delete_Schudle, options);
   }
   
 }

@@ -14,3 +14,9 @@
 .error {
     color: red;
   }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    margin-bottom: 20px; /* Optional: Add some spacing between the button and the content */
+  }
