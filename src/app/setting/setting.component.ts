@@ -65,16 +65,14 @@ export class SettingComponent implements OnInit {
 
   openTimeZoneFormDialog(elRef: any) {
     const dialogRef = this.dialog.open(elRef, {
-      width: '100%', maxWidth: '420px' ,
+      width: '100%', maxWidth: '420px',
     }); 
-  
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('The edit department modal was closed');
     });
-    
   }  
   getSchudleByCompanyId() {
-    debugger
     this.service.getSchudle(this.comapnyId).subscribe(
       (response: any) => {
         this.scheduleData = response.data[0];
@@ -150,7 +148,6 @@ export class SettingComponent implements OnInit {
   }
   
   deleteSchedule() {
-    debugger
     this.service.deleteSchudle(this.timezoneForm.value).subscribe(
       (response: any) => {
           this.toastr.success(response.msg);

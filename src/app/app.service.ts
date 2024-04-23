@@ -559,7 +559,6 @@ export class AppService {
 
   
   createScheudle(data: any) {
-    debugger
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     let comapnyId = localStorage.getItem('comapnyId')

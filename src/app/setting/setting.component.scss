@@ -15,8 +15,31 @@
     color: red;
   }
 
-  .button-container {
+
+  
+.login_loader .loader_img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
     display: flex;
-    justify-content: flex-end; /* Align items to the right */
-    margin-bottom: 20px; /* Optional: Add some spacing between the button and the content */
+    align-items: center;
+    justify-content: center;
+    background: #FF6528 !important;
+    left: 0;
+    right: 0;
+    min-width: 150px;
+    max-width: 150px;
+  }
+  
+  .login_loader .loader_img img {
+    height: 30px;
+    width: 30px !important;
+  }
+  
+  .login_loader .loader_img img {
+    height: 30px;
+    width: 30px !important;
+    filter: brightness(100);
   }
