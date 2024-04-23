@@ -25,6 +25,7 @@ import { AddDepartmentComponent } from './department/add-department/add-departme
 import { EditDepartmentComponent } from './department/edit-department/edit-department.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ReportFilterComponent } from './report/report-filter/report-filter.component';
+import {SettingComponent} from './setting/setting.component';
 const routes: Routes = [
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
   // { path: 'login', component: AuthComponent },
@@ -51,6 +52,7 @@ const routes: Routes = [
     { path:'edit-location/:locationId', component:EditLocationComponent},
     { path:'department',  component:DepartmentComponent},
     { path:'add-department', component:AddDepartmentComponent},
+    { path:'setting', component:SettingComponent},
     { path:'edit-department/:departmentId/:departmentName', component:EditDepartmentComponent},
     ]
   },

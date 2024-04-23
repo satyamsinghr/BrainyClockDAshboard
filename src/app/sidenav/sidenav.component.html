@@ -194,6 +194,14 @@
                 </svg>
               </a>
           </li> -->
+          <li [class.active]="isSettingActive" (click)="selectItem('setting')"
+          class="nav-item d-flex align-items-center justify-content-start">
+          <ng-container *ngIf="this.nav_open == true">
+            <a routerLink="/dashboard/setting" routerLinkActive="active">
+            <span>Setting</span>
+            </a>
+          </ng-container>
+        </li>
         <li (click)="logout()"
           class="nav-item d-flex align-items-center justify-content-start">
           <!-- <a class="nav-link">

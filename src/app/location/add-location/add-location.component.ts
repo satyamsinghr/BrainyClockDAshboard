@@ -80,7 +80,7 @@ export class AddLocationComponent implements OnInit {
           draggable: true // if you want the marker to be draggable
         });
         // Listen to marker drag end event
-        google.maps.event.addListener(this.marker, 'dragend', (event) => {
+        google.maps.event.addListener(this.marker, 'dragend', (event: google.maps.MapMouseEvent) => {
           this.onMarkerDragEnd(event);
         });
       }, () => {

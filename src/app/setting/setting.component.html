@@ -1,0 +1,37 @@
+<div class="d-flex align-items-center justify-content-between">
+  <div class="brand_info">
+    <h2>Setting</h2>
+  </div>
+  <app-header></app-header>
+</div>
+<section class="add_department">
+  <div class="department_card p-3 brand_info">
+    <form [formGroup]="timezoneForm" (ngSubmit)="onSubmit()">
+      <div class="row g-3">
+        <div class="col-12">
+          <label for="timezone">Timezone:</label>
+          <select formControlName="timezone" id="timezone">
+            <option *ngFor="let tz of timezones" [value]="tz">{{tz}}</option>
+          </select>
+          <div *ngIf="timezoneControl.invalid && (timezoneControl.dirty || timezoneControl.touched)">
+            <div *ngIf="timezoneControl.errors && timezoneControl.errors['required']" class="text-danger">Timezone is required.</div>
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="interval">Interval:</label>
+          <select formControlName="interval" id="interval">
+            <option *ngFor="let interval of intervals" [value]="interval">{{interval}}</option>
+          </select>
+          <div *ngIf="intervalControl.invalid && (intervalControl.dirty || intervalControl.touched)">
+            <div *ngIf="intervalControl.errors && intervalControl.errors['required']" class="text-danger">Interval is required.</div>
+          </div>
+        </div>        
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary py-3 px-4 h-auto w-100">
+            {{ scheduleData ? 'Update' : 'Submit' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

@@ -16,6 +16,7 @@ export class SidenavComponent implements OnInit {
   isCompanyActive: boolean;
   isOfficeActive: boolean;
   isEmployeeActive: boolean;
+  isSettingActive : boolean;
   isProfileActive: boolean;
   public currentURL: any = "";
   nav_open: any = true;
@@ -32,6 +33,7 @@ export class SidenavComponent implements OnInit {
         this.isOfficeActive = event.url === '/dashboard/location';
         this.isEmployeeActive = event.url === '/dashboard/employee';
         this.isReportsActive = event.url === '/dashboard/report';
+        this.isSettingActive = event.url === '/dashboard/setting';
         this.isProfileActive = event.url === '/dashboard/profile';
         this.isReportFilterActive = event.url.includes('/dashboard/reportFilter');
       }
@@ -60,6 +62,7 @@ export class SidenavComponent implements OnInit {
     localStorage.removeItem('nameOfCompany');
     localStorage.removeItem('comapnyId');
     localStorage.removeItem('employees');
+    localStorage.removeItem('SchudleGetData');
     localStorage.removeItem(' ');
     this.router.navigateByUrl('/');
   }

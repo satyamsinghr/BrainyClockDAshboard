@@ -47,6 +47,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ProfileComponent } from './profile/profile.component';
 import { ReportFilterComponent } from './report/report-filter/report-filter.component';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { SettingComponent } from './setting/setting.component';
 const TOASTER_SETTINGS = {
   timeOut: 3000,
   positionClass: 'toast-top-right',
@@ -85,6 +86,7 @@ const TOASTER_SETTINGS = {
     EditDepartmentComponent,
     ProfileComponent,
     ReportFilterComponent,
+    SettingComponent
     // RegisterComponent,
   ],
   imports: [

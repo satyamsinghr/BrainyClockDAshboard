@@ -45,6 +45,7 @@ export class AuthService {
     localStorage.removeItem('combo-order');
     localStorage.removeItem('ccount');
     localStorage.removeItem('userId');
+    localStorage.removeItem('SchudleGetData');
     sessionStorage.removeItem('credentials');
     sessionStorage.removeItem('storeStartTime');
     sessionStorage.removeItem('storeCloseTime');

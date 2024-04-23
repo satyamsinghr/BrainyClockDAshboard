@@ -36,6 +36,7 @@
     "mat-daterangepicker": "^1.0.1",
     "mat-icon-import": "^0.1.1",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.45",
     "ngx-daterangepicker-material": "^6.0.4",
     "ngx-spinner": "^14.0.0",
     "ngx-toastr": "^15.0.0",

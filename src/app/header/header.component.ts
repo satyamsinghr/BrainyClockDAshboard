@@ -61,6 +61,8 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('companyName');
     localStorage.removeItem('nameOfCompany');
     localStorage.removeItem('comapnyId');
+    localStorage.removeItem('SchudleGetData');
+
     this.router.navigateByUrl('/');
   }
   // go_to_profile(){
