@@ -18,13 +18,13 @@ export class AuthComponent implements OnInit {
   public showPassword: boolean;
   routType: number;
   constructor(
-    injector:Injector,
-    private router: Router, private loader: LoaderService,private route: ActivatedRoute, private toastr:ToastrService, private credentialsService: CredentialsService,  private fb: FormBuilder,
-    private service:AppService
-    ) { 
-      this.route.paramMap.subscribe((params: ParamMap) => {
-        this.routType = +params.get('type');
-      });
+    injector: Injector,
+    private router: Router, private loader: LoaderService, private route: ActivatedRoute, private toastr: ToastrService, private credentialsService: CredentialsService, private fb: FormBuilder,
+    private service: AppService
+  ) {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.routType = +params.get('type');
+    });
   }
 
   ngOnInit(): void {
@@ -36,8 +36,8 @@ export class AuthComponent implements OnInit {
 
   submitted = false
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required,Validators.email]),
-    password: new FormControl('', [Validators.required , Validators.pattern(/^.{8,}$/)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.pattern(/^.{8,}$/)]),
   });
   get email() { return this.loginForm.get('email'); }
   get password() { return this.loginForm.get('password'); }
@@ -57,16 +57,19 @@ export class AuthComponent implements OnInit {
   get loginFormControl() {
     return this.loginForm.controls;
   }
-  token:any
-  spinner : boolean = false
+  token: any
+  spinner: boolean = false
+  spinnerShow: string = '';
   login() {
     this.submitted = true
     if (this.loginForm.valid) {
+      this.spinnerShow = 'text-trasparent';
       this.spinner = true
       this.submitted = false
-      this.service.login(this.loginForm.value).subscribe((response:any) => {
-        if(response.success){
+      this.service.login(this.loginForm.value).subscribe((response: any) => {
+        if (response.success) {
           this.spinner = false
+          this.spinnerShow = '';
           this.token = response.data.access_token;
           localStorage.setItem('loginToken', JSON.stringify(this.token));
           localStorage.setItem('role', JSON.stringify(response.data.role));
@@ -78,16 +81,17 @@ export class AuthComponent implements OnInit {
           this.toastr.success(response.msg);
           this.router.navigateByUrl('/dashboard');
         }
-        },
+      },
         error => {
           this.service.handleError(error);
           this.spinner = false
+          this.spinnerShow = '';
 
         }
       );
     }
-}
-// register(){
-//    this.router.navigate(['register']);
-// }
+  }
+  // register(){
+  //    this.router.navigate(['register']);
+  // }
 }

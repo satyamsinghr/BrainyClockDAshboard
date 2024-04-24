@@ -8,27 +8,26 @@
 
 <div class="d-flex justify-content-end mb-3">
   <!-- Move the button inside a container with bottom margin -->
-  <div class="add-schedule-btn-container mb-3">
+  <div class="add-schedule-btn-container mb-3 mt-3">  
     <button class="btn btn-primary" (click)="openTimeZoneFormDialog(timezoneFormData)" [disabled]="dataSource.data.length > 0">Add Schedule</button>
   </div>
 </div>
-
 <ng-container *ngIf="dataSource && dataSource.data.length">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  
+  <div class="col-lg-11 col-md-12 col-sm-12 col-12 mt-0">
+    <div class="page_table">
+  <table class="table employee_table card_table setting-table">
+    <mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="timezone">
-      <th mat-header-cell *matHeaderCellDef> Timezone </th>
-      <td mat-cell *matCellDef="let element"> {{ element.Timezone }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="justify-content-lg-center justify-content-md-start justify-content-start"> Timezone </th>
+      <td mat-cell *matCellDef="let element" class="justify-content-lg-center justify-content-md-start justify-content-start"> {{ element.Timezone }} </td>
     </ng-container>
-
-
     <ng-container matColumnDef="interval">
-      <th mat-header-cell *matHeaderCellDef> Interval </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="justify-content-lg-center justify-content-md-start justify-content-start" > Interval </th>
       <td mat-cell *matCellDef="let element"> {{ element.TimeInterval }} </td>
     </ng-container>
 
 
-    <ng-container matColumnDef="edit">
+    <!-- <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button (click)="openTimeZoneFormDialog(timezoneFormData)">
@@ -38,11 +37,41 @@
           <mat-icon>delete</mat-icon>
         </button>
       </td>
-    </ng-container>
+    </ng-container> -->
+    <ng-container matColumnDef="action">
 
+      <mat-header-cell *matHeaderCellDef
+        class="justify-content-end">Action</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+
+        <div class="position-relative">
+          <a class="action"  (click)="openTimeZoneFormDialog(timezoneFormData)"
+         >
+            <img src="../../assets/img/edit_black.png" alt width="24px"
+              height="24px" />
+          </a>
+          <!-- routerLink="/dashboard/edit-department/{{ row.id }}/{{row.department_name}}" -->
+          <div class="tooltip_manual">
+            Edit
+          </div>
+        </div>
+        <div class="position-relative">
+          <a class="action" (click)="deleteSchedule()">
+            <img src="../../assets/img/delete_gray.png" alt width="24px"
+              height="24px" />
+          </a>
+            <div class="tooltip_manual">
+                Delete
+            </div>
+        </div>
+      </mat-cell>
+    </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </mat-table>
   </table>
+  </div>
+  </div>
 </ng-container>
 
 <ng-container *ngIf="dataSource && !dataSource.data.length">

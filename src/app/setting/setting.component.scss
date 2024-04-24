@@ -1,45 +1,59 @@
 .add_department {
-    min-height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.department_card
-{
-    max-width: 500px;
-    margin: auto;
+.department_card {
+  max-width: 500px;
+  margin: auto;
 }
 
 .error {
-    color: red;
-  }
+  color: red;
+}
 
 
-  
+button.btn.btn-primary.text-trasparent {
+  color: transparent !important;
+  transition: 0s;
+  background-color: #FF6528 !important;
+  border-color: #FF6528 !important;
+}
+
+
 .login_loader .loader_img {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #061D23 !important;
-    left: 0;
-    right: 0;
-    min-width: 150px;
-    max-width: 150px;
-  }
-  
-  .login_loader .loader_img img {
-    height: 30px;
-    width: 30px !important;
-  }
-  
-  .login_loader .loader_img img {
-    height: 30px;
-    width: 30px !important;
-    filter: brightness(100);
-  }
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+  left: 0;
+  right: 0;
+  min-width: 150px;
+  max-width: 150px;
+}
+
+.login_loader .loader_img img {
+  height: 30px;
+  width: 30px !important;
+}
+
+.login_loader .loader_img img {
+  height: 30px;
+  width: 30px !important;
+  filter: brightness(100);
+}
+
+
+.table.employee_table.card_table.setting-table mat-table tr td,
+.table.employee_table.card_table.setting-table mat-table tr th
+{
+    width: 10% !important;
+    padding-right: 100px !important;
+}

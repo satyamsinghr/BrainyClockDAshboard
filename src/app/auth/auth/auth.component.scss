@@ -175,7 +175,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #FF6528 !important;
+  background: transparent !important;
   left: 0;
   right: 0;
   min-width: 150px;
@@ -237,6 +237,13 @@ button.btn.btn-primary {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+}
+
+button.btn.btn-primary.text-trasparent {
+  color: transparent !important;
+  transition: 0s;
+  background-color: #FF6528 !important;
+  border-color: #FF6528 !important;
 }
 
 @media (max-width:767px) {

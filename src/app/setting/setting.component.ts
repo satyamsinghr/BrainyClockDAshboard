@@ -32,7 +32,7 @@ export class SettingComponent implements OnInit {
   
   dataSource = new MatTableDataSource(this.scheduleData);
   // dataSource = new MatTableDataSource<viewEmployeeItemDto>(Emp_Data);
-  displayedColumns: string[] = ['timezone', 'interval', 'edit',];
+  displayedColumns: string[] = ['timezone', 'interval', 'action',];
   constructor(private fb: FormBuilder,
     private service: AppService,
     private toastr: ToastrService,
