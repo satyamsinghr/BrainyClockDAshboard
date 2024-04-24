@@ -17,6 +17,9 @@ import { Emp_Data } from '../../@shared/models/dataSource';
 import { finalize } from 'rxjs';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { AppService } from '../../app.service';
+import {AddLocationComponent} from '../add-location/add-location.component';
+import { EditLocationComponent } from '../edit-location/edit-location.component';
+
 const log = new Logger('Employee');
 @Component({
   selector: 'app-location',
@@ -79,25 +82,25 @@ export class LocationComponent implements OnInit {
       this.role = this.service.getRole();
       this.companyId = this.service.getCompanyId();
       this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
-      this.getLocationByCompanyId();
+      // this.getLocationByCompanyId();
       this.getAllLocation();
     }
   }
 
-  locationData: any
-  getLocationByCompanyId() {
-    this.spinner.show();
-    this.service.getLocationByCompany(this.comapnyId).subscribe(
-      (response: any) => {
-        this.spinner.hide();
-        this.locationData = response.data[0];
-      },
-      (error) => {
-        this.service.handleError(error);
-        this.spinner.hide();
-      }
-    );
-  }
+  // locationData: any
+  // getLocationByCompanyId() {
+  //   this.spinner.show();
+  //   this.service.getLocationByCompany(this.comapnyId).subscribe(
+  //     (response: any) => {
+  //       this.spinner.hide();
+  //       this.locationData = response.data[0];
+  //     },
+  //     (error) => {
+  //       this.service.handleError(error);
+  //       this.spinner.hide();
+  //     }
+  //   );
+  // }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -196,5 +199,43 @@ export class LocationComponent implements OnInit {
       }
     );
   }
+
   
+  openAddOfficeModal() {
+    const dialogRef = this.dialog.open(AddLocationComponent, {
+      width: '100%', maxWidth: '1000px' 
+    });
+    // dialogRef.afterClosed().subscribe(result => {
+      dialogRef.componentInstance.locationAdded.subscribe(() => {
+      // Handle modal close event if needed
+        this.getAllLocation();
+      console.log('The modal was closed');
+    });
+  }
+
+  //   EditAddOfficeModal() {
+  //   const dialogRef = this.dialog.open(EditLocationComponent, {
+  //     width: '100%', maxWidth: '1000px' 
+  //   });
+  //     dialogRef.afterClosed().subscribe(result => {
+  //     // Handle modal close event if needed
+  //       this.getAllLocation();
+  //     console.log('The modal was closed');
+  //   });
+  // }
+  
+  EditAddOfficeModal(locationId: number): void {
+    const dialogRef = this.dialog.open(EditLocationComponent, {
+      width: '500px',
+      data: { locationId: locationId },
+    });
+    dialogRef.componentInstance.locationEdit.subscribe(() => {
+    // dialogRef.afterClosed().subscribe((result) => {
+      this.getAllLocation();
+      console.log('The dialog was closed');
+    });
+  }
 }
+
+
+

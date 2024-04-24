@@ -5,8 +5,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from 'src/app/auth/credentials.service';
 import { Subject } from 'rxjs';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppService } from '../../app.service';
-
+import { Inject } from '@angular/core';
+import { EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-edit-location',
@@ -15,11 +17,13 @@ import { AppService } from '../../app.service';
 })
 export class EditLocationComponent implements OnInit {
   isLoading = false;
+  locationId: number;
   editLocationForm!: FormGroup;
   address: string = '';
   protected _onDestroy = new Subject<void>();
   @ViewChild('addresstext') addresstext: any;
   @ViewChild('map') mapElement: ElementRef;
+  @Output() locationEdit: EventEmitter<any> = new EventEmitter();
   map: google.maps.Map;
   marker: google.maps.Marker;
   zoomLat: any;
@@ -29,10 +33,14 @@ export class EditLocationComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private service: AppService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    public dialogRef: MatDialogRef<EditLocationComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { locationId: number }
+  ) { 
+    this.locationId = data.locationId;
+  }
 
-  locationId: any;
+  // locationId: any;
   role: string = '';
   isCompanyLoggedIn: boolean = false;
   companyData: any;
@@ -40,8 +48,8 @@ export class EditLocationComponent implements OnInit {
   disableSelect: boolean = false;
 
   ngOnInit(): void {
-    this.locationId = this.route.snapshot.params['locationId'];
-    this.getLocationById(this.locationId);
+    // this.locationId = this.route.snapshot.params['locationId'];
+    // this.getLocationById(this.locationId);
     this.initializeForm();
     this.role = this.service.getRole();
     if (this.role != 'SA') {
@@ -59,6 +67,8 @@ export class EditLocationComponent implements OnInit {
     } else {
       this.getAllCompany();
     }
+    this.locationId = this.data.locationId;
+    this.getLocationById(this.locationId);  
 
   }
 
@@ -178,17 +188,17 @@ export class EditLocationComponent implements OnInit {
     return this.editLocationForm.controls;
   }
 
-  gotoEmpPage() {
-    this.router.navigate(['/dashboard/location']);
-  }
+  // gotoEmpPage() {
+  //   this.router.navigate(['/dashboard/location']);
+  // }
 
   ngOnDestroy(): void {
     this._onDestroy.next();
     this._onDestroy.complete();
   }
 
-  getLocationById(id: number) {
-    this.service.getLocationById(id).subscribe({
+  getLocationById(locationId: number) {
+    this.service.getLocationById(locationId).subscribe({
       next: (response: any) => {
         if (response.data) {
           this.address = response.data.address;
@@ -211,8 +221,6 @@ export class EditLocationComponent implements OnInit {
   }
 
 
- 
-
   getAllCompany() {
     this.service.getAllCompany().subscribe(
       (response: any) => {
@@ -224,7 +232,9 @@ export class EditLocationComponent implements OnInit {
     );
   }
 
+  spinner: boolean = false
   editLocation() {
+    this.spinner = true
     this.submitted = true;
     if (this.editLocationForm.valid) {
       this.submitted = false;
@@ -233,10 +243,14 @@ export class EditLocationComponent implements OnInit {
         .subscribe(
           (response: any) => {
             this.toastr.success(response.msg);
-            this.router.navigate(['/dashboard/location']);
+            this.dialogRef.close();
+            this.locationEdit.emit();
+            this.spinner = false
+            // this.router.navigate(['/dashboard/location']);
           },
           (error) => {
             this.service.handleError(error);
+            this.spinner = false
           }
         );
     }
@@ -249,7 +263,7 @@ export class EditLocationComponent implements OnInit {
       this.address = place.formatted_address;
       // Call onAddressChange() function
       this.onAddressChange();
-      let address1 = "";
+      let address1 = "";  
       let postcode = "";
   
       if (!place.address_components.some(x => x.types.includes("administrative_area_level_3")))
@@ -300,6 +314,8 @@ export class EditLocationComponent implements OnInit {
     // this.onAddressChange();
   }
 
-
+  onCancel(): void {
+    this.dialogRef.close();
+  }
 
 }

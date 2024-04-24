@@ -1,5 +1,3 @@
-
-
 <section class="px-lg-0">
   <div class="d-flex align-items-center justify-content-between">
     <div class="brand_info">
@@ -19,28 +17,20 @@
                   Name</label>
               </div>
               <div class="col-12">
-                <select
-                  class="form-control"
-                  formControlName="companyId"
+                <select class="form-control" formControlName="companyId"
                   [attr.disabled]="isCompanyLoggedIn == true ? true : null">
                   <option value>Select Company</option>
-                  <option
-                    *ngFor="let company of companyData"
-                    [value]="company.id">
+                  <option *ngFor="let company of companyData" [value]="company.id">
                     {{ company.name }}
                   </option>
                 </select>
                 <div class="col-12">
-                  <small
-                    *ngIf="
+                  <small *ngIf="
                       (editLocationFormControl['companyId'].touched ||
                         submitted) &&
                       editLocationFormControl['companyId'].invalid
-                    "
-                    class="form-text text-muted mt-2">
-                    <div
-                      class="text-danger"
-                      *ngIf="
+                    " class="form-text text-muted mt-2">
+                    <div class="text-danger" *ngIf="
                         editLocationFormControl['companyId'].errors &&
                         editLocationFormControl['companyId'].errors[
                           'required'
@@ -58,23 +48,14 @@
                   Name</label>
               </div>
               <div class="col-12">
-                <input
-                  asp-for="location_name"
-                  type="text"
-                  class="form-control"
-                  formControlName="location_name"
-                  placeholder="Enter Name"
-                  required="required" />
-                <small
-                  *ngIf="
+                <input asp-for="location_name" type="text" class="form-control" formControlName="location_name"
+                  placeholder="Enter Name" required="required" />
+                <small *ngIf="
                     (editLocationFormControl['location_name'].touched ||
                       submitted) &&
                     editLocationFormControl['location_name'].invalid
-                  "
-                  class="form-text text-muted">
-                  <div
-                    class="text-danger"
-                    *ngIf="
+                  " class="form-text text-muted">
+                  <div class="text-danger" *ngIf="
                       editLocationFormControl['location_name'].errors &&
                       editLocationFormControl['location_name'].errors[
                         'required'
@@ -93,28 +74,15 @@
                 <label for="address" class="labelName">Address</label>
               </div>
               <div class="col-12">
-                <input
-                asp-for="address"
-                type="text"
-                #addresstext
-                [(ngModel)]="address"
-                class="form-control"
-                formControlName="address"
-                placeholder="Enter Address"
-                required="required" 
-                (change)="onAddressChange()"
-                (input)="onAddressChange()" 
-                (blur)="onAddressChange()"/>
-                <small
-                  *ngIf="
+                <input asp-for="address" type="text" #addresstext [(ngModel)]="address" class="form-control"
+                  formControlName="address" placeholder="Enter Address" required="required" (change)="onAddressChange()"
+                  (input)="onAddressChange()" (blur)="onAddressChange()" />
+                <small *ngIf="
                     (editLocationFormControl['address'].touched ||
                       submitted) &&
                       editLocationFormControl['address'].invalid
-                  "
-                  class="form-text text-muted">
-                  <div
-                    class="text-danger"
-                    *ngIf="
+                  " class="form-text text-muted">
+                  <div class="text-danger" *ngIf="
                     editLocationFormControl['address'].errors &&
                       editLocationFormControl['address'].errors['required']
                     ">
@@ -126,33 +94,23 @@
 
             <div class="col-lg-8 col-md-12 col-sm-12 col-12">
               <div class="location_map">
-                  <div #map style="height: 485px; width: 150%;"></div>
+                <div #map style="height: 485px; width: 150%;"></div>
               </div>
-          </div>
+            </div>
 
             <div class="row mb-3">
               <div class="col-12">
                 <label for="city" class="labelName">City</label>
               </div>
               <div class="col-12">
-                <input
-                  asp-for="city"
-                  type="text"
-                  #citytext
-                  class="form-control"
-                  formControlName="city"
-                  placeholder="Enter City"
-                  required="required" />
-                <small
-                  *ngIf="
+                <input asp-for="city" type="text" #citytext class="form-control" formControlName="city"
+                  placeholder="Enter City" required="required" />
+                <small *ngIf="
                     (editLocationFormControl['city'].touched ||
                       submitted) &&
                       editLocationFormControl['city'].invalid
-                  "
-                  class="form-text text-muted">
-                  <div
-                    class="text-danger"
-                    *ngIf="
+                  " class="form-text text-muted">
+                  <div class="text-danger" *ngIf="
                     editLocationFormControl['city'].errors &&
                       editLocationFormControl['city'].errors['required']
                     ">
@@ -167,24 +125,14 @@
                 <label for="state" class="labelName">State</label>
               </div>
               <div class="col-12">
-                <input
-                  asp-for="state"
-                  type="text"
-                  #statetext
-                  class="form-control"
-                  formControlName="state"
-                  placeholder="Enter Address"
-                  required="required" />
-                <small
-                  *ngIf="
+                <input asp-for="state" type="text" #statetext class="form-control" formControlName="state"
+                  placeholder="Enter Address" required="required" />
+                <small *ngIf="
                     (editLocationFormControl['state'].touched ||
                       submitted) &&
                       editLocationFormControl['state'].invalid
-                  "
-                  class="form-text text-muted">
-                  <div
-                    class="text-danger"
-                    *ngIf="
+                  " class="form-text text-muted">
+                  <div class="text-danger" *ngIf="
                     editLocationFormControl['state'].errors &&
                       editLocationFormControl['state'].errors['required']
                     ">
@@ -199,24 +147,14 @@
                 <label for="country" class="labelName">Country</label>
               </div>
               <div class="col-12">
-                <input
-                  asp-for="country"
-                  type="text"
-                  #countrytext
-                  class="form-control"
-                  formControlName="country"
-                  placeholder="Enter Country"
-                  required="required" />
-                <small
-                  *ngIf="
+                <input asp-for="country" type="text" #countrytext class="form-control" formControlName="country"
+                  placeholder="Enter Country" required="required" />
+                <small *ngIf="
                     (editLocationFormControl['country'].touched ||
                       submitted) &&
                       editLocationFormControl['country'].invalid
-                  "
-                  class="form-text text-muted">
-                  <div
-                    class="text-danger"
-                    *ngIf="
+                  " class="form-text text-muted">
+                  <div class="text-danger" *ngIf="
                     editLocationFormControl['country'].errors &&
                       editLocationFormControl['country'].errors['required']
                     ">
@@ -232,31 +170,20 @@
                   <label for="pinCode" class="labelName">Pin Code</label>
                 </div>
                 <div class="col-12">
-                  <input
-                    asp-for="pinCode"
-                    type="text"
-                    class="form-control"
-                    formControlName="pinCode"
-                    placeholder="Enter pin Code"
-                    required="required" />
-                  <small
-                    *ngIf="
+                  <input asp-for="pinCode" type="text" class="form-control" formControlName="pinCode"
+                    placeholder="Enter pin Code" required="required" />
+                  <small *ngIf="
                       (editLocationFormControl['pinCode'].touched ||
                         submitted) &&
                       editLocationFormControl['pinCode'].invalid
-                    "
-                    class="form-text text-muted">
-                    <div
-                      class="text-danger"
-                      *ngIf="
+                    " class="form-text text-muted">
+                    <div class="text-danger" *ngIf="
                         editLocationFormControl['pinCode'].errors &&
                         editLocationFormControl['pinCode'].errors['required']
                       ">
                       Pin code is required
                     </div>
-                    <div
-                      class="text-danger"
-                      *ngIf="
+                    <div class="text-danger" *ngIf="
                         (editLocationFormControl['pinCode'].errors &&
                         editLocationFormControl['pinCode'].errors['pattern'])
                       ">
@@ -270,31 +197,20 @@
                   <label for="geofence" class="labelName">Geofence Radius </label>
                 </div>
                 <div class="col-12">
-                  <input
-                    asp-for="pinCode"
-                    type="text"
-                    class="form-control"
-                    formControlName="geofence"
-                    placeholder="Enter Geofence Radius"
-                    required="required" />
-                  <small
-                    *ngIf="
+                  <input asp-for="pinCode" type="text" class="form-control" formControlName="geofence"
+                    placeholder="Enter Geofence Radius" required="required" />
+                  <small *ngIf="
                       (editLocationFormControl['geofence'].touched ||
                         submitted) &&
                         editLocationFormControl['geofence'].invalid
-                    "
-                    class="form-text text-muted">
-                    <div
-                      class="text-danger"
-                      *ngIf="
+                    " class="form-text text-muted">
+                    <div class="text-danger" *ngIf="
                         editLocationFormControl['geofence'].errors &&
                         editLocationFormControl['geofence'].errors['required']
                       ">
                       Geofence Radius is required
                     </div>
-                    <div
-                      class="text-danger"
-                      *ngIf="
+                    <div class="text-danger" *ngIf="
                         editLocationFormControl['geofence'].errors &&
                         editLocationFormControl['geofence'].errors['pattern']
                       ">
@@ -303,13 +219,15 @@
                   </small>
                 </div>
               </div>
-              <button
-                type="button"
-                class="btn btn-outline-primary me-3"
-                (click)="gotoEmpPage()">
+              <button type="button" class="btn btn-outline-primary me-3" (click)="onCancel()">
                 Cancel
               </button>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <div class="d-flex justify-content-center px-lg-5 px-md-4 px-0 position-relative login_loader">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <div *ngIf="spinner == true" class="loader_img">
+                  <img src="assets/img/site_loader.gif" alt>
+                </div>
+              </div>
             </div>
           </form>
         </div>

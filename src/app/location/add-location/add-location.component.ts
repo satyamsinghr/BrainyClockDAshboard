@@ -4,9 +4,11 @@ import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from 'src/app/auth/credentials.service';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { } from 'googlemaps'
 import { AppService } from '../../app.service';
+import { EventEmitter, Output } from '@angular/core';
 @Component({
   selector: 'app-add-location',
   templateUrl: './add-location.component.html',
@@ -20,6 +22,7 @@ export class AddLocationComponent implements OnInit {
   protected _onDestroy = new Subject<void>();
   @ViewChild('addresstext') addresstext: any;
   @ViewChild('map') mapElement: ElementRef;
+  @Output() locationAdded: EventEmitter<any> = new EventEmitter();
   map: google.maps.Map;
   marker: google.maps.Marker;
   zoomLat: any;
@@ -27,12 +30,12 @@ export class AddLocationComponent implements OnInit {
   // @ViewChild('citytext') citytext: any;
   // @ViewChild('statetext') statetext: any;
   // @ViewChild('countrytext') countrytext: any;
-
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private service: AppService
+    private service: AppService,
+    public dialogRef: MatDialogRef<AddLocationComponent>,
   ) { }
   role: string = '';
   isCompanyLoggedIn: boolean = false;
@@ -41,8 +44,8 @@ export class AddLocationComponent implements OnInit {
   name: any;
   ngOnInit(): void {
     this.initializeForm();
-    this.companyName=JSON.parse(localStorage.getItem('nameOfCompany'));
-    this.name=JSON.parse(localStorage.getItem('companyName'));
+    this.companyName = JSON.parse(localStorage.getItem('nameOfCompany'));
+    this.name = JSON.parse(localStorage.getItem('companyName'));
     this.role = this.service.getRole();
     if (this.role != 'SA') {
       this.isCompanyLoggedIn = true;
@@ -51,7 +54,7 @@ export class AddLocationComponent implements OnInit {
         {
           id: this.service.getCompanyId(),
           // name: this.service.getComapnyName(),
-          name: this.companyName?this.companyName:this.name,
+          name: this.companyName ? this.companyName : this.name,
         },
       ];
       this.addLocationForm.patchValue({
@@ -59,7 +62,7 @@ export class AddLocationComponent implements OnInit {
       });
     } else {
       this.getAllCompany();
-     
+
     }
   }
 
@@ -91,7 +94,7 @@ export class AddLocationComponent implements OnInit {
       console.error("Error: Your browser doesn't support Geolocation.");
     }
   }
-  
+
 
   onAddressChange(): void {
     const geocoder = new google.maps.Geocoder();
@@ -106,53 +109,53 @@ export class AddLocationComponent implements OnInit {
       }
     });
   }
-  
 
-    // Update marker position based on address
-    geocodeAddress(address: string): void {
-      const geocoder = new google.maps.Geocoder();
-      geocoder.geocode({ address }, (results, status) => {
-        if (status === 'OK' && results[0]) {
-          const location = results[0].geometry.location;
-          this.marker.setPosition(location);
-          this.map.setCenter(location);
-          // Update form fields if needed
-        } else {
-          console.error('Geocode was not successful for the following reason:', status);
-        }
-      });
-    }
-     // Listen to marker position change
-     onMarkerDragEnd(event: google.maps.MouseEvent): void {
-      const position = event.latLng;
-      const geocoder = new google.maps.Geocoder();
-      geocoder.geocode({ location: position }, (results, status) => {
-        if (status === 'OK' && results[0]) {
-          // Update address field
-          this.address = results[0].formatted_address;
-          // Update form fields based on the address
-          for (const component of results[0].address_components) {
-            const types = component.types;
-            if (types.includes('locality')) {
-              // Update city
-              this.addLocationForm.get('city').setValue(component.long_name);
-            } else if (types.includes('administrative_area_level_1')) {
-              // Update state
-              this.addLocationForm.get('state').setValue(component.long_name);
-            } else if (types.includes('postal_code')) {
-              // Update pin code
-              this.addLocationForm.get('pinCode').setValue(component.long_name);
-            } else if (types.includes('country')) {
-              // Update country
-              this.addLocationForm.get('country').setValue(component.long_name);
-            }
+
+  // Update marker position based on address
+  geocodeAddress(address: string): void {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address }, (results, status) => {
+      if (status === 'OK' && results[0]) {
+        const location = results[0].geometry.location;
+        this.marker.setPosition(location);
+        this.map.setCenter(location);
+        // Update form fields if needed
+      } else {
+        console.error('Geocode was not successful for the following reason:', status);
+      }
+    });
+  }
+  // Listen to marker position change
+  onMarkerDragEnd(event: google.maps.MouseEvent): void {
+    const position = event.latLng;
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ location: position }, (results, status) => {
+      if (status === 'OK' && results[0]) {
+        // Update address field
+        this.address = results[0].formatted_address;
+        // Update form fields based on the address
+        for (const component of results[0].address_components) {
+          const types = component.types;
+          if (types.includes('locality')) {
+            // Update city
+            this.addLocationForm.get('city').setValue(component.long_name);
+          } else if (types.includes('administrative_area_level_1')) {
+            // Update state
+            this.addLocationForm.get('state').setValue(component.long_name);
+          } else if (types.includes('postal_code')) {
+            // Update pin code
+            this.addLocationForm.get('pinCode').setValue(component.long_name);
+          } else if (types.includes('country')) {
+            // Update country
+            this.addLocationForm.get('country').setValue(component.long_name);
           }
-        } else {
-          console.error('Reverse geocode was not successful for the following reason:', status);
         }
-      });
-    }
-    
+      } else {
+        console.error('Reverse geocode was not successful for the following reason:', status);
+      }
+    });
+  }
+
 
 
 
@@ -165,18 +168,18 @@ export class AddLocationComponent implements OnInit {
       this.onAddressChange();
       let address1 = "";
       let postcode = "";
-  
+
       for (const component of place.address_components as google.maps.GeocoderAddressComponent[]) {
         // @ts-ignore remove once typings fixed
         const componentType = component.types[0];
-    
+
         switch (componentType) {
-  
+
           case "postal_code": {
             this.addLocationForm.controls['pinCode'].patchValue(component.long_name);
             break;
           }
-  
+
           case "administrative_area_level_3": {
             this.addLocationForm.controls['city'].patchValue(component.long_name);
             break;
@@ -185,19 +188,19 @@ export class AddLocationComponent implements OnInit {
             this.addLocationForm.controls['state'].patchValue(component.long_name);
             break;
           }
-    
+
           case "country":
             this.addLocationForm.controls['country'].patchValue(component.long_name);
             break;
         }
       }
-  
+
       this.addLocationForm.controls['latitude'].setValue(place.geometry.location.lat().toString());
       this.addLocationForm.controls['longitude'].setValue(place.geometry.location.lng().toString());
-  
+
     });
   }
-  
+
 
   initializeForm() {
     this.addLocationForm = this.fb.group({
@@ -242,20 +245,35 @@ export class AddLocationComponent implements OnInit {
     );
   }
 
+  spinner: boolean = false
   addLocation() {
+    this.spinner = true
     this.submitted = true;
     if (this.addLocationForm.valid) {
       this.submitted = false;
       this.service.addLocation(this.addLocationForm.value).subscribe(
         (response: any) => {
           this.toastr.success(response.msg);
-          console.log("res",response);
-          this.router.navigate(['/dashboard/location']);
+          console.log("res", response);
+          this.dialogRef.close(true);
+          // this.router.navigate(['/dashboard/location']);
+          // this.getLocationByCompanyId();
+          this.locationAdded.emit();
+          this.spinner = false
         },
         (error) => {
           this.service.handleError(error);
+          this.spinner = false
         }
       );
     }
+  }
+
+
+
+  onCancel(): void {
+    // Close the dialog when Cancel button is clicked
+    this.dialogRef.close();
+    // this.router.navigate(['/dashboard/location'])
   }
 }

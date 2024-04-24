@@ -23,7 +23,7 @@
         <a href="javascript:void" class="btn btn-primary w-100"
           (click)="goto_addLocation()">
           Add Office</a>
-        <div class="tooltip_manual">
+        <div class="tooltip_manual" >
           Add Office
         </div>
       </div>
@@ -97,7 +97,9 @@
 
                   <div class="position-relative">
                     <a class="action"
-                      routerLink="/dashboard/edit-location/{{ row.id }}">
+                      
+                      (click)="EditAddOfficeModal(row.id)"
+                      >
                       <img src="../../assets/img/edit_black.png" alt width="24px"
                         height="24px" />
                     </a>
@@ -157,9 +159,9 @@
           <!-- <a href="javascript:void" class="btn btn-primary"
             (click)="goto_addLocation()">
             + Add Office</a> -->
-          <div class="position-relative pt-2">
+          <div class="position-relative pt-2 login_loader" >
             <a href="javascript:void" class="btn btn-primary w-100"
-              (click)="goto_addLocation()">
+              (click)="openAddOfficeModal()">
               Add Office</a>
             <div class="tooltip_manual">
               Add Office

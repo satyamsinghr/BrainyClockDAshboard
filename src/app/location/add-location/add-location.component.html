@@ -3,7 +3,7 @@
     <div class="brand_info">
       <h2>Add Office</h2>
     </div>
-    <app-header></app-header>
+    <!-- <app-header></app-header> -->
   </div>
   <div class="container-fluid p-0">
     <div class="row m-0 justify-content-center mt-4">
@@ -70,20 +70,9 @@
                   <label for="address" class="labelName">Address</label>
                 </div>
                 <div class="col-12">
-                  <input
-                  asp-for="address"
-                  type="text"
-                  #addresstext
-                  [(ngModel)]="address"
-                  class="form-control"
-                  formControlName="address"
-                  placeholder="Enter Address"
-                  required="required" 
-                  (change)="onAddressChange()"
-                  (input)="onAddressChange()" 
-                  (blur)="onAddressChange()"
-                  
-                  />
+                  <input asp-for="address" type="text" #addresstext [(ngModel)]="address" class="form-control"
+                    formControlName="address" placeholder="Enter Address" required="required"
+                    (change)="onAddressChange()" (input)="onAddressChange()" (blur)="onAddressChange()" />
                   <small *ngIf="
                       (addLocationFormControl['address'].touched ||
                         submitted) &&
@@ -203,7 +192,7 @@
                 </div>
                 <div class="col-12">
                   <input asp-for="pinCode" type="text" class="form-control" formControlName="geofence"
-                    placeholder="Enter Geofence Radius" required="required" />
+                    placeholder="Enter " required="required" />
                   <small *ngIf="
                       (addLocationFormControl['geofence'].touched ||
                         submitted) &&
@@ -224,10 +213,15 @@
                   </small>
                 </div>
               </div>
-              <button type="button" class="btn btn-outline-primary me-3" (click)="gotoEmpPage()">
+              <button type="button" class="btn btn-outline-primary me-3" (click)="onCancel()">
                 Cancel
               </button>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <div class="d-flex justify-content-center px-lg-5 px-md-4 px-0 position-relative login_loader">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <div *ngIf="spinner == true" class="loader_img">
+                  <img src="assets/img/site_loader.gif" alt>
+                </div>
+              </div>
             </div>
           </form>
         </div>
