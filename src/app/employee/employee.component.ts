@@ -29,7 +29,7 @@ const log = new Logger('Employee');
 })
 export class EmployeeComponent implements OnInit {
   displayedColumns: string[] = [
-    // 'select',
+    'select',
     'id',
     'employeeName',
     'departmentName',

@@ -28,7 +28,7 @@ const log = new Logger('Employee');
 })
 export class LocationComponent implements OnInit {
   displayedColumns: string[] = [
-    // 'select',
+    'select',
     'locationId',
     'companyId',
     'location_name',
@@ -37,7 +37,7 @@ export class LocationComponent implements OnInit {
     'actions',
   ];
   displayedColumnsCompany: string[] = [
-    // 'select',
+    'select',
     'locationId',
     'location_name',
     'address',

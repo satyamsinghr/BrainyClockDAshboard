@@ -37,7 +37,7 @@
         <div class="student_table pe-lg-4 pe-md-4">
           <table class="table m-0">
             <mat-table #table [dataSource]="dataSource" matSort>
-              <!-- <ng-container matColumnDef="select">
+              <ng-container matColumnDef="select">
                     <mat-header-cell *matHeaderCellDef>
                       <mat-checkbox (change)="$event ? masterToggle() : null"
                         [checked]="selection.hasValue() && isAllSelected()"
@@ -49,7 +49,7 @@
                         [checked]="selection.isSelected(row)">
                       </mat-checkbox>
                     </mat-cell>
-                  </ng-container> -->
+                  </ng-container>
               <ng-container matColumnDef="locationId">
                 <mat-header-cell class="text-nowrap" *matHeaderCellDef mat-sort-header>
                   Office ID

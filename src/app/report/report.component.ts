@@ -28,7 +28,7 @@ export class ReportComponent implements OnInit {
   dataSourceWithPageSize = new MatTableDataSource<viewEmployeeItemDto>(
 
   );
-  displayedColumns = ['reportName', 'reportType', 'dateGenerated', 'reportPeriod', 'Action'];
+  displayedColumns = ['select','reportName', 'reportType', 'dateGenerated', 'reportPeriod', 'Action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   constructor(

@@ -30,7 +30,7 @@
     <div class="page_table">
       <table class="table report_filter_table report_table card_table">
         <mat-table #table [dataSource]="dataSource" matSort>
-          <!-- <ng-container matColumnDef="select">
+          <ng-container matColumnDef="select">
                       <mat-header-cell *matHeaderCellDef class="table_checkbox">
                           <mat-checkbox (change)="$event ? masterToggle() : null"
                               [checked]="selection.hasValue() && isAllSelected()"
@@ -42,7 +42,7 @@
                               (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
                           </mat-checkbox>
                       </mat-cell>
-                  </ng-container> -->
+                  </ng-container>
           <ng-container matColumnDef="reportName">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
              REPORT NAME

@@ -104,7 +104,7 @@
     <div class="page_table">
       <table class="table employee_table card_table">
         <mat-table #table [dataSource]="dataSource" matSort>
-          <!-- <ng-container matColumnDef="select">
+          <ng-container matColumnDef="select">
               <mat-header-cell *matHeaderCellDef class="table_checkbox">
                 <mat-checkbox (change)="$event ? masterToggle() : null"
                   [checked]="selection.hasValue() && isAllSelected()"
@@ -116,7 +116,7 @@
                   [checked]="selection.isSelected(row)">
                 </mat-checkbox>
               </mat-cell>
-            </ng-container> -->
+            </ng-container>
           <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef mat-sort-header
               class="justify-content-lg-center justify-content-md-start justify-content-start">

@@ -26,6 +26,7 @@ const log=new Logger('Employee');
 })
 export class ShiftComponent implements OnInit {
   displayedColumns: string[] = [
+    'select',
     'name',
     'days',
     'clock_in_time',

@@ -28,13 +28,13 @@ const log = new Logger('Employee');
 })
 export class DepartmentComponent implements OnInit {
   displayedColumns: string[] = [
-    // 'select',
+    'select',
     'id',
     'department_name',
     'action'
   ];
   displayedColumnsCompany: string[] = [
-    // 'select',
+    'select',
     'id',
     'department_name',
     'action'
