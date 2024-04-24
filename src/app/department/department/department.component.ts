@@ -72,7 +72,7 @@ export class DepartmentComponent implements OnInit {
   searchData: any
   token:any
   ngOnInit(): void {
-    this.departmentService.getDepartmentById = this.getAllDepartment.bind(this);
+    this.departmentService.getDepartmentById = this.getDepartmentById.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if(this.token == null){
       this.router.navigateByUrl('/');

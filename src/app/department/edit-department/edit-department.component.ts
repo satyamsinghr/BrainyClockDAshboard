@@ -43,7 +43,7 @@ export class EditDepartmentComponent implements OnInit {
   ngOnInit(): void {
     this.departmentId=this.data.departmentId;
     this.departmentName=this.data.departmentName;
-    this.getDepartmentById(this.departmentId);
+    // this.getDepartmentById(this.departmentId);
     this.initializeForm();
   }
 
@@ -70,17 +70,18 @@ export class EditDepartmentComponent implements OnInit {
     this._onDestroy.complete();
   }
 
-  getDepartmentById(id: number) {
-    this.service.getDepartmentById(id).subscribe({
-      next: (response: any) => {
-        if (response.data) {
-          this.editDepartmentForm.patchValue({
-            department: response.data.department_name,
-          });
-        }
-      },
-    });
-  }
+  // getDepartmentById(id: number) {
+  //   this.service.getDepartmentById(id).subscribe({
+  //     next: (response: any) => {
+  //       // if (response.data) {
+  //       //   this.editDepartmentForm.patchValue({
+  //       //     department: response.data.department_name,
+  //       //   });
+  //       // }
+  //       console.log("responce",response);
+  //     },
+  //   });
+  // }
 
   editDepartment() {
     if (this.editDepartmentForm.valid) {
