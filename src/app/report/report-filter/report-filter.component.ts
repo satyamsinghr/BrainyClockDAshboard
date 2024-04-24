@@ -337,7 +337,7 @@ export class ReportFilterComponent implements OnInit {
   getDepartmentById() {
     this.service.getDepartmentById(this.comapnyId).subscribe(
       (response: any) => {
-        this.departments = response;
+        this.departments = response.data;
         this.filterDepartments();
       },
       (error) => {

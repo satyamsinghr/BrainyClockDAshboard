@@ -93,7 +93,7 @@ export class AddEmployeeComponent implements OnInit {
   getDepaetmentById() {
     this.service.getDepartmentById(this.selectedCompanyId).subscribe(
       (response: any) => {
-        this.departmentData = response;
+        this.departmentData = response.data;
       },
       (error) => {
         this.service.handleError(error);

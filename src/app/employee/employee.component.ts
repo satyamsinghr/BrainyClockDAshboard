@@ -87,7 +87,7 @@ export class EmployeeComponent implements OnInit {
       if (this.role != 'SA'){
            this.service.getDepartmentById(this.comapanyId).subscribe(
              (response: any) => {
-                this.departmentData = response;
+                this.departmentData = response.data;
              },
              (error) => {
               this.service.handleError(error);

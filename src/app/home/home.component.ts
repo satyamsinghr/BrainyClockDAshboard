@@ -217,7 +217,7 @@ export class HomeComponent implements OnInit {
   getDepaetmentById() {
     this.service.getDepartmentById(this.selectedCompanyId).subscribe(
       (response: any) => {
-        this.departmentData = response;
+        this.departmentData = response.data;
         this.departmentId=this.departmentData[this.index].id;
         console.log("departmenytId",this.departmentId);
         this.departmentName=this.departmentData[this.index].department_name;

@@ -68,7 +68,7 @@ export class AddShiftComponent implements OnInit {
     if(this.companyId){
       this.service.getDepartmentById(this.companyId).subscribe(
         (response: any) => {
-           this.departmentData = response;
+           this.departmentData = response.data;
         },
         (error) => {
           this.service.handleError(error);

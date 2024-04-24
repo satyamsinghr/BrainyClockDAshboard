@@ -131,7 +131,7 @@ export class EditShiftComponent implements OnInit {
     this.companyId  = event == "" ? this.companyId : event.target.value
         this.service.getDepartmentById(this.companyId).subscribe(
           (response: any) => {
-             this.departmentData = response;
+             this.departmentData = response.data;
           },
           (error) => {
             this.service.handleError(error);

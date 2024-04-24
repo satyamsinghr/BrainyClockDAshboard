@@ -265,7 +265,7 @@ export class ReportComponent implements OnInit {
   getDepartmentById() {
     this.service.getDepartmentById(this.comapnyId).subscribe(
       (response: any) => {
-        this.departments = response;
+        this.departments = response.data;
       },
       (error) => {
         this.service.handleError(error);
