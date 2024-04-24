@@ -27,6 +27,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ReportFilterComponent } from './report/report-filter/report-filter.component';
 import {SettingComponent} from './setting/setting.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 const routes: Routes = [
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
   // { path: 'login', component: AuthComponent },
@@ -58,6 +59,7 @@ const routes: Routes = [
     ]
   },
   { path:'forgot-password', component:ForgotPasswordComponent},
+  { path:'reset-password', component:ResetPasswordComponent},
   { path: "**", component: NotfoundComponent },
 ];
 

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router'; // Import Router
+import { AppService } from '../../app.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -8,8 +10,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: FormGroup;
+  spinner: boolean = false;
+  spinnerShow: string = '';
+  submitted: boolean = false; // Add this line
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router, // Inject Router
+    private service: AppService
+  ) {}
 
   ngOnInit(): void {
     this.forgotPasswordForm = this.formBuilder.group({
@@ -18,13 +27,24 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true; 
     if (this.forgotPasswordForm.valid) {
+      this.spinner = true;
+      this.spinnerShow = 'text-trasparent';
       const email = this.forgotPasswordForm.value.email;
-      // Here you can handle the submission of the email
-      console.log('Email submitted:', email);
+      this.service.forgotPassword(email).subscribe(
+        (response: any) => {
+          console.log('Response:', response);
+          this.router.navigate(['/reset-password']); 
+          this.spinner = false;
+          this.spinnerShow = '';
+        },
+        (error: any) => {
+          console.error('Error:', error);
+          this.spinner = false;
+          this.spinnerShow = '';
+        }
+      );
     }
   }
 }
-
-
-

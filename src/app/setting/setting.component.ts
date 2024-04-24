@@ -23,7 +23,7 @@ export class SettingComponent implements OnInit {
   timezoneForm: FormGroup;
   showTimeZoneFormFlag:boolean= false
   timezones: string[] = moment.tz.names();
-  intervals = ['1 day', '1 week'];
+  intervals = ['1 day', '1 week','1 month'];
   submitButtonDisabled: boolean = false;
 
   scheduleData: any = []; 

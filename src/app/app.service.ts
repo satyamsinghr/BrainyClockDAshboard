@@ -42,6 +42,7 @@ const routes = {
   Post_updateSchudle:`/company/update-schedule`,
   Post_Schudle:`/company/create-schedule`,
   Delete_Schudle: `/company/delete-schedule`,
+  Post_ResetPassword: `/company/reset-password`,
 };
 
 
@@ -128,7 +129,18 @@ export class AppService {
     const url = this.apiConfig + '/admin/upload-excel';
     return this.http.post<APIResponse>(url, formData, { headers });
   }
+  
 
+
+  forgotPassword(email: any): Observable<APIResponse> {
+    debugger
+    const token = JSON.parse(localStorage.getItem('loginToken'));
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const formData = new FormData();
+    formData.append('email', email);
+    const url = this.apiConfig + '/company/forgot-password';
+    return this.http.post<APIResponse>(url, formData, { headers });
+  }
 
   updateEmployee(data: any, id: number): Observable<APIResponse> {
     const token = JSON.parse(localStorage.getItem('loginToken'));
@@ -594,6 +606,18 @@ export class AppService {
       }
     };
     return this.http.delete(this.apiConfig + routes.Delete_Schudle, options);
+  }
+
+  resetPassword() {
+    const token = JSON.parse(localStorage.getItem('loginToken'));
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    let userId = localStorage.getItem('userId')
+    let data = {
+      confirmationCode:"123456",
+      email:"new99@mailinator.com",
+      password:"Test@1234"
+    }
+    return this.http.post<APIResponse>(this.apiConfig + routes.Post_ResetPassword, data, { headers });
   }
   
 }
