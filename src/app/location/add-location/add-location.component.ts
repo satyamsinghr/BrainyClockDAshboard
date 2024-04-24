@@ -18,6 +18,7 @@ export class AddLocationComponent implements OnInit {
   isLoading = false;
   submitted = false;
   address: string = '';
+  spinner: boolean = false
   addLocationForm!: FormGroup;
   protected _onDestroy = new Subject<void>();
   @ViewChild('addresstext') addresstext: any;
@@ -245,11 +246,10 @@ export class AddLocationComponent implements OnInit {
     );
   }
 
-  spinner: boolean = false
   addLocation() {
-    this.spinner = true
     this.submitted = true;
     if (this.addLocationForm.valid) {
+      this.spinner = true
       this.submitted = false;
       this.service.addLocation(this.addLocationForm.value).subscribe(
         (response: any) => {

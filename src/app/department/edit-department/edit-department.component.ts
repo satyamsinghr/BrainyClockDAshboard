@@ -90,9 +90,8 @@ export class EditDepartmentComponent implements OnInit {
         .subscribe(
           (response: any) => {
             this.toastr.success(response.msg);
-            // this.router.navigate(['/dashboard/department']);
             this.dialogRef.close();
-            this.departmentService.getAllDepartment();
+            this.departmentService.getDepartmentById();
             this.spinner = false
           },
           (error) => {

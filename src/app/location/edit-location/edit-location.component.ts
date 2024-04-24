@@ -18,6 +18,7 @@ import { EventEmitter, Output } from '@angular/core';
 export class EditLocationComponent implements OnInit {
   isLoading = false;
   locationId: number;
+  spinner: boolean = false
   editLocationForm!: FormGroup;
   address: string = '';
   protected _onDestroy = new Subject<void>();
@@ -232,11 +233,10 @@ export class EditLocationComponent implements OnInit {
     );
   }
 
-  spinner: boolean = false
   editLocation() {
-    this.spinner = true
     this.submitted = true;
     if (this.editLocationForm.valid) {
+      this.spinner = true
       this.submitted = false;
       this.service
         .editLocation(this.editLocationForm.value, this.locationId)

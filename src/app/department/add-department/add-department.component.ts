@@ -108,7 +108,7 @@ export class AddDepartmentComponent implements OnInit {
         (response: any) => {
           this.toastr.success(response.msg);
           this.dialogRef.close();
-          this.departmentService.getAllDepartment();
+          this.departmentService.getDepartmentById();
           this.spinner = false
           // this.location.replaceState(this.location.path());
     

@@ -72,7 +72,7 @@ export class DepartmentComponent implements OnInit {
   searchData: any
   token:any
   ngOnInit(): void {
-    this.departmentService.getAllDepartment = this.getAllDepartment.bind(this);
+    this.departmentService.getDepartmentById = this.getAllDepartment.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if(this.token == null){
       this.router.navigateByUrl('/');
@@ -152,7 +152,7 @@ export class DepartmentComponent implements OnInit {
     this.service.getDepartmentById(this.comapnyId).subscribe(
       (response: any) => {
         this.spinner.hide();
-        this.dataSource.data = response;
+        this.dataSource.data = response.data;
         this.departmentData = this.dataSource.data
          this.departments = response;
       },
@@ -182,31 +182,13 @@ export class DepartmentComponent implements OnInit {
     );
 }
 
-departmentId: number = 0;
-activeDepartment: string = '';
-getEmployeeNames(departmentName: string,departmentId:number) {
-  // this.activeDepartment = departmentName;
-  this.activeDepartmentId = departmentId
-  this.selectedDepartment = departmentName;
-  this.service.getAllDepartment().subscribe(
-    (response: any) => {
-      // this.employeeList = response.data; 
-      this.dataSource.data = response.data;
-    },
-    (error) => {
-      this.service.handleError(error);
-      this.dataSource.data = [];
-    }
-  );
-}
-
 // departmentId: number = 0;
 // activeDepartment: string = '';
 // getEmployeeNames(departmentName: string,departmentId:number) {
 //   // this.activeDepartment = departmentName;
 //   this.activeDepartmentId = departmentId
 //   this.selectedDepartment = departmentName;
-//   this.service.getEmployeeNamesForDepartment(departmentId).subscribe(
+//   this.service.getAllDepartment().subscribe(
 //     (response: any) => {
 //       // this.employeeList = response.data; 
 //       this.dataSource.data = response.data;
@@ -217,6 +199,24 @@ getEmployeeNames(departmentName: string,departmentId:number) {
 //     }
 //   );
 // }
+
+departmentId: number = 0;
+activeDepartment: string = '';
+getEmployeeNames(departmentName: string,departmentId:number) {
+  // this.activeDepartment = departmentName;
+  this.activeDepartmentId = departmentId
+  this.selectedDepartment = departmentName;
+  this.service.getEmployeeNamesForDepartment(departmentId).subscribe(
+    (response: any) => {
+      // this.employeeList = response.data; 
+      this.dataSource.data = response.data;
+    },
+    (error) => {
+      this.service.handleError(error);
+      this.dataSource.data = [];
+    }
+  );
+}
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
