@@ -26,6 +26,7 @@ import { EditDepartmentComponent } from './department/edit-department/edit-depar
 import { ProfileComponent } from './profile/profile.component';
 import { ReportFilterComponent } from './report/report-filter/report-filter.component';
 import {SettingComponent} from './setting/setting.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 const routes: Routes = [
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
   // { path: 'login', component: AuthComponent },
@@ -56,7 +57,8 @@ const routes: Routes = [
     { path:'edit-department/:departmentId/:departmentName', component:EditDepartmentComponent},
     ]
   },
-  { path: "**", component: NotfoundComponent }
+  { path:'forgot-password', component:ForgotPasswordComponent},
+  { path: "**", component: NotfoundComponent },
 ];
 
 @NgModule({

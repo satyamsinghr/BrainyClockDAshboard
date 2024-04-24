@@ -48,6 +48,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ReportFilterComponent } from './report/report-filter/report-filter.component';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { SettingComponent } from './setting/setting.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 const TOASTER_SETTINGS = {
   timeOut: 3000,
   positionClass: 'toast-top-right',
@@ -86,7 +87,8 @@ const TOASTER_SETTINGS = {
     EditDepartmentComponent,
     ProfileComponent,
     ReportFilterComponent,
-    SettingComponent
+    SettingComponent,
+    ForgotPasswordComponent
     // RegisterComponent,
   ],
   imports: [
