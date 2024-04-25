@@ -1,26 +1,26 @@
-<section class="px-lg-0">
-  <div class="d-flex align-items-center justify-content-between">
-    <div class="brand_info">
-      <h2>Add Office</h2>
-    </div>
-    <!-- <app-header></app-header> -->
-  </div>
-  <div class="container-fluid p-0">
-    <div class="row m-0 justify-content-center mt-4">
-      <div class="col-lg-6 col-md-10 col-sm-12 col-12 ps-lg-0 px-3 pt-lg-3">
-        <div class="department_card">
+<section class="px-lg-0 add_department">
 
+  <div class="department_card p-3 brand_info">
+    <div class="d-flex align-items-center justify-content-center">
+      <div class="brand_info">
+        <h2 class="text-center">Add Office</h2>
+      </div>
+      <!-- <app-header></app-header> -->
+    </div>
+    <div class="container-fluid p-0">
+      <div class="row m-0 justify-content-center">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12 ps-lg-0 px-3 pt-lg-3">
           <form [formGroup]="addLocationForm" (ngSubmit)="addLocation()">
-            <div class="row mb-3">
-              <div class="col-12">
+            <div class="row g-4">
+              <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                 <label for="location_name" class="labelName">Company
                   Name</label>
-              </div>
-              <div class="col-12">
-                <select class="form-control" formControlName="companyId" required
+                <select class="form-control" formControlName="companyId"
+                  required
                   [attr.disabled]="isCompanyLoggedIn == true ? true : null">
                   <option value>Select Company</option>
-                  <option *ngFor="let company of companyData" [value]="company.id">
+                  <option *ngFor="let company of companyData"
+                    [value]="company.id">
                     {{ company.name }}
                   </option>
                   =
@@ -38,14 +38,12 @@
                   </div>
                 </small>
               </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-12">
+
+              <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                 <label for="location_name" class="labelName">Office
                   Name</label>
-              </div>
-              <div class="col-12">
-                <input asp-for="location_name" type="text" class="form-control" formControlName="location_name"
+                <input asp-for="location_name" type="text"
+                  class="form-control" formControlName="location_name"
                   placeholder="Enter Office Name" required="required" />
                 <small *ngIf="
                     (addLocationFormControl['location_name'].touched ||
@@ -62,165 +60,154 @@
                   </div>
                 </small>
               </div>
-            </div>
 
-            <div>
-              <div class="row mb-3">
-                <div class="col-12">
-                  <label for="address" class="labelName">Address</label>
-                </div>
-                <div class="col-12">
-                  <input asp-for="address" type="text" #addresstext [(ngModel)]="address" class="form-control"
-                    formControlName="address" placeholder="Enter Address" required="required"
-                    (change)="onAddressChange()" (input)="onAddressChange()" (blur)="onAddressChange()" />
-                  <small *ngIf="
-                      (addLocationFormControl['address'].touched ||
-                        submitted) &&
-                      addLocationFormControl['address'].invalid
-                    " class="form-text text-muted">
-                    <div class="text-danger" *ngIf="
-                        addLocationFormControl['address'].errors &&
-                        addLocationFormControl['address'].errors['required']
-                      ">
-                      Address is required
-                    </div>
-                  </small>
-                </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <label for="address" class="labelName">Address</label>
+                <input asp-for="address" type="text" #addresstext
+                  [(ngModel)]="address" class="form-control"
+                  formControlName="address" placeholder="Enter Address"
+                  required="required"
+                  (change)="onAddressChange()" (input)="onAddressChange()"
+                  (blur)="onAddressChange()" />
+                <small *ngIf="
+                    (addLocationFormControl['address'].touched ||
+                      submitted) &&
+                    addLocationFormControl['address'].invalid
+                  " class="form-text text-muted">
+                  <div class="text-danger" *ngIf="
+                      addLocationFormControl['address'].errors &&
+                      addLocationFormControl['address'].errors['required']
+                    ">
+                    Address is required
+                  </div>
+                </small>
               </div>
-              <div class="col-lg-8 col-md-12 col-sm-12 col-12">
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="location_map">
-                  <div #map style="height: 485px; width: 120%;"></div>
+                  <div #map style="height: 250px; width: 100%;"></div>
                 </div>
               </div>
 
-              <div class="row mb-3">
-                <div class="col-12">
-                  <label for="city" class="labelName">City</label>
-                </div>
-                <div class="col-12">
-                  <input asp-for="city" type="text" #citytext class="form-control" formControlName="city"
-                    placeholder="Enter City" required="required" />
-                  <small *ngIf="
+              <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <label for="city" class="labelName">City</label>
+                <input asp-for="city" type="text" #citytext
+                  class="form-control" formControlName="city"
+                  placeholder="Enter City" required="required" />
+                <small *ngIf="
                       (addLocationFormControl['city'].touched ||
                         submitted) &&
                       addLocationFormControl['city'].invalid
                     " class="form-text text-muted">
-                    <div class="text-danger" *ngIf="
+                  <div class="text-danger" *ngIf="
                         addLocationFormControl['city'].errors &&
                         addLocationFormControl['city'].errors['required']
                       ">
-                      City is required
-                    </div>
-                  </small>
-                </div>
+                    City is required
+                  </div>
+                </small>
               </div>
 
-              <div class="row mb-3">
-                <div class="col-12">
-                  <label for="state" class="labelName">State</label>
-                </div>
-                <div class="col-12">
-                  <input asp-for="state" type="text" #statetext class="form-control" formControlName="state"
-                    placeholder="Enter Address" required="required" />
-                  <small *ngIf="
+              <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <label for="state" class="labelName">State</label>
+                <input asp-for="state" type="text" #statetext
+                  class="form-control" formControlName="state"
+                  placeholder="Enter Address" required="required" />
+                <small *ngIf="
                       (addLocationFormControl['state'].touched ||
                         submitted) &&
                       addLocationFormControl['state'].invalid
                     " class="form-text text-muted">
-                    <div class="text-danger" *ngIf="
+                  <div class="text-danger" *ngIf="
                         addLocationFormControl['state'].errors &&
                         addLocationFormControl['state'].errors['required']
                       ">
-                      State is required
-                    </div>
-                  </small>
-                </div>
+                    State is required
+                  </div>
+                </small>
               </div>
 
-              <div class="row mb-3">
-                <div class="col-12">
-                  <label for="country" class="labelName">Country</label>
-                </div>
-                <div class="col-12">
-                  <input asp-for="country" type="text" #countrytext class="form-control" formControlName="country"
-                    placeholder="Enter Country" required="required" />
-                  <small *ngIf="
+              <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <label for="country" class="labelName">Country</label>
+                <input asp-for="country" type="text" #countrytext
+                  class="form-control" formControlName="country"
+                  placeholder="Enter Country" required="required" />
+                <small *ngIf="
                       (addLocationFormControl['country'].touched ||
                         submitted) &&
                       addLocationFormControl['country'].invalid
                     " class="form-text text-muted">
-                    <div class="text-danger" *ngIf="
+                  <div class="text-danger" *ngIf="
                         addLocationFormControl['country'].errors &&
                         addLocationFormControl['country'].errors['required']
                       ">
-                      Country is required
-                    </div>
-                  </small>
-                </div>
+                    Country is required
+                  </div>
+                </small>
               </div>
 
-              <div class="row mb-3">
-                <div class="col-12">
-                  <label for="pincode" class="labelName">Pin Code</label>
-                </div>
-                <div class="col-12">
-                  <input asp-for="pinCode" type="text" class="form-control" formControlName="pinCode"
-                    placeholder="Enter pin code" required="required" />
-                  <small *ngIf="
+              <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <label for="pincode" class="labelName">Pin Code</label>
+                <input asp-for="pinCode" type="text" class="form-control"
+                  formControlName="pinCode"
+                  placeholder="Enter pin code" required="required" />
+                <small *ngIf="
                       (addLocationFormControl['pinCode'].touched ||
                         submitted) &&
                       addLocationFormControl['pinCode'].invalid
                     " class="form-text text-muted">
-                    <div class="text-danger" *ngIf="
+                  <div class="text-danger" *ngIf="
                         addLocationFormControl['pinCode'].errors &&
                         addLocationFormControl['pinCode'].errors['required']
                       ">
-                      Pin code is required
-                    </div>
-                    <div class="text-danger" *ngIf="
+                    Pin code is required
+                  </div>
+                  <div class="text-danger" *ngIf="
                         addLocationFormControl['pinCode'].errors &&
                         addLocationFormControl['pinCode'].errors['pattern']
                       ">
-                      Pin code should be numeric
-                    </div>
-                  </small>
-                </div>
+                    Pin code should be numeric
+                  </div>
+                </small>
               </div>
-              <div class="row mb-3">
-                <div class="col-12">
-                  <label for="geofence" class="labelName">Geofence Radius </label>
-                </div>
-                <div class="col-12">
-                  <input asp-for="pinCode" type="text" class="form-control" formControlName="geofence"
-                    placeholder="Enter " required="required" />
-                  <small *ngIf="
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <label for="geofence" class="labelName">Geofence Radius
+                </label>
+                <input asp-for="pinCode" type="text" class="form-control"
+                  formControlName="geofence"
+                  placeholder="Enter " required="required" />
+                <small *ngIf="
                       (addLocationFormControl['geofence'].touched ||
                         submitted) &&
                       addLocationFormControl['geofence'].invalid
                     " class="form-text text-muted">
-                    <div class="text-danger" *ngIf="
+                  <div class="text-danger" *ngIf="
                         addLocationFormControl['geofence'].errors &&
                         addLocationFormControl['geofence'].errors['required']
                       ">
-                      Geofence Radius is required
-                    </div>
-                    <div class="text-danger" *ngIf="
+                    Geofence Radius is required
+                  </div>
+                  <div class="text-danger" *ngIf="
                         addLocationFormControl['geofence'].errors &&
                         addLocationFormControl['geofence'].errors['pattern']
                       ">
-                      Pin code should be numeric
-                    </div>
-                  </small>
-                </div>
+                    Pin code should be numeric
+                  </div>
+                </small>
               </div>
-              <div class="d-flex justify-content-center px-lg-5 px-md-4 px-0 position-relative login_loader">
-              <button type="button" class="btn btn-outline-primary me-3" (click)="onCancel()">
+            </div>
+            <div
+              class="d-flex mt-4  align-items-center justify-content-end gap-3 px-0 position-relative login_loader">
+              <button type="button"
+                class="btn btn-outline-primary py-3 px-4 h-auto"
+                (click)="onCancel()">
                 Cancel
               </button>
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <div *ngIf="spinner == true" class="loader_img">
-                  <img src="assets/img/site_loader.gif" alt>
-                </div>
+              <button type="submit"
+                class="btn btn-primary  py-3 px-4 h-auto">Submit</button>
+              <div *ngIf="spinner == true" class="loader_img">
+                <img src="assets/img/site_loader.gif" alt>
               </div>
             </div>
           </form>

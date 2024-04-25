@@ -32,46 +32,27 @@
 </div>
 <div class="row mt-4 g-4 pt-lg-2">
     <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-0">
-        <!-- <form action class="mb-4 pb-lg-2">
-            <ul class="filter_dropdown d-flex align-items-center gap-4">
+        <form action class="mb-4 pb-lg-2">
+            <ul class="filter_dropdown d-flex align-items-center gap-3">
                 <li class="position-relative">
                     <select name="departments" id="departments">
-                        <option value>Filter by
-                            Department</option>
-                        <option value="Filter by Department">Filter
-                            by Department</option>
-                        <option value="Filter by Department">Filter
-                            by Department</option>
-                        <option value="Filter by Department">Filter
-                            by Department</option>
+                        <option value>Filter by office</option>
+                        <option value="Filter by Department">Filter by
+                            office</option>
+                        <option value="Filter by Department">Filter by
+                            office</option>
+                        <option value="Filter by Department">Filter by
+                            office</option>
                     </select>
-                    <div class="department_drop">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M16.8 9.59999L12 14.4L7.20005 9.59999" stroke="#061D23" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" />
+                    <!-- <div class="department_drop">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M16.8 9.59999L12 14.4L7.20005 9.59999"
+                                stroke="#061D23" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round" />
                         </svg>
-                    </div>
-                </li>
-                <li>
-                    <div class="filter_dropdown">
-                        <input type="checkbox">
-                        <span>CleanCorp Solution
-                            - Manhattan</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="filter_dropdown">
-                        <input type="checkbox">
-                        <span>CleanCorp Solution
-                            - Brooklyn</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="filter_dropdown">
-                        <input type="checkbox">
-                        <span>CleanCorp Solution
-                            - Queens</span>
-                    </div>
+                    </div> -->
                 </li>
                 <li>
                     <div class="filter_dropdown">
@@ -92,29 +73,32 @@
                     </div>
                 </li>
             </ul>
-        </form> -->
+        </form>
     </div>
-    <div class="col-lg-11 col-md-12 col-sm-12 col-12 mt-0">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-0">
         <div class="page_table">
             <table class="table employee_table card_table">
                 <mat-table #table [dataSource]="dataSource" matSort>
                     <ng-container matColumnDef="select">
-                        <mat-header-cell *matHeaderCellDef class="table_checkbox">
-                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                        <mat-header-cell *matHeaderCellDef
+                            class="table_checkbox">
+                            <mat-checkbox
+                                (change)="$event ? masterToggle() : null"
                                 [checked]="selection.hasValue() && isAllSelected()"
                                 [indeterminate]="selection.hasValue() && !isAllSelected()">
                             </mat-checkbox>
                         </mat-header-cell>
                         <mat-cell *matCellDef="let row" class="table_checkbox">
                             <mat-checkbox (click)="$event.stopPropagation()"
-                                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                                (change)="$event ? selection.toggle(row) : null"
+                                [checked]="selection.isSelected(row)">
                             </mat-checkbox>
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="id">
                         <mat-header-cell *matHeaderCellDef mat-sort-header
-                            class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
+                            class="justify-content-lg-center justify-content-md-start justify-content-start text-center text-nowrap">
                             Id
                         </mat-header-cell>
                         <mat-cell *matCellDef="let element"
@@ -124,22 +108,22 @@
 
                     <ng-container matColumnDef="employeeName">
                         <mat-header-cell *matHeaderCellDef mat-sort-header
-                            class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
+                            class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
                             Employee Name
                         </mat-header-cell>
                         <mat-cell *matCellDef="let element"
-                            class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
+                            class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
                             {{ element.firstName + " " + element.lastName }}
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="departmentName">
                         <mat-header-cell *matHeaderCellDef mat-sort-header
-                            class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
+                            class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
                             Department
                         </mat-header-cell>
                         <mat-cell *matCellDef="let element"
-                            class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
+                            class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
                             {{ element.department_name }} </mat-cell>
                     </ng-container>
 
@@ -155,11 +139,11 @@
 
                     <ng-container matColumnDef="status">
                         <mat-header-cell *matHeaderCellDef mat-sort-header
-                            class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
+                            class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
                             Status
                         </mat-header-cell>
                         <mat-cell *matCellDef="let element"
-                            class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
+                            class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
                             {{ element.status }} </mat-cell>
                     </ng-container>
 
@@ -178,7 +162,7 @@
                             </ng-container>
                         </mat-cell>
                     </ng-container>
-<!-- 
+                    <!-- 
                     <ng-container matColumnDef="primaryLocation">
                         <mat-header-cell *matHeaderCellDef mat-sort-header
                             class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
@@ -195,28 +179,51 @@
                             class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
                             attendance this week
                         </mat-header-cell>
-                        <mat-cell *matCellDef="let element">
+                        <mat-cell *matCellDef="let element"
+                            class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
                             <ul class="this_week_attendance">
-                                <li *ngFor="let day of weekDays" [ngClass]="getAttendanceClass(element.attendance, day)">
+                                <!-- <li *ngFor="let day of weekDays"
+                                    [ngClass]="getAttendanceClass(element.attendance, day)">
                                     {{ day.charAt(0) }}
-                                  </li>
+                                </li> -->
+                                <li class="late">
+                                    M
+                                </li>
+                                <li class="present">
+                                    T
+                                </li>
+                                <li class="present">
+                                    W
+                                </li>
+                                <li class="present">
+                                    T
+                                </li>
+                                <li class="upcoming">
+                                    F
+                                </li>
+                                <li>
+                                    S
+                                </li>
+                                <li>
+                                    S
+                                </li>
                             </ul>
                         </mat-cell>
-                    </ng-container> 
+                    </ng-container>
 
                     <ng-container matColumnDef="actions">
                         <mat-header-cell
                             *matHeaderCellDef
-                            class="justify-content-end">Action</mat-header-cell>
-                        <mat-cell *matCellDef="let row">
-                            <div class="position-relative">
-                                <a class="action" (click)="openEditEmployeeModal(row)"
-                                >
+                            class="justify-content-end"></mat-header-cell>
+                        <mat-cell *matCellDef="let row" 
+                        class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
+                            <!-- <div class="position-relative">
+                                <a class="action"
+                                    (click)="openEditEmployeeModal(row)">
                                     <img src="../../assets/img/edit_black.png"
                                         alt
                                         width="24px" height="24px" />
                                 </a>
-                                <!-- routerLink="/dashboard/edit-employee/{{ row.id }}" -->
                                 <div class="tooltip_manual">
                                     Edit
                                 </div>
@@ -224,13 +231,26 @@
                             <div class="position-relative">
                                 <a class="action"
                                     (click)="ConfirmDeleteEmp(row.id)">
-                                    <img src="../../assets/img/delete_gray.png" alt
+                                    <img src="../../assets/img/delete_gray.png"
+                                        alt
                                         width="24px" height="24px" />
                                 </a>
                                 <div class="tooltip_manual">
                                     Delete
                                 </div>
-                            </div>
+                            </div> -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                height="6" viewBox="0 0 20 6" fill="none">
+                                <path
+                                    d="M4.21125 5.8725H1.66125C1.22096 5.87151 0.798993 5.69617 0.487663 5.38484C0.176333 5.07351 0.000990525 4.65154 0 4.21125V1.66125C0.000990525 1.22096 0.176333 0.798993 0.487663 0.487663C0.798993 0.176332 1.22096 0.000990524 1.66125 0H4.21125C4.65154 0.000990524 5.07351 0.176332 5.38484 0.487663C5.69617 0.798993 5.87151 1.22096 5.8725 1.66125V4.21125C5.87151 4.65154 5.69617 5.07351 5.38484 5.38484C5.07351 5.69617 4.65154 5.87151 4.21125 5.8725ZM1.66125 1.5C1.61848 1.5 1.57747 1.51699 1.54723 1.54723C1.51699 1.57747 1.5 1.61848 1.5 1.66125V4.21125C1.5 4.25402 1.51699 4.29503 1.54723 4.32527C1.57747 4.35551 1.61848 4.3725 1.66125 4.3725H4.21125C4.25402 4.3725 4.29503 4.35551 4.32527 4.32527C4.35551 4.29503 4.3725 4.25402 4.3725 4.21125V1.66125C4.3725 1.61848 4.35551 1.57747 4.32527 1.54723C4.29503 1.51699 4.25402 1.5 4.21125 1.5H1.66125Z"
+                                    fill="#20263B" />
+                                <path
+                                    d="M11.0511 5.8725H8.50109C8.06081 5.87151 7.63884 5.69617 7.32751 5.38484C7.01618 5.07351 6.84083 4.65154 6.83984 4.21125V1.66125C6.84083 1.22096 7.01618 0.798993 7.32751 0.487663C7.63884 0.176332 8.06081 0.000990524 8.50109 0H11.0511C11.4914 0.000990524 11.9133 0.176332 12.2247 0.487663C12.536 0.798993 12.7114 1.22096 12.7123 1.66125V4.21125C12.7114 4.65154 12.536 5.07351 12.2247 5.38484C11.9133 5.69617 11.4914 5.87151 11.0511 5.8725ZM8.50109 1.5C8.45833 1.5 8.41731 1.51699 8.38707 1.54723C8.35683 1.57747 8.33984 1.61848 8.33984 1.66125V4.21125C8.33984 4.25402 8.35683 4.29503 8.38707 4.32527C8.41731 4.35551 8.45833 4.3725 8.50109 4.3725H11.0511C11.0939 4.3725 11.1349 4.35551 11.1651 4.32527C11.1954 4.29503 11.2123 4.25402 11.2123 4.21125V1.66125C11.2123 1.61848 11.1954 1.57747 11.1651 1.54723C11.1349 1.51699 11.0939 1.5 11.0511 1.5H8.50109Z"
+                                    fill="#FF4B07" />
+                                <path
+                                    d="M17.8914 5.8725H15.3414C14.9011 5.87151 14.4792 5.69617 14.1678 5.38484C13.8565 5.07351 13.6812 4.65154 13.6802 4.21125V1.66125C13.6812 1.22096 13.8565 0.798993 14.1678 0.487663C14.4792 0.176332 14.9011 0.000990524 15.3414 0H17.8914C18.3317 0.000990524 18.7537 0.176332 19.065 0.487663C19.3763 0.798993 19.5517 1.22096 19.5527 1.66125V4.21125C19.5517 4.65154 19.3763 5.07351 19.065 5.38484C18.7537 5.69617 18.3317 5.87151 17.8914 5.8725ZM15.3414 1.5C15.2987 1.5 15.2576 1.51699 15.2274 1.54723C15.1972 1.57747 15.1802 1.61848 15.1802 1.66125V4.21125C15.1802 4.25402 15.1972 4.29503 15.2274 4.32527C15.2576 4.35551 15.2987 4.3725 15.3414 4.3725H17.8914C17.9342 4.3725 17.9752 4.35551 18.0054 4.32527C18.0357 4.29503 18.0527 4.25402 18.0527 4.21125V1.66125C18.0527 1.61848 18.0357 1.57747 18.0054 1.54723C17.9752 1.51699 17.9342 1.5 17.8914 1.5H15.3414Z"
+                                    fill="#20263B" />
+                            </svg>
                         </mat-cell>
                         <!-- <mat-cell *matCellDef="let row" class="justify-content-center"> -->
                         <!-- <button mat-icon-button></button> -->

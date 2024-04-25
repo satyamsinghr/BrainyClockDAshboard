@@ -3002,7 +3002,7 @@ aside {
 
 .cards {
   // background: #FCFCFC;
-  background: #EFF1F3;
+  background: #fff;
   border-radius: 24px;
   padding: 24px;
 }
@@ -3038,15 +3038,131 @@ table.table.card_table tr th,
 
 table.table.card_table tbody tr td,
 .cards .mat-cell,
-.page_table .mat-cell {
+.page_table .mat-cell,
+table.table.employee_table.card_table mat-table mat-cell {
   font-size: 14px;
   font-style: normal;
   vertical-align: middle;
   font-weight: 400;
-  padding: 18px 10px !important;
   line-height: normal;
   color: #000;
   border-bottom: 1px solid #EFF1F3;
+}
+
+table.table.card_table.employee_table mat-table mat-cell:first-child {
+  padding-right: 24px !important;
+  background: transparent;
+  border: none;
+  padding-left: 0 !important;
+}
+
+table.table.card_table.employee_table mat-header-row mat-header-cell:first-child {
+  padding-left: 0 !important;
+  padding-right: 24px !important;
+}
+
+.mat-sort-header-arrow {
+  right: -16px !important;
+  position: absolute !important;
+}
+
+.employee_table mat-header-row mat-header-cell:first-child,
+.employee_table mat-table mat-cell:first-child {
+  width: 2% !important;
+}
+
+table.table.card_table.employee_table mat-table mat-cell:nth-child(2) {
+  border-radius: 8px 0 0 8px;
+}
+
+table.table.card_table.employee_table mat-header-row mat-header-cell {
+  padding: 22px 11px !important;
+  padding-top: 0 !important;
+}
+
+table.table.card_table.employee_table mat-table mat-cell:not(:first-child) {
+  background-color: #FCFCFC !important;
+  padding: 22px 11px !important;
+  border-bottom: 1px solid #D9D9D9 !important;
+}
+
+table.table.employee_table.card_table mat-table mat-cell:nth-child(7),
+table.table.card_table.employee_table mat-header-row mat-header-cell:nth-child(7) {
+  width: 27%;
+  flex: 0 0 auto;
+}
+
+.mat-paginator-range-actions {
+  gap: 10px !important;
+}
+
+table.table.employee_table.card_table mat-table mat-cell:nth-child(2),
+table.table.card_table.employee_table mat-header-row mat-header-cell:nth-child(2) {
+  width: 8%;
+  flex: 0 0 auto;
+}
+
+table.table.employee_table.department_table.card_table mat-table mat-cell:nth-child(2),
+table.table.card_table.employee_table.department_table mat-header-row mat-header-cell:nth-child(2) {
+  width: 12%;
+  flex: 0 0 auto;
+}
+.add_shifts_c li
+{
+  position: relative;
+}
+.add_shifts_c li input
+{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  opacity: 0;
+  height: 100%;
+}
+.add_shifts_c li button {
+  border-radius: 20px;
+  border: 1px solid #061D23;
+  background: #FCFCFC;
+  padding: 10px 16px;
+  color: #061D23;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.add_shifts_c li button svg
+{
+  opacity: 0;
+  position: absolute;
+  transition: 0.3s;
+  flex: 0 0 auto;
+  width: 20px;
+}
+.add_shifts_c li input:checked~button {
+  background: #061D23;
+  font-weight: 700;
+  color: #FCFCFC;
+  padding: 6px 16px 6px 6px !important;
+}
+.add_shifts_c li input:checked~button svg
+{
+  opacity: 1;
+  position: relative;
+  transition: 0.3s;
+}
+table.table.employee_table.department_table.card_table mat-table mat-cell:nth-child(3),
+table.table.card_table.employee_table.department_table mat-header-row mat-header-cell:nth-child(3) {
+  width: 19%;
+  flex: 0 0 auto;
+}
+
+table.table.employee_table.department_table.card_table mat-table mat-cell:nth-child(7),
+table.table.card_table.employee_table.department_table mat-header-row mat-header-cell:nth-child(7) {
+  width: auto;
+  flex: 0 0 auto;
 }
 
 .mat-paginator-container {
@@ -3066,11 +3182,16 @@ table.table.card_table tbody tr:first-child td {
   height: 4px;
   background-color: #E2E2DF;
   width: 100%;
+  min-width: 65px;
 }
 
 .progress-bar {
-  background-color: #00916E;
+  background-color: #A1D938;
   border-radius: 35px !important;
+}
+
+.fade_att {
+  color: hsl(0deg 0% 0% / 25%) !important;
 }
 
 table.table.card_table tbody tr td:first-child {
@@ -3225,7 +3346,6 @@ ul.filter_dropdown li select,
   padding: 4px 8px 4px 16px;
   width: 100%;
   background-color: #FCFCFC;
-  max-width: 256px;
   border-radius: 36px;
   font-size: 12px;
   font-style: normal;
@@ -3234,7 +3354,6 @@ ul.filter_dropdown li select,
   color: #061D23;
   outline: none;
   box-shadow: none;
-  min-width: 186px;
   appearance: none;
 }
 
@@ -3583,9 +3702,11 @@ ol.breadcrumb li a {
 }
 
 .this_week_attendance li.present {
-  background: #00916E;
-  border: 2px solid #00916E;
+  background: #A1D938;
+  border: 2px solid #A1D938;
+  color: #061D23;
 }
+
 .this_week_attendance li.absent {
   background: black;
   border: 2px solid black;
@@ -3635,7 +3756,8 @@ table.table.card_table.employee_table.operations tbody tr td:not(:first-child) {
 
 .location_map {
   height: 485px;
-  width: 150%; /* Adjust this value to increase the width */
+  width: 150%;
+  /* Adjust this value to increase the width */
   border-radius: 24px;
   overflow: hidden;
 }
@@ -3732,7 +3854,7 @@ button.mat-custom-page[disabled] {
 }
 
 .report_filter_outer {
-  background-color: #fff;
+  background-color: #EFF1F3;
 }
 
 .report_filter_form {
@@ -4260,7 +4382,7 @@ th.month.drp-animate {
     font-style: normal;
     font-weight: 700;
     line-height: 24px;
-    color:  #031A40;
+    color: #031A40;
     width: 100%;
   }
 

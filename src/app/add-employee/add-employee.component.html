@@ -147,7 +147,7 @@
                 <!-- <small *ngIf="addEmployeeFormControl['employeeOverTime'].invalid" class="form-text text-danger mt-2">
                   Employee Overtime is required
                 </small> -->
-                <!-- <small
+<!-- <small
                   *ngIf="
                 (addEmployeeFormControl['overTime'].touched || submitted) && addEmployeeFormControl['overTime'].invalid"
                   class="form-text text-muted mt-2">
@@ -160,13 +160,13 @@
             </div>
 
             <!-- Type -->
-            <!-- <div class="row mb-3">
+<!-- <div class="row mb-3">
               <div class="col-12">
                 <label for="type" class="labelName">Type</label>
               </div>
               <div class="col-12"> -->
-              
-                <!-- <select class="form-select form-control" formControlName="type" required>
+
+<!-- <select class="form-select form-control" formControlName="type" required>
                   <option value>Select Type</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -184,8 +184,8 @@
               </div>
             </div> -->
 
-            <!-- //Shift1 -->
-            <!-- <div class="row mb-3">
+<!-- //Shift1 -->
+<!-- <div class="row mb-3">
               <div class="col-12">
                 <label for="shifts1" class="labelName">Shift1</label>
               </div>
@@ -212,8 +212,8 @@
               </div>
             </div> -->
 
-            <!-- shift2 -->
-            <!-- <div class="row mb-3">
+<!-- shift2 -->
+<!-- <div class="row mb-3">
               <div class="col-12">
                 <label for="shifts2" class="labelName">Shift2</label>
               </div>
@@ -229,8 +229,8 @@
               </div>
             </div> -->
 
-            <!-- shift3 -->
-            <!-- <div class="row mb-3">
+<!-- shift3 -->
+<!-- <div class="row mb-3">
               <div class="col-12">
                 <label for="shifts3" class="labelName">Shift3</label>
               </div>
@@ -248,7 +248,7 @@
               </div>
             </div> -->
 
-            <!-- <div class="row mb-3">
+<!-- <div class="row mb-3">
               <div class="col-12">
                 <label for="department_id" class="labelName">Department
                   Name</label>
@@ -311,11 +311,11 @@
             </div>
           </form> -->
 
-        <!-- </div>
+<!-- </div>
       </div>
     </div>
   </div>
-</section> --> 
+</section> -->
 
 <section class="add_department">
   <div class="department_card p-3 brand_info">
@@ -484,7 +484,7 @@
             </div>
           </small>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+        <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="shifts1" class="labelName">Shift1</label>
           <select class="form-select form-select-md form-control"
             aria-label=".form-select-sm example"
@@ -537,6 +537,51 @@
               {{ shift.name }}
             </option>
           </select>
+        </div> -->
+        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+          <label for="location_id" class="labelName">Select shifts</label>
+
+          <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
+            <li>
+              <input type="checkbox" checked>
+              <button class="d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                  viewBox="0 0 20 20" fill="none">
+                  <rect width="20" height="20" rx="10" fill="white" />
+                  <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23"
+                    stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+                <span>Morning shift</span>
+              </button>
+            </li>
+            <li>
+              <input type="checkbox" checked>
+              <button class="d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                  viewBox="0 0 20 20" fill="none">
+                  <rect width="20" height="20" rx="10" fill="white" />
+                  <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23"
+                    stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+                <span>Weekend
+                  shift</span></button>
+            </li>
+            <li>
+              <input type="checkbox">
+              <button class="d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                  viewBox="0 0 20 20" fill="none">
+                  <rect width="20" height="20" rx="10" fill="white" />
+                  <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23"
+                    stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+                <span> Night
+                  shift</span></button>
+            </li>
+          </ul>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="department_id" class="labelName">Department
@@ -594,7 +639,8 @@
           (click)="onCancel()">
           Cancel
         </button>
-        <button type="submit" class="btn btn-primary py-3 px-4 h-auto">Add Employee</button>
+        <button type="submit" class="btn btn-primary py-3 px-4 h-auto">Add
+          Employee</button>
         <div *ngIf="spinner == true" class="loader_img">
           <img src="assets/img/site_loader.gif" alt>
         </div>
@@ -603,6 +649,3 @@
 
   </div>
 </section>
-
-
-

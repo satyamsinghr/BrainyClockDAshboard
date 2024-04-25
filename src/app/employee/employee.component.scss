@@ -1,55 +1,63 @@
 .department_select {
-    select, input {
-        border: 1px solid #cdcdcd;
-        border-radius: 10px;
-        height: 40px;
-    }
 
-    ul.suggestions {
-        margin: 0;
-        list-style-type: none;
-        height: 170px;
-        position: absolute;
-        top: 100%;
-        overflow: auto;
-        width: 100%;
-        background: #fff;
-        z-index: 999;
-        box-shadow: 4px 0px 16px -1px #00000034;
-        padding: 10px;
-        border-radius: 0 0 5px 5px;
+  select,
+  input {
+    border: 1px solid #cdcdcd;
+    border-radius: 10px;
+    height: 40px;
+  }
 
-        li {
-            font-size: 14px;
-            padding: 5px 0;
-        }
-    }
-}
-.this_week_attendance {
+  ul.suggestions {
+    margin: 0;
     list-style-type: none;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    gap: 3px;
+    height: 170px;
+    position: absolute;
+    top: 100%;
+    overflow: auto;
+    width: 100%;
+    background: #fff;
+    z-index: 999;
+    box-shadow: 4px 0px 16px -1px #00000034;
+    padding: 10px;
+    border-radius: 0 0 5px 5px;
+
+    li {
+      font-size: 14px;
+      padding: 5px 0;
+    }
   }
-  
-  .this_week_attendance li {
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    line-height: 30px;
-  }
-  
-  .present {
-    background-color: green;
-  }
-  
-  .late {
-    background-color: yellow;
-  }
-  
-  .absent {
-    background-color: red;
-  }
-  
+}
+
+.this_week_attendance {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+
+.page_table mat-cell.mat-column-actions {
+  justify-content: center !important;
+}
+
+.this_week_attendance li {
+  border-radius: 8px;
+  width: 33px;
+  height: 33px;
+  text-align: center;
+  line-height: 30px;
+}
+
+.present {
+  background-color: #A1D938;
+  color: #061D23;
+}
+
+.late {
+  background-color: #FF6528;
+}
+
+.absent {
+  background-color: #061D23;
+}

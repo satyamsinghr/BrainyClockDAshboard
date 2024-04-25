@@ -17,7 +17,7 @@ import { Emp_Data } from '../../@shared/models/dataSource';
 import { finalize } from 'rxjs';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { AppService } from '../../app.service';
-import {AddLocationComponent} from '../add-location/add-location.component';
+import { AddLocationComponent } from '../add-location/add-location.component';
 import { EditLocationComponent } from '../edit-location/edit-location.component';
 
 const log = new Logger('Employee');
@@ -72,14 +72,14 @@ export class LocationComponent implements OnInit {
 
   role: any;
   companyId: number;
-  comapnyId:any
+  comapnyId: any
   token: string
   ngOnInit(): void {
     this.token = JSON.parse(localStorage.getItem('loginToken'));
-    if(this.token == null){
+    if (this.token == null) {
       this.router.navigateByUrl('/');
     }
-    else{
+    else {
       this.role = this.service.getRole();
       this.companyId = this.service.getCompanyId();
       this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
@@ -128,9 +128,9 @@ export class LocationComponent implements OnInit {
         office.address.toLowerCase().includes(searchData)
     );
   }
-  
 
-  officeData : any = []
+
+  officeData: any = []
   getAllLocation() {
     if (this.role == 'SA') {
       this.spinner.show();
@@ -201,15 +201,16 @@ export class LocationComponent implements OnInit {
     );
   }
 
-  
+
   openAddOfficeModal() {
     const dialogRef = this.dialog.open(AddLocationComponent, {
-      width: '100%', maxWidth: '1000px' 
+      width: '728px',
+      height: '600px'
     });
     // dialogRef.afterClosed().subscribe(result => {
-      dialogRef.componentInstance.locationAdded.subscribe(() => {
+    dialogRef.componentInstance.locationAdded.subscribe(() => {
       // Handle modal close event if needed
-        this.getAllLocation();
+      this.getAllLocation();
       console.log('The modal was closed');
     });
   }
@@ -224,14 +225,14 @@ export class LocationComponent implements OnInit {
   //     console.log('The modal was closed');
   //   });
   // }
-  
+
   EditAddOfficeModal(locationId: number): void {
     const dialogRef = this.dialog.open(EditLocationComponent, {
       width: '500px',
       data: { locationId: locationId },
     });
     dialogRef.componentInstance.locationEdit.subscribe(() => {
-    // dialogRef.afterClosed().subscribe((result) => {
+      // dialogRef.afterClosed().subscribe((result) => {
       this.getAllLocation();
       console.log('The dialog was closed');
     });

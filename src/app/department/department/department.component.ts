@@ -9,7 +9,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
-import {DepartmentService} from 'src/app/department.service';
+import { DepartmentService } from 'src/app/department.service';
 import {
   ConfirmDialogComponent,
   ConfirmDialogModel,
@@ -18,8 +18,8 @@ import { Emp_Data } from '../../@shared/models/dataSource';
 import { finalize } from 'rxjs';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { AppService } from '../../app.service';
-import {AddDepartmentComponent} from '../add-department/add-department.component'
-import {EditDepartmentComponent} from '../edit-department/edit-department.component'
+import { AddDepartmentComponent } from '../add-department/add-department.component'
+import { EditDepartmentComponent } from '../edit-department/edit-department.component'
 const log = new Logger('Employee');
 @Component({
   selector: 'app-department',
@@ -29,21 +29,35 @@ const log = new Logger('Employee');
 export class DepartmentComponent implements OnInit {
   displayedColumns: string[] = [
     'select',
-    'id',
+    // 'id',
     'department_name',
+    'Location',
+    'Shift',
+    'Attendance',
+    'shift',
+    'attendance',
+    'SHift',
+    'ATtendance',
     'action'
   ];
   displayedColumnsCompany: string[] = [
     'select',
-    'id',
+    // 'id',
     'department_name',
+    'Location',
+    'Shift',
+    'Attendance',
+    'shift',
+    'attendance',
+    'SHift',
+    'ATtendance',
     'action'
   ];
   employeeList: any = []
   selectedDepartment: any = []
   departments: any = []
   dataSource = new MatTableDataSource(Emp_Data);
-  departmentData : any = []
+  departmentData: any = []
   dataSourceWithPageSize = new MatTableDataSource(Emp_Data);
   selection = new SelectionModel(true, []);
   // @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -68,17 +82,17 @@ export class DepartmentComponent implements OnInit {
     this.dataSourceWithPageSize.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  comapnyId:any
-  role:any
+  comapnyId: any
+  role: any
   searchData: any
-  token:any
+  token: any
   ngOnInit(): void {
     this.departmentService.getDepartmentById = this.getDepartmentById.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
-    if(this.token == null){
+    if (this.token == null) {
       this.router.navigateByUrl('/');
     }
-    else{
+    else {
       this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
       this.role = JSON.parse(localStorage.getItem('role'));
       if (this.role != 'SA') {
@@ -90,7 +104,7 @@ export class DepartmentComponent implements OnInit {
     }
   }
 
-  
+
   locationData: any
   getLocationByCompanyId() {
     this.service.getLocationByCompany(this.comapnyId).subscribe(
@@ -112,22 +126,22 @@ export class DepartmentComponent implements OnInit {
   activeDepartmentId: number = null;
   nextDepartment() {
     if (this.activeDepartmentId !== null) {
-      const currentIndex = this.departments.findIndex((dept:any) => dept.id === this.activeDepartmentId);
+      const currentIndex = this.departments.findIndex((dept: any) => dept.id === this.activeDepartmentId);
       if (currentIndex < this.departments.length - 1) {
         this.activeDepartment = this.departments[currentIndex + 1].department_name;
         this.activeDepartmentId = this.departments[currentIndex + 1].id;
-        this.getEmployeeNames(  this.activeDepartment,this.activeDepartmentId);
+        this.getEmployeeNames(this.activeDepartment, this.activeDepartmentId);
       }
     }
   }
-  
+
   previousDepartment() {
     if (this.activeDepartmentId !== null) {
-      const currentIndex = this.departments.findIndex((dept:any) => dept.id === this.activeDepartmentId);
+      const currentIndex = this.departments.findIndex((dept: any) => dept.id === this.activeDepartmentId);
       if (currentIndex > 0) {
-        this.activeDepartment = this.departments[currentIndex -1].department_name;
+        this.activeDepartment = this.departments[currentIndex - 1].department_name;
         this.activeDepartmentId = this.departments[currentIndex - 1].id;
-        this.getEmployeeNames(this.activeDepartment,this.activeDepartmentId);
+        this.getEmployeeNames(this.activeDepartment, this.activeDepartmentId);
       }
     }
   }
@@ -155,25 +169,25 @@ export class DepartmentComponent implements OnInit {
         this.spinner.hide();
         this.dataSource.data = response.data;
         this.departmentData = this.dataSource.data
-         this.departments = response;
+        this.departments = response;
       },
       (error) => {
         this.service.handleError(error);
         this.spinner.hide();
       }
     );
-}
+  }
   getAllDepartment() {
     this.spinner.show();
     this.service.getAllDepartment().subscribe(
       (response: any) => {
         this.spinner.hide();
         // this.dataSource.data = response.data;
-         this.departments = response.data;
-         if (this.departments.length > 0) {
+        this.departments = response.data;
+        if (this.departments.length > 0) {
           this.activeDepartment = this.departments[0].department_name;
           this.activeDepartmentId = this.departments[0].id;
-          this.getEmployeeNames(this.departments[0].department_name,this.activeDepartmentId);
+          this.getEmployeeNames(this.departments[0].department_name, this.activeDepartmentId);
         }
       },
       (error) => {
@@ -181,43 +195,43 @@ export class DepartmentComponent implements OnInit {
         this.spinner.hide();
       }
     );
-}
+  }
 
-// departmentId: number = 0;
-// activeDepartment: string = '';
-// getEmployeeNames(departmentName: string,departmentId:number) {
-//   // this.activeDepartment = departmentName;
-//   this.activeDepartmentId = departmentId
-//   this.selectedDepartment = departmentName;
-//   this.service.getAllDepartment().subscribe(
-//     (response: any) => {
-//       // this.employeeList = response.data; 
-//       this.dataSource.data = response.data;
-//     },
-//     (error) => {
-//       this.service.handleError(error);
-//       this.dataSource.data = [];
-//     }
-//   );
-// }
+  // departmentId: number = 0;
+  // activeDepartment: string = '';
+  // getEmployeeNames(departmentName: string,departmentId:number) {
+  //   // this.activeDepartment = departmentName;
+  //   this.activeDepartmentId = departmentId
+  //   this.selectedDepartment = departmentName;
+  //   this.service.getAllDepartment().subscribe(
+  //     (response: any) => {
+  //       // this.employeeList = response.data; 
+  //       this.dataSource.data = response.data;
+  //     },
+  //     (error) => {
+  //       this.service.handleError(error);
+  //       this.dataSource.data = [];
+  //     }
+  //   );
+  // }
 
-departmentId: number = 0;
-activeDepartment: string = '';
-getEmployeeNames(departmentName: string,departmentId:number) {
-  // this.activeDepartment = departmentName;
-  this.activeDepartmentId = departmentId
-  this.selectedDepartment = departmentName;
-  this.service.getEmployeeNamesForDepartment(departmentId).subscribe(
-    (response: any) => {
-      // this.employeeList = response.data; 
-      this.dataSource.data = response.data;
-    },
-    (error) => {
-      this.service.handleError(error);
-      this.dataSource.data = [];
-    }
-  );
-}
+  departmentId: number = 0;
+  activeDepartment: string = '';
+  getEmployeeNames(departmentName: string, departmentId: number) {
+    // this.activeDepartment = departmentName;
+    this.activeDepartmentId = departmentId
+    this.selectedDepartment = departmentName;
+    this.service.getEmployeeNamesForDepartment(departmentId).subscribe(
+      (response: any) => {
+        // this.employeeList = response.data; 
+        this.dataSource.data = response.data;
+      },
+      (error) => {
+        this.service.handleError(error);
+        this.dataSource.data = [];
+      }
+    );
+  }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
@@ -260,7 +274,8 @@ getEmployeeNames(departmentName: string,departmentId:number) {
   }
 
 
-  openAddDepartmentModal() {4
+  openAddDepartmentModal() {
+    4
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '100%', maxWidth: '420px' // adjust width as needed
       // You can pass data to the modal if needed
@@ -272,21 +287,22 @@ getEmployeeNames(departmentName: string,departmentId:number) {
     });
   }
 
-  openEditDepartmentModal(departmentId: number,departmentName:string) {
+  openEditDepartmentModal(departmentId: number, departmentName: string) {
     const dialogRef = this.dialog.open(EditDepartmentComponent, {
-      width: '100%', maxWidth: '420px' , // adjust width as needed
+      width: '100%', maxWidth: '420px', // adjust width as needed
       // Pass department ID to the modal if needed
-      data: { departmentId: departmentId ,
-          departmentName:departmentName
+      data: {
+        departmentId: departmentId,
+        departmentName: departmentName
       }
-    }); 
+    });
     // this.getAllDepartment() ;
     dialogRef.afterClosed().subscribe(result => {
       // Handle modal close event if needed
       console.log('The edit department modal was closed');
     });
   }
-  
-  
+
+
 }
 

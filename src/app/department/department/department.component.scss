@@ -352,3 +352,12 @@ button.btn.btn-primary.bg-dark {
     width: 10%;
     padding: 8px 12px;
 }
+
+.page_table mat-cell.cdk-column-actions,
+.page_table mat-cell.cdk-column-action,
+.page_table mat-cell.mat-column-actions,
+.page_table mat-cell.mat-column-action,
+.student_table mat-cell.mat-column-actions,
+.student_table mat-cell.mat-column-action {
+    justify-content: center !important;
+}
