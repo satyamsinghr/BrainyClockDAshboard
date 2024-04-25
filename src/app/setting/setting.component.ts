@@ -25,6 +25,7 @@ export class SettingComponent implements OnInit {
   timezones: string[] = moment.tz.names();
   intervals = ['1 day', '1 week','1 month'];
   submitButtonDisabled: boolean = false;
+  nameOfCompany = JSON.parse(localStorage.getItem('nameOfCompany'));
 
   scheduleData: any = []; 
   // createSchudleData : any = []

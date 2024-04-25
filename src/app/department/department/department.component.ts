@@ -49,6 +49,7 @@ export class DepartmentComponent implements OnInit {
   // @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  nameOfCompany = JSON.parse(localStorage.getItem('nameOfCompany'));
   constructor(
     private paginator1: MatPaginatorIntl,
     private router: Router,

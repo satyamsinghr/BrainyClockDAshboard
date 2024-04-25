@@ -54,6 +54,7 @@ export class EmployeeComponent implements OnInit {
   allEmployee : any = []
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  nameOfCompany = JSON.parse(localStorage.getItem('nameOfCompany'));
   constructor(
     private paginator1: MatPaginatorIntl,
     private router: Router,

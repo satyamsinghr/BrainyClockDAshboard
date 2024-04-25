@@ -49,6 +49,7 @@ export class LocationComponent implements OnInit {
   dataSourceWithPageSize = new MatTableDataSource(Emp_Data);
   selection = new SelectionModel(true, []);
   // @ViewChild(MatPaginator) paginator!: MatPaginator;
+  nameOfCompany = JSON.parse(localStorage.getItem('nameOfCompany'));
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   constructor(

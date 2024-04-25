@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
   sideBarOpen: boolean = true;
-  selectedWeek: string
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild('paginatorOperations') paginatorOperations: MatPaginator;
   dataSource = new MatTableDataSource<any>([]);

@@ -25,6 +25,7 @@ export class ReportComponent implements OnInit {
   role: any
   selection = new SelectionModel<viewEmployeeItemDto>(true, []);
   dataSource = new MatTableDataSource<any>([]);
+  nameOfCompany = JSON.parse(localStorage.getItem('nameOfCompany'));
   dataSourceWithPageSize = new MatTableDataSource<viewEmployeeItemDto>(
 
   );

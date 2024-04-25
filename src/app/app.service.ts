@@ -133,7 +133,6 @@ export class AppService {
 
 
   forgotPassword(email: any): Observable<APIResponse> {
-    debugger
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const formData = new FormData();

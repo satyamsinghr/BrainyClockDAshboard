@@ -34,6 +34,7 @@ export class ShiftComponent implements OnInit {
     'actions',
   ];
   role : string = '';
+  nameOfCompany = JSON.parse(localStorage.getItem('nameOfCompany'));
   dataSource = new MatTableDataSource<viewEmployeeItemDto>(Emp_Data);
   dataSourceWithPageSize = new MatTableDataSource<viewEmployeeItemDto>(Emp_Data);
   selection = new SelectionModel<viewEmployeeItemDto>(true, []);

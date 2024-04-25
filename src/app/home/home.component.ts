@@ -17,6 +17,7 @@ import * as moment from 'moment';
 export class HomeComponent implements OnInit {
   sideBarOpen: boolean = true;
   selectedWeek: string
+  nameOfCompany = JSON.parse(localStorage.getItem('nameOfCompany'));
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild('paginatorOperations') paginatorOperations: MatPaginator;
   dataSource = new MatTableDataSource<any>([]);
