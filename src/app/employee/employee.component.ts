@@ -33,10 +33,11 @@ export class EmployeeComponent implements OnInit {
     'id',
     'employeeName',
     'departmentName',
-    'role',
+    // 'role',
     'status',
     'shifts',
-    'primaryLocation',
+    'attandance_this_week',
+    // 'primaryLocation',
     'actions',
   ];
   role: string = '';
@@ -113,6 +114,35 @@ export class EmployeeComponent implements OnInit {
     }
 
     
+  }
+
+  weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+
+  getAttendanceClass(attendance:any, day:any) {
+    const today = new Date().getDay();
+    const currentDayIndex = this.weekDays.indexOf(day);
+    if (day === 'Saturday' || day === 'Sunday') {
+      return 'disabled';
+    }
+    if (currentDayIndex+1 > today) {
+      return 'upcoming';
+    }
+    const attendanceDay = attendance.find((a:any) => a.day == day);
+    if (attendanceDay) {
+      switch (attendanceDay.attendance_status) {
+        case 'Present':
+          return 'present';
+        case 'Late':
+          return 'active';
+        case 'Absent':
+          return 'active absent';
+        default:
+          return '';
+      }
+    }   else {
+      return 'active absent';
+    }
   }
 
   locationData: any

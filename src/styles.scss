@@ -3586,8 +3586,12 @@ ol.breadcrumb li a {
   background: #00916E;
   border: 2px solid #00916E;
 }
+.this_week_attendance li.absent {
+  background: black;
+  border: 2px solid black;
+}
 
-.this_week_attendance li.today {
+.this_week_attendance li.upcoming {
   border-color: #061D23;
   color: #061D23;
   background: #FCFCFC;

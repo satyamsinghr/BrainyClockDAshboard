@@ -143,7 +143,7 @@
                             {{ element.department_name }} </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="role">
+                    <!-- <ng-container matColumnDef="role">
                         <mat-header-cell *matHeaderCellDef mat-sort-header
                             class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
                             Role
@@ -151,7 +151,7 @@
                         <mat-cell *matCellDef="let element"
                             class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
                             {{ element.role }} </mat-cell>
-                    </ng-container>
+                    </ng-container> -->
 
                     <ng-container matColumnDef="status">
                         <mat-header-cell *matHeaderCellDef mat-sort-header
@@ -178,7 +178,7 @@
                             </ng-container>
                         </mat-cell>
                     </ng-container>
-
+<!-- 
                     <ng-container matColumnDef="primaryLocation">
                         <mat-header-cell *matHeaderCellDef mat-sort-header
                             class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
@@ -188,7 +188,21 @@
                             class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap"> {{
                             element.primaryLocation
                             }} </mat-cell>
-                    </ng-container>
+                    </ng-container> -->
+
+                    <ng-container matColumnDef="attandance_this_week">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header
+                            class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
+                            attendance this week
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <ul class="this_week_attendance">
+                                <li *ngFor="let day of weekDays" [ngClass]="getAttendanceClass(element.attendance, day)">
+                                    {{ day.charAt(0) }}
+                                  </li>
+                            </ul>
+                        </mat-cell>
+                    </ng-container> 
 
                     <ng-container matColumnDef="actions">
                         <mat-header-cell
