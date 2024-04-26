@@ -395,13 +395,13 @@
                       addEmployeeFormControl['hourlyRate'].errors &&
                       addEmployeeFormControl['hourlyRate'].errors['required']
                     ">
-              hourlyRate is required
+              Hourly wage  is required
             </div>
             <!-- <div class="text-danger" *ngIf="
                       addEmployeeFormControl['hourlyRate'].errors &&
                       addEmployeeFormControl['hourlyRate'].errors['pattern']
                     ">
-              First name should be alhabetic
+              Hourly wage  should be alhabetic
             </div> -->
           </small>
         </div>
@@ -443,8 +443,14 @@
                       addEmployeeFormControl['overTime'].errors &&
                       addEmployeeFormControl['overTime'].errors['required']
                     ">
-                    Overtime wage is required
+                    Overtime is required
             </div>
+               <!-- <div class="text-danger" *ngIf="
+                      addEmployeeFormControl['overTime'].errors &&
+                      addEmployeeFormControl['overTime'].errors['pattern']
+                    ">
+              Hourly wage  should be alhabetic
+            </div> -->  
             <!-- <div class="text-danger" *ngIf="
                       addEmployeeFormControl['email'].errors &&
                       addEmployeeFormControl['email'].errors['email']
@@ -633,8 +639,9 @@
 
 
           <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c" >
-            <li *ngFor="let shift of matchingShifts">
-              <input type="checkbox" checked >
+            <li *ngFor="let shift of matchingShifts let i = index" >
+              <input  class="form-control"
+              formControlName="shifts" type="checkbox" [checked]="shifts[i] !== ''" (change)="updateShift(i, shift.id)">
               <button type="button" class="d-flex align-items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <rect width="20" height="20" rx="10" fill="white" />
@@ -645,6 +652,17 @@
               </button>
             </li>
           </ul>
+          <small *ngIf="
+          (addEmployeeFormControl['shifts'].touched || submitted) &&
+          addEmployeeFormControl['shifts'].invalid
+        " class="form-text text-muted mt-2">
+  <div class="text-danger" *ngIf="
+            addEmployeeFormControl['shifts'].errors &&
+            addEmployeeFormControl['shifts'].errors['required']
+          ">
+    Shifts is required
+  </div>
+</small>
           
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
@@ -704,9 +722,9 @@
         </button>
         <button type="submit" class="btn btn-primary py-3 px-4 h-auto">Add
           Employee</button>
-        <div *ngIf="spinner == true" class="loader_img">
+        <!-- <div *ngIf="spinner == true" class="loader_img">
           <img src="assets/img/site_loader.gif" alt>
-        </div>
+        </div> -->
       </div>
     </form>
   </div>

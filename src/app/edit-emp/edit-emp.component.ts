@@ -16,6 +16,7 @@ export class EditEmpComponent implements OnInit {
   employeeId!: number;
   editEmployeeForm!: FormGroup;
   submitted = false;
+  selectedShifts: number[] = [];
   spinner:boolean = false;
   shiftsName: any = ['[2,3]', '[3,4]', '[4,5]', '[5,6]', '[7,8]', '[8,9]'];
   constructor(
@@ -43,11 +44,12 @@ export class EditEmpComponent implements OnInit {
   shifts1: number;
   shifts2: number;
   shifts3: number;
-  employee_id:any;
+  employee_id:string;
   department_id:any;
   department_name:any;
   // type: number;
   ngOnInit(): void {
+    debugger
     this.employeeId = this.data.row.id;
     this.id = this.data.row.id;
     this.firstName = this.data.row.firstName;
@@ -61,6 +63,12 @@ export class EditEmpComponent implements OnInit {
     this.department_name = this.data.row.department_name;
     this.role = this.service.getRole();
     this.isCompanyLoggedIn = this.role == 'SA' ? false : true;
+    this.selectedShifts.push(
+      this.data.row.shift_id_1 !== null ? this.data.row.shift_id_1 : "",
+      this.data.row.shift_id_2 !== null ? this.data.row.shift_id_2 : "",
+      this.data.row.shift_id_3 !== null ? this.data.row.shift_id_3 : ""
+  );
+    console.log("asd",this.selectedShifts)
     // this.employeeId = this.route.snapshot.params['employeeId'];
     this.initializeForm();
     this. getAllDepartment();
@@ -76,7 +84,7 @@ export class EditEmpComponent implements OnInit {
         companyId: this.service.getCompanyId(),
       });
       this.companyId = this.service.getCompanyId();
-      this.getAllShift();
+      // this.getAllShift();
       // this.matchingShifts = this.ShiftData.filter(
       //   (x: any) => x.company_id === parseInt(this.selectedCompanyId)
       // );
@@ -87,31 +95,31 @@ export class EditEmpComponent implements OnInit {
     // this.matchingShifts.push(this.data.row);
   }
 
-  getAllShift() {
-    this.service.getAllShift().subscribe(
-      (response: any) => {
-        this.ShiftData = response.data;
-        if (this.role !== 'SA') {
-          this.matchingShifts = this.ShiftData.filter(
-            (x: any) => x.company_id === parseInt(this.selectedCompanyId)
-          );
-        }
-        this.shifts1 = this.matchingShifts.find((x: { name: any; }) => x.name == this.data.row.shift_name_1).id;
-        this.shifts2 = this.matchingShifts.find((x: { name: any; }) => x.name == this.data.row.shift_name_2).id;
-        this.shifts3 = this.matchingShifts.find((x: { name: any; }) => x.name == this.data.row.shift_name_3).id;
+  // getAllShift() {
+  //   this.service.getAllShift().subscribe(
+  //     (response: any) => {
+  //       this.ShiftData = response.data;
+  //       if (this.role !== 'SA') {
+  //         this.matchingShifts = this.ShiftData.filter(
+  //           (x: any) => x.company_id === parseInt(this.selectedCompanyId)
+  //         );
+  //       }
+  //       this.shifts1 = this.matchingShifts.find((x: { name: any; }) => x.name == this.data.row.shift_name_1).id;
+  //       this.shifts2 = this.matchingShifts.find((x: { name: any; }) => x.name == this.data.row.shift_name_2).id;
+  //       this.shifts3 = this.matchingShifts.find((x: { name: any; }) => x.name == this.data.row.shift_name_3).id;
         
-        // this.shifts1 = this.data.row.shift_name_1;
-        // this.shifts2 = this.data.row.shift_name_2;
-        // this.shifts3 = this.data.row.shift_name_3;
+  //       // this.shifts1 = this.data.row.shift_name_1;
+  //       // this.shifts2 = this.data.row.shift_name_2;
+  //       // this.shifts3 = this.data.row.shift_name_3;
 
-        console.log('tesing gdfdf', { 'selected': this.shifts1, 'arr': this.matchingShifts });
+  //       console.log('tesing gdfdf', { 'selected': this.shifts1, 'arr': this.matchingShifts });
 
-      },
-      (error) => {
-        this.service.handleError(error);
-      }
-    );
-  }
+  //     },
+  //     (error) => {
+  //       this.service.handleError(error);
+  //     }
+  //   );
+  // }
   initializeForm() {
     this.editEmployeeForm = this.fb.group({
       companyId: ['', [Validators.required]],
@@ -238,16 +246,19 @@ export class EditEmpComponent implements OnInit {
     });
   }
 
+  
+
   gotoEmpPage() {
     this.router.navigate(['/dashboard/employee']);
   }
 
   editEmployee() {
+    debugger
     this.submitted = true;
     if (this.editEmployeeForm.valid) {
       this.spinner = true;
       this.submitted = false;
-      this.service.updateEmployee(this.editEmployeeForm.value, this.id).subscribe((response: any) => {
+      this.service.updateEmployee(this.editEmployeeForm.value, this.id,this.selectedShifts).subscribe((response: any) => {
         if ((response as any).success == true) {
           this.toastr.success((response as any).msg);
           this.editEmployeeForm.reset();
@@ -269,10 +280,11 @@ export class EditEmpComponent implements OnInit {
 
   departmentData: any;
   getAllDepartment() {
+    debugger
     this.service.getAllDepartment().subscribe(
       (response: any) => {
         this.departmentData = response.data;
-        console.log("departmentData",this.departmentData);
+        this.department_name = this.departmentData.find((x: { department_name: any; }) => x.department_name == this.data.row.department_name).id;
       },
       (error) => {
         this.service.handleError(error);
@@ -280,4 +292,24 @@ export class EditEmpComponent implements OnInit {
     );
   }
 
+  isShiftSelected(shiftId: number): boolean {
+    return this.selectedShifts.includes(shiftId);
+  }
+
+  // Toggle selection of a shift
+  toggleShiftSelection(shiftId: number): void {
+    const index = this.selectedShifts.indexOf(shiftId);
+    if (index === -1) {
+      // Shift not selected, add it to the list
+      this.selectedShifts.push(shiftId);
+    } else {
+      // Shift already selected, remove it from the list
+      this.selectedShifts.splice(index, 1);
+    }
+  }
+  getSelectedShiftsArray(): string[] {
+    return this.selectedShifts.map(shiftId => shiftId.toString());
+  }
+
+  
 }

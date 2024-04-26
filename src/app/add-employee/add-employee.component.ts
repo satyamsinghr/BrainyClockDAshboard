@@ -77,8 +77,8 @@ export class AddEmployeeComponent implements OnInit {
       ],
       // lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
       email: ['', [Validators.required, Validators.email]],
-      hourlyRate: ['', Validators.required],
-      overTime: ['', Validators.required],
+      hourlyRate: ['', [Validators.required]],
+      overTime: ['', [Validators.required]],
       // shifts1: ['', [Validators.required]],
       // shifts2: [''],
       // shifts3: [''],
@@ -252,7 +252,14 @@ export class AddEmployeeComponent implements OnInit {
     }
   }
 
+  shifts: (number | string)[] = ["", "", ""];
+  updateShift(index: number, shiftId: number) {
+    this.shifts[index] = this.shifts[index] === shiftId ? "" : shiftId;
+    console.log("shiftsshifts",this.shifts);
+  }
+  
   addEmployee() {
+    debugger
     this.submitted = true;
     // if (this.role != 'SA') {
     //   const companyId = this.service.getCompanyId();
@@ -262,7 +269,7 @@ export class AddEmployeeComponent implements OnInit {
       if (this.addEmployeeForm.valid) {
        this.spinner = true
         this.submitted = false;
-        this.service.addEmployee(this.addEmployeeForm.value).subscribe(
+        this.service.addEmployee(this.addEmployeeForm.value,this.shifts).subscribe(
           (response: any) => {
             if (response.data) {
               this.toastr.success(response.msg);
@@ -282,7 +289,7 @@ export class AddEmployeeComponent implements OnInit {
     } else if (this.role == 'SA') {
       if (this.addEmployeeForm.valid) {
         this.submitted = false;
-        this.service.addEmployee(this.addEmployeeForm.value).subscribe(
+        this.service.addEmployee(this.addEmployeeForm.value,this.shifts).subscribe(
           (response: any) => {
             if (response.data) {
               this.toastr.success(response.msg);

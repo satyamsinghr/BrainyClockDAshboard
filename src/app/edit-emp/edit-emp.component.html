@@ -444,10 +444,10 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="name" class="labelName">Employee ID :</label>
-          <input type="number" class="form-control"
+          <input type="text" class="form-control"
             formControlName="employee_id"
             [(ngModel)]="employee_id"
-            placeholder="Enter Employee ID" required />
+            placeholder="Enter Employee ID" required  readonly/>
           <small
             *ngIf="
                 (editEmployeeFormControl['employee_id'].touched || submitted) && editEmployeeFormControl['employee_id'].invalid"
@@ -504,8 +504,8 @@
           <label for="location_id" class="labelName">Select shifts :</label>
           <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c" >
             <li *ngFor="let shift of matchingShifts">
-              <input type="checkbox" checked >
-              <button type="button" class="d-flex align-items-center gap-2">
+              <input type="checkbox" [checked]="isShiftSelected(shift.id)" >
+              <button type="button" class="d-flex align-items-center gap-2" (change)="toggleShiftSelection(shift.id)"> 
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <rect width="20" height="20" rx="10" fill="white" />
                   <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23" stroke-width="2" stroke-linecap="round"
@@ -519,6 +519,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="department_id" class="labelName">Department :</label>
           <select class="form-control" formControlName="department_id"
+          [(ngModel)]="department_name"
             required>
             <option value>Select Department</option>
             <option *ngFor="let department of departmentData"
@@ -678,10 +679,12 @@
           (click)="onCancel()">
           Cancel
         </button>
+        <div class="position-relative">
         <button type="submit" class="btn btn-primary py-3 px-4 h-auto">Update Employee</button>
-        <div *ngIf="spinner == true" class="loader_img">
+        <!-- <div *ngIf="spinner == true" class="loader_img">
           <img src="assets/img/site_loader.gif" alt>
-        </div>
+        </div> -->
+      </div>
       </div>
     </form>
 

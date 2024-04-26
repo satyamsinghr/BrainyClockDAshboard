@@ -92,27 +92,28 @@ export class AppService {
     }
   }
 
-  addEmployee(data: any): Observable<APIResponse> {
-    const token = JSON.parse(localStorage.getItem('loginToken'));
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    let userId = localStorage.getItem('userId')
-    const shiftKeys = ['shifts1', 'shifts2', 'shifts3'];
-    const shifts = [];
-    for (const key of shiftKeys) {
-      const shiftValue = data[key];
-      if (shiftValue !== null && shiftValue !== undefined && shiftValue !== "") {
-        shifts.push(parseInt(shiftValue));
-      }
-    }
+    addEmployee(data: any,shifts:any): Observable<APIResponse> {
+      debugger
+      const token = JSON.parse(localStorage.getItem('loginToken'));
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      let userId = localStorage.getItem('userId')
+    // const shiftKeys = ['shifts1', 'shifts2', 'shifts3'];
+    // const shifts = [];
+    // for (const key of shiftKeys) {
+    //   const shiftValue = data[key];
+    //   if (shiftValue !== null && shiftValue !== undefined && shiftValue !== "") {
+    //     shifts.push(parseInt(shiftValue));
+    //   }
+    // }
     const modifiedData = {
-      "company_id": data.company_id,
+      "company_id": data.company_id.toString(),
       "firstName": data.firstName,
       // "lastName": data.lastName, 
       "email": data.email,
       // "password": data.password, 
       "shifts": shifts,
       "department_id": data.department_id,
-      "location_id": data.location_id,
+      // "location_id": data.location_id,
       "hourlyRate": data.hourlyRate,
       "overTime": data.overTime,
       "employee_id": data.employee_id,
@@ -142,28 +143,31 @@ export class AppService {
     return this.http.post<APIResponse>(url, formData, { headers });
   }
 
-  updateEmployee(data: any, id: number): Observable<APIResponse> {
+  updateEmployee(data: any, id: number,shifts:any): Observable<APIResponse> {
+    debugger
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const shiftKeys = ['shifts1', 'shifts2', 'shifts3'];
-    const shifts = [];
-    for (const key of shiftKeys) {
-      const shiftValue = data[key];
-      if (shiftValue !== null && shiftValue !== undefined && shiftValue !== "") {
-        shifts.push(parseInt(shiftValue));
-      }
-    }
+    // const shiftKeys = ['shifts1', 'shifts2', 'shifts3'];
+    // const shifts = [];
+    // for (const key of shiftKeys) {
+    //   const shiftValue = data[key];
+    //   if (shiftValue !== null && shiftValue !== undefined && shiftValue !== "") {
+    //     shifts.push(parseInt(shiftValue));
+    //   }
+    // }
     const modifiedData = {
       companyId: data.companyId.toString(),
       firstName: data.firstName,
-      lastName: data.lastName,
+      // lastName: data.lastName,
       email: data.email,
       // overTime:data.overTime,
       // hourlyRate:data.hourlyRate,
-      overTime: (data.overTime != null && data.overTime !== "") ? data.overTime : "",
+      overTime: (data.overTime != null && data.overTime !== "") ? data.overTime.toString() : "",
       hourlyRate: (data.hourlyRate != null && data.hourlyRate !== "") ? data.hourlyRate : "",
+      // employee_id: data.employee_id,
+      department_id: data.department_id.toString(),
       shifts: shifts,
-      type: data.type
+      // type: data.type
 
       // officeId: data.
     };
