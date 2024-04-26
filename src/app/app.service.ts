@@ -93,7 +93,6 @@ export class AppService {
   }
 
     addEmployee(data: any,shifts:any): Observable<APIResponse> {
-      debugger
       const token = JSON.parse(localStorage.getItem('loginToken'));
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       let userId = localStorage.getItem('userId')
@@ -144,7 +143,6 @@ export class AppService {
   }
 
   updateEmployee(data: any, id: number,shifts:any): Observable<APIResponse> {
-    debugger
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     // const shiftKeys = ['shifts1', 'shifts2', 'shifts3'];

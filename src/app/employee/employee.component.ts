@@ -463,7 +463,6 @@ this.filterEmployee(
 
 
   openEditEmployeeModal(row: any,) {
-    debugger
     const dialogRef = this.dialog.open(EditEmpComponent, {
       height:'600px',
       width: '728px' ,

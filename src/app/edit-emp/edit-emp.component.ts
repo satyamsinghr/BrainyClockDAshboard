@@ -49,7 +49,6 @@ export class EditEmpComponent implements OnInit {
   department_name:any;
   // type: number;
   ngOnInit(): void {
-    debugger
     this.employeeId = this.data.row.id;
     this.id = this.data.row.id;
     this.firstName = this.data.row.firstName;
@@ -253,7 +252,6 @@ export class EditEmpComponent implements OnInit {
   }
 
   editEmployee() {
-    debugger
     this.submitted = true;
     if (this.editEmployeeForm.valid) {
       this.spinner = true;
@@ -280,7 +278,6 @@ export class EditEmpComponent implements OnInit {
 
   departmentData: any;
   getAllDepartment() {
-    debugger
     this.service.getAllDepartment().subscribe(
       (response: any) => {
         this.departmentData = response.data;
