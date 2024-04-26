@@ -204,11 +204,13 @@
                 (click)="onCancel()">
                 Cancel
               </button>
+              <div class="position-relative">
               <button type="submit"
                 class="btn btn-primary  py-3 px-4 h-auto">Submit</button>
               <div *ngIf="spinner == true" class="loader_img">
                 <img src="assets/img/site_loader.gif" alt>
               </div>
+            </div>
             </div>
           </form>
         </div>
