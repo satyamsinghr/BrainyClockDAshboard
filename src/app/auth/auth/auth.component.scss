@@ -178,8 +178,9 @@
   background: transparent !important;
   left: 0;
   right: 0;
-  min-width: 150px;
-  max-width: 150px;
+  min-width: 100%;
+  max-width: 100%;
+  border-radius: 70px;
 }
 
 .login_loader .loader_img img {
