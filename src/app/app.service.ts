@@ -93,6 +93,7 @@ export class AppService {
   }
 
   addEmployee(data: any): Observable<APIResponse> {
+    debugger
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     let userId = localStorage.getItem('userId')
@@ -107,7 +108,7 @@ export class AppService {
     const modifiedData = {
       "company_id": data.company_id,
       "firstName": data.firstName,
-      "lastName": data.lastName,
+      // "lastName": data.lastName, 
       "email": data.email,
       // "password": data.password, 
       "shifts": shifts,
@@ -115,7 +116,8 @@ export class AppService {
       "location_id": data.location_id,
       "hourlyRate": data.hourlyRate,
       "overTime": data.overTime,
-      "type": data.type
+      "employee_id": data.employee_id,
+      // "type": data.type
       // "created_by": userId,
     };
     return this.http.post<APIResponse>(this.apiConfig + routes.Post_AddEmployee, modifiedData, { headers });

@@ -395,14 +395,14 @@
                       addEmployeeFormControl['hourlyRate'].errors &&
                       addEmployeeFormControl['hourlyRate'].errors['required']
                     ">
-              First name is required
+              hourlyRate is required
             </div>
-            <div class="text-danger" *ngIf="
+            <!-- <div class="text-danger" *ngIf="
                       addEmployeeFormControl['hourlyRate'].errors &&
                       addEmployeeFormControl['hourlyRate'].errors['pattern']
                     ">
               First name should be alhabetic
-            </div>
+            </div> -->
           </small>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
@@ -412,7 +412,7 @@
             formControlName="employee_id"
             placeholder="Enter Employee ID " required="required" />
           <small *ngIf="
-                    (addEmployeeFormControl['employee_id'].touched ||
+                    (addEmployeeFormControl['employee_id'] ||
                       submitted) &&
                     addEmployeeFormControl['employee_id'].invalid
                   " class="form-text text-muted mt-2">
@@ -497,10 +497,10 @@
           <input type="number" class="form-control"
             formControlName="overTime" placeholder="Enter Overtime"
             required />
-          <!-- <small *ngIf="addEmployeeFormControl['employeeOverTime'].invalid" class="form-text text-danger mt-2">
+         <small *ngIf="addEmployeeFormControl['employeeOverTime'].invalid" class="form-text text-danger mt-2">
                   Employee Overtime is required
                 </small> -->
-          <small
+          <!-- <small
             *ngIf="
                 (addEmployeeFormControl['overTime'].touched || submitted) && addEmployeeFormControl['overTime'].invalid"
             class="form-text text-muted mt-2">
@@ -589,7 +589,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="location_id" class="labelName">Select shifts :</label>
 
-          <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
+          <!-- <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
             <li>
               <input type="checkbox" checked>
               <button class="d-flex align-items-center gap-2">
@@ -629,7 +629,23 @@
                 <span> Night
                   shift</span></button>
             </li>
+          </ul> -->
+
+
+          <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c" >
+            <li *ngFor="let shift of matchingShifts">
+              <input type="checkbox" checked >
+              <button type="button" class="d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <rect width="20" height="20" rx="10" fill="white" />
+                  <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+                <span>{{ shift.name }}</span>
+              </button>
+            </li>
           </ul>
+          
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="department_id" class="labelName">Department :</label>
@@ -637,7 +653,7 @@
             required>
             <option value>Select Department</option>
             <option *ngFor="let department of departmentData"
-              [value]="department.id">
+              [value]="department.department_id">
               {{ department.department_name }}
             </option>
           </select>
@@ -693,6 +709,5 @@
         </div>
       </div>
     </form>
-
   </div>
 </section>

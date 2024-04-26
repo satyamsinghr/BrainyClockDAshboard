@@ -70,20 +70,22 @@ export class AddEmployeeComponent implements OnInit {
   initializeForm() {
     this.addEmployeeForm = this.fb.group({
       company_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      employee_id:['', [Validators.required]],
       firstName: [
         '',
         [Validators.required, Validators.pattern('^[a-zA-Z ]*$')],
       ],
-      lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      // lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
       email: ['', [Validators.required, Validators.email]],
       hourlyRate: ['', Validators.required],
       overTime: ['', Validators.required],
-      shifts1: ['', [Validators.required]],
-      shifts2: [''],
-      shifts3: [''],
-      department_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')],],
-      location_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      type: ['', Validators.required],
+      // shifts1: ['', [Validators.required]],
+      // shifts2: [''],
+      // shifts3: [''],
+      shifts:['',[Validators.required]],
+      department_id: ['', [Validators.required]],
+      // location_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      // type: ['', Validators.required],
     });
   }
 
@@ -91,6 +93,7 @@ export class AddEmployeeComponent implements OnInit {
     return this.addEmployeeForm.get('shifts');
   }
   getDepaetmentById() {
+    debugger
     this.service.getDepartmentById(this.selectedCompanyId).subscribe(
       (response: any) => {
         this.departmentData = response.data;
@@ -117,6 +120,7 @@ export class AddEmployeeComponent implements OnInit {
     this.service.getAllDepartment().subscribe(
       (response: any) => {
         this.departmentData = response.data;
+        console.log("departmentData",this.departmentData);
       },
       (error) => {
         this.service.handleError(error);
@@ -138,6 +142,7 @@ export class AddEmployeeComponent implements OnInit {
 
   ShiftData: [];
   getAllShift() {
+    debugger
     this.service.getAllShift().subscribe(
       (response: any) => {
         this.ShiftData = response.data;
@@ -250,6 +255,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   addEmployee() {
+    debugger
     this.submitted = true;
     // if (this.role != 'SA') {
     //   const companyId = this.service.getCompanyId();
