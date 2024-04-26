@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   base_url:'https://8m02o9way6.execute-api.us-east-1.amazonaws.com/prod/api',
-  local_url : 'http://localhost:8080/api'
+  // base_url : 'http://localhost:3000/api'
 };
 
 /*

@@ -104,12 +104,21 @@ export class DepartmentComponent implements OnInit {
     }
   }
 
+  getAttendancePercentage(attendance: any, total: any): any {
+    if (total == 0) {
+      return 0;
+    }
+    return (attendance / total) * 100;
+  }
 
   locationData: any
+  allLocationByCompany: any[] = []; // Assuming you have already fetched this data
+  selectedLocationId:any;
   getLocationByCompanyId() {
     this.service.getLocationByCompany(this.comapnyId).subscribe(
       (response: any) => {
         this.locationData = response.data[0];
+        this.allLocationByCompany  =  response.data
       },
       (error) => {
         this.service.handleError(error);
@@ -117,7 +126,39 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
+  onLocationSelect(e: any) {
+    this.selectedLocationId = e.target.value;
+    if ( this.selectedLocationId == "") {
+      this.dataSource.data = this.departmentData;
+    }
+    else{
+      const fileredData =   this.departmentData.filter((x:any) => x.location_id == this.selectedLocationId);
+      if (fileredData) {
+         this.dataSource.data =fileredData
+      } else {
+        console.log('No department found for the selected location ID:', this.selectedLocationId);
+      }
+    }
+    
+  }
+  selectedDeptId:any
+  onDepartmentSelect(e: any) {
+    this.selectedDeptId = e.target.value;
+    
+    if ( this.selectedDeptId == "") {
+      this.dataSource.data = this.departmentData;
+    }
+    else{
+      const fileredData =   this.departmentData.filter((x:any) => x.department_id == this.selectedDeptId);
+      if (fileredData) {
+         this.dataSource.data =fileredData
+      } else {
+        console.log('No department found for the selected location ID:', this.selectedLocationId);
+      }
+    }
+   
+  }
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;

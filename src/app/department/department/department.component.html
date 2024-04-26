@@ -32,7 +32,7 @@
     <form action class="mb-4 pb-lg-2">
       <ul class="filter_dropdown d-flex align-items-center gap-3">
         <li class="position-relative">
-          <select name="departments" id="departments">
+          <!-- <select name="departments" id="departments">
             <option value>Filter by office</option>
             <option value="Filter by Department">Filter by
               office</option>
@@ -40,10 +40,17 @@
               office</option>
             <option value="Filter by Department">Filter by
               office</option>
-          </select>
-        </li>
+          </select> -->
+            <select name="locations" id="locations" (change)="onLocationSelect($event)">
+              
+              <option value="">Filter by office</option>
+              <option value="">All Offce</option>
+              <option *ngFor="let location of allLocationByCompany" [value]="location.id">{{ location.location_name }}</option>
+            </select>
+          </li>
+      
         <li class="position-relative">
-          <select name="departments" id="departments">
+          <!-- <select name="departments" id="departments">
             <option value>Filter by department</option>
             <option value="Filter by Department">Filter by
               department</option>
@@ -51,6 +58,11 @@
               department</option>
             <option value="Filter by Department">Filter by
               department</option>
+          </select> -->
+          <select name="departments" id="departments" (change)="onDepartmentSelect($event)">
+            <option value="">Filter by department</option>
+            <option value="">All Department</option>
+            <option *ngFor="let dept of departmentData" [value]="dept.department_id">{{ dept.department_name }}</option>
           </select>
         </li>
       </ul>
@@ -84,6 +96,8 @@
               </mat-checkbox>
             </mat-cell>
           </ng-container>
+
+          <!-- For department_name -->
           <ng-container matColumnDef="department_name">
             <mat-header-cell *matHeaderCellDef mat-sort-header
               class="justify-content-lg-start justify-content-md-start text-nowrap justify-content-start">
@@ -93,6 +107,9 @@
               class="justify-content-lg-start justify-content-md-start text-nowrap justify-content-start">
               {{ element.department_name}} </mat-cell>
           </ng-container>
+
+
+            <!-- For location -->
           <ng-container matColumnDef="Location">
             <mat-header-cell *matHeaderCellDef mat-sort-header
               class="justify-content-lg-center justify-content-md-center text-nowrap justify-content-center">
@@ -100,8 +117,10 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element"
               class="justify-content-lg-center justify-content-md-center text-nowrap justify-content-center">
-              CleanCorp Solutions - Manhattan </mat-cell>
+              {{element.location_name}} </mat-cell>
           </ng-container>
+
+          <!-- For Shift 1 -->
           <ng-container matColumnDef="Shift">
             <mat-header-cell *matHeaderCellDef mat-sort-header
               class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
@@ -109,8 +128,10 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element"
               class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              Morning shift </mat-cell>
+             {{element.shift_name_1}} </mat-cell>
           </ng-container>
+
+          <!-- For shift1 Attandance -->
           <ng-container matColumnDef="Attendance">
             <mat-header-cell *matHeaderCellDef mat-sort-header
               class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
@@ -118,13 +139,13 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element"
               class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              <b>24/28</b>
+              <b *ngIf="element.shift_name_1">{{element.shift_1_attendance}}/{{element.shift_1_total}}</b>
 
               <div
-                class="progress ms-2" style="background-color:#061D23;">
+                class="progress ms-2" style="background-color:#061D23;"  *ngIf="element.shift_name_1">
                 <div
                   class="progress-bar"
-                  style="width: 90%"
+                  [style.width.%]="getAttendancePercentage(element.shift_1_attendance, element.shift_1_total)"
                   role="progressbar"
                   aria-valuenow="24"
                   aria-valuemin="0"
@@ -132,6 +153,8 @@
               </div>
             </mat-cell>
           </ng-container>
+<!-- For Shift 2 -->
+
           <ng-container matColumnDef="shift">
             <mat-header-cell *matHeaderCellDef mat-sort-header
               class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
@@ -139,23 +162,22 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element"
               class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              Night shift
+             {{element.shift_name_2}}  
             </mat-cell>
           </ng-container>
-          <ng-container matColumnDef="attendance">
+          <ng-container matColumnDef="attendance" >
             <mat-header-cell *matHeaderCellDef mat-sort-header
               class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              Attendance
+              Attendance  
             </mat-header-cell>
-            <mat-cell *matCellDef="let element"
-              class="justify-content-lg-center fade_att justify-content-md-center  text-nowrap justify-content-center">
-              --/10
-
+            <mat-cell *matCellDef="let element" 
+              class="justify-content-lg-center fade_att justify-content-md-center  text-nowrap justify-content-center" >
+              <b *ngIf="element.shift_name_2"> {{element.shift_2_attendance}}/{{element.shift_2_total}}</b>
               <div
-                class="progress ms-2">
+                class="progress ms-2" style="background-color:#061D23;"  *ngIf="element.shift_name_2">
                 <div
                   class="progress-bar"
-                  style="width: 0%"
+                  [style.width.%]="getAttendancePercentage(element.shift_2_attendance, element.shift_2_total)"
                   role="progressbar"
                   aria-valuenow="24"
                   aria-valuemin="0"
@@ -163,6 +185,8 @@
               </div>
             </mat-cell>
           </ng-container>
+
+            <!-- For shift3 -->
           <ng-container matColumnDef="SHift">
             <mat-header-cell *matHeaderCellDef mat-sort-header
               class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
@@ -170,7 +194,7 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element"
               class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              Shift 3
+              {{element.shift_name_3}}  
             </mat-cell>
           </ng-container>
           <ng-container matColumnDef="ATtendance">
@@ -180,13 +204,13 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element"
               class="justify-content-lg-center fade_att justify-content-md-center  text-nowrap justify-content-center">
-              --/12
+              <b *ngIf="element.shift_name_3"> {{element.shift_3_attendance}}/{{element.shift_3_total}} </b>
 
               <div
-                class="progress ms-2">
+                class="progress ms-2"  style="background-color:#061D23;"  *ngIf="element.shift_name_3">
                 <div
                   class="progress-bar"
-                  style="width: 0%"
+                  [style.width.%]="getAttendancePercentage(element.shift_3_attendance, element.shift_3_total)"
                   role="progressbar"
                   aria-valuenow="24"
                   aria-valuemin="0"
