@@ -120,6 +120,17 @@
               {{element.location_name}} </mat-cell>
           </ng-container>
 
+          <!-- <ng-container matColumnDef="Location_Id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+              class="justify-content-lg-center justify-content-md-center text-nowrap justify-content-center">
+              Location_Id
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"
+              class="justify-content-lg-center justify-content-md-center text-nowrap justify-content-center">
+              {{element.location_id}} </mat-cell>
+          </ng-container> -->
+
+
           <!-- For Shift 1 -->
           <ng-container matColumnDef="Shift">
             <mat-header-cell *matHeaderCellDef mat-sort-header
@@ -258,7 +269,7 @@
                 </div>
               </div>
               <div class="position-relative">
-                <a class="action" (click)="ConfirmDeleteDepartment(row.id)">
+                <a class="action" (click)="ConfirmDeleteDepartment(row.department_id)">
                   <img src="../../assets/img/delete_gray.png" alt width="24px"
                     height="24px" />
                 </a>

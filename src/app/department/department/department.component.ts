@@ -286,7 +286,7 @@ export class DepartmentComponent implements OnInit {
   goto_addbulkEmployee() {
     // this.router.navigate(['/dashboard/addBulk-employee']);
   }
-  ConfirmDeleteDepartment(departmentId: number) {
+  ConfirmDeleteDepartment(departmentId: any) {
     const message = `Are you sure you want to delete this record?`;
     const dialogData = new ConfirmDialogModel('Confirm Action', message, false);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

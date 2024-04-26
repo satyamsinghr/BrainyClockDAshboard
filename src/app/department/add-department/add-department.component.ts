@@ -43,8 +43,8 @@ export class AddDepartmentComponent implements OnInit {
     this.companyName=JSON.parse(localStorage.getItem('nameOfCompany'));
     this.name=JSON.parse(localStorage.getItem('companyName'));
     this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
-    this.getLocationByCompanyId();
     this.initializeForm();
+    this.getLocationByCompanyId();
     if (this.role != 'SA') {
       this.isCompanyLoggedIn = true;
       this.companyData = [
@@ -66,6 +66,7 @@ export class AddDepartmentComponent implements OnInit {
     this.addDepartmentForm = this.fb.group({
       department: ['', [Validators.required]],
       company_id: ['', [Validators.required]],
+      location_id:['',[Validators.required]]
     });
   }
 
@@ -132,6 +133,7 @@ export class AddDepartmentComponent implements OnInit {
 
 
   getLocationByCompanyId() {
+    debugger
     this.service.getLocationByCompany(this.comapnyId).subscribe(
       (response: any) => {
         this.locationData = response.data;
