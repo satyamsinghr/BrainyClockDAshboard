@@ -20,8 +20,8 @@
     <div class="header_add_button d-lg-none d-md-none d-flex">
 
       <div class="position-relative">
-        <a href="javascript:void" class="btn btn-primary w-100"
-          (click)="goto_addShift()">Add shift</a>
+        <button type="button"  class="btn btn-primary w-100"
+          (click)="goto_addShift()" >Add shift</button>
         <div class="tooltip_manual">
           Add shift
         </div>
@@ -166,8 +166,8 @@
               <!-- <a href="javascript:void" class="btn btn-primary bg-white mt-3" (click)="goto_addbulkEmployee()">Add
                 in bulk</a> -->
               <div class="position-relative">
-                <a href="javascript:void" class="btn btn-primary w-100"
-                  (click)="goto_addShift()">Add shift</a>
+                <button type="button" class="btn btn-primary w-100"
+                  (click)="goto_addShift()" [disabled]="dataSource.data.length >= 3">Add shift</button>
                 <div class="tooltip_manual">
                   Add shift
                 </div>

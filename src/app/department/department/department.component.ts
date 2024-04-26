@@ -38,7 +38,7 @@ export class DepartmentComponent implements OnInit {
     'attendance',
     'SHift',
     'ATtendance',
-    'action'
+    'action',
   ];
   displayedColumnsCompany: string[] = [
     'select',
@@ -51,7 +51,7 @@ export class DepartmentComponent implements OnInit {
     'attendance',
     'SHift',
     'ATtendance',
-    'action'
+    'action',
   ];
   employeeList: any = []
   selectedDepartment: any = []
@@ -113,12 +113,12 @@ export class DepartmentComponent implements OnInit {
 
   locationData: any
   allLocationByCompany: any[] = []; // Assuming you have already fetched this data
-  selectedLocationId:any;
+  selectedLocationId: any;
   getLocationByCompanyId() {
     this.service.getLocationByCompany(this.comapnyId).subscribe(
       (response: any) => {
         this.locationData = response.data[0];
-        this.allLocationByCompany  =  response.data
+        this.allLocationByCompany = response.data
       },
       (error) => {
         this.service.handleError(error);
@@ -128,35 +128,35 @@ export class DepartmentComponent implements OnInit {
 
   onLocationSelect(e: any) {
     this.selectedLocationId = e.target.value;
-    if ( this.selectedLocationId == "") {
+    if (this.selectedLocationId == "") {
       this.dataSource.data = this.departmentData;
     }
-    else{
-      const fileredData =   this.departmentData.filter((x:any) => x.location_id == this.selectedLocationId);
+    else {
+      const fileredData = this.departmentData.filter((x: any) => x.location_id == this.selectedLocationId);
       if (fileredData) {
-         this.dataSource.data =fileredData
+        this.dataSource.data = fileredData
       } else {
         console.log('No department found for the selected location ID:', this.selectedLocationId);
       }
     }
-    
+
   }
-  selectedDeptId:any
+  selectedDeptId: any
   onDepartmentSelect(e: any) {
     this.selectedDeptId = e.target.value;
-    
-    if ( this.selectedDeptId == "") {
+
+    if (this.selectedDeptId == "") {
       this.dataSource.data = this.departmentData;
     }
-    else{
-      const fileredData =   this.departmentData.filter((x:any) => x.department_id == this.selectedDeptId);
+    else {
+      const fileredData = this.departmentData.filter((x: any) => x.department_id == this.selectedDeptId);
       if (fileredData) {
-         this.dataSource.data =fileredData
+        this.dataSource.data = fileredData
       } else {
         console.log('No department found for the selected location ID:', this.selectedLocationId);
       }
     }
-   
+
   }
 
   isAllSelected() {
@@ -316,7 +316,6 @@ export class DepartmentComponent implements OnInit {
 
 
   openAddDepartmentModal() {
-    4
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '100%', maxWidth: '420px' // adjust width as needed
       // You can pass data to the modal if needed
@@ -328,13 +327,12 @@ export class DepartmentComponent implements OnInit {
     });
   }
 
-  openEditDepartmentModal(departmentId: number, departmentName: string) {
+  openEditDepartmentModal(row: any) {
     const dialogRef = this.dialog.open(EditDepartmentComponent, {
       width: '100%', maxWidth: '420px', // adjust width as needed
       // Pass department ID to the modal if needed
       data: {
-        departmentId: departmentId,
-        departmentName: departmentName
+        row: row
       }
     });
     // this.getAllDepartment() ;

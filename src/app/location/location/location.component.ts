@@ -215,17 +215,6 @@ export class LocationComponent implements OnInit {
     });
   }
 
-  //   EditAddOfficeModal() {
-  //   const dialogRef = this.dialog.open(EditLocationComponent, {
-  //     width: '100%', maxWidth: '1000px' 
-  //   });
-  //     dialogRef.afterClosed().subscribe(result => {
-  //     // Handle modal close event if needed
-  //       this.getAllLocation();
-  //     console.log('The modal was closed');
-  //   });
-  // }
-
   EditAddOfficeModal(locationId: number): void {
     const dialogRef = this.dialog.open(EditLocationComponent, {
       width: '500px',

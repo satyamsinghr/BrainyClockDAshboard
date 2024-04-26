@@ -188,7 +188,7 @@
             class="form-control"
             formControlName="department"
             placeholder="Enter department"
-            [(ngModel)]="departmentName"
+            [(ngModel)]="department_name"
             required
           />
           <small
@@ -200,6 +200,22 @@
             </div>
           </small>
         </div>
+      </div>
+      <div class="col-12">
+        <select id="location_id" formControlName="location_id" class="form-control"   [(ngModel)]="location_id">
+          <option value="" disabled selected>Select Location Name</option>
+          <option *ngFor="let location of locationData" [value]="location.id">{{ location.location_name }}</option>
+        </select>
+        <small
+          *ngIf="(editDepartmentFormControl['location_id'].touched ) &&
+            editDepartmentFormControl['location_id'].invalid"
+          class="form-text text-muted">
+          <div class="text-danger"
+            *ngIf=" editDepartmentFormControl['location_id'].errors &&
+              editDepartmentFormControl['location_id'].errors['required' ]">
+            *Location Name is required
+          </div>
+        </small>
       </div>
       <div class="d-flex align-items-center gap-3">
         <button type="button" class="btn btn-outline-primary py-3 h-auto px-4" (click)="onCancel()">

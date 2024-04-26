@@ -21,6 +21,9 @@ export class EditDepartmentComponent implements OnInit {
   // getDepartmentById();
   spinner : boolean = false
   isLoading = false;
+  department_name: string;
+  location_id:number;
+  comapnyId:any
   editDepartmentForm!: FormGroup;
   protected _onDestroy = new Subject<void>();
   constructor(
@@ -41,15 +44,21 @@ export class EditDepartmentComponent implements OnInit {
   departmentName: any;
 
   ngOnInit(): void {
-    this.departmentId=this.data.departmentId;
-    this.departmentName=this.data.departmentName;
+    this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
+    this.department_name = this.data.row.department_name;
+    this.location_id = this.data.row.location_id;
+    this.departmentId=this.data.row.department_id;
+    // this.departmentId=this.data.departmentId;
+    // this.departmentName=this.data.departmentName;
     // this.getDepartmentById(this.departmentId);
     this.initializeForm();
+    this.getLocationByCompanyId();
   }
 
   initializeForm() {
     this.editDepartmentForm = this.fb.group({
       department: ['', [Validators.required]],
+      location_id:['',[Validators.required]]
     });
   }
   get shiftName() {
@@ -106,5 +115,20 @@ export class EditDepartmentComponent implements OnInit {
     // Close the dialog when Cancel button is clicked
     this.dialogRef.close();
   }
+
+  
+  locationData:any=[]
+
+  getLocationByCompanyId() {
+    this.service.getLocationByCompany(this.comapnyId).subscribe(
+      (response: any) => {
+        this.locationData = response.data;
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
+  }
+
 
 }

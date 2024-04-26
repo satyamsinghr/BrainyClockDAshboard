@@ -203,7 +203,7 @@ export class AppService {
     let userId = localStorage.getItem('userId')
     let companyData = {
       department: data.department,
-      created_by: userId
+      location_id : data.location_id,
     }
     return this.http.put<APIResponse>(this.apiConfig + routes.Post_EditDepartment(id), companyData, { headers });
   }

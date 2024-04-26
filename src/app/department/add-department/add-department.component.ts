@@ -23,7 +23,9 @@ export class AddDepartmentComponent implements OnInit {
   companyData:any;
   role:any
   companyName:any
+  comapnyId:any
   addDepartmentForm!: FormGroup;
+  locationData:any=[]
   protected _onDestroy = new Subject<void>();
   constructor(
     private router: Router,
@@ -40,6 +42,8 @@ export class AddDepartmentComponent implements OnInit {
     this.role = this.service.getRole();
     this.companyName=JSON.parse(localStorage.getItem('nameOfCompany'));
     this.name=JSON.parse(localStorage.getItem('companyName'));
+    this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
+    this.getLocationByCompanyId();
     this.initializeForm();
     if (this.role != 'SA') {
       this.isCompanyLoggedIn = true;
@@ -126,5 +130,16 @@ export class AddDepartmentComponent implements OnInit {
   }
 
 
+
+  getLocationByCompanyId() {
+    this.service.getLocationByCompany(this.comapnyId).subscribe(
+      (response: any) => {
+        this.locationData = response.data;
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
+  }
   
 }

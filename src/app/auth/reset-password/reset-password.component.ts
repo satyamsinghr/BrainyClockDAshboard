@@ -25,7 +25,6 @@ export class ResetPasswordComponent implements OnInit {
   get f() { return this.resetPasswordForm.controls; }
 
   onSubmit(): void {
-    debugger
     this.submitted = true;
     if (this.resetPasswordForm.valid) {
       this.spinner = true;
