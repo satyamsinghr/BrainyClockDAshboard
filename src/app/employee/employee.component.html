@@ -1,4 +1,4 @@
- <div class="d-flex align-items-center justify-content-between">
+<div class="d-flex align-items-center justify-content-between">
     <div class="brand_info">
         <!-- <h2>CleanCorp Solutions</h2> -->
         <!-- <h2>{{locationData?.location_name}}</h2> -->
@@ -33,7 +33,7 @@
 <div class="row mt-4 g-4 pt-lg-2">
     <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-0">
         <form action class="mb-4 pb-lg-2">
-            <ul class="filter_dropdown d-flex align-items-center gap-3">
+            <!-- <ul class="filter_dropdown d-flex align-items-center gap-3">
                 <li class="position-relative">
                     <select name="departments" id="departments">
                         <option value>Filter by office</option>
@@ -44,15 +44,6 @@
                         <option value="Filter by Department">Filter by
                             office</option>
                     </select>
-                    <!-- <div class="department_drop">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M16.8 9.59999L12 14.4L7.20005 9.59999"
-                                stroke="#061D23" stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </div> -->
                 </li>
                 <li>
                     <div class="filter_dropdown">
@@ -72,7 +63,7 @@
                         <span>Weekend shift</span>
                     </div>
                 </li>
-            </ul>
+            </ul> -->
         </form>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-0">
@@ -146,6 +137,25 @@
                             class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
                             {{ element.status }} </mat-cell>
                     </ng-container>
+                    <ng-container matColumnDef="clock_in">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header
+                            class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
+                            clock_in
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element"
+                            class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
+                            {{ element.shift_clock_in_time_1 }} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="clock_out">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header
+                            class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
+                            clock_in
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element"
+                            class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
+                            {{ element.shift_clock_in_time_2 }} </mat-cell>
+                    </ng-container>
+
 
                     <ng-container matColumnDef="shifts">
                         <mat-header-cell *matHeaderCellDef mat-sort-header
@@ -153,12 +163,14 @@
                             Shifts
                         </mat-header-cell>
                         <mat-cell *matCellDef="let element"
-                            class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
+                            class="justify-content-lg-center flex-column justify-content-md-center gap-3 justify-content-center text-nowrap">
                             <ng-container
                                 *ngIf="element.shift_name_1 || element.shift_name_2 || element.shift_name_3">
-                                {{ element.shift_name_1 || '' }} {{
-                                element.shift_name_2 || '' }} {{
-                                element.shift_name_3 || '' }}
+                                <span> {{ element.shift_name_1 || '' }}</span>
+                                <span> {{
+                                    element.shift_name_2 || '' }}</span>
+                                <span> {{
+                                    element.shift_name_3 || '' }}</span>
                             </ng-container>
                         </mat-cell>
                     </ng-container>
@@ -181,43 +193,31 @@
                         </mat-header-cell>
                         <mat-cell *matCellDef="let element"
                             class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
-                            <ul class="this_week_attendance">
-                                <!-- <li *ngFor="let day of weekDays"
+                            <div class="d-flex gap-3 flex-column">
+                                <ul class="this_week_attendance"
+                                    *ngFor="let shift of Object.keys(element.attendance)">
+                                    <li *ngFor="let day of weekDays"
+                                        [ngClass]="getAttendanceClass(element.attendance[shift], day)">
+                                        {{ day.charAt(0) }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- <ul class="this_week_attendance" >
+                                <li *ngFor="let day of weekDays"
                                     [ngClass]="getAttendanceClass(element.attendance, day)">
                                     {{ day.charAt(0) }}
-                                </li> -->
-                                <li class="late">
-                                    M
                                 </li>
-                                <li class="present">
-                                    T
-                                </li>
-                                <li class="present">
-                                    W
-                                </li>
-                                <li class="present">
-                                    T
-                                </li>
-                                <li class="upcoming">
-                                    F
-                                </li>
-                                <li>
-                                    S
-                                </li>
-                                <li>
-                                    S
-                                </li>
-                            </ul>
+                            </ul> -->
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="actions">
                         <mat-header-cell
                             *matHeaderCellDef
-                            class="justify-content-end">Action</mat-header-cell>
-                        <mat-cell *matCellDef="let row" 
-                        class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
-                            <div class="position-relative">
+                            class="justify-content-end"></mat-header-cell>
+                        <mat-cell *matCellDef="let row"
+                            class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
+                            <!-- <div class="position-relative">
                                 <a class="action"
                                     (click)="openEditEmployeeModal(row)">
                                     <img src="../../assets/img/edit_black.png"

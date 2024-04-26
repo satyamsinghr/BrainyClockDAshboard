@@ -35,6 +35,8 @@ export class EmployeeComponent implements OnInit {
     'departmentName',
     // 'role',
     'status',
+    'clock_in',
+    'clock_out',
     'shifts',
     'attandance_this_week',
     // 'primaryLocation',
@@ -55,6 +57,7 @@ export class EmployeeComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   nameOfCompany = JSON.parse(localStorage.getItem('nameOfCompany'));
+  Object = Object;
   constructor(
     private paginator1: MatPaginatorIntl,
     private router: Router,
@@ -202,7 +205,10 @@ export class EmployeeComponent implements OnInit {
           this.spinner.hide();
           // this.allEmployee = response.data;
           this.employeeData = response.data
-          this.dataSource.data = response.data;
+   let dataaa = this.groupAttendanceByShift(response.data);
+   console.log("adaaa",dataaa)
+          // this.dataSource.data = response.data;
+          this.dataSource.data = dataaa;
         },
         (error) => {
           this.service.handleError(error);
@@ -210,6 +216,31 @@ export class EmployeeComponent implements OnInit {
         }
       );
     }
+  }
+  groupAttendanceByShift(employees: any[]) {
+    const groupedAttendance: any[] = [];
+
+    employees.forEach(employee => {
+      const groupedEmployee = { ...employee };
+      groupedEmployee.attendance = this.groupByShift(employee.attendance);
+      groupedAttendance.push(groupedEmployee);
+    });
+    console.log("as>>>>ss>>>>>>>>>>>>",groupedAttendance)
+    return groupedAttendance;
+  }
+
+  private groupByShift(attendance: any[]) {
+    const groupedByShift: any = {};
+
+    attendance.forEach(record => {
+      const shiftName = record.shift_name;
+      if (!groupedByShift[shiftName]) {
+        groupedByShift[shiftName] = [];
+      }
+      groupedByShift[shiftName].push(record);
+    });
+
+    return groupedByShift;
   }
 
 uncheckAll() {
