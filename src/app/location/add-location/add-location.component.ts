@@ -76,6 +76,8 @@ export class AddLocationComponent implements OnInit {
           zoom: 14,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
+        this.addLocationForm.controls['latitude'].setValue(position.coords.latitude.toString());
+      this.addLocationForm.controls['longitude'].setValue(position.coords.longitude.toString());
         this.map = new google.maps.Map(this.mapElement.nativeElement, mapProperties);
         // Initialize marker here
         this.marker = new google.maps.Marker({
@@ -247,6 +249,7 @@ export class AddLocationComponent implements OnInit {
   }
 
   addLocation() {
+    debugger
     this.submitted = true;
     if (this.addLocationForm.valid) {
       this.spinner = true

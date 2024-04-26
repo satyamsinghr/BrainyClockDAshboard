@@ -607,16 +607,16 @@ export class AppService {
     return this.http.delete(this.apiConfig + routes.Delete_Schudle, options);
   }
 
-  resetPassword() {
+  resetPassword(data:any) {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     let userId = localStorage.getItem('userId')
-    let data = {
-      confirmationCode:"123456",
-      email:"new99@mailinator.com",
-      password:"Test@1234"
+    let obj = {
+      confirmationCode:data.confirmationCode,
+      email:data.email,
+      password:data.password
     }
-    return this.http.post<APIResponse>(this.apiConfig + routes.Post_ResetPassword, data, { headers });
+    return this.http.post<APIResponse>(this.apiConfig + routes.Post_ResetPassword, obj, { headers });
   }
   
 }
