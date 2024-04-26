@@ -93,7 +93,6 @@ export class AppService {
   }
 
   addEmployee(data: any): Observable<APIResponse> {
-    debugger
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     let userId = localStorage.getItem('userId')

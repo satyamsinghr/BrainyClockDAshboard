@@ -36,28 +36,34 @@ export class EditEmpComponent implements OnInit {
   selectedCompanyId: any;
   id: number;
   firstName: string;
-  lastName: string;
+  // lastName: string;
   email: string;
   hourlyRate: number;
   overTime: number;
   shifts1: number;
   shifts2: number;
   shifts3: number;
-  type: number;
+  employee_id:any;
+  department_id:any;
+  department_name:any;
+  // type: number;
   ngOnInit(): void {
     this.employeeId = this.data.row.id;
     this.id = this.data.row.id;
     this.firstName = this.data.row.firstName;
-    this.lastName = this.data.row.lastName;
+    // this.lastName = this.data.row.lastName;
     this.email = this.data.row.email;
     this.hourlyRate = this.data.row.hourlyRate;
     this.overTime = this.data.row.overTime;
-    this.type = this.data.row.type;
+    this.employee_id = this.data.row.employee_id;
+    // this.type = this.data.row.type;
     this.selectedCompanyId = this.data.row.company_id;
+    this.department_name = this.data.row.department_name;
     this.role = this.service.getRole();
     this.isCompanyLoggedIn = this.role == 'SA' ? false : true;
-    this.employeeId = this.route.snapshot.params['employeeId'];
+    // this.employeeId = this.route.snapshot.params['employeeId'];
     this.initializeForm();
+    this. getAllDepartment();
     this.getEmployeeById(this.employeeId);
     if (this.role != 'SA') {
       this.companyData = [
@@ -110,14 +116,16 @@ export class EditEmpComponent implements OnInit {
     this.editEmployeeForm = this.fb.group({
       companyId: ['', [Validators.required]],
       firstName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-      lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      // lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
       email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       hourlyRate: [''],
       overTime: [''],
-      shifts1: ['', [Validators.required]],
-      shifts2: ['', [Validators.required]],
-      shifts3: ['', [Validators.required]],
-      type: ['', [Validators.required]],
+      // shifts1: ['', [Validators.required]],
+      // shifts2: ['', [Validators.required]],
+      // shifts3: ['', [Validators.required]],
+      // type: ['', [Validators.required]],
+      employee_id: ['', [Validators.required]],
+      department_id: ['', [Validators.required]],
     });
   }
   get shiftName() {
@@ -257,6 +265,19 @@ export class EditEmpComponent implements OnInit {
   onCancel(): void {
     // Close the dialog when Cancel button is clicked
     this.dialogRef.close();
+  }
+
+  departmentData: any;
+  getAllDepartment() {
+    this.service.getAllDepartment().subscribe(
+      (response: any) => {
+        this.departmentData = response.data;
+        console.log("departmentData",this.departmentData);
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
   }
 
 }

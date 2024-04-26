@@ -355,8 +355,8 @@
       <div class="row g-4">
         <div class="col-12">
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-        <label for="companyId" class="labelName">Company Name</label>
+        <!--<div class="col-lg-6 col-md-6 col-sm-12 col-12">
+        <label for="companyId" class="labelName">Employee name :</label>
         <select
         class="form-select form-select-md form-control"
         formControlName="companyId"
@@ -390,13 +390,13 @@
           Company Name is required
         </div>
       </small>
-        </div>
+        </div> -->
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-          <label for="name" class="labelName">First Name</label>
+          <label for="name" class="labelName">Employee name :</label>
           <input asp-for="name" type="text" class="form-control"
             formControlName="firstName"
             [(ngModel)]="firstName"
-            placeholder="Enter First Name" required="required" />
+            placeholder="Enter Employee Name" required="required" />
           <small *ngIf="
                     (editEmployeeFormControl['firstName'].touched ||
                       submitted) &&
@@ -406,48 +406,82 @@
                       editEmployeeFormControl['firstName'].errors &&
                       editEmployeeFormControl['firstName'].errors['required']
                     ">
-              First name is required
+              Employee name is required
             </div>
             <div class="text-danger" *ngIf="
                       editEmployeeFormControl['firstName'].errors &&
                       editEmployeeFormControl['firstName'].errors['pattern']
                     ">
-              First name should be alhabetic
+              Employee name should be alhabetic
             </div>
           </small>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-          <label for="name" class="labelName">Last Name</label>
+          <label for="name" class="labelName">Set hourly wage :</label>
 
           <input asp-for="name" type="text" class="form-control"
-            formControlName="lastName"
-            [(ngModel)]="lastName"
-            placeholder="Enter Last Name" required="required" />
+            formControlName="hourlyRate"
+            [(ngModel)]="hourlyRate"
+            placeholder="Enter Hourly wage" required="required" />
           <small *ngIf="
-                    (editEmployeeFormControl['lastName'].touched ||
+                    (editEmployeeFormControl['hourlyRate'].touched ||
                       submitted) &&
-                      editEmployeeFormControl['lastName'].invalid
+                      editEmployeeFormControl['hourlyRate'].invalid
                   " class="form-text text-muted mt-2">
             <div class="text-danger" *ngIf="
-                      editEmployeeFormControl['lastName'].errors &&
-                      editEmployeeFormControl['lastName'].errors['required']
+                      editEmployeeFormControl['hourlyRate'].errors &&
+                      editEmployeeFormControl['hourlyRate'].errors['required']
                     ">
-              Last name is required
+              Hourly Wage is required
             </div>
             <div class="text-danger" *ngIf="
-                      editEmployeeFormControl['lastName'].errors &&
-                      editEmployeeFormControl['lastName'].errors['pattern']
+                      editEmployeeFormControl['hourlyRate'].errors &&
+                      editEmployeeFormControl['hourlyRate'].errors['pattern']
                     ">
-              Last name should be alhabetic
+              Hourly Wage should be alhabetic
             </div>
           </small>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-          <label for="email" class="labelName">Email</label>
+          <label for="name" class="labelName">Employee ID :</label>
+          <input type="number" class="form-control"
+            formControlName="employee_id"
+            [(ngModel)]="employee_id"
+            placeholder="Enter Employee ID" required />
+          <small
+            *ngIf="
+                (editEmployeeFormControl['employee_id'].touched || submitted) && editEmployeeFormControl['employee_id'].invalid"
+            class="form-text text-muted mt-2">
+            <div class="text-danger"
+              *ngIf="editEmployeeFormControl['employee_id'].errors &&
+                  editEmployeeFormControl['employee_id'].errors['required']">
+                Employee ID is required
+            </div>
+          </small>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+          <label for="name" class="labelName">Set overtime wage :</label>
+          <input type="number" class="form-control"
+            formControlName="overTime"
+            [(ngModel)]="overTime"
+            placeholder="Enter OverTime Wage" required />
+          <small
+            *ngIf="
+                (editEmployeeFormControl['overTime'].touched || submitted) && editEmployeeFormControl['overTime'].invalid"
+            class="form-text text-muted mt-2">
+            <div class="text-danger"
+              *ngIf="editEmployeeFormControl['overTime'].errors &&
+                  editEmployeeFormControl['overTime'].errors['required']">
+                  Overtime wage is required
+            </div>
+          </small>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+          <label for="email" class="labelName">Email ID :</label>
           <input asp-for="email" type="text" class="form-control"
             formControlName="email"
             [(ngModel)]="email"
-            placeholder="Enter Email" required="required" />
+            placeholder="Enter Email" required="required"  readonly/>
           <small *ngIf="
                     (editEmployeeFormControl['email'].touched || submitted) &&
                     editEmployeeFormControl['email'].invalid
@@ -456,17 +490,60 @@
                       editEmployeeFormControl['email'].errors &&
                       editEmployeeFormControl['email'].errors['required']
                     ">
-              Email is required
+              Email Id is required
             </div>
             <div class="text-danger" *ngIf="
                       editEmployeeFormControl['email'].errors &&
                       editEmployeeFormControl['email'].errors['email']
                     ">
-              Please enter valid email
+              Please enter valid Email Id
             </div>
           </small>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+          <label for="location_id" class="labelName">Select shifts :</label>
+          <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c" >
+            <li *ngFor="let shift of matchingShifts">
+              <input type="checkbox" checked >
+              <button type="button" class="d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <rect width="20" height="20" rx="10" fill="white" />
+                  <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+                <span>{{ shift.name }}</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+          <label for="department_id" class="labelName">Department :</label>
+          <select class="form-control" formControlName="department_id"
+            required>
+            <option value>Select Department</option>
+            <option *ngFor="let department of departmentData"
+              [value]="department.id">
+              {{ department.department_name }}
+            </option>
+          </select>
+          <small *ngIf="
+                    (editEmployeeFormControl['department_id'].touched ||
+                      submitted) &&
+                      editEmployeeFormControl['department_id'].invalid
+                  " class="form-text text-muted mt-2">
+            <div class="text-danger" *ngIf="
+                      editEmployeeFormControl['department_id'].errors &&
+                      editEmployeeFormControl['department_id'].errors[
+                        'required'
+                      ]
+                    ">
+              Department name is required
+            </div>
+          </small>
+        </div>
+         
+
+        <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="hourlyRate" class="labelName">Hour Rate</label>
           <input type="number" class="form-control"
             formControlName="hourlyRate"
@@ -489,9 +566,9 @@
           [(ngModel)]="overTime"
             formControlName="overTime" placeholder="Enter Overtime"
             required />
-          <!-- <small *ngIf="addEmployeeFormControl['employeeOverTime'].invalid" class="form-text text-danger mt-2">
+          <small *ngIf="addEmployeeFormControl['employeeOverTime'].invalid" class="form-text text-danger mt-2">
                   Employee Overtime is required
-                </small> -->
+                </small> 
           <small
             *ngIf="
                 (editEmployeeFormControl['overTime'].touched || submitted) && editEmployeeFormControl['overTime'].invalid"
@@ -505,7 +582,7 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="type" class="labelName">Type</label>
-          <!-- Change input type to select and add options -->
+          
           <select class="form-select form-control"
             formControlName="type"
             [(ngModel)]="type"
@@ -525,8 +602,8 @@
               Type is required
             </div>
           </small>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+        </div> -->
+        <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="shifts1" class="labelName">Shift1</label>
           <select class="form-select form-select-md form-control"
             aria-label=".form-select-sm example" 
@@ -567,35 +644,10 @@
             <div class="text-danger" *ngIf="editEmployeeFormControl['shifts3'].errors && editEmployeeFormControl['shifts3'].errors['required']">Shift3 is required</div>
           </small>
         </div>
-        
+         -->
 
 
-        <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-          <label for="department_id" class="labelName">Department
-            Name</label>
-          <select class="form-control" formControlName="department_id"
-            required>
-            <option value>Select Department</option>
-            <option *ngFor="let department of departmentData"
-              [value]="department.id">
-              {{ department.department_name }}
-            </option>
-          </select>
-          <small *ngIf="
-                    (editEmployeeFormControl['department_id'].touched ||
-                      submitted) &&
-                      editEmployeeFormControl['department_id'].invalid
-                  " class="form-text text-muted mt-2">
-            <div class="text-danger" *ngIf="
-                      editEmployeeFormControl['department_id'].errors &&
-                      editEmployeeFormControl['department_id'].errors[
-                        'required'
-                      ]
-                    ">
-              Department name is required
-            </div>
-          </small>
-        </div> -->
+       
         <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="location_id" class="labelName">Office Name</label>
           <select class="form-control" formControlName="location_id"

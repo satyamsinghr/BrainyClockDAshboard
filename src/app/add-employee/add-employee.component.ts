@@ -93,7 +93,6 @@ export class AddEmployeeComponent implements OnInit {
     return this.addEmployeeForm.get('shifts');
   }
   getDepaetmentById() {
-    debugger
     this.service.getDepartmentById(this.selectedCompanyId).subscribe(
       (response: any) => {
         this.departmentData = response.data;
@@ -142,7 +141,6 @@ export class AddEmployeeComponent implements OnInit {
 
   ShiftData: [];
   getAllShift() {
-    debugger
     this.service.getAllShift().subscribe(
       (response: any) => {
         this.ShiftData = response.data;
@@ -255,7 +253,6 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   addEmployee() {
-    debugger
     this.submitted = true;
     // if (this.role != 'SA') {
     //   const companyId = this.service.getCompanyId();

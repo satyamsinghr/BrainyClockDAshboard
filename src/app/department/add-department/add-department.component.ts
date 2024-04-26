@@ -133,7 +133,6 @@ export class AddDepartmentComponent implements OnInit {
 
 
   getLocationByCompanyId() {
-    debugger
     this.service.getLocationByCompany(this.comapnyId).subscribe(
       (response: any) => {
         this.locationData = response.data;
