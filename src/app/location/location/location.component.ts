@@ -217,7 +217,8 @@ export class LocationComponent implements OnInit {
 
   EditAddOfficeModal(locationId: number): void {
     const dialogRef = this.dialog.open(EditLocationComponent, {
-      width: '500px',
+      width: '728px',
+      height: '600px',
       data: { locationId: locationId },
     });
     dialogRef.componentInstance.locationEdit.subscribe(() => {

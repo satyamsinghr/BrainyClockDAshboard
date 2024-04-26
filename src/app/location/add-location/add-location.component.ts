@@ -249,7 +249,6 @@ export class AddLocationComponent implements OnInit {
   }
 
   addLocation() {
-    debugger
     this.submitted = true;
     if (this.addLocationForm.valid) {
       this.spinner = true
