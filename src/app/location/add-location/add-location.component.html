@@ -3,7 +3,7 @@
   <div class="department_card p-3 brand_info">
     <div class="d-flex align-items-center justify-content-center">
       <div class="brand_info">
-        <h2 class="text-center">Add Office</h2>
+        <h2 class="text-center">Add new Office Location</h2>
       </div>
       <!-- <app-header></app-header> -->
     </div>
@@ -61,7 +61,7 @@
                 </small>
               </div>
 
-              <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+              <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                 <label for="address" class="labelName">Address</label>
                 <input asp-for="address" type="text" #addresstext
                   [(ngModel)]="address" class="form-control"
@@ -81,12 +81,6 @@
                     Address is required
                   </div>
                 </small>
-              </div>
-
-              <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <div class="location_map">
-                  <div #map style="height: 250px; width: 100%;"></div>
-                </div>
               </div>
 
               <div class="col-lg-6 col-md-6 col-sm-12 col-12">
@@ -171,7 +165,7 @@
                 </small>
               </div>
 
-              <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+              <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                 <label for="geofence" class="labelName">Geofence Radius (in meters)
                 </label>
                 <input asp-for="pinCode" type="text" class="form-control"
@@ -196,6 +190,12 @@
                   </div>
                 </small>
               </div>
+              
+              <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="location_map">
+                  <div #map style="height: 250px; width: 100%;"></div>
+                </div>
+              </div>
             </div>
             <div
               class="d-flex mt-4  align-items-center justify-content-end gap-3 px-0 position-relative login_loader">
@@ -206,7 +206,7 @@
               </button>
               <div class="position-relative">
               <button type="submit"
-                class="btn btn-primary  py-3 px-4 h-auto">Submit</button>
+                class="btn btn-primary  py-3 px-4 h-auto">Add new location</button>
               <div *ngIf="spinner == true" class="loader_img">
                 <img src="assets/img/site_loader.gif" alt>
               </div>

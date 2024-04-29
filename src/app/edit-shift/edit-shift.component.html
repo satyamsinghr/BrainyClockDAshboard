@@ -580,13 +580,13 @@
       <!-- <h2>CleanCorp Solutions</h2> -->
       <h2>Edit Shift Form</h2>
     </div>
-    <app-header></app-header>
+    <!-- <app-header></app-header> -->
   </div>
   <div class="container-fluid p-0">
     <div class="row m-0 justify-content-center mt-4">
       <div class="col-lg-6 col-md-10 col-sm-12 col-12 ps-lg-0 px-3 pt-lg-3">
         <div class="department_card">
-
+          <h2>Edit Shift Form</h2>
           <form [formGroup]="editShiftForm" (ngSubmit)="editShift()">
             <div class="row mb-3">
               <div class="col-12">
@@ -636,7 +636,7 @@
                   <option value>Select Department</option>
                   <option
                     *ngFor="let department of departmentData"
-                    [value]="department.id">
+                    [value]="department.department_id">
                     {{ department.department_name }}
                   </option>
                 </select>
@@ -672,7 +672,7 @@
                 </small>
               </div>
             </div>
-            <div class="row mb-3">
+            <!-- <div class="row mb-3">
               <div class="col-12">
                 <label for="days" class="labelName">Select Days</label>
               </div>
@@ -703,7 +703,7 @@
                   </div>
                 </small>
               </div>
-            </div>
+            </div> -->
             <div class="row mb-3">
               <div class="col-12">
                 <label for="clockInTime" class="labelName">Clock In Time</label>
@@ -840,6 +840,24 @@
                   </small>
                 </div>
               </div> -->
+             
+             <div class="row mb-3">
+              <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
+                <li *ngFor="let day of dayName; let i = index">
+                  <input type="checkbox" [checked]="days.includes(day)"  (click)="toggleDaySelection(day,i)">
+                  <button type="button" class="d-flex align-items-center gap-2" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <rect width="20" height="20" rx="10" fill="white" />
+                      <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                    <span>{{ day}}</span>
+                  </button>
+                </li>
+              </ul>
+             </div>
+             
+             
               <button
                 type="button"
                 class="btn btn-outline-primary me-3"

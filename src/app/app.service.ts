@@ -377,13 +377,14 @@ export class AppService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<addShiftItemDto>(this.apiConfig + routes.Get_ShiftByCompany(companyId), { headers });
   }
-  updateShift(updateDto: addShiftItemDto, id: number) {
+  updateShift(updateDto: addShiftItemDto, id: number,days:any) {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     let userId = localStorage.getItem('userId')
     const requestData = {
       ...updateDto,
-      created_by: userId
+      days:days,
+      // created_by: userId
     };
     return this.http.put(this.apiConfig + routes.Update_Shift(id), requestData, { headers });
   }

@@ -5,7 +5,7 @@
         class="col-lg-12 col-md-12 col-sm-12 col-12 ps-lg-0 px-3 pt-lg-5 mt-lg-4 pt-md-4 pt-4">
         <form [formGroup]="addShiftForm">
           <div class="row ps-lg-5">
-            <div
+            <!-- <div
               class="col-lg-1 col-md-1 col-sm-12 col-12 d-lg-flex d-md-flex d-none">
               <div class="back_to_home" (click)="back_to_shift()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"
@@ -15,12 +15,12 @@
                     fill="#4E4E4E" />
                 </svg>
               </div>
-            </div>
-            <div class="col-lg-5 col-md-6 col-sm-12 col-12">
+            </div> -->
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
               <div class="shift_page_detail">
-                <h2>Add a shift</h2>
+                <!-- <h2>Add a shift</h2>
                 <h6 class="my-lg-5 my-md-4 my-4">Shift
-                  details</h6>
+                  details</h6> -->
                 <div class="form-group row mb-lg-4 pb--lg-2 mb-md-4 mb-4">
                   <div
                     class="col-lg-4 col-md-12 col-sm-12 col-12 d-flex align-items-center">
@@ -177,7 +177,7 @@
                     </div>
                   </div>
                 </div>
-                <h6 class="my-lg-5 my-md-4 my-4">Schedule</h6>
+                <!-- <h6 class="my-lg-5 my-md-4 my-4">Schedule</h6> -->
                 <div class="row">
                   <div class="col-lg-10 col-md-12 col-sm-12 col-12">
                     <div
@@ -237,7 +237,7 @@
                       class="checkbox day_checkbox mt-lg-5 pt-lg-4 mt-md-4 mt-4">
                       <label for>Select days :</label>
                       <div class="row mt-3 g-3">
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-6"
+                        <!-- <div class="col-lg-3 col-md-4 col-sm-6 col-6"
                           *ngFor="let days of dayName">
                           <div
                             class="checkbox_outer justify-content-center w-100"
@@ -247,12 +247,29 @@
                               [checked]="selectedDays.includes(days)">
                             {{ days }}
                           </div>
-                        </div>
-                        <!-- <div  class="text-danger justify-content-center" *ngIf="selectedDays.length== 0">
-                          Day is required
-                          </div> -->
+                        </div> -->
+                        <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
+                        <li *ngFor="let days of dayName let i = index" style="cursor: pointer;">
+                          <input class="form-control" formControlName="shifts" type="checkbox" [checked]="days[i] === ''"
+                          (click)="toggleDaySelection(days)">
+                          <button type="button" class="d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                              <rect width="20" height="20" rx="10" fill="white" />
+                              <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            </svg>
+                            <span>{{ days }}</span>
+                          </button>
+                        </li>
+                      </ul>
+                      
                       </div>
                     </div>
+                    <button type="button"
+                    class="btn btn-outline-primary py-3 px-4 h-auto"
+                    (click)="onCancel()">
+                    Cancel
+                  </button>
                   </div>
                 </div>
               </div>

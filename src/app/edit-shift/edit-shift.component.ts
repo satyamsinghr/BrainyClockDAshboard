@@ -43,13 +43,16 @@ export class EditShiftComponent implements OnInit {
   submitted = false;
   disableSelect: boolean = true;
   role: any;
+  company_id: any;
+  selectedDays: any;
   isCompanyLoggedIn: boolean = false;
   ngOnInit(): void {
     this.rowId = this.data.row.id;
+    this.company_id = this.data.row.company_id;
     this.department_id=this.data.row.department_id;
     this.clockInTime=this.data.row.clock_in_time;
     this.clockOutTime=this.data.row.clock_out_time;
-    this.days=this.data.row.days;
+    this.days=this.data.row.days.split(',');
     this.location_id=this.data.location_id;
     this.name=this.data.row.name;
     this.role = this.service.getRole();
@@ -58,7 +61,8 @@ export class EditShiftComponent implements OnInit {
       this.id = params['id'];
       this.getFormDetail(this.id);
       // this.getAllCompany();
-      this.getAllDepartment();
+      // this.getAllDepartment();
+      this.getDepartmentById()
     });
     if (this.role != 'SA') {
       this.isCompanyLoggedIn = true;
@@ -75,6 +79,26 @@ export class EditShiftComponent implements OnInit {
     } else {
       this.getAllCompany();
     }
+  }
+  
+  toggleDaySelection(day: any, i: number): void {
+    const index = this.days.indexOf(day);
+    if (index === -1) {
+        this.days.push(day);
+    } else {
+      this.days.splice(index, 1);
+    }
+  }
+
+  getDepartmentById() {
+    this.service.getDepartmentById(this.company_id).subscribe(
+      (response: any) => {
+        this.departmentData = response.data;
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
   }
 
   getFormDetail(id: number) {
@@ -113,7 +137,7 @@ export class EditShiftComponent implements OnInit {
       companyId: ['', [Validators.required]],
       department_id: ['', [Validators.required]],
       name: ['', [Validators.required]],
-      days: ['', [Validators.required]],
+      // days: ['', [Validators.required]],
       clockInTime: ['', [Validators.required]],
       clockOutTime: ['', [Validators.required]],
       // lunchInTime: ['', [Validators.required]],
@@ -132,6 +156,7 @@ export class EditShiftComponent implements OnInit {
       }
     );
   }
+
   departmentData: any;
   getAllDepartment() {
     this.service.getAllDepartment().subscribe(
@@ -145,6 +170,7 @@ export class EditShiftComponent implements OnInit {
       }
     );
   }
+
   companyId:any
   onSelectCompany(event:any){
     this.companyId  = event == "" ? this.companyId : event.target.value
@@ -173,7 +199,7 @@ export class EditShiftComponent implements OnInit {
     if (this.editShiftForm.valid) {
       this.submitted = false;
       this.service
-        .updateShift(this.editShiftForm.value, this.id)
+        .updateShift(this.editShiftForm.value,this.rowId,this.days)
         .subscribe((response) => {
           if ((response as any).success == true) {
             // this.toastr.success((response as any).msg);
