@@ -77,13 +77,13 @@ export class AddBulkEmployeeComponent implements OnInit {
     localStorage.removeItem('duplicateBulkEmpData');
     let fileType = evt.target.files[0].type;
     if (fileType !== 'application/vnd.ms-excel' && fileType !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' && fileType !== 'text/csv') {
-      this.toastr.error('Please select a valid Excel file (.XLSX or .XLS format).');
+      // this.toastr.error('Please select a valid Excel file (.XLSX or .XLS format).');
       return;
     } else {
       this.fileUpload = evt.target.files[0];
       this.service.employeeFile(this.fileUpload).subscribe((response: any) => {
         if (response) {
-          this.toastr.success(response.message);
+          // this.toastr.success(response.message);
           this.router.navigate(['/dashboard/employee']);
         }
       },

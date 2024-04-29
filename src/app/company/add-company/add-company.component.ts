@@ -60,7 +60,7 @@ export class AddCompanyComponent implements OnInit {
       this.submitted = false;
       this.service.addCompany(this.addCompanyForm.value).subscribe(
         (response: any) => {
-          this.toastr.success(response.msg);
+          // this.toastr.success(response.msg);
           this.router.navigate(['/dashboard/company']);
         },
         (error) => {

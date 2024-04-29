@@ -98,31 +98,6 @@ export class EditEmpComponent implements OnInit {
     this.getOfficeLocation();
   }
 
-  // getAllShift() {
-  //   this.service.getAllShift().subscribe(
-  //     (response: any) => {
-  //       this.ShiftData = response.data;
-  //       if (this.role !== 'SA') {
-  //         this.matchingShifts = this.ShiftData.filter(
-  //           (x: any) => x.company_id === parseInt(this.selectedCompanyId)
-  //         );
-  //       }
-  //       this.shifts1 = this.matchingShifts.find((x: { name: any; }) => x.name == this.data.row.shift_name_1).id;
-  //       this.shifts2 = this.matchingShifts.find((x: { name: any; }) => x.name == this.data.row.shift_name_2).id;
-  //       this.shifts3 = this.matchingShifts.find((x: { name: any; }) => x.name == this.data.row.shift_name_3).id;
-        
-  //       // this.shifts1 = this.data.row.shift_name_1;
-  //       // this.shifts2 = this.data.row.shift_name_2;
-  //       // this.shifts3 = this.data.row.shift_name_3;
-
-  //       console.log('tesing gdfdf', { 'selected': this.shifts1, 'arr': this.matchingShifts });
-
-  //     },
-  //     (error) => {
-  //       this.service.handleError(error);
-  //     }
-  //   );
-  // }
   initializeForm() {
     this.editEmployeeForm = this.fb.group({
       companyId: ['', [Validators.required]],
@@ -289,7 +264,7 @@ export class EditEmpComponent implements OnInit {
       this.submitted = false;
       this.service.updateEmployee(this.editEmployeeForm.value, this.id,this.selectedShifts).subscribe((response: any) => {
         if ((response as any).success == true) {
-          this.toastr.success((response as any).msg);
+          // this.toastr.success((response as any).msg);
           this.editEmployeeForm.reset();
           this.dialogRef.close();
           this.employeeService.getAllEmployee();
@@ -321,17 +296,33 @@ export class EditEmpComponent implements OnInit {
   }
 
   // Toggle selection of a shift
-  toggleShiftSelection(shiftId: number): void {
-    console.log("before",this.isShiftSelected);
+  // toggleShiftSelection(shiftId: number): void {
+  //   console.log("before",this.isShiftSelected);
+  //   const index = this.selectedShifts.indexOf(shiftId);
+  //   if (index === -1) {
+  //     // Shift not selected, add it to the list
+  //     this.selectedShifts.push(shiftId);
+  //   } else {
+  //     // Shift already selected, remove it from the list
+  //     this.selectedShifts.splice(index, 1);
+  //   }
+  //   console.log("after",this.isShiftSelected)
+  // }
+  toggleShiftSelection(shiftId: number, i :any): void {
+    console.log("before", this.selectedShifts);
     const index = this.selectedShifts.indexOf(shiftId);
+    const nullIndex = this.selectedShifts.indexOf(null);
     if (index === -1) {
-      // Shift not selected, add it to the list
-      this.selectedShifts.push(shiftId);
+      if (nullIndex !== -1) {
+        this.selectedShifts[nullIndex] = shiftId;
+      } else {
+        this.selectedShifts[i] = shiftId;
+      }
     } else {
-      // Shift already selected, remove it from the list
-      this.selectedShifts.splice(index, 1);
+      this.selectedShifts[index] = null;
     }
-    console.log("after",this.isShiftSelected)
+    
+    console.log("after", this.selectedShifts);
   }
   isShiftSelected(shiftId: number): boolean {
     return this.selectedShifts.includes(shiftId);

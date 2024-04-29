@@ -435,7 +435,7 @@ this.filterEmployee(
     this.service.deleteEmployee(employeeId).subscribe(
       (response: any) => {
         if (response.success == true) {
-          this.toastr.success(response.msg);
+          // this.toastr.success(response.msg);
         }
         this.getAllEmployee();
       },

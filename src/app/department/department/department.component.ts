@@ -304,7 +304,7 @@ export class DepartmentComponent implements OnInit {
     this.service.deleteDepartment(departmentId).subscribe(
       (response: any) => {
         if (response.success == true) {
-          this.toastr.success(response.msg);
+          // this.toastr.success(response.msg);
         }
         this.role !== null ? this.getAllDepartment() : this.getDepartmentById()
       },

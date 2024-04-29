@@ -174,7 +174,7 @@ export class CompanyComponent implements OnInit {
     this.service.deleteCompany(companyId).subscribe(
       (response: any) => {
         if (response.success == true) {
-          this.toastr.success(response.msg);
+          // this.toastr.success(response.msg);
         }
         this.getAllCompany();
       },

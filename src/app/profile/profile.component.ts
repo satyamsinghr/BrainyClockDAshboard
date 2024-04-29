@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
         this.submitted = false
         this.service.updatePassword(this.passwordForm.value, this.email ).subscribe((response:any) => {
         if(response.success){
-          this.toastr.success('Password has been updated successfully');
+          // this.toastr.success('Password has been updated successfully');
           this.passwordForm.reset()
         }},
         error => {

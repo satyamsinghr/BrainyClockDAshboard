@@ -111,7 +111,7 @@ export class AddDepartmentComponent implements OnInit {
       this.submitted = false;
       this.service.addDepartment(this.addDepartmentForm.value).subscribe(
         (response: any) => {
-          this.toastr.success(response.msg);
+          // this.toastr.success(response.msg);
           this.dialogRef.close();
           this.departmentService.getDepartmentById();
           this.spinner = false

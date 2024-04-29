@@ -242,7 +242,7 @@ export class EditLocationComponent implements OnInit {
         .editLocation(this.editLocationForm.value, this.locationId)
         .subscribe(
           (response: any) => {
-            this.toastr.success(response.msg);
+            // this.toastr.success(response.msg);
             this.dialogRef.close();
             this.locationEdit.emit();
             this.spinner = false

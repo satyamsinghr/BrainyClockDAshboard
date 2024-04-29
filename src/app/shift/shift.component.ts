@@ -228,7 +228,7 @@ export class ShiftComponent implements OnInit {
     this.loader.display(true);
     this.service.deleteShift(shiftId).subscribe((response:any) => {
        if(response.success==true){
-        this.toastr.success(response.msg);
+        // this.toastr.success(response.msg);
        }
        this.getAllShift();
       },

@@ -88,7 +88,8 @@ export class AppService {
       localStorage.removeItem('comapnyId');
     } else {
       const errorMessage = error.error.msg || error.message;
-      this.toastr.error(errorMessage);
+      // this.toastr.error(errorMessage);
+      console.log("errorMessage",errorMessage)
     }
   }
 

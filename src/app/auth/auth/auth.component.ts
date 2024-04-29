@@ -78,7 +78,7 @@ export class AuthComponent implements OnInit {
           localStorage.setItem('nameOfCompany', JSON.stringify(response.data.company_name));
           localStorage.setItem('comapnyId', JSON.stringify(response.data.company_id));
           localStorage.setItem('email', JSON.stringify(response.data.email));
-          this.toastr.success(response.msg);
+          // this.toastr.success(response.msg);
           this.router.navigateByUrl('/dashboard');
         }
       },

@@ -271,7 +271,7 @@ export class AddEmployeeComponent implements OnInit {
         this.service.addEmployee(this.addEmployeeForm.value,this.shifts).subscribe(
           (response: any) => {
             if (response.data) {
-              this.toastr.success(response.msg);
+              // this.toastr.success(response.msg);
               this.addEmployeeForm.reset();
               this.dialogRef.close();
               this.employeeService.getAllEmployee();
@@ -291,7 +291,7 @@ export class AddEmployeeComponent implements OnInit {
         this.service.addEmployee(this.addEmployeeForm.value,this.shifts).subscribe(
           (response: any) => {
             if (response.data) {
-              this.toastr.success(response.msg);
+              // this.toastr.success(response.msg);
               this.addEmployeeForm.reset();
               this.router.navigate(['/dashboard/employee']);
             }
@@ -302,7 +302,7 @@ export class AddEmployeeComponent implements OnInit {
         );
       }
     } else {
-      this.toastr.error("Please Upgrade Your Plan to add more employees");
+      // this.toastr.error("Please Upgrade Your Plan to add more employees");
 
     }
   }

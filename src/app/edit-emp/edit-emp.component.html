@@ -401,7 +401,7 @@
           </small>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-          <label for="lastName" class="labelName">First Name :</label>
+          <label for="lastName" class="labelName">Last Name :</label>
           <input asp-for="lastName" type="text" class="form-control" formControlName="lastName" [(ngModel)]="lastName"
             placeholder="Enter Last Name" required="required" />
           <small *ngIf="
@@ -572,8 +572,8 @@
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="shifts" class="labelName">Select shifts :</label>
           <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
-            <li *ngFor="let shift of matchingShifts">
-              <input type="checkbox" [checked]="isShiftSelected(shift.id)" (change)="toggleShiftSelection(shift.id)">
+            <li *ngFor="let shift of matchingShifts; let i = index">
+              <input type="checkbox" [checked]="isShiftSelected(shift.id)" (change)="toggleShiftSelection(shift.id,i)">
               <button type="button" class="d-flex align-items-center gap-2" >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <rect width="20" height="20" rx="10" fill="white" />

@@ -157,7 +157,7 @@ export class EditShiftComponent implements OnInit {
         .updateShift(this.editShiftForm.value, this.id)
         .subscribe((response) => {
           if ((response as any).success == true) {
-            this.toastr.success((response as any).msg);
+            // this.toastr.success((response as any).msg);
             this.router.navigate(['/dashboard/shift']);
           }
         });

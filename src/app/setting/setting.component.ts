@@ -113,7 +113,7 @@ export class SettingComponent implements OnInit {
       this.submitButtonDisabled = true; 
       this.service.updateSchudle(this.timezoneForm.value).subscribe(
         (response: any) => {
-          this.toastr.success(response.msg);
+          // this.toastr.success(response.msg);
           console.log("res", response);
           this.getSchudleByCompanyId();
           this.dialog.closeAll();
@@ -132,7 +132,7 @@ export class SettingComponent implements OnInit {
       this.submitButtonDisabled = true;
       this.service.createScheudle(this.timezoneForm.value).subscribe(
         (response: any) => {
-          this.toastr.success(response.msg);
+          // this.toastr.success(response.msg);
           console.log("res", response);
           this.getSchudleByCompanyId();
           this.dialog.closeAll();
@@ -151,7 +151,7 @@ export class SettingComponent implements OnInit {
   deleteSchedule() {
     this.service.deleteSchudle(this.timezoneForm.value).subscribe(
       (response: any) => {
-          this.toastr.success(response.msg);
+          // this.toastr.success(response.msg);
           this.getSchudleByCompanyId();
       },
       (error) => {

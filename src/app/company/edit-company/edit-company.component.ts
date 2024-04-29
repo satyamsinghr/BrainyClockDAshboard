@@ -79,7 +79,7 @@ export class EditCompanyComponent implements OnInit {
         .editCompany(this.editCompanyForm.value, this.companyId)
         .subscribe(
           (response: any) => {
-            this.toastr.success(response.msg);
+            // this.toastr.success(response.msg);
             this.router.navigate(['/dashboard/company']);
           },
           (error) => {

@@ -99,7 +99,7 @@ export class EditDepartmentComponent implements OnInit {
         .editDepartment(this.editDepartmentForm.value, this.departmentId)
         .subscribe(
           (response: any) => {
-            this.toastr.success(response.msg);
+            // this.toastr.success(response.msg);
             this.dialogRef.close();
             this.departmentService.getDepartmentById();
             this.spinner = false
