@@ -631,6 +631,7 @@
               <div class="col-12">
                 <select
                   class="form-control"
+                  [(ngModel)]="department_id"
                   formControlName="department_id">
                   <option value>Select Department</option>
                   <option
@@ -647,6 +648,7 @@
               </div>
               <div class="col-12">
                 <input
+                [ngModel]="name"
                   asp-for="name"
                   type="text"
                   class="form-control"
@@ -708,6 +710,7 @@
               </div>
               <div class="col-12">
                 <input
+                [(ngModel)]="clockInTime"
                   asp-for="clockInTime"
                   type="time"
                   class="form-control"
@@ -739,6 +742,7 @@
               </div>
               <div class="col-12">
                 <input
+                [(ngModel)]="clockOutTime"
                   asp-for="clockOutTime"
                   type="time"
                   class="form-control"
@@ -839,7 +843,7 @@
               <button
                 type="button"
                 class="btn btn-outline-primary me-3"
-                (click)="gotoViewShiftPage()">
+                (click)="onCancel()">
                 Cancel
               </button>
               <button type="submit" class="btn btn-primary">Submit</button>

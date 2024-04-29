@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from '../auth/credentials.service';
 import { AppService } from '../app.service';
 import { ToastrService } from 'ngx-toastr';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-edit-shift',
   templateUrl: './edit-shift.component.html',
@@ -21,6 +22,13 @@ export class EditShiftComponent implements OnInit {
     'Saturday',
     'Sunday',
   ];
+  rowId :any 
+  clockInTime:any;
+  clockOutTime:any;
+  days:any;
+  department_id:any;
+  location_id:any;
+  name :any;
   id: number = 0;
   constructor(
     private router: Router,
@@ -28,20 +36,29 @@ export class EditShiftComponent implements OnInit {
     private credentialsService: CredentialsService,
     private fb: FormBuilder,
     private service: AppService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    @Inject(MAT_DIALOG_DATA) private data: any,
+    public dialogRef: MatDialogRef<EditShiftComponent>
   ) {}
   submitted = false;
   disableSelect: boolean = true;
   role: any;
   isCompanyLoggedIn: boolean = false;
   ngOnInit(): void {
+    this.rowId = this.data.row.id;
+    this.department_id=this.data.row.department_id;
+    this.clockInTime=this.data.row.clock_in_time;
+    this.clockOutTime=this.data.row.clock_out_time;
+    this.days=this.data.row.days;
+    this.location_id=this.data.location_id;
+    this.name=this.data.row.name;
     this.role = this.service.getRole();
     this.initializeForm();
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.getFormDetail(this.id);
       // this.getAllCompany();
-      // this.getAllDepartment();
+      this.getAllDepartment();
     });
     if (this.role != 'SA') {
       this.isCompanyLoggedIn = true;
@@ -120,6 +137,8 @@ export class EditShiftComponent implements OnInit {
     this.service.getAllDepartment().subscribe(
       (response: any) => {
         this.departmentData = response.data;
+        this.department_id = this.departmentData.find((x: { department_id: any; }) => x.department_id == this.data.row.department_id).id;
+      
       },
       (error) => {
         this.service.handleError(error);
@@ -159,8 +178,13 @@ export class EditShiftComponent implements OnInit {
           if ((response as any).success == true) {
             // this.toastr.success((response as any).msg);
             this.router.navigate(['/dashboard/shift']);
+            this.onCancel();
           }
         });
     }
+  }
+  onCancel(): void {
+    // Close the dialog when Cancel button is clicked
+    this.dialogRef.close();
   }
 }
