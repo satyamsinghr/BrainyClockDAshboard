@@ -4,7 +4,7 @@ import { Logger } from './../@shared/logger.service';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from './../@shared/pipes/loader.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,6 +17,8 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { AppService } from '../app.service'
 import { CredentialsService } from '../auth/credentials.service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { AddShiftComponent } from '../add-shift/add-shift.component';
+import { EditShiftComponent } from '../edit-shift/edit-shift.component';
 
 const log=new Logger('Employee');
 @Component({
@@ -238,4 +240,33 @@ export class ShiftComponent implements OnInit {
     );
   }
 
+  openAddShiftModal() {
+    const dialogRef = this.dialog.open(AddShiftComponent, {
+      width: '728px',
+      height:'600px' 
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle modal close event if needed
+this.getAllShift();
+      console.log('The modal was closed');
+    });
+  }
+
+
+  openEditShiftModal(row: any,) {
+    const dialogRef = this.dialog.open(EditShiftComponent, {
+      height:'600px',
+      width: '728px' ,
+      data: { row: row}
+      
+    }); 
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle modal close event if needed
+      this.getAllShift();
+      console.log('The edit department modal was closed');
+    });
+  }
+
+  
 }

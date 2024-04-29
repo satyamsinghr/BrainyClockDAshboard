@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '../app.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-add-shift',
   templateUrl: './add-shift.component.html',
@@ -31,7 +32,8 @@ export class AddShiftComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private service: AppService
+    private service: AppService,
+    public dialogRef: MatDialogRef<AddShiftComponent>
   ) {}
   name:any
   ngOnInit(): void {
@@ -193,8 +195,8 @@ export class AddShiftComponent implements OnInit {
       this.service.addShift(this.addShiftForm.value,this.selectedDays).subscribe(
         (response: any) => {
           if (response.success == true) {
-            this.toastr.success(response.msg);
-            this.router.navigate(['/dashboard/shift']);
+            this.dialogRef.close();
+            // this.getAllShifts();
           }
         },
         (error) => {
@@ -205,5 +207,11 @@ export class AddShiftComponent implements OnInit {
   }
   back_to_shift(){
     this.router.navigate(['/dashboard/shift']);
+  }
+
+  
+  onCancel(): void {
+    // Close the dialog when Cancel button is clicked
+    this.dialogRef.close();
   }
 }

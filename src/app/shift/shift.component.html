@@ -21,7 +21,7 @@
 
       <div class="position-relative">
         <button type="button"  class="btn btn-primary w-100"
-          (click)="goto_addShift()" >Add shift</button>
+        (click)="openAddShiftModal()">Add shift</button>
         <div class="tooltip_manual">
           Add shift
         </div>
@@ -114,7 +114,8 @@
 
                       <div class="position-relative">
                         <a class="action"
-                          routerLink="/dashboard/edit-shift/{{ row.id }}"><img
+                          (click)="openEditShiftModal(row)"
+                          ><img
                             src="../../assets/img/edit_black.png" alt
                             width="24px"
                             height="24px" /></a>
@@ -167,7 +168,7 @@
                 in bulk</a> -->
               <div class="position-relative">
                 <button type="button" class="btn btn-primary w-100"
-                  (click)="goto_addShift()" [disabled]="dataSource.data.length >= 3">Add shift</button>
+                  (click)="openAddShiftModal()" [disabled]="dataSource.data.length >= 3">Add shift</button>
                 <div class="tooltip_manual">
                   Add shift
                 </div>
