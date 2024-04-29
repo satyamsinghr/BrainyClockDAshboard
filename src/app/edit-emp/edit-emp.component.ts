@@ -37,26 +37,29 @@ export class EditEmpComponent implements OnInit {
   selectedCompanyId: any;
   id: number;
   firstName: string;
-  // lastName: string;
+  lastName: string;
   email: string;
   hourlyRate: number;
   overTime: number;
-  shifts1: number;
-  shifts2: number;
-  shifts3: number;
+  // shifts1: number;
+  // shifts2: number;
+  // shifts3: number;
   employee_id:string;
   department_id:any;
   department_name:any;
-  // type: number;
+  locations:any ;
+  type: number;
+  location_name:any;
   ngOnInit(): void {
     this.employeeId = this.data.row.id;
     this.id = this.data.row.id;
     this.firstName = this.data.row.firstName;
-    // this.lastName = this.data.row.lastName;
+    this.lastName = this.data.row.lastName;
     this.email = this.data.row.email;
     this.hourlyRate = this.data.row.hourlyRate;
     this.overTime = this.data.row.overTime;
-    this.employee_id = this.data.row.employee_id;
+    // this.employee_id = this.data.row.employee_id;
+    this.location_name =this.data.row.location_id;
     // this.type = this.data.row.type;
     this.selectedCompanyId = this.data.row.company_id;
     this.department_name = this.data.row.department_name;
@@ -92,6 +95,7 @@ export class EditEmpComponent implements OnInit {
     }
     // this.matchingShifts = [];
     // this.matchingShifts.push(this.data.row);
+    this.getOfficeLocation();
   }
 
   // getAllShift() {
@@ -123,16 +127,18 @@ export class EditEmpComponent implements OnInit {
     this.editEmployeeForm = this.fb.group({
       companyId: ['', [Validators.required]],
       firstName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-      // lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
       email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       hourlyRate: [''],
       overTime: [''],
       // shifts1: ['', [Validators.required]],
       // shifts2: ['', [Validators.required]],
       // shifts3: ['', [Validators.required]],
-      // type: ['', [Validators.required]],
-      employee_id: ['', [Validators.required]],
+      type: ['', [Validators.required]],
+      // employee_id: ['', [Validators.required]],
       department_id: ['', [Validators.required]],
+      location_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+
     });
   }
   get shiftName() {
@@ -245,12 +251,37 @@ export class EditEmpComponent implements OnInit {
     });
   }
 
-  
-
   gotoEmpPage() {
     this.router.navigate(['/dashboard/employee']);
   }
 
+
+  getOfficeLocation() {
+    if (this.role === 'SA') {
+      this.service
+        .getCompanyOfficeLocation(this.selectedCompanyId)
+        .subscribe((response: any) => {
+          this.locations = response.data
+          this.location_name = this.locations.find((x: { location_name: any; }) => x.location_name == this.data.row.location_name).id;
+        },
+          (error) => {
+            this.service.handleError(error);
+            this.locations = []
+          }
+        );
+    } else {
+      this.service
+        .getCompanyOfficeLocation(this.companyData[0].id)
+        .subscribe((response: any) => {
+          this.locations = response.data
+        },
+          (error) => {
+            this.service.handleError(error);
+            this.locations = []
+          }
+        );
+      }
+  }
   editEmployee() {
     this.submitted = true;
     if (this.editEmployeeForm.valid) {
@@ -289,12 +320,9 @@ export class EditEmpComponent implements OnInit {
     );
   }
 
-  isShiftSelected(shiftId: number): boolean {
-    return this.selectedShifts.includes(shiftId);
-  }
-
   // Toggle selection of a shift
   toggleShiftSelection(shiftId: number): void {
+    console.log("before",this.isShiftSelected);
     const index = this.selectedShifts.indexOf(shiftId);
     if (index === -1) {
       // Shift not selected, add it to the list
@@ -303,6 +331,10 @@ export class EditEmpComponent implements OnInit {
       // Shift already selected, remove it from the list
       this.selectedShifts.splice(index, 1);
     }
+    console.log("after",this.isShiftSelected)
+  }
+  isShiftSelected(shiftId: number): boolean {
+    return this.selectedShifts.includes(shiftId);
   }
   getSelectedShiftsArray(): string[] {
     return this.selectedShifts.map(shiftId => shiftId.toString());

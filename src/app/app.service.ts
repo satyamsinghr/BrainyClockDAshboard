@@ -107,7 +107,7 @@ export class AppService {
     const modifiedData = {
       "company_id": data.company_id.toString(),
       "firstName": data.firstName,
-      // "lastName": data.lastName, 
+      "lastName": data.lastName, 
       "email": data.email,
       // "password": data.password, 
       "shifts": shifts,
@@ -115,8 +115,9 @@ export class AppService {
       // "location_id": data.location_id,
       "hourlyRate": data.hourlyRate,
       "overTime": data.overTime,
-      "employee_id": data.employee_id,
-      // "type": data.type
+      // "employee_id": data.employee_id,
+      "type": data.type,
+      "location_id":data.location_id
       // "created_by": userId,
     };
     return this.http.post<APIResponse>(this.apiConfig + routes.Post_AddEmployee, modifiedData, { headers });
@@ -142,34 +143,63 @@ export class AppService {
     return this.http.post<APIResponse>(url, formData, { headers });
   }
 
-  updateEmployee(data: any, id: number,shifts:any): Observable<APIResponse> {
+  // updateEmployee(data: any, id: number,shifts:any): Observable<APIResponse> {
+  //   const token = JSON.parse(localStorage.getItem('loginToken'));
+  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  //   // const shiftKeys = ['shifts1', 'shifts2', 'shifts3'];
+  //   // const shifts = [];
+  //   // for (const key of shiftKeys) {
+  //   //   const shiftValue = data[key];
+  //   //   if (shiftValue !== null && shiftValue !== undefined && shiftValue !== "") {
+  //   //     shifts.push(parseInt(shiftValue));
+  //   //   }
+  //   // }
+  //   const modifiedData = {
+  //     companyId: data.companyId.toString(),
+  //     firstName: data.firstName,
+  //     lastName: data.lastName,
+  //     email: data.email,
+  //     // overTime:data.overTime,
+  //     // hourlyRate:data.hourlyRate,
+  //     overTime: (data.overTime != null && data.overTime !== "") ? data.overTime.toString() : "",
+  //     hourlyRate: (data.hourlyRate != null && data.hourlyRate !== "") ? data.hourlyRate : "",
+  //     // employee_id: data.employee_id,
+  //     department_id: data.department_id.toString(),
+  //     shifts: shifts,
+  //     type: data.type,
+  //     location_id:data.location_id
+  //     // type: data.type
+
+  //     // officeId: data.
+  //   };
+  //   return this.http.put<APIResponse>(this.apiConfig + routes.Post_UpdateEmployee(id), modifiedData, { headers })
+  //     .pipe(
+  //       catchError(error => {
+  //         console.error('API Error:', error);
+  //         throw error;
+  //       })
+  //     );
+  // }
+  updateEmployee(data: any, id: number, shifts: any): Observable<APIResponse> {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    // const shiftKeys = ['shifts1', 'shifts2', 'shifts3'];
-    // const shifts = [];
-    // for (const key of shiftKeys) {
-    //   const shiftValue = data[key];
-    //   if (shiftValue !== null && shiftValue !== undefined && shiftValue !== "") {
-    //     shifts.push(parseInt(shiftValue));
-    //   }
-    // }
-    const modifiedData = {
-      companyId: data.companyId.toString(),
-      firstName: data.firstName,
-      // lastName: data.lastName,
-      email: data.email,
-      // overTime:data.overTime,
-      // hourlyRate:data.hourlyRate,
-      overTime: (data.overTime != null && data.overTime !== "") ? data.overTime.toString() : "",
-      hourlyRate: (data.hourlyRate != null && data.hourlyRate !== "") ? data.hourlyRate : "",
-      // employee_id: data.employee_id,
-      department_id: data.department_id.toString(),
-      shifts: shifts,
-      // type: data.type
-
-      // officeId: data.
-    };
-    return this.http.put<APIResponse>(this.apiConfig + routes.Post_UpdateEmployee(id), modifiedData, { headers })
+  
+    // Create a new FormData instance
+    const formData = new FormData();
+    // Append each key-value pair to the FormData
+    formData.append('companyId', data.companyId.toString());
+    formData.append('firstName', data.firstName);
+    formData.append('lastName', data.lastName);
+    formData.append('email', data.email);
+    formData.append('overTime', (data.overTime != null && data.overTime !== "") ? data.overTime.toString() : "");
+    formData.append('hourlyRate', (data.hourlyRate != null && data.hourlyRate !== "") ? data.hourlyRate : "");
+    formData.append('department_id', data.department_id.toString());
+    formData.append('shifts', JSON.stringify(shifts)); // Assuming shifts is an array of numbers
+    formData.append('type', data.type);
+    formData.append('location_id', data.location_id);
+  
+    // Send the request with FormData
+    return this.http.put<APIResponse>(this.apiConfig + routes.Post_UpdateEmployee(id), formData, { headers })
       .pipe(
         catchError(error => {
           console.error('API Error:', error);
@@ -177,7 +207,6 @@ export class AppService {
         })
       );
   }
-
   addCompany(data: any) {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

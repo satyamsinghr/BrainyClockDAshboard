@@ -70,12 +70,12 @@ export class AddEmployeeComponent implements OnInit {
   initializeForm() {
     this.addEmployeeForm = this.fb.group({
       company_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      employee_id:['', [Validators.required]],
+      // employee_id:['', [Validators.required]],
       firstName: [
         '',
         [Validators.required, Validators.pattern('^[a-zA-Z ]*$')],
       ],
-      // lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
       email: ['', [Validators.required, Validators.email]],
       hourlyRate: ['', [Validators.required]],
       overTime: ['', [Validators.required]],
@@ -84,8 +84,8 @@ export class AddEmployeeComponent implements OnInit {
       // shifts3: [''],
       shifts:['',[Validators.required]],
       department_id: ['', [Validators.required]],
-      // location_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      // type: ['', Validators.required],
+      location_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      type: ['', Validators.required],
     });
   }
 
