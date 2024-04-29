@@ -104,6 +104,10 @@ export class DepartmentComponent implements OnInit {
     }
   }
 
+  parseAttendance(attendance: string): number {
+    return parseInt(attendance, 10);
+  }
+
   getAttendancePercentage(attendance: any, total: any): any {
     if (total == 0) {
       return 0;

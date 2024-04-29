@@ -150,10 +150,13 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element"
               class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              <b *ngIf="element.shift_name_1">{{element.shift_1_attendance}}/{{element.shift_1_total}}</b>
+              <div *ngIf="parseAttendance(element.shift_1_attendance) >= 0">
+              <b>{{element.shift_1_attendance}}/{{element.shift_1_total}}</b>
+
+              </div>
 
               <div
-                class="progress ms-2" style="background-color:#061D23;"  *ngIf="element.shift_name_1">
+                class="progress ms-2" style="background-color:#061D23;"  *ngIf="parseAttendance(element.shift_1_attendance) >= 0">
                 <div
                   class="progress-bar"
                   [style.width.%]="getAttendancePercentage(element.shift_1_attendance, element.shift_1_total)"
@@ -183,9 +186,11 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element" 
               class="justify-content-lg-center fade_att justify-content-md-center  text-nowrap justify-content-center" >
-              <b *ngIf="element.shift_name_2"> {{element.shift_2_attendance}}/{{element.shift_2_total}}</b>
+              <div  *ngIf="parseAttendance(element.shift_2_attendance) >= 0">
+                <b> {{element.shift_2_attendance}}/{{element.shift_2_total}}</b>
+              </div>
               <div
-                class="progress ms-2" style="background-color:#061D23;"  *ngIf="element.shift_name_2">
+                class="progress ms-2" style="background-color:#061D23;"   *ngIf="parseAttendance(element.shift_2_attendance) >= 0">
                 <div
                   class="progress-bar"
                   [style.width.%]="getAttendancePercentage(element.shift_2_attendance, element.shift_2_total)"
@@ -215,10 +220,12 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element"
               class="justify-content-lg-center fade_att justify-content-md-center  text-nowrap justify-content-center">
-              <b *ngIf="element.shift_name_3"> {{element.shift_3_attendance}}/{{element.shift_3_total}} </b>
+              <div *ngIf="parseAttendance(element.shift_3_attendance) >= 0">
+                <b> {{element.shift_3_attendance}}/{{element.shift_3_total}} </b>
+              </div>
 
               <div
-                class="progress ms-2"  style="background-color:#061D23;"  *ngIf="element.shift_name_3">
+                class="progress ms-2"  style="background-color:#061D23;" *ngIf="parseAttendance(element.shift_3_attendance) >= 0">
                 <div
                   class="progress-bar"
                   [style.width.%]="getAttendancePercentage(element.shift_3_attendance, element.shift_3_total)"
