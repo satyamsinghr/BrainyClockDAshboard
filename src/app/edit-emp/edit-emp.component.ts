@@ -271,7 +271,7 @@ export class EditEmpComponent implements OnInit {
       this.submitted = false;
       this.service.updateEmployee(this.editEmployeeForm.value, this.id,this.selectedShifts).subscribe((response: any) => {
         if ((response as any).success == true) {
-          // this.toastr.success((response as any).msg);
+          this.toastr.success((response as any).msg);
           this.editEmployeeForm.reset();
           this.dialogRef.close();
           this.employeeService.getAllEmployee();
@@ -302,31 +302,18 @@ export class EditEmpComponent implements OnInit {
     );
   }
 
-  // Toggle selection of a shift
-  // toggleShiftSelection(shiftId: number): void {
-  //   console.log("before",this.isShiftSelected);
-  //   const index = this.selectedShifts.indexOf(shiftId);
-  //   if (index === -1) {
-  //     // Shift not selected, add it to the list
-  //     this.selectedShifts.push(shiftId);
-  //   } else {
-  //     // Shift already selected, remove it from the list
-  //     this.selectedShifts.splice(index, 1);
-  //   }
-  //   console.log("after",this.isShiftSelected)
-  // }
   toggleShiftSelection(shiftId: number, i :any): void {
     console.log("before", this.selectedShifts);
     const index = this.selectedShifts.indexOf(shiftId);
     const nullIndex = this.selectedShifts.indexOf(null);
     if (index === -1) {
       if (nullIndex !== -1) {
-        this.selectedShifts[nullIndex] = shiftId;
+        this.selectedShifts[i] = shiftId;
       } else {
         this.selectedShifts[i] = shiftId;
       }
     } else {
-      this.selectedShifts[index] = null;
+      this.selectedShifts[i] = null;
     }
     
     console.log("after", this.selectedShifts);
@@ -334,6 +321,7 @@ export class EditEmpComponent implements OnInit {
   isShiftSelected(shiftId: number): boolean {
     return this.selectedShifts.includes(shiftId);
   }
+
   getSelectedShiftsArray(): string[] {
     return this.selectedShifts.map(shiftId => shiftId.toString());
   }

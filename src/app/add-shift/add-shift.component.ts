@@ -193,7 +193,7 @@ export class AddShiftComponent implements OnInit {
       this.service.addShift(this.addShiftForm.value,this.selectedDays).subscribe(
         (response: any) => {
           if (response.success == true) {
-            // this.toastr.success(response.msg);
+            this.toastr.success(response.msg);
             this.router.navigate(['/dashboard/shift']);
           }
         },

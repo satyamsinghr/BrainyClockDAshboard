@@ -191,7 +191,7 @@ export class LocationComponent implements OnInit {
     this.service.deleteLocation(locationId).subscribe(
       (response: any) => {
         if (response.success == true) {
-          // this.toastr.success(response.msg);
+          this.toastr.success(response.msg);
         }
         this.getAllLocation();
       },

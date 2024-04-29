@@ -276,7 +276,7 @@ export class AddEmployeeComponent implements OnInit {
         this.service.addEmployee(this.addEmployeeForm.value,this.shifts).subscribe(
           (response: any) => {
             if (response.data) {
-              // this.toastr.success(response.msg);
+              this.toastr.success(response.msg);
               this.addEmployeeForm.reset();
               this.dialogRef.close();
               this.employeeService.getAllEmployee();
