@@ -83,6 +83,11 @@ export class AuthComponent implements OnInit {
         }
       },
         error => {
+          if(error){
+            this.toastr.error(error.error.msg);
+          }else{
+            this.toastr.error("Intenal Server error");
+          }
           this.service.handleError(error);
           this.spinner = false
           this.spinnerShow = '';
