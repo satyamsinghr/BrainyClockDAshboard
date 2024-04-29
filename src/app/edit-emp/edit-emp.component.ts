@@ -2,7 +2,7 @@ import { AppService } from './../app.service';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from './../@shared/pipes/loader.service';
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from 'src/app/auth/credentials.service';
 import { MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material/dialog';
@@ -16,7 +16,7 @@ export class EditEmpComponent implements OnInit {
   employeeId!: number;
   editEmployeeForm!: FormGroup;
   submitted = false;
-  selectedShifts: number[] = [];
+  selectedShifts: any []=[];
   spinner:boolean = false;
   shiftsName: any = ['[2,3]', '[3,4]', '[4,5]', '[5,6]', '[7,8]', '[8,9]'];
   constructor(
@@ -98,6 +98,9 @@ export class EditEmpComponent implements OnInit {
     this.getOfficeLocation();
   }
 
+
+
+  
   initializeForm() {
     this.editEmployeeForm = this.fb.group({
       companyId: ['', [Validators.required]],
@@ -106,16 +109,14 @@ export class EditEmpComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       hourlyRate: [''],
       overTime: [''],
-      // shifts1: ['', [Validators.required]],
-      // shifts2: ['', [Validators.required]],
-      // shifts3: ['', [Validators.required]],
       type: ['', [Validators.required]],
-      // employee_id: ['', [Validators.required]],
       department_id: ['', [Validators.required]],
       location_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-
     });
   }
+
+
+  
   get shiftName() {
     return this.editEmployeeForm.get('shifts');
   }
@@ -147,7 +148,6 @@ export class EditEmpComponent implements OnInit {
     this.editEmployeeForm.get('shifts3').reset('');
     console.log("matches", this.matchingShifts);
   }
-
 
 
 
@@ -226,6 +226,13 @@ export class EditEmpComponent implements OnInit {
     });
   }
 
+
+
+  shouldShowError(): boolean {
+    return this.submitted || this.selectedShifts.every(shift => shift === null || shift === undefined || shift === "");
+  }
+  
+  
   gotoEmpPage() {
     this.router.navigate(['/dashboard/employee']);
   }
@@ -331,5 +338,17 @@ export class EditEmpComponent implements OnInit {
     return this.selectedShifts.map(shiftId => shiftId.toString());
   }
 
+
+
+  atLeastOneShiftSelectedValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const selectedShifts: number[] = control.value;
+      if (selectedShifts && selectedShifts.length > 0) {
+        return null; // At least one shift is selected, so return null (no error)
+      } else {
+        return { 'noShiftSelected': true }; // No shift selected, return an error
+      }
+    };
   
+  }
 }

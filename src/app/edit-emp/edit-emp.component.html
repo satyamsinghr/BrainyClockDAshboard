@@ -584,9 +584,10 @@
               </button>
             </li>
           </ul>
+          <small>
+          <div *ngIf="shouldShowError()" class="text-danger">Please select at least one shift.</div>
+        </small>
         </div>
-
-
         <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="hourlyRate" class="labelName">Hour Rate</label>
           <input type="number" class="form-control"
@@ -722,7 +723,7 @@
           Cancel
         </button>
         <div class="position-relative">
-          <button type="submit" class="btn btn-primary py-3 px-4 h-auto">Update Employee</button>
+          <button type="submit" class="btn btn-primary py-3 px-4 h-auto" [disabled]="shouldShowError()">Update Employee</button>
           <!-- <div *ngIf="spinner == true" class="loader_img">
           <img src="assets/img/site_loader.gif" alt>
         </div> -->

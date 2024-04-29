@@ -82,7 +82,7 @@ export class AddEmployeeComponent implements OnInit {
       // shifts1: ['', [Validators.required]],
       // shifts2: [''],
       // shifts3: [''],
-      shifts:['',[Validators.required]],
+      // shifts: ['', [Validators.required]],
       department_id: ['', [Validators.required]],
       location_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       type: ['', Validators.required],
@@ -257,6 +257,11 @@ export class AddEmployeeComponent implements OnInit {
     this.shifts[index] = this.shifts[index] === shiftId ? "" : shiftId;
     console.log("shiftsshifts",this.shifts);
   }
+
+  shouldShowError(): boolean {
+    return this.shifts.every(shift => shift === null || shift === undefined || shift === "");
+  }
+  
   
   addEmployee() {
     this.submitted = true;
@@ -315,6 +320,7 @@ export class AddEmployeeComponent implements OnInit {
     // Close the dialog when Cancel button is clicked
     this.dialogRef.close();
   }
+
 
 
 }
