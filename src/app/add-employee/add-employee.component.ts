@@ -22,6 +22,7 @@ export class AddEmployeeComponent implements OnInit {
   addEmployeeForm!: FormGroup;
   role: string = '';
   companyData: any;
+  spinnerShow: string = '';
   isCompanyLoggedIn: boolean = false;
   noOfEmployees: any
   protected _onDestroy = new Subject<void>();
@@ -272,6 +273,7 @@ export class AddEmployeeComponent implements OnInit {
     if (this.role !== 'SA' && this.noOfEmployees > this.employeeLength) {
       if (this.addEmployeeForm.valid) {
        this.spinner = true
+       this.spinnerShow = 'text-trasparent';
         this.submitted = false;
         this.service.addEmployee(this.addEmployeeForm.value,this.shifts).subscribe(
           (response: any) => {
@@ -281,6 +283,7 @@ export class AddEmployeeComponent implements OnInit {
               this.dialogRef.close();
               this.employeeService.getAllEmployee();
               this.spinner = false;
+              this.spinnerShow = '';
               // this.router.navigate(['/dashboard/employee']);
             }
           },
