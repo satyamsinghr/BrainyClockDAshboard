@@ -264,7 +264,6 @@ export class AddEmployeeComponent implements OnInit {
   
   
   addEmployee() {
-    debugger
     this.submitted = true;
     // if (this.role != 'SA') {
     //   const companyId = this.service.getCompanyId();

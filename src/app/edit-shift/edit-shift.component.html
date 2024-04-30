@@ -855,6 +855,9 @@
                   </button>
                 </li>
               </ul>
+              <small *ngIf="shouldShowError()"class="text-danger mt-2">
+                Please select at least one day
+              </small>
              </div>
               <button
                 type="button"
@@ -862,7 +865,7 @@
                 (click)="onCancel()">
                 Cancel
               </button>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary" [disabled]="shouldShowError()">Submit</button>
             <div *ngIf="spinner == true" class="loader_img">
               <img src="assets/img/site_loader.gif" alt>
             </div>

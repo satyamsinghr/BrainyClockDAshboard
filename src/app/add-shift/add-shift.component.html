@@ -265,7 +265,9 @@
                           </button>
                         </li>
                       </ul>
-                      
+                      <small *ngIf="submitted && selectedDays.length === 0" class="text-danger mt-2">
+                        Please select at least one day
+                      </small>
                       </div>
                     </div>
                     <button type="button"

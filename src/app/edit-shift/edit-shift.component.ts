@@ -26,7 +26,7 @@ export class EditShiftComponent implements OnInit {
   spinner:boolean = false;
   clockInTime:any;
   clockOutTime:any;
-  days:any;
+  days:any [] =[];
   department_id:any;
   location_id:any;
   name :any;
@@ -208,12 +208,22 @@ export class EditShiftComponent implements OnInit {
             // this.router.navigate(['/dashboard/shift']);
             this.spinner=false;
             this.onCancel();
-          }
-        });
+          } 
+        },
+        (error) => {
+          this.service.handleError(error);
+          this.spinner = false;
+        }
+      );
     }
+    
   }
   onCancel(): void {
     // Close the dialog when Cancel button is clicked
     this.dialogRef.close();
+  }
+
+  shouldShowError(): boolean {
+    return this.submitted || this.days.length === 0 || this.days.every(d => d === null || d === undefined || d === "");
   }
 }
