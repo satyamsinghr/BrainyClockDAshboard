@@ -63,6 +63,12 @@ export class ReportFilterComponent implements OnInit {
   selectedReportType: string = 'Select ReportType';
 
   ngOnInit(): void {
+    console.log("asdd1",this.router.url)
+    const Url  = this.router.url
+    const parts = Url.split('/');
+   const lastPart = parts[parts.length - 1];
+   console.log("Last part:", lastPart);
+
     this.createForm();
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if (this.token == null) {

@@ -3112,11 +3112,13 @@ table.table.card_table.employee_table.setting_table mat-table mat-cell {
 table.table.card_table.employee_table.setting_table mat-table mat-cell:nth-child(1) {
   border-radius: 8px 0 0 8px;
 }
+
 table.table.card_table.employee_table.setting_table mat-table mat-cell:nth-child(2) {
   border-radius: 0px 0 0 0px;
 }
-.employee_table.setting_table mat-header-row mat-header-cell:first-child, .employee_table.setting_table mat-table mat-cell:first-child
-{
+
+.employee_table.setting_table mat-header-row mat-header-cell:first-child,
+.employee_table.setting_table mat-table mat-cell:first-child {
   width: auto !important;
   min-width: 20% !important;
 }
@@ -3136,6 +3138,8 @@ table.table.card_table.employee_table.department_table mat-header-row mat-header
   width: 12%;
   flex: 0 0 auto;
 }
+
+
 
 .add_shifts_c li {
   position: relative;
@@ -3193,9 +3197,16 @@ table.table.card_table.employee_table.department_table mat-header-row mat-header
 }
 
 table.table.employee_table.department_table.card_table mat-table mat-cell:nth-child(7),
-table.table.card_table.employee_table.department_table mat-header-row mat-header-cell:nth-child(7) {
+table.table.card_table.employee_table.department_table mat-header-row mat-header-cell:nth-child(7),
+table.table.employee_table.department_table.card_table mat-table mat-cell:nth-child(9),
+table.table.card_table.employee_table.department_table mat-header-row mat-header-cell:nth-child(9) {
   width: auto;
   flex: 0 0 auto;
+}
+
+table.table.employee_table.department_table.card_table mat-table mat-cell:not(:first-child),
+table.table.card_table.employee_table.department_table mat-header-row mat-header-cell:not(:first-child) {
+  min-width: 9%;
 }
 
 .mat-paginator-container {
@@ -4420,15 +4431,15 @@ th.month.drp-animate {
   }
 
   input {
-    height: 60px;
-    border-radius: 8px;
-    border: 2px solid #031A40;
-    background: #fff;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    color: #000;
+    height: 60px !important;
+    border-radius: 8px !important;
+    border: 2px solid #031A40 !important;
+    background: #fff !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: normal !important;
+    color: #000 !important;
   }
 
   select {

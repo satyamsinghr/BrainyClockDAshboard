@@ -21,10 +21,11 @@ export class DashboardComponent implements OnInit {
   //constructor(public service: AppService, public route: ActivatedRoute) { }
   constructor(private router: Router,public service: AppService) {
   }
+  lastUrl:any
   ngOnInit(): void {
-    console.log(this.router.url)
     const Url  = this.router.url
+    const parts = Url.split('/');
+    this.lastUrl = parts[parts.length - 1];
   }
-
 
 }

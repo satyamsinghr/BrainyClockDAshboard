@@ -1,16 +1,20 @@
 <!-- <section class="site_card px-5"> -->
     <section class="site_card report_filter_outer px-5">
-    <div class="container-fluid px-3">
-        <div class="row">
-            <div class="col-12">
-                <div class="d-flex page_Operationswrapper align-items-start gap-lg-4 gap-md-4 gap-0">
-                    <app-sidenav class="sidenav">
-                    </app-sidenav>
-                    <div class="page_body {{this.service.nav_active_class}}">
-                        <router-outlet></router-outlet>
+        <!-- bg-white for report else hide -->
+        <div class="container-fluid px-3"> 
+            <!-- normal  px-3      if report page then px-0-->
+            <div class="row">
+                <div class="col-12  ">
+                    <div class="d-flex page_Operationswrapper align-items-start gap-lg-4 gap-md-4 gap-0">
+                        <!--  gap-lg-0 gap-md-0  report  if normal page  gap-lg-4 gap-md-4 -->
+                        <app-sidenav class="sidenav">
+                        </app-sidenav>
+                        <div class="page_body {{this.service.nav_active_class}} ">
+                            <!-- ms-0 w-100 for report else hide  -->
+                            <router-outlet></router-outlet>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
