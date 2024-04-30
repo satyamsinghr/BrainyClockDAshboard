@@ -44,7 +44,6 @@
             <select name="locations" id="locations" (change)="onLocationSelect($event)">
               
               <option value="">Filter by office</option>
-              <option value="">All Offce</option>
               <option *ngFor="let location of allLocationByCompany" [value]="location.id">{{ location.location_name }}</option>
             </select>
           </li>
@@ -288,7 +287,7 @@
           </ng-container>
           <ng-container matColumnDef="noData">
             <mat-footer-cell
-              classs="justify-content-lg-center justify-content-md-start justify-content-start"
+              class="justify-content-lg-center justify-content-md-start justify-content-start"
               *matFooterCellDef
               [attr.colspan]="dataSource.data.length == 0">
               No data found

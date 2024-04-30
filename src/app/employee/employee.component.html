@@ -7,14 +7,12 @@
     </div>
     <div class="header_search d-lg-block d-md-block d-none">
         <div class="search_box">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M5 11C5 7.691 7.691 5 11 5C14.309 5 17 7.691 17 11C17 14.309 14.309 17 11 17C7.691 17 5 14.309 5 11ZM20.707 19.293L17.312 15.897C18.365 14.543 19 12.846 19 11C19 6.589 15.411 3 11 3C6.589 3 3 6.589 3 11C3 15.411 6.589 19 11 19C12.846 19 14.543 18.365 15.897 17.312L19.293 20.707C19.488 20.902 19.744 21 20 21C20.256 21 20.512 20.902 20.707 20.707C21.098 20.316 21.098 19.684 20.707 19.293Z"
                     fill="#061D23" />
             </svg>
-            <input type="search" placeholder="Search"
-                (keyup)="filterEmployeeData($event)">
+            <input type="search" placeholder="Search" (keyup)="filterEmployeeData($event)">
         </div>
     </div>
     <div class="header_add_button d-flex align-items-center gap-4">
@@ -33,9 +31,9 @@
 <div class="row mt-4 g-4 pt-lg-2">
     <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-0">
         <form action class="mb-4 pb-lg-2">
-            <!-- <ul class="filter_dropdown d-flex align-items-center gap-3">
+            <ul class="filter_dropdown d-flex align-items-center gap-3">
                 <li class="position-relative">
-                    <select name="departments" id="departments">
+                    <!-- <select name="departments" id="departments">
                         <option value>Filter by office</option>
                         <option value="Filter by Department">Filter by
                             office</option>
@@ -43,9 +41,21 @@
                             office</option>
                         <option value="Filter by Department">Filter by
                             office</option>
+                    </select> -->
+                    <select name="locations" id="locations" (change)="onLocationSelect($event)">
+
+                        <option value="">Filter by office</option>
+                        <option *ngFor="let location of allLocationByCompany" [value]="location.id">{{
+                            location.location_name }}</option>
                     </select>
                 </li>
-                <li>
+                <li class="position-relative">
+                    <select name="departments" id="departments" (change)="onDepartmentSelect($event)">
+                        <option value="">Filter by department</option>
+                        <option *ngFor="let dept of departmentData" [value]="dept.department_id">{{ dept.department_name }}</option>
+                      </select>
+                </li>
+                <!-- <li>
                     <div class="filter_dropdown">
                         <input type="checkbox">
                         <span>Morning shift</span>
@@ -62,8 +72,8 @@
                         <input type="checkbox">
                         <span>Weekend shift</span>
                     </div>
-                </li>
-            </ul> -->
+                </li> -->
+            </ul>
         </form>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-0">
@@ -71,18 +81,15 @@
             <table class="table employee_table card_table">
                 <mat-table #table [dataSource]="dataSource" matSort>
                     <ng-container matColumnDef="select">
-                        <mat-header-cell *matHeaderCellDef
-                            class="table_checkbox">
-                            <mat-checkbox
-                                (change)="$event ? masterToggle() : null"
+                        <mat-header-cell *matHeaderCellDef class="table_checkbox">
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
                                 [checked]="selection.hasValue() && isAllSelected()"
                                 [indeterminate]="selection.hasValue() && !isAllSelected()">
                             </mat-checkbox>
                         </mat-header-cell>
                         <mat-cell *matCellDef="let row" class="table_checkbox">
                             <mat-checkbox (click)="$event.stopPropagation()"
-                                (change)="$event ? selection.toggle(row) : null"
-                                [checked]="selection.isSelected(row)">
+                                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
                             </mat-checkbox>
                         </mat-cell>
                     </ng-container>
@@ -164,8 +171,7 @@
                         </mat-header-cell>
                         <mat-cell *matCellDef="let element"
                             class="justify-content-lg-center flex-column justify-content-md-center gap-3 justify-content-center text-nowrap">
-                            <ng-container
-                                *ngIf="element.shift_name_1 || element.shift_name_2 || element.shift_name_3">
+                            <ng-container *ngIf="element.shift_name_1 || element.shift_name_2 || element.shift_name_3">
                                 <span> {{ element.shift_name_1 || '' }}</span>
                                 <span> {{
                                     element.shift_name_2 || '' }}</span>
@@ -194,10 +200,10 @@
                         <mat-cell *matCellDef="let element"
                             class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
                             <div class="d-flex gap-3 flex-column">
-                                <ul class="this_week_attendance"
-                                    *ngFor="let shift of Object.keys(element.attendance)">
+                                <ul class="this_week_attendance" *ngFor="let shift of Object.keys(element.attendance)">
                                     <li *ngFor="let day of weekDays"
-                                        [ngClass]="getAttendanceClass(element.attendance[shift], day)">
+                                        [ngClass]="getAttendanceClass(element.attendance[shift], day)"
+                                        >
                                         {{ day.charAt(0) }}
                                     </li>
                                 </ul>
@@ -212,28 +218,20 @@
                     </ng-container>
 
                     <ng-container matColumnDef="actions">
-                        <mat-header-cell
-                            *matHeaderCellDef
-                            class="justify-content-end"></mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef class="justify-content-end"></mat-header-cell>
                         <mat-cell *matCellDef="let row"
                             class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
                             <div class="position-relative">
-                                <a class="action"
-                                    (click)="openEditEmployeeModal(row)">
-                                    <img src="../../assets/img/edit_black.png"
-                                        alt
-                                        width="24px" height="24px" />
+                                <a class="action" (click)="openEditEmployeeModal(row)">
+                                    <img src="../../assets/img/edit_black.png" alt width="24px" height="24px" />
                                 </a>
                                 <div class="tooltip_manual">
                                     Edit
                                 </div>
                             </div>
                             <div class="position-relative">
-                                <a class="action"
-                                    (click)="ConfirmDeleteEmp(row.id)">
-                                    <img src="../../assets/img/delete_gray.png"
-                                        alt
-                                        width="24px" height="24px" />
+                                <a class="action" (click)="ConfirmDeleteEmp(row.id)">
+                                    <img src="../../assets/img/delete_gray.png" alt width="24px" height="24px" />
                                 </a>
                                 <div class="tooltip_manual">
                                     Delete
@@ -252,9 +250,9 @@
                                     fill="#20263B" />
                             </svg>
                         </mat-cell> -->
-                        <!-- <mat-cell *matCellDef="let row" class="justify-content-center"> -->
-                        <!-- <button mat-icon-button></button> -->
-                        <!-- <mat-icon><svg xmlns="http://www.w3.org/2000/svg" width="20" height="6" viewBox="0 0 20 6"
+                            <!-- <mat-cell *matCellDef="let row" class="justify-content-center"> -->
+                            <!-- <button mat-icon-button></button> -->
+                            <!-- <mat-icon><svg xmlns="http://www.w3.org/2000/svg" width="20" height="6" viewBox="0 0 20 6"
                                     fill="none">
                                     <path
                                         d="M4.21125 5.8725H1.66125C1.22096 5.87151 0.798993 5.69617 0.487663 5.38484C0.176333 5.07351 0.000990525 4.65154 0 4.21125V1.66125C0.000990525 1.22096 0.176333 0.798993 0.487663 0.487663C0.798993 0.176332 1.22096 0.000990524 1.66125 0H4.21125C4.65154 0.000990524 5.07351 0.176332 5.38484 0.487663C5.69617 0.798993 5.87151 1.22096 5.8725 1.66125V4.21125C5.87151 4.65154 5.69617 5.07351 5.38484 5.38484C5.07351 5.69617 4.65154 5.87151 4.21125 5.8725ZM1.66125 1.5C1.61848 1.5 1.57747 1.51699 1.54723 1.54723C1.51699 1.57747 1.5 1.61848 1.5 1.66125V4.21125C1.5 4.25402 1.51699 4.29503 1.54723 4.32527C1.57747 4.35551 1.61848 4.3725 1.66125 4.3725H4.21125C4.25402 4.3725 4.29503 4.35551 4.32527 4.32527C4.35551 4.29503 4.3725 4.25402 4.3725 4.21125V1.66125C4.3725 1.61848 4.35551 1.57747 4.32527 1.54723C4.29503 1.51699 4.25402 1.5 4.21125 1.5H1.66125Z"
@@ -266,7 +264,7 @@
                                         d="M17.8912 5.8725H15.3412C14.9009 5.87151 14.4789 5.69617 14.1676 5.38484C13.8563 5.07351 13.6809 4.65154 13.6799 4.21125V1.66125C13.6809 1.22096 13.8563 0.798993 14.1676 0.487663C14.4789 0.176332 14.9009 0.000990524 15.3412 0H17.8912C18.3315 0.000990524 18.7534 0.176332 19.0648 0.487663C19.3761 0.798993 19.5514 1.22096 19.5524 1.66125V4.21125C19.5514 4.65154 19.3761 5.07351 19.0648 5.38484C18.7534 5.69617 18.3315 5.87151 17.8912 5.8725ZM15.3412 1.5C15.2984 1.5 15.2574 1.51699 15.2272 1.54723C15.1969 1.57747 15.1799 1.61848 15.1799 1.66125V4.21125C15.1799 4.25402 15.1969 4.29503 15.2272 4.32527C15.2574 4.35551 15.2984 4.3725 15.3412 4.3725H17.8912C17.9339 4.3725 17.975 4.35551 18.0052 4.32527C18.0354 4.29503 18.0524 4.25402 18.0524 4.21125V1.66125C18.0524 1.61848 18.0354 1.57747 18.0052 1.54723C17.975 1.51699 17.9339 1.5 17.8912 1.5H15.3412Z"
                                         fill="#20263B" />
                                 </svg></mat-icon> -->
-                        <!-- <a class="action" routerLink="/dashboard/edit-employee/{{ row.id }}">
+                            <!-- <a class="action" routerLink="/dashboard/edit-employee/{{ row.id }}">
                                 <img src="../../assets/img/edit_black.png" alt width="24px" height="24px" />
                             </a>
                             <a class="action" (click)="ConfirmDeleteEmp(row.id)">
@@ -275,29 +273,23 @@
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="noData">
-                        <mat-footer-cell classs="justify-content-center"
-                            *matFooterCellDef
-                            [attr.colspan]="dataSource.data.length == 0">
+                        <mat-footer-cell class="justify-content-lg-center justify-content-md-start justify-content-start" *matFooterCellDef
+                            [attr.colspan]="dataSource.data.length === 0">
                             No data found
                         </mat-footer-cell>
                     </ng-container>
-                    <mat-footer-row *matFooterRowDef="['noData']"
-                        [hidden]="dataSource && dataSource.data.length > 0">
+                    <mat-footer-row *matFooterRowDef="['noData']" [hidden]="dataSource && dataSource.data.length > 0">
                     </mat-footer-row>
-                    <mat-header-row
-                        *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-                    <mat-row
-                        *matRowDef="let row; columns: displayedColumns"></mat-row>
+                    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
                 </mat-table>
-                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium"
-                    color="#fff" type="pacman" [fullScreen]="true"><p
-                        style="color: white" class="loader_img"> <img
-                            src="assets/img/site_loader.gif"
-                            alt></p></ngx-spinner>
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="pacman" [fullScreen]="true">
+                    <p style="color: white" class="loader_img"> <img src="assets/img/site_loader.gif" alt></p>
+                </ngx-spinner>
             </table>
             <div class="col-12">
-                <mat-paginator #paginator [pageSize]="5" style-paginator
-                    [length]="dataSource.data.length"
+                <mat-paginator #paginator [pageSize]="5" style-paginator [length]="dataSource.data.length"
                     showFirstLastButtons>
                 </mat-paginator>
             </div>

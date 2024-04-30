@@ -1,18 +1,18 @@
-import { viewEmployeeItemDto }    from './../@shared/models/viewEmployee.model';
-import { SelectionModel }         from '@angular/cdk/collections';
-import { Logger }                 from './../@shared/logger.service';
-import { ToastrService }          from 'ngx-toastr';
-import { LoaderService }          from './../@shared/pipes/loader.service';
+import { viewEmployeeItemDto } from './../@shared/models/viewEmployee.model';
+import { SelectionModel } from '@angular/cdk/collections';
+import { Logger } from './../@shared/logger.service';
+import { ToastrService } from 'ngx-toastr';
+import { LoaderService } from './../@shared/pipes/loader.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog }              from '@angular/material/dialog';
-import { MatPaginator }           from '@angular/material/paginator';
-import { MatSort }                from '@angular/material/sort';
-import { MatTableDataSource }     from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { AddEmployeeComponent } from '../add-employee/add-employee.component';
-import {EditEmpComponent} from '../edit-emp/edit-emp.component';
-import {EmployeeService} from 'src/app/employee.service';
+import { EditEmpComponent } from '../edit-emp/edit-emp.component';
+import { EmployeeService } from 'src/app/employee.service';
 import {
   ConfirmDialogComponent,
   ConfirmDialogModel,
@@ -52,8 +52,8 @@ export class EmployeeComponent implements OnInit {
   @ViewChildren("checkboxes") checkboxes: QueryList<ElementRef>;
   count = 0;
   pageNumber: number;
-  locationid : string = ''
-  allEmployee : any = []
+  locationid: string = ''
+  allEmployee: any = []
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   nameOfCompany = JSON.parse(localStorage.getItem('nameOfCompany'));
@@ -77,32 +77,32 @@ export class EmployeeComponent implements OnInit {
     this.dataSourceWithPageSize.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  comapanyId:any
+  comapanyId: any
   token: any
   ngOnInit(): void {
     this.employeeService.getAllEmployee = this.getAllEmployee.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
-    if(this.token == null){
+    if (this.token == null) {
       this.router.navigateByUrl('/');
     }
-    else{
+    else {
       this.role = this.service.getRole();
       this.comapanyId = JSON.parse(localStorage.getItem('comapnyId'));
       this.getLocationByCompanyId();
-      if (this.role != 'SA'){
-           this.service.getDepartmentById(this.comapanyId).subscribe(
-             (response: any) => {
-                this.departmentData = response.data;
-             },
-             (error) => {
-              this.service.handleError(error);
-             }
-           );
-      
+      if (this.role != 'SA') {
+        this.service.getDepartmentById(this.comapanyId).subscribe(
+          (response: any) => {
+            this.departmentData = response.data;
+          },
+          (error) => {
+            this.service.handleError(error);
+          }
+        );
+
       } else {
         this.getAllDepartment();
       }
-    
+
       const companyId = this.route.snapshot.queryParams['companyId'];
       this.locationid = this.route.snapshot.queryParams['locationId'];
       if (companyId && this.locationid) {
@@ -112,27 +112,33 @@ export class EmployeeComponent implements OnInit {
       }
       this.getAllCompany();
       // this.getAllDepartment();
-  
-     
+
+
       this.role = JSON.parse(localStorage.getItem('role'));
     }
 
-    
+
   }
 
   weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 
-  getAttendanceClass(attendance:any, day:any) {
+  getAttendanceClass(attendance:any, day: any) {
+    if(attendance.length>0){
+    
     const today = new Date().getDay();
     const currentDayIndex = this.weekDays.indexOf(day);
     if (day === 'Saturday' || day === 'Sunday') {
       return 'disabled';
     }
-    if (currentDayIndex+1 > today) {
+    // if (!Array.isArray(attendance)) {
+    //   console.error('Attendance data is not an array:', attendance);
+    //   return ''; // Handle this case appropriately
+    // }
+    if (currentDayIndex + 1 > today) {
       return 'upcoming';
-    }
-    const attendanceDay = attendance.find((a:any) => a.day == day);
+    } 
+    const attendanceDay = attendance.find((a: any) => a.day == day);
     if (attendanceDay) {
       switch (attendanceDay.attendance_status) {
         case 'Present':
@@ -144,16 +150,20 @@ export class EmployeeComponent implements OnInit {
         default:
           return '';
       }
-    }   else {
+    } else {
       return 'active absent';
     }
+      
+  }
   }
 
   locationData: any
+  allLocationByCompany: any[] = [];
   getLocationByCompanyId() {
     this.service.getLocationByCompany(this.comapanyId).subscribe(
       (response: any) => {
         this.locationData = response.data[0];
+        this.allLocationByCompany = response.data
       },
       (error) => {
         this.service.handleError(error);
@@ -163,7 +173,7 @@ export class EmployeeComponent implements OnInit {
 
   departmentData: any;
   getAllDepartment() {
-    if(this.role === 'SA'){
+    if (this.role === 'SA') {
       this.service.getAllDepartment().subscribe(
         (response: any) => {
           this.departmentData = response.data;
@@ -205,8 +215,7 @@ export class EmployeeComponent implements OnInit {
           this.spinner.hide();
           // this.allEmployee = response.data;
           this.employeeData = response.data
-   let dataaa = this.groupAttendanceByShift(response.data);
-   console.log("adaaa",dataaa)
+          let dataaa = this.groupAttendanceByShift(response.data);
           // this.dataSource.data = response.data;
           this.dataSource.data = dataaa;
         },
@@ -225,7 +234,6 @@ export class EmployeeComponent implements OnInit {
       groupedEmployee.attendance = this.groupByShift(employee.attendance);
       groupedAttendance.push(groupedEmployee);
     });
-    console.log("as>>>>ss>>>>>>>>>>>>",groupedAttendance)
     return groupedAttendance;
   }
 
@@ -243,31 +251,31 @@ export class EmployeeComponent implements OnInit {
     return groupedByShift;
   }
 
-uncheckAll() {
-  this.checkboxes.forEach((element) => {
-    element.nativeElement.checked = false;
-    this.departmentId=[];
-  });
-this.filterEmployee(
-  this.selectedCompanyId,
-  this.departmentId,
-  this.name,
-);
-}
-departmentId: any[] = [];
-getEmployeeNames(id:any){
-  const index = this.departmentId.indexOf(id);
+  uncheckAll() {
+    this.checkboxes.forEach((element) => {
+      element.nativeElement.checked = false;
+      this.departmentId = [];
+    });
+    this.filterEmployee(
+      this.selectedCompanyId,
+      this.departmentId,
+      this.name,
+    );
+  }
+  departmentId: any[] = [];
+  getEmployeeNames(id: any) {
+    const index = this.departmentId.indexOf(id);
     if (index !== -1) {
-      this.departmentId.splice(index, 1); 
+      this.departmentId.splice(index, 1);
     } else {
       this.departmentId.push(id);
     }
-this.filterEmployee(
-  this.selectedCompanyId,
-  this.departmentId,
-  this.name,
-);
-  
+    this.filterEmployee(
+      this.selectedCompanyId,
+      this.departmentId,
+      this.name,
+    );
+
   }
 
   companyData: any;
@@ -297,13 +305,35 @@ this.filterEmployee(
   selectedDepartmentId: any;
   onDepartmentSelect(event: any) {
     const selectedValue = event.target.value;
+    if (selectedValue == "") {
+      let dataaa = this.groupAttendanceByShift( this.employeeData);
+      this.dataSource.data = dataaa;
+    }
+    else {
+    const data= this.employeeData.filter((x:any)=> x.department_id == selectedValue)
+     let dataaa = this.groupAttendanceByShift(data);
+    this.dataSource.data = dataaa;
     this.selectedDepartmentId =
       selectedValue === '' ? '' : parseInt(selectedValue);
-    this.filterEmployee(
-      this.selectedCompanyId,
-      this.selectedDepartmentId,
-      this.name,
-    );
+  }
+  }
+  
+  selectedLocationId: any;
+  onLocationSelect(e: any) {
+    this.selectedLocationId = e.target.value;
+    if (this.selectedLocationId == "") {
+      let dataaa = this.groupAttendanceByShift( this.employeeData);
+      this.dataSource.data = dataaa;
+    }
+    else {
+    const data= this.employeeData.filter((x:any)=> x.location_id == this.selectedLocationId)
+    console.log("datadatadatadata",data);
+    
+     let dataaa = this.groupAttendanceByShift(data);
+    this.dataSource.data = dataaa;
+    this.selectedDepartmentId =
+    this.selectedLocationId === '' ? '' : parseInt(this.selectedLocationId);
+    }
   }
   name: any;
   onFirstNameChange(event: any) {
@@ -345,7 +375,7 @@ this.filterEmployee(
   }
 
   suggestions: any[] = [];
-  searchEmployeeData : string
+  searchEmployeeData: string
 
 
   // filterEmployeeData(event:any){
@@ -365,7 +395,7 @@ this.filterEmployee(
         employee.department_name.toString().toLowerCase().includes(searchData)
     );
   }
-  
+
 
   filterEmployee(selectedCompanyId: any, selectedDepartmentId: any, name: any) {
     if (this.role !== 'SA') {
@@ -446,34 +476,32 @@ this.filterEmployee(
   }
 
 
-  
+
   openAddEmployeeModal() {
     const dialogRef = this.dialog.open(AddEmployeeComponent, {
       width: '728px',
-      height:'600px' // adjust width as needed
+      height: '600px' // adjust width as needed
       // You can pass data to the modal if needed
       // data: { anyData: yourData },
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       // Handle modal close event if needed
-      console.log('The modal was closed');
     });
   }
 
 
   openEditEmployeeModal(row: any,) {
     const dialogRef = this.dialog.open(EditEmpComponent, {
-      height:'600px',
-      width: '728px' ,
-      data: { row: row}
-      
-    }); 
+      height: '600px',
+      width: '728px',
+      data: { row: row }
+
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       // Handle modal close event if needed
-      console.log('The edit department modal was closed');
     });
   }
-  
+
 }
