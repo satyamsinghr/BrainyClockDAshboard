@@ -275,7 +275,7 @@
 
     <form [formGroup]="addShiftForm">
 
-      <div class="row row_container g-3 mt-3 mb-0">
+      <!-- <div class="row row_container g-3 mt-3 mb-0">
         <div class="col-12">
           <div class="select_input position-relative">
             <select id="department" formControlName="companyId"
@@ -288,7 +288,22 @@
                 [value]=" company.id">
                 {{ company.name }}
               </option>
-            </select>
+            </select> -->
+               <div class="row row_container g-3 mt-3 mb-0">
+                <div class="col-12">
+               <div class="select_input position-relative">
+                <select
+                  class="form-control"
+                  formControlName="companyId"
+                  [attr.disabled]="isCompanyLoggedIn == true ? true : null"
+                  (change)="onCompanySelect($event)">
+                  <option value>Select Company</option>
+                  <option
+                    *ngFor="let company of companyData"
+                    [value]="company.id">
+                    {{ company.name }}
+                  </option>
+                </select>
             <small *ngIf="
                                     (addShiftFormControl['companyId'].touched ||
                                       submitted) &&

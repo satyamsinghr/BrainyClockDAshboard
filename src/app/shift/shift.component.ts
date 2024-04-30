@@ -255,8 +255,8 @@ this.getAllShift();
 
   openEditShiftModal(row: any,) {
     const dialogRef = this.dialog.open(EditShiftComponent, {
-      height:'420px',
-      width: '600px' ,
+      width: '420px',
+      height:'600px',
       data: { row: row}
       
     }); 
