@@ -362,7 +362,9 @@ export class ReportFilterComponent implements OnInit {
     link.click();
     this.show_modal = '';
   }
-
+  closeModal(){
+    this.show_modal = ''; 
+  }
   generateExcelData(data: any[]): any[][] {
     const excelData: any[][] = [];
     const headers = Object.keys(data[0]);

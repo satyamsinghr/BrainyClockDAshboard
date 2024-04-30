@@ -230,8 +230,8 @@
             <label
               class="m-0 d-flex align-items-center mb-4 gap-lg-4 gap-md-4 gap-3">
               <label class="custom_checkbox"><input type="checkbox"
-                  [checked]="selectedDepartmentIds.includes(department.id)"
-                  (change)="toggleDepartmentSelection(department.id)">
+                  [checked]="selectedDepartmentIds.includes(department.department_id)"
+                  (change)="toggleDepartmentSelection(department.department_id)">
                 <label></label>
               </label>
               <span>{{ department.department_name }}</span>
@@ -273,16 +273,19 @@
 
       <div class="modal-body p-0" *ngIf="!loading">
         <div class="modal_title text-center">
-          <h2 class="text-nowrap">Your report is ready!</h2>
+          <h2 class="text-nowrap" *ngIf="generatedReports?.length > 0">Your report is ready!</h2>
         </div>
-        <div class="pt-4">
+        <div class="pt-4" *ngIf="generatedReports?.length > 0">
           <img src="../../../assets/img/success_img.gif" width="100%" />
         </div>
-        <div class="processing mt-4 pt-lg-2">
+        <div class="pt-4" *ngIf="generatedReports?.length == 0">
+          <p class="m-0 text-center">Data Not Available</p>
+        </div>
+        <div class="processing mt-4 pt-lg-2" *ngIf="generatedReports?.length > 0">
           <p class="m-0 text-center">The report {{reportNameValue}} is ready and
             available for download.</p>
         </div>
-        <div
+        <div *ngIf="generatedReports?.length > 0"
           class="btn_grp d-flex align-items-center gap-lg-4 gap-md-4 gap-4 mt-4 pt-lg-2">
           <button class="btn btn-primary px-3" style="height: 56px;"
             (click)="downloadExcelReport()"
@@ -291,6 +294,13 @@
             data-bs-dismiss="modal"
             aria-label="Close" (click)="downloadCSVReport()">Download
             CSV</button>
+        </div>
+        <div *ngIf="generatedReports?.length == 0"
+          class="btn_grp d-flex align-items-center gap-lg-4 gap-md-4 gap-4 mt-4 pt-lg-2">
+          <button class="btn btn-outline-primary px-3" style="height: 56px;"
+            data-bs-dismiss="modal"
+            aria-label="Close" (click)="closeModal()">Close
+            </button>
         </div>
       </div>
     </div>
