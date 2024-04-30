@@ -39,6 +39,7 @@ export class EditEmpComponent implements OnInit {
   firstName: string;
   lastName: string;
   email: string;
+  spinnerShow: string = '';
   hourlyRate: number;
   overTime: number;
   // shifts1: number;
@@ -267,6 +268,7 @@ export class EditEmpComponent implements OnInit {
   editEmployee() {
     this.submitted = true;
     if (this.editEmployeeForm.valid) {
+      this.spinnerShow = 'text-trasparent';
       this.spinner = true;
       this.submitted = false;
       this.service.updateEmployee(this.editEmployeeForm.value, this.id,this.selectedShifts).subscribe((response: any) => {
@@ -276,6 +278,7 @@ export class EditEmpComponent implements OnInit {
           this.dialogRef.close();
           this.employeeService.getAllEmployee();
           this.spinner = false;
+          this.spinnerShow = ''
           // this.router.navigate(['/dashboard/employee']);
         }
       });

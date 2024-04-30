@@ -22,6 +22,7 @@ export class EditDepartmentComponent implements OnInit {
   spinner : boolean = false
   isLoading = false;
   department_name: string;
+  spinnerShow: string = '';
   location_id:number;
   comapnyId:any
   editDepartmentForm!: FormGroup;
@@ -95,10 +96,12 @@ export class EditDepartmentComponent implements OnInit {
   editDepartment() {
     if (this.editDepartmentForm.valid) {
       this.spinner = true
+      this.spinnerShow = 'text-trasparent';
       this.service
         .editDepartment(this.editDepartmentForm.value, this.departmentId)
         .subscribe(
           (response: any) => {
+            this.spinnerShow = '';
             this.toastr.success(response.msg);
             this.dialogRef.close();
             this.departmentService.getDepartmentById();
@@ -106,7 +109,8 @@ export class EditDepartmentComponent implements OnInit {
           },
           (error) => {
             this.service.handleError(error);
-            this.spinner = false
+            this.spinner = false;
+            this.spinnerShow = '';
           }
         );
     }

@@ -28,6 +28,7 @@ export class EditShiftComponent implements OnInit {
   clockOutTime:any;
   days:any[] =[];
   department_id:any;
+  spinnerShow: string = '';
   location_id:any;
   name :any;
   id: number = 0;
@@ -199,6 +200,7 @@ export class EditShiftComponent implements OnInit {
     this.submitted = true;
     if (this.editShiftForm.valid) {
       this.spinner=true;
+      this.spinnerShow = 'text-trasparent';
       this.submitted = false;
       this.service
         .updateShift(this.editShiftForm.value,this.rowId,this.days)
@@ -207,6 +209,7 @@ export class EditShiftComponent implements OnInit {
             // this.toastr.success((response as any).msg);
             // this.router.navigate(['/dashboard/shift']);
             this.spinner=false;
+            this.spinnerShow = '';
             this.onCancel();
           }
         });

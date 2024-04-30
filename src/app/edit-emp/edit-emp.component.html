@@ -717,18 +717,34 @@
           </small>
         </div>// -->
       </div>
-
-      <div class="mt-4 d-flex align-items-center justify-content-center gap-3">
-        <button type="button" class="btn btn-outline-primary py-3 px-4 h-auto" (click)="onCancel()">
+      <!-- <div class="d-flex align-items-center gap-3 pt-3 ">
+        <button type="button" class="btn btn-outline-primary py-3 h-auto px-4"
+        (click)="onCancel()">
           Cancel
         </button>
-        <div class="position-relative">
-          <button type="submit" class="btn btn-primary py-3 px-4 h-auto" [disabled]="shouldShowError()">Update Employee</button>
+        <div
+        class="d-flex justify-content-center position-relative login_loader">
+          <button type="submit" class="btn btn-primary  {{spinnerShow}} py-3 px-4 h-auto w-100" [disabled]="shouldShowError()">Update Employee</button>
           <div *ngIf="spinner == true" class="loader_img">
           <img src="assets/img/site_loader.gif" alt>
         </div>
         </div>
-      </div>
+      </div> -->
+      <div
+              class="d-flex mt-4  align-items-center justify-content-center gap-3 px-0 position-relative login_loader">
+              <button type="button"
+                class="btn btn-outline-primary py-3 px-4 h-auto"
+                (click)="onCancel()">
+                Cancel
+              </button>
+              <div class="position-relative">
+              <button type="submit"
+                class="btn btn-primary  py-3 px-4 h-auto" >Update Employee</button>
+              <div *ngIf="spinner == true" class="loader_img">
+                <img src="assets/img/site_loader.gif" alt>
+              </div>
+            </div>
+            </div>
     </form>
 
   </div>

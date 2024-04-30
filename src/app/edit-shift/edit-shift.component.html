@@ -574,25 +574,13 @@
   </div>
 </div> -->
 
-<section class="px-lg-0">
-  <div class="d-flex align-items-center justify-content-between">
-    <div class="brand_info">
-      <!-- <h2>CleanCorp Solutions</h2> -->
+<section class="add_department">
+  <div class="department_card p-3 brand_info">
       <h2>Edit Shift Form</h2>
-    </div>
-    <!-- <app-header></app-header> -->
-  </div>
-  <div class="container-fluid p-0">
-    <div class="row m-0 justify-content-center mt-4">
-      <div class="col-lg-6 col-md-10 col-sm-12 col-12 ps-lg-0 px-3 pt-lg-3">
-        <div class="department_card">
-          <h2>Edit Shift Form</h2>
           <form [formGroup]="editShiftForm" (ngSubmit)="editShift()">
-            <div class="row mb-3">
-              <div class="col-12">
-                <label for="companyId" class="labelName">Company Name</label>
-              </div>
-              <div class="col-12">
+              <div class="row row_container g-3 mt-3 mb-0">
+                <div class="col-12">
+               <div class="select_input position-relative">
                 <select
                   class="form-control"
                   formControlName="companyId"
@@ -621,14 +609,17 @@
                     Company name is required
                   </div>
                 </small>
+                <span class="down_arrow"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M16.7998 9.5999L11.9998 14.3999L7.19981 9.5999"
+                    stroke="black" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </span>
               </div>
             </div>
-            <div class="row mb-3">
-              <div class="col-12">
-                <label for="department_id" class="labelName">Department
-                  Name</label>
-              </div>
-              <div class="col-12">
+          <div class="col-12">
+            <div class="select_input position-relative">
                 <select
                   class="form-control"
                   [(ngModel)]="department_id"
@@ -640,13 +631,16 @@
                     {{ department.department_name }}
                   </option>
                 </select>
-              </div>
+                <span class="down_arrow"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M16.7998 9.5999L11.9998 14.3999L7.19981 9.5999"
+                    stroke="black" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </span>
             </div>
-            <div class="row mb-3">
-              <div class="col-12">
-                <label for="name" class="labelName">Name</label>
-              </div>
-              <div class="col-12">
+          </div>
+          <div class="col-12">
                 <input
                 [ngModel]="name"
                   asp-for="name"
@@ -670,7 +664,6 @@
                     Name is required
                   </div>
                 </small>
-              </div>
             </div>
             <!-- <div class="row mb-3">
               <div class="col-12">
@@ -704,11 +697,9 @@
                 </small>
               </div>
             </div> -->
-            <div class="row mb-3">
-              <div class="col-12">
+            <div class="col-12">
+              <div class="form-group">
                 <label for="clockInTime" class="labelName">Clock In Time</label>
-              </div>
-              <div class="col-12">
                 <input
                 [(ngModel)]="clockInTime"
                   asp-for="clockInTime"
@@ -735,12 +726,10 @@
                 </small>
               </div>
             </div>
-            <div class="row mb-3">
-              <div class="col-12">
+            <div class="col-12">
+              <div class="form-group">
                 <label for="clockOutTime" class="labelName">Clock Out
                   Time</label>
-              </div>
-              <div class="col-12">
                 <input
                 [(ngModel)]="clockOutTime"
                   asp-for="clockOutTime"
@@ -841,11 +830,15 @@
                 </div>
               </div> -->
              
-             <div class="row mb-3">
-              <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
+              <div class="col-12 pt-2">
+                
+          <label for class="mb-2">Select days :</label>
+                <ul
+                class="d-flex align-items-center gap-2 flex-wrap add_shifts_c">
                 <li *ngFor="let day of dayName; let i = index">
                   <input type="checkbox" [checked]="days.includes(day)"  (click)="toggleDaySelection(day,i)">
-                  <button type="button" class="d-flex align-items-center gap-2" >
+                  <button type="button"
+                  class="d-flex align-items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                       <rect width="20" height="20" rx="10" fill="white" />
                       <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23" stroke-width="2" stroke-linecap="round"
@@ -857,20 +850,33 @@
               </ul>
               <small *ngIf="shouldShowError()" class="text-danger">Please Select at least one day</small>
              </div>
-              <button
-                type="button"
-                class="btn btn-outline-primary me-3"
+            </div>
+            <!-- <div class="d-flex flex-lg-row flex-md-row flex-column-reverse align-items-center justify-content-between gap-3 pt-5 ">
+              <button type="button" class="btn btn-outline-primary py-3 h-auto px-4"
                 (click)="onCancel()">
                 Cancel
               </button>
+              <div
+              class="d-flex justify-content-center w-100 position-relative login_loader">
               <button type="submit" class="btn btn-primary" [disabled]="shouldShowError()">Submit</button>
+          </div>
+          </div> -->
+        </div>
+        <div class="d-flex flex-lg-row flex-md-row flex-column-reverse align-items-center justify-content-between gap-3 pt-5 ">
+          <button type="button" class="btn btn-outline-primary py-3 h-auto px-4"
+            (click)="onCancel()">
+            Cancel
+          </button>
+          <div
+            class="d-flex justify-content-center w-100 position-relative login_loader">
+            <button type="submit"
+              class="btn btn-primary  {{spinnerShow}} py-3 px-4 h-auto w-100">Add
+              New Shift</button>
             <div *ngIf="spinner == true" class="loader_img">
-              <img src="assets/img/site_loader.gif" alt>
+              <img src="assets/img/site_loader.gif" alt />
             </div>
           </div>
+        </div>
           </form>
         </div>
-      </div>
-    </div>
-  </div>
 </section>
