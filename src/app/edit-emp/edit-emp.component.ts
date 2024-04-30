@@ -230,7 +230,7 @@ export class EditEmpComponent implements OnInit {
 
 
   shouldShowError(): boolean {
-    return this.submitted || this.selectedShifts.every(shift => shift === null || shift === undefined || shift === "");
+    return this.selectedShifts.every(shift => shift === null || shift === undefined || shift === "");
   }
   
   
