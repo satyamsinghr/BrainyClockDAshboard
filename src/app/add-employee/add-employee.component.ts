@@ -82,7 +82,7 @@ export class AddEmployeeComponent implements OnInit {
       // shifts1: ['', [Validators.required]],
       // shifts2: [''],
       // shifts3: [''],
-      // shifts: ['', [Validators.required]],
+      shifts: ['', [Validators.required]],
       department_id: ['', [Validators.required]],
       location_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       type: ['', Validators.required],
@@ -264,6 +264,7 @@ export class AddEmployeeComponent implements OnInit {
   
   
   addEmployee() {
+    debugger
     this.submitted = true;
     // if (this.role != 'SA') {
     //   const companyId = this.service.getCompanyId();
@@ -287,8 +288,10 @@ export class AddEmployeeComponent implements OnInit {
           (error) => {
             if(error.status== 409){
               this.toastr.error(error.error.msg);
+              this.spinner = false;
             }else{
               this.toastr.error("Intenal Server error");
+              this.spinner = false;
             }
             this.service.handleError(error);
             this.spinner = false;
@@ -297,17 +300,20 @@ export class AddEmployeeComponent implements OnInit {
       }
     } else if (this.role == 'SA') {
       if (this.addEmployeeForm.valid) {
+        // this.spinner = true
         this.submitted = false;
         this.service.addEmployee(this.addEmployeeForm.value,this.shifts).subscribe(
           (response: any) => {
             if (response.data) {
               // this.toastr.success(response.msg);
               this.addEmployeeForm.reset();
-              this.router.navigate(['/dashboard/employee']);
+              // this.router.navigate(['/dashboard/employee']);
+              // this.spinner = false;
             }
           },
           (error) => {
-            this.service.handleError(error);
+            // this.service.handleError(error);
+            // this.spinner = false;
           }
         );
       }

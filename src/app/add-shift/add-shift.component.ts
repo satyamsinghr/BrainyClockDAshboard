@@ -21,6 +21,7 @@ export class AddShiftComponent implements OnInit {
     'Sunday',
   ];
   selectedDay: string = '';
+  spinner:boolean = false;
   role: string = '';
   isCompanyLoggedIn: boolean = false;
   companyData: any;
@@ -191,16 +192,19 @@ export class AddShiftComponent implements OnInit {
       this.addShiftForm.get('companyId').setValue(companyId);
     }
     if (this.addShiftForm.valid) {
+      this.spinner = true
       this.submitted = false;
       this.service.addShift(this.addShiftForm.value,this.selectedDays).subscribe(
         (response: any) => {
           if (response.success == true) {
             this.dialogRef.close();
+            this.spinner = false;
             // this.getAllShifts();
           }
         },
         (error) => {
           this.service.handleError(error);
+          this.spinner = false;
         }
       );
     }

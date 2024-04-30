@@ -856,8 +856,6 @@
                 </li>
               </ul>
              </div>
-             
-             
               <button
                 type="button"
                 class="btn btn-outline-primary me-3"
@@ -865,9 +863,11 @@
                 Cancel
               </button>
               <button type="submit" class="btn btn-primary">Submit</button>
+            <div *ngIf="spinner == true" class="loader_img">
+              <img src="assets/img/site_loader.gif" alt>
             </div>
+          </div>
           </form>
-
         </div>
       </div>
     </div>

@@ -23,6 +23,7 @@ export class EditShiftComponent implements OnInit {
     'Sunday',
   ];
   rowId :any 
+  spinner:boolean = false;
   clockInTime:any;
   clockOutTime:any;
   days:any;
@@ -197,13 +198,15 @@ export class EditShiftComponent implements OnInit {
   editShift() {
     this.submitted = true;
     if (this.editShiftForm.valid) {
+      this.spinner=true;
       this.submitted = false;
       this.service
         .updateShift(this.editShiftForm.value,this.rowId,this.days)
         .subscribe((response) => {
           if ((response as any).success == true) {
             // this.toastr.success((response as any).msg);
-            this.router.navigate(['/dashboard/shift']);
+            // this.router.navigate(['/dashboard/shift']);
+            this.spinner=false;
             this.onCancel();
           }
         });
