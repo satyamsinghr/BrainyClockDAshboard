@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ResetPasswordComponent implements OnInit {
   resetPasswordForm: FormGroup;
+  public showPassword: boolean;
   submitted = false;
   spinner = false;
   spinnerShow: string = '';
