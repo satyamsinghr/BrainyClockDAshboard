@@ -21,7 +21,7 @@ export class AddShiftComponent implements OnInit {
     'Sunday',
   ];
   selectedDay: string = '';
-  spinner:boolean = false;
+  spinner: boolean = false;
   role: string = '';
   isCompanyLoggedIn: boolean = false;
   companyData: any;
@@ -29,22 +29,23 @@ export class AddShiftComponent implements OnInit {
   locationAllData: any;
   companyId: any;
   companyName: any;
+  spinnerShow: any;
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private service: AppService,
     public dialogRef: MatDialogRef<AddShiftComponent>
-  ) {}
-  name:any
+  ) { }
+  name: any
   ngOnInit(): void {
     this.companyId = JSON.parse(localStorage.getItem('comapnyId'));
-    this.companyName=JSON.parse(localStorage.getItem('nameOfCompany'));
-    this.name=JSON.parse(localStorage.getItem('companyName'));
+    this.companyName = JSON.parse(localStorage.getItem('nameOfCompany'));
+    this.name = JSON.parse(localStorage.getItem('companyName'));
     this.initializeForm();
     this.role = this.service.getRole();
     this.getAllLocation();
-   
+
     if (this.role != 'SA') {
       this.getDepaetmentById();
       this.getLocation();
@@ -53,7 +54,7 @@ export class AddShiftComponent implements OnInit {
         {
           id: this.service.getCompanyId(),
           // name: this.service.getComapnyName(),
-         
+
           name: this.companyName ? this.companyName : this.name,
         },
       ];
@@ -62,23 +63,23 @@ export class AddShiftComponent implements OnInit {
       });
     } else {
       this.getAllCompany();
-    // this.getAllDepartment();
+      // this.getAllDepartment();
     }
   }
 
-  getDepaetmentById(){
+  getDepaetmentById() {
     this.companyId = this.role == 'SA' ? this.selectedCompanyId : this.companyId
-    if(this.companyId){
+    if (this.companyId) {
       this.service.getDepartmentById(this.companyId).subscribe(
         (response: any) => {
-           this.departmentData = response.data;
+          this.departmentData = response.data;
         },
         (error) => {
           this.service.handleError(error);
         }
       );
     }
-    else{
+    else {
       this.departmentData = []
     }
   }
@@ -116,7 +117,7 @@ export class AddShiftComponent implements OnInit {
       }
     );
   }
-  changeDays(e: any) {}
+  changeDays(e: any) { }
   get daysName() {
     return this.addShiftForm.get('days');
   }
@@ -137,51 +138,51 @@ export class AddShiftComponent implements OnInit {
     this.getLocation();
     this.getDepaetmentById();
   }
-  getAllLocation(){
+  getAllLocation() {
     this.service.getAllLocation().subscribe(
-        (response: any) => {
-          this.locationAllData = response.data;
-        },
-        (error) => {
-          this.service.handleError(error);
-        }
-      );
+      (response: any) => {
+        this.locationAllData = response.data;
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
   }
   getLocation() {
-    if(this.role=='SA'){
+    if (this.role == 'SA') {
       this.service
-      .getCompanyOfficeLocation(parseInt(this.selectedCompanyId))
-      .subscribe((response: any) => {
-        this.locationData = response.data
-      },
-      (error) => {
-        this.service.handleError(error);
-        this.locationData = []
-      }
-      );
-    }else{
+        .getCompanyOfficeLocation(parseInt(this.selectedCompanyId))
+        .subscribe((response: any) => {
+          this.locationData = response.data
+        },
+          (error) => {
+            this.service.handleError(error);
+            this.locationData = []
+          }
+        );
+    } else {
       this.service
-      .getCompanyOfficeLocation(this.companyId)
-      .subscribe((response: any) => {
-        this.locationData = response.data
-      },
-      (error) => {
-        this.service.handleError(error);
-        this.locationData = []
-      }
-      );
+        .getCompanyOfficeLocation(this.companyId)
+        .subscribe((response: any) => {
+          this.locationData = response.data
+        },
+          (error) => {
+            this.service.handleError(error);
+            this.locationData = []
+          }
+        );
     }
- 
+
   }
 
-  selectedDays: string[] = []; 
+  selectedDays: string[] = [];
 
   toggleDaySelection(day: string) {
     const index = this.selectedDays.indexOf(day);
     if (index > -1) {
       this.selectedDays.splice(index, 1);
     } else {
-      this.selectedDays.push(day); 
+      this.selectedDays.push(day);
     }
   }
 
@@ -194,11 +195,15 @@ export class AddShiftComponent implements OnInit {
     if (this.addShiftForm.valid) {
       this.spinner = true
       this.submitted = false;
-      this.service.addShift(this.addShiftForm.value,this.selectedDays).subscribe(
+
+      this.spinnerShow = 'text-trasparent';
+      this.service.addShift(this.addShiftForm.value, this.selectedDays).subscribe(
         (response: any) => {
           if (response.success == true) {
             this.dialogRef.close();
             this.spinner = false;
+
+            this.spinnerShow = '';
             // this.getAllShifts();
           }
         },
@@ -209,11 +214,11 @@ export class AddShiftComponent implements OnInit {
       );
     }
   }
-  back_to_shift(){
+  back_to_shift() {
     this.router.navigate(['/dashboard/shift']);
   }
 
-  
+
   onCancel(): void {
     // Close the dialog when Cancel button is clicked
     this.dialogRef.close();

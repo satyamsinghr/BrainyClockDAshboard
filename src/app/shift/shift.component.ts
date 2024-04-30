@@ -242,7 +242,7 @@ export class ShiftComponent implements OnInit {
 
   openAddShiftModal() {
     const dialogRef = this.dialog.open(AddShiftComponent, {
-      width: '728px',
+      width: '420px',
       height:'600px' 
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -255,8 +255,8 @@ this.getAllShift();
 
   openEditShiftModal(row: any,) {
     const dialogRef = this.dialog.open(EditShiftComponent, {
-      height:'600px',
-      width: '728px' ,
+      height:'420px',
+      width: '600px' ,
       data: { row: row}
       
     }); 

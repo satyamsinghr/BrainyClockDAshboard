@@ -2851,7 +2851,7 @@ aside {
 }
 
 .sidebar_menu .nav_menu {
-  margin-top: 92px;
+  margin-top: 48px;
   transition: 0.5s;
 }
 
@@ -2867,7 +2867,7 @@ aside {
 // }
 
 .sidebar_menu ul.navmenu li.nav-item:not(:last-child) {
-  margin-bottom: 44px;
+  margin-bottom: 32px;
 }
 
 .sidebar_menu li.nav-item .nav-link {
@@ -2893,10 +2893,17 @@ aside {
   transition: 0.5s;
 }
 
+button.btn.btn-primary.text-trasparent {
+  color: transparent !important;
+  transition: 0s;
+  background-color: #FF6528 !important;
+  border-color: #FF6528 !important;
+}
+
 /*== page body ==*/
 .page_body {
   width: 94.79100vw;
-  margin-left: 8vw;
+  margin-left: 7.5vw;
   transition: 0.5s;
 }
 
@@ -3095,6 +3102,25 @@ table.table.card_table.employee_table mat-header-row mat-header-cell:nth-child(9
   flex: 0 0 auto;
 }
 
+
+table.table.card_table.employee_table.setting_table mat-table mat-cell {
+  background-color: #FCFCFC !important;
+  padding: 22px 11px !important;
+  border-bottom: 1px solid #D9D9D9 !important;
+}
+
+table.table.card_table.employee_table.setting_table mat-table mat-cell:nth-child(1) {
+  border-radius: 8px 0 0 8px;
+}
+table.table.card_table.employee_table.setting_table mat-table mat-cell:nth-child(2) {
+  border-radius: 0px 0 0 0px;
+}
+.employee_table.setting_table mat-header-row mat-header-cell:first-child, .employee_table.setting_table mat-table mat-cell:first-child
+{
+  width: auto !important;
+  min-width: 20% !important;
+}
+
 .mat-paginator-range-actions {
   gap: 10px !important;
 }
@@ -3121,6 +3147,7 @@ table.table.card_table.employee_table.department_table mat-header-row mat-header
   right: 0;
   bottom: 0;
   top: 0;
+  z-index: 999999;
   width: 100%;
   opacity: 0;
   height: 100%;
@@ -4520,11 +4547,11 @@ mat-dialog-container#mat-dialog-0 {
   }
 
   .sidebar_menu ul.navmenu li.nav-item:not(:last-child) {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 
   .sidebar_menu .nav_menu {
-    margin-top: 78px;
+    margin-top: 38px;
   }
 
   .filter_dropdown span {

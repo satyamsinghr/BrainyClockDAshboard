@@ -1,26 +1,12 @@
-<section class="px-lg-5">
+<!-- <section class="px-lg-5">
   <div class="container-fluid p-0">
     <div class="row m-0">
       <div
         class="col-lg-12 col-md-12 col-sm-12 col-12 ps-lg-0 px-3 pt-lg-5 mt-lg-4 pt-md-4 pt-4">
         <form [formGroup]="addShiftForm">
           <div class="row ps-lg-5">
-            <!-- <div 
-              class="col-lg-1 col-md-1 col-sm-12 col-12 d-lg-flex d-md-flex d-none">
-              <div class="back_to_home" (click)="back_to_shift()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"
-                  viewBox="0 0 64 64" fill="none">
-                  <path
-                    d="M28.6957 43.8871C29.4028 44.7357 30.664 44.8503 31.5125 44.1432C32.3611 43.4361 32.4757 42.1749 31.7686 41.3264L28.6957 43.8871ZM21.3932 32.0001L19.8568 30.7197C19.2387 31.4614 19.2387 32.5387 19.8568 33.2804L21.3932 32.0001ZM31.7686 22.6738C32.4757 21.8252 32.3611 20.5641 31.5125 19.857C30.664 19.1498 29.4028 19.2645 28.6957 20.113L31.7686 22.6738ZM42.6066 34.0001C43.7112 34.0001 44.6066 33.1046 44.6066 32.0001C44.6066 30.8955 43.7112 30.0001 42.6066 30.0001V34.0001ZM31.7686 41.3264L22.9297 30.7197L19.8568 33.2804L28.6957 43.8871L31.7686 41.3264ZM22.9297 33.2804L31.7686 22.6738L28.6957 20.113L19.8568 30.7197L22.9297 33.2804ZM21.3932 34.0001H42.6066V30.0001H21.3932V34.0001ZM16.4437 16.4437C25.0352 7.85212 38.9648 7.85212 47.5563 16.4437L50.3848 13.6152C40.2311 3.46159 23.7689 3.46159 13.6152 13.6152L16.4437 16.4437ZM47.5563 16.4437C56.1479 25.0352 56.1479 38.9648 47.5563 47.5563L50.3848 50.3848C60.5384 40.2311 60.5384 23.7689 50.3848 13.6152L47.5563 16.4437ZM47.5563 47.5563C38.9648 56.1479 25.0352 56.1479 16.4437 47.5563L13.6152 50.3848C23.7689 60.5384 40.2311 60.5384 50.3848 50.3848L47.5563 47.5563ZM16.4437 47.5563C7.85212 38.9648 7.85212 25.0352 16.4437 16.4437L13.6152 13.6152C3.46159 23.7689 3.46159 40.2311 13.6152 50.3848L16.4437 47.5563Z"
-                    fill="#4E4E4E" />
-                </svg>
-              </div>
-            </div> -->
             <div class="col-lg-6 col-md-6 col-sm-12 col-12">
               <div class="shift_page_detail">
-                <!-- <h2>Add a shift</h2>
-                <h6 class="my-lg-5 my-md-4 my-4">Shift
-                  details</h6> -->
                 <div class="form-group row mb-lg-4 pb--lg-2 mb-md-4 mb-4">
                   <div
                     class="col-lg-4 col-md-12 col-sm-12 col-12 d-flex align-items-center">
@@ -180,7 +166,7 @@
                     </div>
                   </div>
                 </div>
-                <!-- <h6 class="my-lg-5 my-md-4 my-4">Schedule</h6> -->
+
                 <div class="row">
                   <div class="col-lg-10 col-md-12 col-sm-12 col-12">
                     <div
@@ -240,41 +226,37 @@
                       class="checkbox day_checkbox mt-lg-5 pt-lg-4 mt-md-4 mt-4">
                       <label for>Select days :</label>
                       <div class="row mt-3 g-3">
-                        <!-- <div class="col-lg-3 col-md-4 col-sm-6 col-6"
-                          *ngFor="let days of dayName">
-                          <div
-                            class="checkbox_outer justify-content-center w-100"
-                            [class.active]="selectedDays.includes(days)"
-                            (click)="toggleDaySelection(days)">
-                            <input type="checkbox"
-                              [checked]="selectedDays.includes(days)">
-                            {{ days }}
-                          </div>
-                        </div> -->
-                        <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
-                        <li *ngFor="let days of dayName let i = index" style="cursor: pointer;">
-                          <input class="form-control" formControlName="shifts" type="checkbox" [checked]="days[i] === ''"
-                          (click)="toggleDaySelection(days)">
-                          <button type="button" class="d-flex align-items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                              <rect width="20" height="20" rx="10" fill="white" />
-                              <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                            </svg>
-                            <span>{{ days }}</span>
-                          </button>
-                        </li>
-                      </ul>
-                      <small *ngIf="submitted && selectedDays.length === 0" class="text-danger mt-2">
-                        Please select at least one day
-                      </small>
+
+                        <ul
+                          class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
+                          <li *ngFor="let days of dayName let i = index"
+                            style="cursor: pointer;">
+                            <input class="form-control" formControlName="shifts"
+                              type="checkbox" [checked]="days[i] === ''"
+                              (click)="toggleDaySelection(days)">
+                            <button type="button"
+                              class="d-flex align-items-center gap-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                height="20" viewBox="0 0 20 20" fill="none">
+                                <rect width="20" height="20" rx="10"
+                                  fill="white" />
+                                <path d="M14 7L8.03374 13L6 10.9548"
+                                  stroke="#061D23" stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round" />
+                              </svg>
+                              <span>{{ days }}</span>
+                            </button>
+                          </li>
+                        </ul>
+
                       </div>
                     </div>
                     <button type="button"
-                    class="btn btn-outline-primary py-3 px-4 h-auto"
-                    (click)="onCancel()">
-                    Cancel
-                  </button>
+                      class="btn btn-outline-primary py-3 px-4 h-auto"
+                      (click)="onCancel()">
+                      Cancel
+                    </button>
                   </div>
                 </div>
               </div>
@@ -284,5 +266,248 @@
         </form>
       </div>
     </div>
+  </div>
+</section> -->
+
+<section class="add_department">
+  <div class="department_card p-3 brand_info">
+    <h2 class="text-center">Add Shift</h2>
+
+    <form [formGroup]="addShiftForm">
+
+      <div class="row row_container g-3 mt-3 mb-0">
+        <div class="col-12">
+          <div class="select_input position-relative">
+            <select id="department" formControlName="companyId"
+              (change)="onCompanySelect($event)"
+              [attr.disabled]="isCompanyLoggedIn == true ? true : null">
+              <option value defaultSelected>
+                Select Company Name
+              </option>
+              <option *ngFor="let  company of companyData"
+                [value]=" company.id">
+                {{ company.name }}
+              </option>
+            </select>
+            <small *ngIf="
+                                    (addShiftFormControl['companyId'].touched ||
+                                      submitted) &&
+                                    addShiftFormControl['companyId'].invalid
+                                  " class="form-text text-muted mt-2">
+              <div class="text-danger" *ngIf="
+                                      addShiftFormControl['companyId'].errors &&
+                                      addShiftFormControl['companyId'].errors['required']
+                                    ">
+                Company Name is required
+              </div>
+              <div *ngIf="
+                                      addShiftFormControl['companyId'].errors &&
+                                      addShiftFormControl['companyId'].errors['pattern']
+                                    ">
+                Enter Only Numeric Value
+              </div>
+            </small>
+
+            <span class="down_arrow"><svg xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M16.7998 9.5999L11.9998 14.3999L7.19981 9.5999"
+                  stroke="black" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="select_input position-relative">
+            <select id="department" formControlName="department_id">
+              <option value defaultSelected>
+                Select Department
+              </option>
+              <option *ngFor="let department of departmentData"
+                [value]="department.department_id">
+                {{ department.department_name }}
+              </option>
+            </select>
+            <small *ngIf="
+                                  (addShiftFormControl['department_id'].touched ||
+                                    submitted) &&
+                                  addShiftFormControl['department_id'].invalid
+                                " class="form-text text-muted mt-2">
+              <div class="text-danger" *ngIf="
+                                    addShiftFormControl['department_id'].errors &&
+                                    addShiftFormControl['department_id'].errors['required']
+                                  ">
+                Department Name is required
+              </div>
+              <div *ngIf="
+                                    addShiftFormControl['department_id'].errors &&
+                                    addShiftFormControl['department_id'].errors['pattern']
+                                  ">
+                Enter Only Numeric Value
+              </div>
+            </small>
+            <span class="down_arrow"><svg xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M16.7998 9.5999L11.9998 14.3999L7.19981 9.5999"
+                  stroke="black" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div class="col-12">
+          <input type="text" id="department" placeholder="Shift Name"
+            formControlName="name" />
+          <small
+            *ngIf="
+          (addShiftFormControl['name'].touched || submitted) &&
+          addShiftFormControl['name'].invalid
+        "
+            class="form-text text-muted mt-2">
+            <div
+              class="text-danger"
+              *ngIf="
+            addShiftFormControl['name'].errors &&
+            addShiftFormControl['name'].errors['required']
+          ">
+              Name is required
+            </div>
+          </small>
+        </div>
+        <div class="col-12">
+          <div class="select_input position-relative">
+            <select name="location" formControlName="locationId">
+              <option value defaultSelected>
+                Select Office
+              </option>
+              <option *ngFor="let location of locationData"
+                [value]="location.id">
+                {{ location.location_name }}
+              </option>
+            </select>
+            <small *ngIf="
+                                            (addShiftFormControl['locationId'].touched ||
+                                              submitted) &&
+                                            addShiftFormControl['locationId'].invalid
+                                          " class="form-text text-muted mt-2">
+              <div class="text-danger" *ngIf="
+                                              addShiftFormControl['locationId'].errors &&
+                                              addShiftFormControl['locationId'].errors['required']
+                                            ">
+                Location Name is required
+              </div>
+              <div *ngIf="
+                                              addShiftFormControl['locationId'].errors &&
+                                              addShiftFormControl['locationId'].errors['locationId']
+                                            ">
+                Enter Only Numeric Value
+              </div>
+            </small>
+            <span class="down_arrow"><svg xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M16.7998 9.5999L11.9998 14.3999L7.19981 9.5999"
+                  stroke="black" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <label for="clockIn" class="mb-1">Clock in :</label>
+
+            <input asp-for="clockInTime" type="time"
+              class="form-control" formControlName="clockInTime"
+              placeholder="Choose Clock In Time"
+              required="required" />
+            <small
+              *ngIf="
+          (addShiftFormControl['clockInTime'].touched ||
+            submitted) &&
+          addShiftFormControl['clockInTime'].invalid
+        "
+              class="form-text text-muted mt-2">
+              <div
+                class="text-danger"
+                *ngIf="
+            addShiftFormControl['clockInTime'].errors &&
+            addShiftFormControl['clockInTime'].errors['required']
+          ">
+                Clock In Time is required
+              </div>
+            </small>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="clockOut" class="mb-1">Clock out :</label>
+            <input asp-for="clockOutTime" type="time"
+              class="form-control" formControlName="clockOutTime"
+              placeholder="Choose Clock In Time"
+              required="required" />
+            <small
+              *ngIf="
+          (addShiftFormControl['clockOutTime'].touched ||
+            submitted) &&
+          addShiftFormControl['clockOutTime'].invalid
+        "
+              class="form-text text-muted mt-2">
+              <div
+                class="text-danger"
+                *ngIf="
+            addShiftFormControl['clockOutTime'].errors &&
+            addShiftFormControl['clockOutTime'].errors['required']
+          ">
+                Clock Out Time is required
+              </div>
+            </small>
+          </div>
+        </div>
+
+        <div class="col-12 pt-2">
+          <label for class="mb-2">Select days :</label>
+          <ul
+            class="d-flex align-items-center gap-2 flex-wrap add_shifts_c">
+            <li *ngFor="let days of dayName let i = index"
+              style="cursor: pointer;">
+              <input class="form-control" formControlName="shifts"
+                type="checkbox" [checked]="days[i] === ''"
+                (click)="toggleDaySelection(days)">
+              <button type="button"
+                class="d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                  height="20" viewBox="0 0 20 20" fill="none">
+                  <rect width="20" height="20" rx="10"
+                    fill="white" />
+                  <path d="M14 7L8.03374 13L6 10.9548"
+                    stroke="#061D23" stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+                <span>{{ days }}</span>
+              </button>
+            </li>
+          </ul>
+          <small *ngIf="submitted && this.selectedDays.length === 0" class = "text-danger"> please Select at least one day</small>
+        </div>
+
+      </div>
+      <div class="d-flex flex-lg-row flex-md-row flex-column-reverse align-items-center justify-content-between gap-3 pt-5 ">
+        <button type="button" class="btn btn-outline-primary py-3 h-auto px-4"
+          (click)="onCancel()">
+          Cancel
+        </button>
+        <div
+          class="d-flex justify-content-center w-100 position-relative login_loader">
+          <button type="submit" (click)="addShift()"
+            class="btn btn-primary  {{spinnerShow}} py-3 px-4 h-auto w-100">Add
+            New Shift</button>
+          <div *ngIf="spinner == true" class="loader_img">
+            <img src="assets/img/site_loader.gif" alt />
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </section>

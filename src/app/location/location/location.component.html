@@ -5,60 +5,74 @@
       <!-- <h2>CleanCorp Solutions</h2> -->
       <!-- <h2>{{locationData?.location_name}}</h2> -->
     </div>
-    <div class="header_search d-lg-block d-md-block d-none">
-      <div class="search_box">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-          viewBox="0 0 24 24" fill="none">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-            d="M5 11C5 7.691 7.691 5 11 5C14.309 5 17 7.691 17 11C17 14.309 14.309 17 11 17C7.691 17 5 14.309 5 11ZM20.707 19.293L17.312 15.897C18.365 14.543 19 12.846 19 11C19 6.589 15.411 3 11 3C6.589 3 3 6.589 3 11C3 15.411 6.589 19 11 19C12.846 19 14.543 18.365 15.897 17.312L19.293 20.707C19.488 20.902 19.744 21 20 21C20.256 21 20.512 20.902 20.707 20.707C21.098 20.316 21.098 19.684 20.707 19.293Z"
-            fill="#061D23" />
-        </svg>
-        <input type="search" placeholder="Search"
-          (keyup)="filterOfficeData($event)">
-      </div>
-    </div>
-    <div class="header_add_button d-lg-none d-md-none d-flex">
 
-      <div class="position-relative pt-2">
-        <a href="javascript:void" class="btn btn-primary w-100"
-          (click)="goto_addLocation()">
-          Add Office</a>
-        <div class="tooltip_manual" >
-          Add Office
+    <div class="d-flex align-items-center justify-content-between gap-4">
+      <div class="header_search d-lg-block d-md-block d-none">
+        <div class="search_box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M5 11C5 7.691 7.691 5 11 5C14.309 5 17 7.691 17 11C17 14.309 14.309 17 11 17C7.691 17 5 14.309 5 11ZM20.707 19.293L17.312 15.897C18.365 14.543 19 12.846 19 11C19 6.589 15.411 3 11 3C6.589 3 3 6.589 3 11C3 15.411 6.589 19 11 19C12.846 19 14.543 18.365 15.897 17.312L19.293 20.707C19.488 20.902 19.744 21 20 21C20.256 21 20.512 20.902 20.707 20.707C21.098 20.316 21.098 19.684 20.707 19.293Z"
+              fill="#061D23" />
+          </svg>
+          <input type="search" placeholder="Search"
+            (keyup)="filterOfficeData($event)">
         </div>
       </div>
-      <!-- <button class="btn btn-outline-primary">Import</button> -->
+      <div class="header_add_button d-lg-block d-md-block d-flex">
+        <div class="position-relative pt-2">
+          <a href="javascript:void" class="btn btn-primary w-100 d-flex align-items-center gap-2 justify-content-center"
+          (click)="openAddOfficeModal()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg" width="24"
+              height="24"
+              viewBox="0 0 24 24" fill="none">
+              <path
+                d="M19 11H13V5C13 4.73478 12.8946 4.48043 12.7071 4.29289C12.5196 4.10536 12.2652 4 12 4C11.7348 4 11.4804 4.10536 11.2929 4.29289C11.1054 4.48043 11 4.73478 11 5V11H5C4.73478 11 4.48043 11.1054 4.29289 11.2929C4.10536 11.4804 4 11.7348 4 12C4 12.2652 4.10536 12.5196 4.29289 12.7071C4.48043 12.8946 4.73478 13 5 13H11V19C11 19.2652 11.1054 19.5196 11.2929 19.7071C11.4804 19.8946 11.7348 20 12 20C12.2652 20 12.5196 19.8946 12.7071 19.7071C12.8946 19.5196 13 19.2652 13 19V13H19C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11Z"
+                fill="#FCFCFC" />
+            </svg>
+            <span style="padding-top: 3px;">Add Office</span></a>
+          <div class="tooltip_manual">
+            Add Office
+          </div>
+        </div>
+        <!-- <button class="btn btn-outline-primary">Import</button> -->
+      </div>
     </div>
     <app-header></app-header>
   </div>
   <div class="container-fluid p-0">
     <div class="row m-0">
-      <div class="col-lg-10 col-md-12 col-sm-12 col-12 ps-lg-0 px-lg-3 px-md-3 px-0 pt-lg-3">
+      <div
+        class="col-lg-10 col-md-12 col-sm-12 col-12 ps-lg-0 px-lg-3 px-md-3 px-0 pt-lg-3">
         <div class="student_table pe-lg-4 pe-md-4">
           <table class="table m-0">
             <mat-table #table [dataSource]="dataSource" matSort>
               <ng-container matColumnDef="select">
-                    <mat-header-cell *matHeaderCellDef>
-                      <mat-checkbox (change)="$event ? masterToggle() : null"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()">
-                      </mat-checkbox>
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let row">
-                      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)">
-                      </mat-checkbox>
-                    </mat-cell>
-                  </ng-container>
+                <mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()">
+                  </mat-checkbox>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)">
+                  </mat-checkbox>
+                </mat-cell>
+              </ng-container>
               <ng-container matColumnDef="locationId">
-                <mat-header-cell class="text-nowrap" *matHeaderCellDef mat-sort-header>
+                <mat-header-cell class="text-nowrap" *matHeaderCellDef
+                  mat-sort-header>
                   Office ID
                 </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{ element.id }}
                 </mat-cell>
               </ng-container>
               <ng-container matColumnDef="companyId">
-                <mat-header-cell class="text-nowrap" *matHeaderCellDef mat-sort-header>
+                <mat-header-cell class="text-nowrap" *matHeaderCellDef
+                  mat-sort-header>
                   Company Name
                 </mat-header-cell>
                 <mat-cell *matCellDef="let element">
@@ -66,7 +80,8 @@
                 </mat-cell>
               </ng-container>
               <ng-container matColumnDef="location_name">
-                <mat-header-cell class="text-nowrap" *matHeaderCellDef mat-sort-header>
+                <mat-header-cell class="text-nowrap" *matHeaderCellDef
+                  mat-sort-header>
                   Office Name
                 </mat-header-cell>
                 <mat-cell *matCellDef="let element">
@@ -74,7 +89,8 @@
                 </mat-cell>
               </ng-container>
               <ng-container matColumnDef="address">
-                <mat-header-cell class="text-nowrap" *matHeaderCellDef mat-sort-header>
+                <mat-header-cell class="text-nowrap" *matHeaderCellDef
+                  mat-sort-header>
                   Address
                 </mat-header-cell>
                 <mat-cell *matCellDef="let element">
@@ -82,7 +98,8 @@
                 </mat-cell>
               </ng-container>
               <ng-container matColumnDef="pincode">
-                <mat-header-cell class="text-nowrap" *matHeaderCellDef mat-sort-header>
+                <mat-header-cell class="text-nowrap" *matHeaderCellDef
+                  mat-sort-header>
                   Pincode
                 </mat-header-cell>
                 <mat-cell *matCellDef="let element">
@@ -97,10 +114,9 @@
 
                   <div class="position-relative">
                     <a class="action"
-                      
-                      (click)="EditAddOfficeModal(row.id)"
-                      >
-                      <img src="../../assets/img/edit_black.png" alt width="24px"
+                      (click)="EditAddOfficeModal(row.id)">
+                      <img src="../../assets/img/edit_black.png" alt
+                        width="24px"
                         height="24px" />
                     </a>
                     <div class="tooltip_manual">
@@ -109,7 +125,8 @@
                   </div>
                   <div class="position-relative">
                     <a class="action" (click)="ConfirmDeleteLocation(row.id)">
-                      <img src="../../assets/img/delete_gray.png" alt width="24px"
+                      <img src="../../assets/img/delete_gray.png" alt
+                        width="24px"
                         height="24px" />
                     </a>
                     <div class="tooltip_manual">
@@ -159,14 +176,14 @@
           <!-- <a href="javascript:void" class="btn btn-primary"
             (click)="goto_addLocation()">
             + Add Office</a> -->
-          <div class="position-relative pt-2 login_loader" >
+          <!-- <div class="position-relative pt-2 login_loader" >
             <a href="javascript:void" class="btn btn-primary w-100"
               (click)="openAddOfficeModal()">
               Add Office</a>
             <div class="tooltip_manual">
               Add Office
             </div>
-          </div>
+          </div> -->
           <!-- <a href="javascript:void" class="btn btn-primary bg-white mt-3" (click)="goto_addbulkEmployee()">Add
             in bulk</a> -->
         </div>

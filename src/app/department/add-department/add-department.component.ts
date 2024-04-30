@@ -1,6 +1,6 @@
 import { LoaderService } from 'src/app/@shared/pipes';
 import { ToastrService } from 'ngx-toastr';
-import { Component, OnInit ,Inject} from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from 'src/app/auth/credentials.service';
@@ -8,24 +8,25 @@ import { Subject } from 'rxjs';
 import { AppService } from '../../app.service';
 import { Location } from '@angular/common';
 import { MatDialogRef } from '@angular/material/dialog';
-import {DepartmentComponent} from '../department/department.component'
-import {DepartmentService} from 'src/app/department.service';
+import { DepartmentComponent } from '../department/department.component'
+import { DepartmentService } from 'src/app/department.service';
 @Component({
   selector: 'app-add-department',
   templateUrl: './add-department.component.html',
   styleUrls: ['./add-department.component.scss'],
 })
 export class AddDepartmentComponent implements OnInit {
-  spinner : boolean = false
+  spinner: boolean = false
   isLoading = false;
   isCompanyLoggedIn: boolean = false;
   submitted = false;
-  companyData:any;
-  role:any
-  companyName:any
-  comapnyId:any
+  companyData: any;
+  role: any
+  companyName: any
+  comapnyId: any
+  spinnerShow: string = '';
   addDepartmentForm!: FormGroup;
-  locationData:any=[]
+  locationData: any = []
   protected _onDestroy = new Subject<void>();
   constructor(
     private router: Router,
@@ -33,15 +34,15 @@ export class AddDepartmentComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private service: AppService,
-     public dialogRef: MatDialogRef<AddDepartmentComponent> ,
+    public dialogRef: MatDialogRef<AddDepartmentComponent>,
     //  @Inject(DepartmentComponent) private departmentComponent: DepartmentComponent 
     private departmentService: DepartmentService
-  ) {}
-  name:any
+  ) { }
+  name: any
   ngOnInit(): void {
     this.role = this.service.getRole();
-    this.companyName=JSON.parse(localStorage.getItem('nameOfCompany'));
-    this.name=JSON.parse(localStorage.getItem('companyName'));
+    this.companyName = JSON.parse(localStorage.getItem('nameOfCompany'));
+    this.name = JSON.parse(localStorage.getItem('companyName'));
     this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
     this.initializeForm();
     this.getLocationByCompanyId();
@@ -50,7 +51,7 @@ export class AddDepartmentComponent implements OnInit {
       this.companyData = [
         {
           id: this.service.getCompanyId(),
-          name: this.companyName?this.companyName:this.name,
+          name: this.companyName ? this.companyName : this.name,
         },
       ];
       this.addDepartmentForm.patchValue({
@@ -66,11 +67,11 @@ export class AddDepartmentComponent implements OnInit {
     this.addDepartmentForm = this.fb.group({
       department: ['', [Validators.required]],
       company_id: ['', [Validators.required]],
-      location_id:['',[Validators.required]]
+      location_id: ['', [Validators.required]]
     });
   }
 
-  selectedCompanyId:any
+  selectedCompanyId: any
   onCompanySelect(event: any) {
     this.selectedCompanyId = event.target.value;
   }
@@ -90,7 +91,7 @@ export class AddDepartmentComponent implements OnInit {
     return this.addDepartmentForm.get('shifts');
   }
 
-  changeShift(e: any) {}
+  changeShift(e: any) { }
   get addDepartmentFormControl() {
     return this.addDepartmentForm.controls;
   }
@@ -107,16 +108,18 @@ export class AddDepartmentComponent implements OnInit {
   addDepartment() {
     this.submitted = true;
     if (this.addDepartmentForm.valid) {
+      this.spinnerShow = 'text-trasparent';
       this.spinner = true
       this.submitted = false;
       this.service.addDepartment(this.addDepartmentForm.value).subscribe(
         (response: any) => {
+          this.spinnerShow = '';
           this.toastr.success(response.msg);
           this.dialogRef.close();
           this.departmentService.getDepartmentById();
           this.spinner = false
           // this.location.replaceState(this.location.path());
-    
+
         },
         (error) => {
           this.service.handleError(error);
@@ -142,5 +145,5 @@ export class AddDepartmentComponent implements OnInit {
       }
     );
   }
-  
+
 }
