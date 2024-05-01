@@ -17,6 +17,7 @@ import { Workbook } from 'exceljs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import moment from 'moment';
+import { SharedService } from 'src/app/shared.service';
 moment.locale("fr");
 @Component({
   selector: 'app-report-filter',
@@ -34,6 +35,7 @@ export class ReportFilterComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  lastUrl: string;
   constructor(
     private router: Router,
     public dialog: MatDialog,
@@ -42,6 +44,7 @@ export class ReportFilterComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private datePipe: DatePipe,
     private fb: FormBuilder,
+    private sharedService:SharedService
     // private modalService: NgbModal,
   ) { this.alwaysShowCalendars = true; }
 
@@ -63,12 +66,13 @@ export class ReportFilterComponent implements OnInit {
   selectedReportType: string = 'Select ReportType';
 
   ngOnInit(): void {
-    console.log("asdd1",this.router.url)
-    const Url  = this.router.url
+    const Url  = this.router.url;
+    console.log("testtt",Url);
+    
     const parts = Url.split('/');
-   const lastPart = parts[parts.length - 1];
-   console.log("Last part:", lastPart);
-
+    this.lastUrl = parts[parts.length - 1];
+    this.sharedService.setLastUrl(this.lastUrl);
+    console.log("LastURL",this.lastUrl)
     this.createForm();
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if (this.token == null) {

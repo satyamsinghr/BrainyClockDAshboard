@@ -19,7 +19,7 @@ import { CredentialsService } from '../auth/credentials.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { AddShiftComponent } from '../add-shift/add-shift.component';
 import { EditShiftComponent } from '../edit-shift/edit-shift.component';
-
+import { SharedService } from '../shared.service'
 const log=new Logger('Employee');
 @Component({
   selector: 'app-shift',
@@ -43,6 +43,7 @@ export class ShiftComponent implements OnInit {
   // @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  lastUrl: string;
   constructor(private paginator1: MatPaginatorIntl,
       private router:Router, 
       public dialog: MatDialog,
@@ -50,6 +51,7 @@ export class ShiftComponent implements OnInit {
       private toastr:ToastrService, 
       private appService:AppService,
       private service:AppService,
+      private sharedService:SharedService,
       private spinner: NgxSpinnerService) {
     paginator1.itemsPerPageLabel = 'The amount of data displayed';
   }
@@ -61,6 +63,13 @@ export class ShiftComponent implements OnInit {
   comapnyId:any
   token:any
   ngOnInit(): void {
+    const Url  = this.router.url;
+    console.log("testtt",Url);
+    
+    const parts = Url.split('/');
+    this.lastUrl = parts[parts.length - 1];
+    this.sharedService.setLastUrl(this.lastUrl);
+    console.log("deptartmemntLAstURL",this.lastUrl)
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if(this.token == null){
       this.router.navigateByUrl('/');

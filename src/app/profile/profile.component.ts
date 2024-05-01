@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, Valid
 import { AppService } from 'src/app/app.service';
 import { ToastrService } from 'ngx-toastr';
 import { NavigationStart, Router } from '@angular/router';
+import { SharedService } from '../shared.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -12,13 +13,22 @@ export class ProfileComponent implements OnInit {
   passwordForm: FormGroup;
   submitted: boolean = false
   email: any
+  lastUrl: string;
   constructor(
      private service:AppService,
      private fb: FormBuilder,
      private toastr:ToastrService,
+     private sharedService:SharedService,
      private router: Router) {}
 
   ngOnInit(): void {
+    const Url  = this.router.url;
+    console.log("testtt",Url);
+    
+    const parts = Url.split('/');
+    this.lastUrl = parts[parts.length - 1];
+    this.sharedService.setLastUrl(this.lastUrl);
+    console.log("LastURL",this.lastUrl)
     this.email = JSON.parse(localStorage.getItem('email'));
     this.initForm();
   }

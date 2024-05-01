@@ -3,7 +3,7 @@ import { Chart } from 'angular-highcharts';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { AppService } from '../app.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Router } from '@angular/router';
 import { SharedService } from '../shared.service'; 
 @Component({
@@ -19,12 +19,19 @@ export class DashboardComponent implements OnInit {
   displayedColumn: string[] = ['department', 'currentShift', 'shiftStatus', 'attendance'];
   dataSourceOperations = new MatTableDataSource<any>([]);
   displayedOprationsColumn: string[] = ['employee', 'status', 'clock-in']
+  isReportPage: boolean;
   //constructor(public service: AppService, public route: ActivatedRoute) { }
   constructor(private router: Router,public service: AppService,private sharedService: SharedService) {
   }
   lastUrl:any
   ngOnInit(): void {
     const Url  = this.router.url;
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // Check if the current URL contains 'report'
+        this.isReportPage = this.router.url.includes('reportFilter');
+      }
+    });
     // console.log("testtt",Url);
     
     // const parts = Url.split('/');

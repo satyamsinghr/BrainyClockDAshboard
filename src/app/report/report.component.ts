@@ -13,6 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 import { saveAs } from 'file-saver';
 import { Workbook } from 'exceljs';
+import { SharedService } from '../shared.service';
 // import * as XLSX from 'xlsx';
 
 @Component({
@@ -32,13 +33,15 @@ export class ReportComponent implements OnInit {
   displayedColumns = ['select','reportName', 'reportType', 'dateGenerated', 'reportPeriod', 'Action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  lastUrl: string;
   constructor(
     private router: Router,
     public dialog: MatDialog,
     private service: AppService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private sharedService:SharedService
   ) { }
 
   getCurrentDate(): Date {
@@ -58,6 +61,13 @@ export class ReportComponent implements OnInit {
   shifts: any = []
   pageSize: number = 10;
   ngOnInit(): void {
+    const Url  = this.router.url;
+    console.log("testtt",Url);
+    
+    const parts = Url.split('/');
+    this.lastUrl = parts[parts.length - 1];
+    this.sharedService.setLastUrl(this.lastUrl);
+    console.log("LastURL",this.lastUrl)
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if (this.token == null) {
       this.router.navigateByUrl('/');

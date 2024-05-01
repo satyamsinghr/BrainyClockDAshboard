@@ -9,6 +9,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { viewEmployeeItemDto } from './../@shared/models/viewEmployee.model';
 import { Emp_Data } from '../@shared/models/dataSource';
 import { MatDialogRef } from '@angular/material/dialog';
+import { SharedService } from '../shared.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -35,15 +37,25 @@ export class SettingComponent implements OnInit {
   dataSource = new MatTableDataSource(this.scheduleData);
   // dataSource = new MatTableDataSource<viewEmployeeItemDto>(Emp_Data);
   displayedColumns: string[] = ['timezone', 'interval', 'action',];
+  lastUrl: any;
   constructor(private fb: FormBuilder,
+    private router:Router, 
     private service: AppService,
     private toastr: ToastrService,
     public dialog: MatDialog,
+    private sharedService :SharedService
     // public dialogRef: MatDialogRef<SettingComponent> ,
   ) { }
 
 
   ngOnInit() {
+    const Url  = this.router.url;
+    console.log("testtt",Url);
+    
+    const parts = Url.split('/');
+    this.lastUrl = parts[parts.length - 1];
+    this.sharedService.setLastUrl(this.lastUrl);
+    console.log("LastURL",this.lastUrl)
     this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
     // this.scheduleData = JSON.parse(localStorage.getItem('SchudleGetData'));
     this.timezoneForm = this.fb.group({

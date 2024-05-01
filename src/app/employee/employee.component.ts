@@ -21,6 +21,7 @@ import { Emp_Data } from '../@shared/models/dataSource';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { AppService } from './../app.service';
 import { ViewChildren, QueryList, ElementRef, AfterViewInit } from '@angular/core';
+import { SharedService } from '../shared.service';
 const log = new Logger('Employee');
 @Component({
   selector: 'app-employee',
@@ -58,6 +59,7 @@ export class EmployeeComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   nameOfCompany = JSON.parse(localStorage.getItem('nameOfCompany'));
   Object = Object;
+  lastUrl: string;
   constructor(
     private paginator1: MatPaginatorIntl,
     private router: Router,
@@ -67,7 +69,8 @@ export class EmployeeComponent implements OnInit {
     private toastr: ToastrService,
     private service: AppService,
     private spinner: NgxSpinnerService,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private sharedService:SharedService
   ) {
     paginator1.itemsPerPageLabel = 'The amount of data displayed';
   }
@@ -80,6 +83,13 @@ export class EmployeeComponent implements OnInit {
   comapanyId: any
   token: any
   ngOnInit(): void {
+    const Url  = this.router.url;
+    console.log("testtt",Url);
+    
+    const parts = Url.split('/');
+    this.lastUrl = parts[parts.length - 1];
+    this.sharedService.setLastUrl(this.lastUrl);
+    console.log("LastURL",this.lastUrl)
     this.employeeService.getAllEmployee = this.getAllEmployee.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if (this.token == null) {
