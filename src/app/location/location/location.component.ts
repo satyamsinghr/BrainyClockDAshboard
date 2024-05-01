@@ -19,7 +19,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { AppService } from '../../app.service';
 import { AddLocationComponent } from '../add-location/add-location.component';
 import { EditLocationComponent } from '../edit-location/edit-location.component';
-
+import { SharedService } from '../../shared.service'
 const log = new Logger('Employee');
 @Component({
   selector: 'app-location',
@@ -59,7 +59,8 @@ export class LocationComponent implements OnInit {
     private loader: LoaderService,
     private toastr: ToastrService,
     private service: AppService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private sharedService: SharedService
   ) {
     paginator1.itemsPerPageLabel = 'The amount of data displayed';
   }
@@ -74,7 +75,15 @@ export class LocationComponent implements OnInit {
   companyId: number;
   comapnyId: any
   token: string
+  lastUrl: string
   ngOnInit(): void {
+    const Url  = this.router.url;
+    console.log("testtt",Url);
+    
+    const parts = Url.split('/');
+    this.lastUrl = parts[parts.length - 1];
+    this.sharedService.setLastUrl(this.lastUrl);
+    console.log("deptartmemntLAstURL",this.lastUrl);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if (this.token == null) {
       this.router.navigateByUrl('/');

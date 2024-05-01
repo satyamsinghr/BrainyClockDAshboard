@@ -20,6 +20,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { AppService } from '../../app.service';
 import { AddDepartmentComponent } from '../add-department/add-department.component'
 import { EditDepartmentComponent } from '../edit-department/edit-department.component'
+import { SharedService } from '../../shared.service'
 const log = new Logger('Employee');
 @Component({
   selector: 'app-department',
@@ -72,7 +73,8 @@ export class DepartmentComponent implements OnInit {
     private toastr: ToastrService,
     private service: AppService,
     private spinner: NgxSpinnerService,
-    private departmentService: DepartmentService
+    private departmentService: DepartmentService,
+    private sharedService: SharedService
   ) {
     paginator1.itemsPerPageLabel = 'The amount of data displayed';
   }
@@ -86,7 +88,15 @@ export class DepartmentComponent implements OnInit {
   role: any
   searchData: any
   token: any
+  lastUrl: any
   ngOnInit(): void {
+    const Url  = this.router.url;
+    console.log("testtt",Url);
+    
+    const parts = Url.split('/');
+    this.lastUrl = parts[parts.length - 1];
+    this.sharedService.setLastUrl(this.lastUrl);
+    console.log("deptartmemntLAstURL",this.lastUrl);
     this.departmentService.getDepartmentById = this.getDepartmentById.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if (this.token == null) {
