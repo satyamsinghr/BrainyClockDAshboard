@@ -250,7 +250,7 @@ export class ReportFilterComponent implements OnInit {
       this.selectedDepartmentIds = [];
       this.selectedDepartmentNames = [];
     } else {
-      this.selectedDepartmentIds = this.departments.map((dep: any) => dep.id);
+      this.selectedDepartmentIds = this.departments.map((dep: any) => dep.department_id);
       this.selectedDepartmentNames = this.departments.map((dep: any) => dep.department_name);
     }
     this.selectAllChecked = !this.selectAllChecked;
