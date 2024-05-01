@@ -11,6 +11,7 @@ import { Emp_Data } from '../@shared/models/dataSource';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SharedService } from '../shared.service';
 import { Router } from '@angular/router';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../@shared/confirm.dialog';
 
 
 @Component({
@@ -179,6 +180,20 @@ export class SettingComponent implements OnInit {
         this.service.handleError(error);
       }
     );
+  }
+  ConfirmDeleteDepartment() {
+    const message = `Are you sure you want to delete this record?`;
+    const dialogData = new ConfirmDialogModel('Confirm Action', message, false);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '400px',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((data: boolean) => {
+      if (data == true) {
+        this.deleteSchedule();
+      }
+    });
   }
 
 }

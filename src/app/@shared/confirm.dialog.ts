@@ -17,7 +17,7 @@ import { Component, OnInit, Inject } from '@angular/core';
         <button mat-raised-button color="primary" (click)="onConfirm()">OK</button>
       </div>
       <ng-template #elseBlock>
-        <button mat-raised-button color="primary" (click)="onConfirm()">Yes</button>
+        <button mat-raised-button color="primary" [style.background-color]="'#FF6528'" (click)="onConfirm()">Yes</button>
         <button mat-raised-button (click)="onDismiss()">No</button>
       </ng-template>
     </div>

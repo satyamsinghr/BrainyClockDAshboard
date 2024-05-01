@@ -503,7 +503,7 @@
               </button>
             </li>
           </ul>
-          <small *ngIf="submitted && this.selectedDays.length === 0" class = "text-danger"> please Select at least one day</small>
+          <small *ngIf="this.selectedDays.length === 0" class = "text-danger"> please Select at least one day</small>
         </div>
       </div>
       <div class="d-flex flex-lg-row flex-md-row flex-column-reverse align-items-center justify-content-between gap-3 pt-5 ">
@@ -514,7 +514,7 @@
         <div
           class="d-flex justify-content-center w-100 position-relative login_loader">
           <button type="submit" (click)="addShift()"
-            class="btn btn-primary  {{spinnerShow}} py-3 px-4 h-auto w-100">Create
+            class="btn btn-primary  {{spinnerShow}} py-3 px-4 h-auto w-100" [disabled]="selectedDays.length === 0">Create
             New Shift</button>
           <div *ngIf="spinner == true" class="loader_img">
             <img src="assets/img/site_loader.gif" alt />

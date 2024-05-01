@@ -738,7 +738,7 @@
                 Cancel
               </button>
               <div class="position-relative">
-              <button type="submit"
+              <button type="submit" [disabled]="shouldShowError()"
                 class="btn btn-primary  {{spinnerShow}} py-3 px-4 h-auto" >Update Employee</button>
               <div *ngIf="spinner == true" class="loader_img">
                 <img src="assets/img/site_loader.gif" alt>

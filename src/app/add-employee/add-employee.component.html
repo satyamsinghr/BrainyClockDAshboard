@@ -844,7 +844,7 @@
       </button>
       <div class="position-relative">
       <button type="submit"
-        class="btn btn-primary  {{spinnerShow}} py-3 px-4 h-auto" >Add Employee</button>
+        class="btn btn-primary  {{spinnerShow}} py-3 px-4 h-auto"[disabled]="shouldShowError()" >Add Employee</button>
       <div *ngIf="spinner == true" class="loader_img">
         <img src="assets/img/site_loader.gif" alt>
       </div>

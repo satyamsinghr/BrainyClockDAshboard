@@ -222,6 +222,6 @@ export class EditShiftComponent implements OnInit {
 
 
   shouldShowError(): boolean {
-    return this.submitted || this.days.length === 0 || this.days.every(day => day === null || day === undefined || day === "");
+    return this.days.length === 0 || this.days.every(day => day === null || day === undefined || day === "");
   }
 }

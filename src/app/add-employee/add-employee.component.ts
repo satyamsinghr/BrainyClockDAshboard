@@ -291,12 +291,15 @@ export class AddEmployeeComponent implements OnInit {
             if(error.status== 409){
               this.toastr.error(error.error.msg);
               this.spinner = false;
+              this.spinnerShow = '';
             }else{
               this.toastr.error("Intenal Server error");
               this.spinner = false;
+              this.spinnerShow = '';
             }
             this.service.handleError(error);
             this.spinner = false;
+            this.spinnerShow = '';
           }
         );
       }
