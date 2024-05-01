@@ -261,7 +261,6 @@ export class HomeComponent implements OnInit {
 
 forwardButtonClick() {
     if (this.index < this.departmentData.length-1) {
-      debugger
         this.index++;
         this.updateDepartmentName();
         this.departmentId=this.departmentData[this.index].department_id;

@@ -292,11 +292,11 @@ export class AppService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<addEmployeeItemDto[]>(this.apiConfig + routes.Get_AllEmployee, { headers });
   }
-  getAllEmployeeByCompany(): Observable<addEmployeeItemDto[]> {
+  getAllEmployeeByCompany(params: any = {}): Observable<addEmployeeItemDto[]> {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const comapnyId = this.getCompanyId();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<addEmployeeItemDto[]>(this.apiConfig + routes.Get_AllEmployee_Company(comapnyId), { headers });
+    return this.http.get<addEmployeeItemDto[]>(this.apiConfig + routes.Get_AllEmployee_Company(comapnyId), { headers,params  });
   }
   deleteEmployee(employeeId: number) {
     const token = JSON.parse(localStorage.getItem('loginToken'));

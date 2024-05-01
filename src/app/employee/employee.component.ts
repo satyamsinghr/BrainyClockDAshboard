@@ -70,7 +70,7 @@ export class EmployeeComponent implements OnInit {
     private service: AppService,
     private spinner: NgxSpinnerService,
     private employeeService: EmployeeService,
-    private sharedService:SharedService
+    private sharedService: SharedService
   ) {
     paginator1.itemsPerPageLabel = 'The amount of data displayed';
   }
@@ -83,15 +83,16 @@ export class EmployeeComponent implements OnInit {
   comapanyId: any
   token: any
   ngOnInit(): void {
-    const Url  = this.router.url;
-    console.log("testtt",Url);
-    
+    const Url = this.router.url;
+    console.log("testtt", Url);
+
     const parts = Url.split('/');
     this.lastUrl = parts[parts.length - 1];
     this.sharedService.setLastUrl(this.lastUrl);
-    console.log("LastURL",this.lastUrl)
+    console.log("LastURL", this.lastUrl)
     this.employeeService.getAllEmployee = this.getAllEmployee.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
+    this.getAllShift();
     if (this.token == null) {
       this.router.navigateByUrl('/');
     }
@@ -133,38 +134,38 @@ export class EmployeeComponent implements OnInit {
   weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 
-  getAttendanceClass(attendance:any, day: any) {
-    if(attendance.length>0){
-    
-    const today = new Date().getDay();
-    const currentDayIndex = this.weekDays.indexOf(day);
-    if (day === 'Saturday' || day === 'Sunday') {
-      return 'disabled';
-    }
-    // if (!Array.isArray(attendance)) {
-    //   console.error('Attendance data is not an array:', attendance);
-    //   return ''; // Handle this case appropriately
-    // }
-    if (currentDayIndex + 1 > today) {
-      return 'upcoming';
-    } 
-    const attendanceDay = attendance.find((a: any) => a.day == day);
-    if (attendanceDay) {
-      switch (attendanceDay.attendance_status) {
-        case 'Present':
-          return 'present';
-        case 'Late':
-          return 'active';
-        case 'Absent':
-          return 'active absent';
-        default:
-          return '';
+  getAttendanceClass(attendance: any, day: any) {
+    if (attendance.length > 0) {
+
+      const today = new Date().getDay();
+      const currentDayIndex = this.weekDays.indexOf(day);
+      if (day === 'Saturday' || day === 'Sunday') {
+        return 'disabled';
       }
-    } else {
-      return 'active absent';
+      // if (!Array.isArray(attendance)) {
+      //   console.error('Attendance data is not an array:', attendance);
+      //   return ''; // Handle this case appropriately
+      // }
+      if (currentDayIndex + 1 > today) {
+        return 'upcoming';
+      }
+      const attendanceDay = attendance.find((a: any) => a.day == day);
+      if (attendanceDay) {
+        switch (attendanceDay.attendance_status) {
+          case 'Present':
+            return 'present';
+          case 'Late':
+            return 'active';
+          case 'Absent':
+            return 'active absent';
+          default:
+            return '';
+        }
+      } else {
+        return 'active absent';
+      }
+
     }
-      
-  }
   }
 
   locationData: any
@@ -203,6 +204,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   employeeData: any = []
+  selectedShiftIds: number[] = [];
   getAllEmployee() {
     if (this.role == 'SA') {
       this.spinner.show();
@@ -219,8 +221,13 @@ export class EmployeeComponent implements OnInit {
         }
       );
     } else {
+      const params: { [key: string]: any } = {};
+
+      this.selectedShiftIds.forEach((shiftId, index) => {
+        params[`shiftId${index + 1}`] = shiftId;
+      });
       this.spinner.show();
-      this.service.getAllEmployeeByCompany().subscribe(
+      this.service.getAllEmployeeByCompany(params).subscribe(
         (response: any) => {
           this.spinner.hide();
           // this.allEmployee = response.data;
@@ -316,33 +323,33 @@ export class EmployeeComponent implements OnInit {
   onDepartmentSelect(event: any) {
     const selectedValue = event.target.value;
     if (selectedValue == "") {
-      let dataaa = this.groupAttendanceByShift( this.employeeData);
+      let dataaa = this.groupAttendanceByShift(this.employeeData);
       this.dataSource.data = dataaa;
     }
     else {
-    const data= this.employeeData.filter((x:any)=> x.department_id == selectedValue)
-     let dataaa = this.groupAttendanceByShift(data);
-    this.dataSource.data = dataaa;
-    this.selectedDepartmentId =
-      selectedValue === '' ? '' : parseInt(selectedValue);
+      const data = this.employeeData.filter((x: any) => x.department_id == selectedValue)
+      let dataaa = this.groupAttendanceByShift(data);
+      this.dataSource.data = dataaa;
+      this.selectedDepartmentId =
+        selectedValue === '' ? '' : parseInt(selectedValue);
+    }
   }
-  }
-  
+
   selectedLocationId: any;
   onLocationSelect(e: any) {
     this.selectedLocationId = e.target.value;
     if (this.selectedLocationId == "") {
-      let dataaa = this.groupAttendanceByShift( this.employeeData);
+      let dataaa = this.groupAttendanceByShift(this.employeeData);
       this.dataSource.data = dataaa;
     }
     else {
-    const data= this.employeeData.filter((x:any)=> x.location_id == this.selectedLocationId)
-    console.log("datadatadatadata",data);
-    
-     let dataaa = this.groupAttendanceByShift(data);
-    this.dataSource.data = dataaa;
-    this.selectedDepartmentId =
-    this.selectedLocationId === '' ? '' : parseInt(this.selectedLocationId);
+      const data = this.employeeData.filter((x: any) => x.location_id == this.selectedLocationId)
+      console.log("datadatadatadata", data);
+
+      let dataaa = this.groupAttendanceByShift(data);
+      this.dataSource.data = dataaa;
+      this.selectedDepartmentId =
+        this.selectedLocationId === '' ? '' : parseInt(this.selectedLocationId);
     }
   }
   name: any;
@@ -513,5 +520,88 @@ export class EmployeeComponent implements OnInit {
       // Handle modal close event if needed
     });
   }
+
+  getAllShifts: any = []
+  shiftData: any = []
+  getAllShift() {
+    if (this.role == 'SA') {
+      this.spinner.show();
+      this.service.getAllShift().subscribe((response: any) => {
+        this.spinner.hide();
+        this.shiftData = response.data
+        this.dataSource.data = response.data;
+        // this.getAllShifts=response.data;
+      },
+        error => {
+          this.service.handleError(error);
+          this.spinner.hide();
+        }
+      );
+    } else {
+      this.spinner.show();
+      this.service.getShiftByCompany().subscribe((response: any) => {
+        this.spinner.hide();
+        this.shiftData = response.data
+        // this.dataSource.data=response.data;
+      },
+        error => {
+          this.service.handleError(error);
+          this.spinner.hide();
+        }
+      );
+    }
+  }
+
+  toggleCheckbox(shift: any) {
+    shift.checked = !shift.checked;
+    if (shift.checked) {
+      this.selectedShiftIds.push(shift.id); // Add selected shift ID
+    } else {
+      this.selectedShiftIds = this.selectedShiftIds.filter(id => id !== shift.id); // Remove unselected shift ID
+    }
+  }
+
+  getEmployeeId(attandance: any) {
+    if (attandance.length > 0) {
+      const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
+
+      const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
+      return EmpId[0]?.employee_id
+    }
+  }
+  getEmployeeShift(attandance: any) {
+    if (attandance.length > 0) {
+      const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
+
+      const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
+      return EmpId[0]?.shift_name
+    }
+  }
+  getEmployeeStatus(attandance: any) {
+    if (attandance.length > 0) {
+      const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
+
+      const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
+      return EmpId[0]?.attendance_status
+    }
+  }
+  getEmployeeClockIn(attandance: any) {
+    if (attandance.length > 0) {
+      const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
+
+      const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
+      return EmpId[0]?.clock_in_time ? EmpId[0]?.clock_in_time  : "--"
+
+    }
+  }
+  getEmployeeClockOut(attandance: any) {
+    if (attandance.length > 0) {
+      const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
+
+      const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
+      return EmpId[0]?.clock_out_time ? EmpId[0]?.clock_out_time : "--"
+    }
+  }
+
 
 }

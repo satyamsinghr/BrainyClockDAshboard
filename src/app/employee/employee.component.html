@@ -8,26 +8,20 @@
     <div class="d-flex align-items-center justify-content-between gap-4">
         <div class="header_search d-lg-block d-md-block d-none">
             <div class="search_box">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                    viewBox="0 0 24 24" fill="none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M5 11C5 7.691 7.691 5 11 5C14.309 5 17 7.691 17 11C17 14.309 14.309 17 11 17C7.691 17 5 14.309 5 11ZM20.707 19.293L17.312 15.897C18.365 14.543 19 12.846 19 11C19 6.589 15.411 3 11 3C6.589 3 3 6.589 3 11C3 15.411 6.589 19 11 19C12.846 19 14.543 18.365 15.897 17.312L19.293 20.707C19.488 20.902 19.744 21 20 21C20.256 21 20.512 20.902 20.707 20.707C21.098 20.316 21.098 19.684 20.707 19.293Z"
                         fill="#061D23" />
                 </svg>
-                <input type="search" placeholder="Search"
-                    (keyup)="filterEmployeeData($event)">
+                <input type="search" placeholder="Search" (keyup)="filterEmployeeData($event)">
             </div>
         </div>
         <div class="header_add_button d-flex align-items-center gap-3">
 
             <div class="position-relative">
-                <button
-                    class="btn btn-primary d-flex align-items-center gap-2 justify-content-center"
+                <button class="btn btn-primary d-flex align-items-center gap-2 justify-content-center"
                     (click)="openAddEmployeeModal()">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg" width="24"
-                        height="24"
-                        viewBox="0 0 24 24" fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path
                             d="M19 11H13V5C13 4.73478 12.8946 4.48043 12.7071 4.29289C12.5196 4.10536 12.2652 4 12 4C11.7348 4 11.4804 4.10536 11.2929 4.29289C11.1054 4.48043 11 4.73478 11 5V11H5C4.73478 11 4.48043 11.1054 4.29289 11.2929C4.10536 11.4804 4 11.7348 4 12C4 12.2652 4.10536 12.5196 4.29289 12.7071C4.48043 12.8946 4.73478 13 5 13H11V19C11 19.2652 11.1054 19.5196 11.2929 19.7071C11.4804 19.8946 11.7348 20 12 20C12.2652 20 12.5196 19.8946 12.7071 19.7071C12.8946 19.5196 13 19.2652 13 19V13H19C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11Z"
                             fill="#FCFCFC" />
@@ -58,16 +52,24 @@
                 <li class="position-relative">
                     <select name="departments" id="departments" (change)="onDepartmentSelect($event)">
                         <option value="">Filter by department</option>
-                        <option *ngFor="let dept of departmentData" [value]="dept.department_id">{{ dept.department_name }}</option>
-                      </select>
+                        <option *ngFor="let dept of departmentData" [value]="dept.department_id">{{ dept.department_name
+                            }}</option>
+                    </select>
                 </li>
-                <!-- <li>
+                <!-- <li *ngFor="let shift of shiftData">
+                    <div class="filter_dropdown">
+                        <input type="checkbox" [checked]="shift.checked" (click)="toggleCheckbox(shift); getAllEmployee()">
+                        <span>{{shift.name}}</span>
+                    </div>
+                </li> -->
+
+                <!-- <li *ngFor="let shift of shiftNames">
                     <div class="filter_dropdown">
                         <input type="checkbox">
-                        <span>Morning shift</span>
+                        <span>{{ shift }}</span>
                     </div>
-                </li>
-                <li>
+                </li> -->
+                <!--<li>
                     <div class="filter_dropdown">
                         <input type="checkbox">
                         <span>Night shift</span>
@@ -87,18 +89,15 @@
             <table class="table employee_table card_table">
                 <mat-table #table [dataSource]="dataSource" matSort>
                     <ng-container matColumnDef="select">
-                        <mat-header-cell *matHeaderCellDef
-                            class="table_checkbox">
-                            <mat-checkbox
-                                (change)="$event ? masterToggle() : null"
+                        <mat-header-cell *matHeaderCellDef class="table_checkbox">
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
                                 [checked]="selection.hasValue() && isAllSelected()"
                                 [indeterminate]="selection.hasValue() && !isAllSelected()">
                             </mat-checkbox>
                         </mat-header-cell>
                         <mat-cell *matCellDef="let row" class="table_checkbox">
                             <mat-checkbox (click)="$event.stopPropagation()"
-                                (change)="$event ? selection.toggle(row) : null"
-                                [checked]="selection.isSelected(row)">
+                                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
                             </mat-checkbox>
                         </mat-cell>
                     </ng-container>
@@ -110,7 +109,13 @@
                         </mat-header-cell>
                         <mat-cell *matCellDef="let element"
                             class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
-                            {{ element.id}} </mat-cell>
+                            {{ element.id}}
+                            <!-- <div class="d-flex gap-3 flex-column">
+                                <li class="this_week_attendance" *ngFor="let shift of Object.keys(element.attendance)">
+                                    {{ getEmployeeId(element.attendance[shift]) }}
+                                </li>
+                            </div> -->
+                        </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="employeeName">
@@ -124,8 +129,8 @@
                         </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="departmentName">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header
+                   <ng-container matColumnDef="departmentName">
+                         <mat-header-cell *matHeaderCellDef mat-sort-header
                             class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
                             Department
                         </mat-header-cell>
@@ -151,7 +156,13 @@
                         </mat-header-cell>
                         <mat-cell *matCellDef="let element"
                             class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
-                            {{ element.status }} </mat-cell>
+                            <!-- {{ element.status }}  -->
+                            <div class="d-flex gap-3 flex-column">
+                                <li class="this_week_attendance" *ngFor="let shift of Object.keys(element.attendance)">
+                                    {{ getEmployeeStatus(element.attendance[shift]) }}
+                                </li>
+                            </div>
+                        </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="clock_in">
                         <mat-header-cell *matHeaderCellDef mat-sort-header
@@ -160,16 +171,28 @@
                         </mat-header-cell>
                         <mat-cell *matCellDef="let element"
                             class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
-                            {{ element.shift_clock_in_time_1 }} </mat-cell>
+                            <!-- {{ element.shift_clock_in_time_1 }}  -->
+                            <div class="d-flex gap-3 flex-column">
+                                <li class="this_week_attendance" *ngFor="let shift of Object.keys(element.attendance)">
+                                    {{ getEmployeeClockIn(element.attendance[shift]) }}
+                                </li>
+                            </div>
+                        </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="clock_out">
                         <mat-header-cell *matHeaderCellDef mat-sort-header
                             class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
-                            clock_in
+                            clock_out
                         </mat-header-cell>
                         <mat-cell *matCellDef="let element"
                             class="justify-content-lg-start justify-content-md-start justify-content-start text-nowrap">
-                            {{ element.shift_clock_in_time_2 }} </mat-cell>
+                            <!-- {{ element.shift_clock_in_time_2 }}  -->
+                            <div class="d-flex gap-3 flex-column">
+                                <li class="this_week_attendance" *ngFor="let shift of Object.keys(element.attendance)">
+                                    {{ getEmployeeClockOut(element.attendance[shift]) }}
+                                </li>
+                            </div>
+                        </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="shifts">
@@ -179,14 +202,18 @@
                         </mat-header-cell>
                         <mat-cell *matCellDef="let element"
                             class="justify-content-lg-center flex-column justify-content-md-center gap-3 justify-content-center text-nowrap">
-                            <ng-container
-                                *ngIf="element.shift_name_1 || element.shift_name_2 || element.shift_name_3">
+                            <!-- <ng-container *ngIf="element.shift_name_1 || element.shift_name_2 || element.shift_name_3">
                                 <span> {{ element.shift_name_1 || '' }}</span>
                                 <span> {{
                                     element.shift_name_2 || '' }}</span>
                                 <span> {{
                                     element.shift_name_3 || '' }}</span>
-                            </ng-container>
+                            </ng-container> -->
+                            <div class="d-flex gap-3 flex-column">
+                                <li class="this_week_attendance" *ngFor="let shift of Object.keys(element.attendance)">
+                                    {{ getEmployeeShift(element.attendance[shift]) }}
+                                </li>
+                            </div>
                         </mat-cell>
                     </ng-container>
                     <!-- 
@@ -209,8 +236,7 @@
                         <mat-cell *matCellDef="let element"
                             class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
                             <div class="d-flex gap-3 flex-column">
-                                <ul class="this_week_attendance"
-                                    *ngFor="let shift of Object.keys(element.attendance)">
+                                <ul class="this_week_attendance" *ngFor="let shift of Object.keys(element.attendance)">
                                     <li *ngFor="let day of weekDays"
                                         [ngClass]="getAttendanceClass(element.attendance[shift], day)">
                                         {{ day.charAt(0) }}
@@ -227,28 +253,20 @@
                     </ng-container>
 
                     <ng-container matColumnDef="actions">
-                        <mat-header-cell
-                            *matHeaderCellDef
-                            class="justify-content-end"></mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef class="justify-content-end"></mat-header-cell>
                         <mat-cell *matCellDef="let row"
                             class="justify-content-lg-center justify-content-md-start justify-content-start text-nowrap">
                             <div class="position-relative">
-                                <a class="action"
-                                    (click)="openEditEmployeeModal(row)">
-                                    <img src="../../assets/img/edit_black.png"
-                                        alt
-                                        width="24px" height="24px" />
+                                <a class="action" (click)="openEditEmployeeModal(row)">
+                                    <img src="../../assets/img/edit_black.png" alt width="24px" height="24px" />
                                 </a>
                                 <div class="tooltip_manual">
                                     Edit
                                 </div>
                             </div>
                             <div class="position-relative">
-                                <a class="action"
-                                    (click)="ConfirmDeleteEmp(row.id)">
-                                    <img src="../../assets/img/delete_gray.png"
-                                        alt
-                                        width="24px" height="24px" />
+                                <a class="action" (click)="ConfirmDeleteEmp(row.id)">
+                                    <img src="../../assets/img/delete_gray.png" alt width="24px" height="24px" />
                                 </a>
                                 <div class="tooltip_manual">
                                     Delete
@@ -290,29 +308,22 @@
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="noData">
-                        <mat-footer-cell classs="justify-content-center"
-                            *matFooterCellDef
+                        <mat-footer-cell classs="justify-content-center" *matFooterCellDef
                             [attr.colspan]="dataSource.data.length == 0">
                             No data found
                         </mat-footer-cell>
                     </ng-container>
-                    <mat-footer-row *matFooterRowDef="['noData']"
-                        [hidden]="dataSource && dataSource.data.length > 0">
+                    <mat-footer-row *matFooterRowDef="['noData']" [hidden]="dataSource && dataSource.data.length > 0">
                     </mat-footer-row>
-                    <mat-header-row
-                        *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-                    <mat-row
-                        *matRowDef="let row; columns: displayedColumns"></mat-row>
+                    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
                 </mat-table>
-                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium"
-                    color="#fff" type="pacman" [fullScreen]="true"><p
-                        style="color: white" class="loader_img"> <img
-                            src="assets/img/site_loader.gif"
-                            alt></p></ngx-spinner>
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="pacman" [fullScreen]="true">
+                    <p style="color: white" class="loader_img"> <img src="assets/img/site_loader.gif" alt></p>
+                </ngx-spinner>
             </table>
             <div class="col-12">
-                <mat-paginator #paginator [pageSize]="5" style-paginator
-                    [length]="dataSource.data.length"
+                <mat-paginator #paginator [pageSize]="5" style-paginator [length]="dataSource.data.length"
                     showFirstLastButtons>
                 </mat-paginator>
             </div>
