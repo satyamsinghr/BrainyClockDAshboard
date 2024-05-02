@@ -195,14 +195,12 @@ export class AddShiftComponent implements OnInit {
     if (this.addShiftForm.valid) {
       this.spinner = true
       this.submitted = false;
-
       this.spinnerShow = 'text-trasparent';
       this.service.addShift(this.addShiftForm.value, this.selectedDays).subscribe(
         (response: any) => {
           if (response.success == true) {
             this.dialogRef.close();
             this.spinner = false;
-
             this.spinnerShow = '';
             // this.getAllShifts();
           }
@@ -210,6 +208,7 @@ export class AddShiftComponent implements OnInit {
         (error) => {
           this.service.handleError(error);
           this.spinner = false;
+          this.spinnerShow = '';
         }
       );
     }
