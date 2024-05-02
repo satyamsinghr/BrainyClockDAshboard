@@ -2,7 +2,7 @@
   <section class="report_filter  bg-white">
     <div class="row g-lg-0 g-md-0 g-3">
       <div
-        class="col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-center">
+        class="col-lg-6 col-md-6 col-sm-6 col-6 d-lg-flex d-md-flex d-none align-items-center">
         <div class="filterheader brand_info font_light">
           <h2 class="d-flex align-items-center gap-4">
             <span style="width: 40px;height: 40px;top:0px;position: relative;"
@@ -19,14 +19,14 @@
         </div>
       </div>
       <div
-        class="col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-center justify-content-end">
-        <div class="btn_group d-flex align-items-center gap-4 flex-wrap">
+        class="col-lg-6 col-md-6 col-sm-12 col-12 d-flex align-items-center justify-content-lg-end justfiy-content-md-end justify-content-start">
+        <div class="btn_group d-flex align-items-center gap-4">
           <button class="btn btn-outline-primary" style="height: 56px;"
             (click)="goto_report()">Cancel</button>
           <!-- <button class="btn btn-primary" style="height: 56px;" type="submit"
           data-bs-toggle="modal"
           data-bs-target="#processing_reportModal">Run Reports</button> -->
-          <button class="btn btn-primary" style="height: 56px;" type="submit"
+          <button class="btn btn-primary text-nowrap" style="height: 56px;" type="submit"
             (click)="onSubmit()">Run
             Reports</button>
         </div>

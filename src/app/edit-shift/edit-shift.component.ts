@@ -210,13 +210,8 @@ export class EditShiftComponent implements OnInit {
             // this.router.navigate(['/dashboard/shift']);
             this.spinner=false;
             this.spinnerShow = '';
-            this.dialogRef.close();
+            this.onCancel();
           }
-        },
-        (error) => {
-          this.service.handleError(error);
-          this.spinner = false;
-          this.spinnerShow = '';
         });
     }
   }

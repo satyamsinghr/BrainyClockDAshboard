@@ -123,8 +123,7 @@ export class AddDepartmentComponent implements OnInit {
         },
         (error) => {
           this.service.handleError(error);
-          this.spinner = false;
-          this.spinnerShow = '';
+          this.spinner = false
         }
       );
     }

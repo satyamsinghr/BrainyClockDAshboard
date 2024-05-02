@@ -19,15 +19,18 @@ import { Component, OnInit, Inject } from '@angular/core';
       <ng-template #elseBlock>
         <!-- <button mat-raised-button class="bnt btn-outline-primary" color="primary" [style.background-color]="'#FF6528'" (click)="onConfirm()">Yes</button>
         <button mat-raised-button class="bnt btn-primary" (click)="onDismiss()">No</button> -->
-        <div class="header_add_button d-flex align-items-center gap-3">
-            <div class="position-relative">
-                <button class="btn btn-primary d-flex align-items-center gap-2 justify-content-center"
+        <div
+        class="d-flex mt-0 align-items-center justify-content-center gap-3 px-0 position-relative login_loader">
+        <button type="button"
+          class="btn btn-primary py-3 px-4 h-auto"
                     (click)="onConfirm()">
-                    Yes
-                </button>
-            </div>
-            <button class="btn btn-outline-primary" (click)="onDismiss()">No</button>
+          Yes
+        </button>
+        <div class="position-relative location_outer">
+          <button type="submit"
+            class="btn btn-outline-primary py-3 px-4 h-auto" (click)="onDismiss()">No</button>
         </div>
+      </div>
       </ng-template>
     </div>
   `,

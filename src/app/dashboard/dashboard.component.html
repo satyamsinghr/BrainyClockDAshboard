@@ -26,10 +26,10 @@
             <!-- for normal  px-3 if report page then px-0-->
             <div class="row">
                 <div class="col-12">
-                    <div class="d-flex page_Operationswrapper align-items-start" [ngClass]="{'gap-lg-4': !isReportPage, 'gap-md-4': !isReportPage, 'gap-lg-0': isReportPage, 'gap-md-0': isReportPage}">
+                    <div class="d-flex page_Operationswrapper flex-xl-row flex-lg-column flex-md-column flex-column align-items-start" [ngClass]="{'gap-lg-4': !isReportPage, 'gap-md-4': !isReportPage, 'gap-lg-0': isReportPage, 'gap-md-0': isReportPage}">
                         <!-- gap-lg-0 gap-md-0 report if normal page gap-lg-4 gap-md-4 -->
                         <app-sidenav class="sidenav"></app-sidenav>
-                        <div class="page_body" [ngClass]="{'ms-0': isReportPage, 'w-100': isReportPage}">
+                        <div class="page_body w-100" [ngClass]="{'ms-0': isReportPage, 'w-100': isReportPage}">
                             <!-- ms-0 w-100 for report else hide -->
                             <router-outlet></router-outlet>
                         </div>

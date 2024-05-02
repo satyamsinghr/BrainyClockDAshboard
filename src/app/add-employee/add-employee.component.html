@@ -332,7 +332,8 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="company_id" class="labelName">Company Name :</label>
-          <select class="form-control" formControlName="company_id" required (change)="onCompanySelect($event)"
+          <select class="form-control" formControlName="company_id" required
+            (change)="onCompanySelect($event)"
             [attr.disabled]="isCompanyLoggedIn == true ? true : null">
             <option value>Select Company</option>
             <option *ngFor="let company of companyData" [value]="company.id">
@@ -355,7 +356,8 @@
 
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="name" class="labelName">First Name :</label>
-          <input asp-for="name" type="text" class="form-control" formControlName="firstName"
+          <input asp-for="name" type="text" class="form-control"
+            formControlName="firstName"
             placeholder="Enter Employee Name" required="required" />
           <small *ngIf="
                     (addEmployeeFormControl['firstName'].touched ||
@@ -379,7 +381,8 @@
 
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="name" class="labelName">Last Name :</label>
-          <input asp-for="name" type="text" class="form-control" formControlName="lastName" placeholder="Enter LastName"
+          <input asp-for="name" type="text" class="form-control"
+            formControlName="lastName" placeholder="Enter LastName"
             required="required" />
           <small *ngIf="
                     (addEmployeeFormControl['lastName'].touched ||
@@ -403,7 +406,8 @@
 
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="email" class="labelName">Email ID :</label>
-          <input asp-for="email" type="text" class="form-control" formControlName="email" placeholder="Enter Email Id"
+          <input asp-for="email" type="text" class="form-control"
+            formControlName="email" placeholder="Enter Email Id"
             required="required" />
           <small *ngIf="
                     (addEmployeeFormControl['email'].touched || submitted) &&
@@ -426,7 +430,8 @@
 
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="name" class="labelName">Set hourly wage :</label>
-          <input asp-for="name" type="text" class="form-control" formControlName="hourlyRate"
+          <input asp-for="name" type="text" class="form-control"
+            formControlName="hourlyRate"
             placeholder="Enter Hourly wage" required="required" />
           <small *ngIf="
                     (addEmployeeFormControl['hourlyRate'].touched ||
@@ -474,7 +479,8 @@
         </div> -->
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="name" class="labelName">Set overtime wage :</label>
-          <input asp-for="name" type="text" class="form-control" formControlName="overTime"
+          <input asp-for="name" type="text" class="form-control"
+            formControlName="overTime"
             placeholder="Enter overtime wage" required="required" />
           <small *ngIf="
                     (addEmployeeFormControl['overTime'].touched || submitted) &&
@@ -501,12 +507,12 @@
           </small>
         </div>
 
-
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="department_id" class="labelName">Department :</label>
           <select class="form-control" formControlName="department_id" required>
             <option value>Select Department</option>
-            <option *ngFor="let department of departmentData" [value]="department.department_id">
+            <option *ngFor="let department of departmentData"
+              [value]="department.department_id">
               {{ department.department_name }}
             </option>
           </select>
@@ -527,16 +533,19 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="type" class="labelName">Type</label>
-          <select class="form-select form-control" formControlName="type" required>
+          <select class="form-select form-control" formControlName="type"
+            required>
             <option value>Select Type</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
           </select>
 
-          <small *ngIf="(addEmployeeFormControl['type'].touched || submitted) && addEmployeeFormControl['type'].invalid"
+          <small
+            *ngIf="(addEmployeeFormControl['type'].touched || submitted) && addEmployeeFormControl['type'].invalid"
             class="form-text text-muted mt-2">
-            <div class="text-danger" *ngIf="addEmployeeFormControl['type'].errors &&
+            <div class="text-danger"
+              *ngIf="addEmployeeFormControl['type'].errors &&
           addEmployeeFormControl['type'].errors['required']">
               Type is required
             </div>
@@ -565,8 +574,6 @@
                   </div>
                 </small>
             </div> -->
-
-
 
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="location_id" class="labelName">Office :</label>
@@ -746,15 +753,18 @@
             </li>
           </ul> -->
 
-
           <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
-            <li *ngFor="let shift of matchingShifts let i = index" style="cursor: pointer;">
-              <input class="form-control" formControlName="shifts" type="checkbox" [checked]="shifts[i] !== ''"
+            <li *ngFor="let shift of matchingShifts let i = index"
+              style="cursor: pointer;">
+              <input class="form-control" formControlName="shifts"
+                type="checkbox" [checked]="shifts[i] !== ''"
                 (change)="updateShift(i, shift.id)">
               <button type="button" class="d-flex align-items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                  viewBox="0 0 20 20" fill="none">
                   <rect width="20" height="20" rx="10" fill="white" />
-                  <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23" stroke-width="2" stroke-linecap="round"
+                  <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23"
+                    stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
                 </svg>
                 <span>{{ shift.name }}</span>
@@ -772,7 +782,8 @@
               Shifts is required
             </div>
           </small> -->
-          <div *ngIf=" shouldShowError()" class="text-danger">Please select at least one shift.</div>
+          <div *ngIf=" shouldShowError()" class="text-danger">Please select at
+            least one shift.</div>
         </div>
         <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="department_id" class="labelName">Department :</label>
@@ -836,20 +847,21 @@
       </div> -->
 
       <div
-      class="d-flex mt-4  align-items-center justify-content-center gap-3 px-0 position-relative login_loader">
-      <button type="button"
-        class="btn btn-outline-primary py-3 px-4 h-auto"
-        (click)="onCancel()">
-        Cancel
-      </button>
-      <div class="position-relative">
-      <button type="submit"
-        class="btn btn-primary  {{spinnerShow}} py-3 px-4 h-auto"[disabled]="shouldShowError()" >Add Employee</button>
-      <div *ngIf="spinner == true" class="loader_img">
-        <img src="assets/img/site_loader.gif" alt>
+        class="d-flex mt-4  flex-lg-row flex-md-row flex-column-reverse align-items-center justify-content-center gap-3 px-0 position-relative login_loader">
+        <button type="button"
+          class="btn btn-outline-primary py-3 px-4 h-auto"
+          (click)="onCancel()">
+          Cancel
+        </button>
+        <div class="position-relative location_outer">
+          <button type="submit"
+            class="btn btn-primary  {{spinnerShow}} py-3 px-4 h-auto"
+            [disabled]="shouldShowError()">Add Employee</button>
+          <div *ngIf="spinner == true" class="loader_img">
+            <img src="assets/img/site_loader.gif" alt>
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
     </form>
   </div>
 </section>

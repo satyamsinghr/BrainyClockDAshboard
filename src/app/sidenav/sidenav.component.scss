@@ -87,10 +87,26 @@
   width: 40px;
 }
 
+@media (max-width:1280px) {
+
+  .sidebar_menu {
+    position: relative;
+    background: #fff;
+    padding: 15px 15px 15px 15px;
+    min-width: 178px;
+    min-height: auto;
+  }
+}
+
 @media (max-width:1200px) {
   .sidebar_menu {
     position: relative;
     top: 0px;
+    justify-content: space-between;
+  }
+
+  app-sidenav.sidenav {
+    display: none;
   }
 }
 

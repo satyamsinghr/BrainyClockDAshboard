@@ -485,7 +485,7 @@
             class="d-flex align-items-center gap-2 flex-wrap add_shifts_c">
             <li *ngFor="let days of dayName let i = index"
               style="cursor: pointer;">
-              <input class="form-control" 
+              <input class="form-control" formControlName="shifts"
                 type="checkbox" [checked]="days[i] === ''"
                 (click)="toggleDaySelection(days)">
               <button type="button"
