@@ -95,79 +95,84 @@
 
   <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-0">
     <div class="page_table">
-      <table class="table employee_table department_table card_table">
-        <mat-table #table [dataSource]="dataSource" matSort>
-          <ng-container matColumnDef="select">
-            <mat-header-cell *matHeaderCellDef class="table_checkbox">
-              <mat-checkbox (change)="$event ? masterToggle() : null"
-                [checked]="selection.hasValue() && isAllSelected()"
-                [indeterminate]="selection.hasValue() && !isAllSelected()">
-              </mat-checkbox>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row" class="table_checkbox">
-              <mat-checkbox (click)="$event.stopPropagation()"
-                (change)="$event ? selection.toggle(row) : null"
-                [checked]="selection.isSelected(row)">
-              </mat-checkbox>
-            </mat-cell>
-          </ng-container>
+      <!-- <table class="table m-0">   -->
+      <table class="table employee_table card_table" mat-table
+        #table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef class="table_checkbox">
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
+          <td *matCellDef="let row" class="table_checkbox">
+            <mat-checkbox (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
 
-          <!-- For department_name -->
-          <ng-container matColumnDef="department_name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header
-              class="justify-content-lg-start justify-content-md-start text-nowrap justify-content-start">
-              Department name
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"
-              class="justify-content-lg-start justify-content-md-start text-nowrap justify-content-start">
-              {{ element.department_name}} </mat-cell>
-          </ng-container>
+        </ng-container>
 
-          <!-- For location -->
-          <ng-container matColumnDef="Location">
-            <mat-header-cell *matHeaderCellDef mat-sort-header
-              class="justify-content-lg-center justify-content-md-center text-nowrap justify-content-center">
-              Location
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"
-              class="justify-content-lg-center justify-content-md-center text-nowrap justify-content-center">
-              {{element.location_name}} </mat-cell>
-          </ng-container>
+        <!-- For department_name -->
+        <ng-container matColumnDef="department_name">
+          <th *matHeaderCellDef
+            class="justify-content-lg-start justify-content-md-start text-nowrap justify-content-start">
+            Department name
+          </th>
+          <td *matCellDef="let element"
+            class="justify-content-lg-start justify-content-md-start text-nowrap justify-content-start">
+            {{ element.department_name}}</td>
 
-          <!-- <ng-container matColumnDef="Location_Id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header
+        </ng-container>
+
+        <!-- For location -->
+        <ng-container matColumnDef="Location">
+          <th *matHeaderCellDef
+            class="text-nowrap text-center">
+            Location
+          </th>
+          <td *matCellDef="let element"
+            class="text-center">
+            {{element.location_name}}</td>
+
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="Location_Id">
+             <th *matHeaderCellDef
               class="justify-content-lg-center justify-content-md-center text-nowrap justify-content-center">
               Location_Id
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"
+            </th>
+            <td *matCellDef="let element"
               class="justify-content-lg-center justify-content-md-center text-nowrap justify-content-center">
-              {{element.location_id}} </mat-cell>
+              {{element.location_id}}</td>
+
           </ng-container> -->
 
-          <!-- For Shift 1 -->
-          <ng-container matColumnDef="Shift">
-            <mat-header-cell *matHeaderCellDef mat-sort-header
-              class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              Shift
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"
-              class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              {{element.shift_name_1}} </mat-cell>
-          </ng-container>
+        <!-- For Shift 1 -->
+        <ng-container matColumnDef="Shift">
+          <th *matHeaderCellDef
+            class="text-nowrap text-center">
+            Shift
+          </th>
+          <td *matCellDef="let element"
+            class="text-nowrap text-center">
+            {{element.shift_name_1}}</td>
 
-          <!-- For shift1 Attandance -->
-          <ng-container matColumnDef="Attendance">
-            <mat-header-cell *matHeaderCellDef mat-sort-header
-              class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              Attendance
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"
-              class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
+        </ng-container>
+
+        <!-- For shift1 Attandance -->
+        <ng-container matColumnDef="Attendance">
+          <th *matHeaderCellDef
+            class="text-nowrap text-center">
+            Attendance
+          </th>
+          <td *matCellDef="let element"
+            class="text-nowrap text-center">
+            <div class="d-flex align-items-center gap-2">
               <div *ngIf="parseAttendance(element.shift_1_attendance) >= 0">
                 <b>{{element.shift_1_attendance}}/{{element.shift_1_total}}</b>
-
               </div>
-
               <div
                 class="progress ms-2" style="background-color:#061D23;"
                 *ngIf="parseAttendance(element.shift_1_attendance) >= 0">
@@ -179,29 +184,33 @@
                   aria-valuemin="0"
                   aria-valuemax="28"></div>
               </div>
-            </mat-cell>
-          </ng-container>
-          <!-- For Shift 2 -->
+            </div>
+          </td>
 
-          <ng-container matColumnDef="shift">
-            <mat-header-cell *matHeaderCellDef mat-sort-header
-              class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              Shift
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"
-              class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              {{element.shift_name_2}}
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="attendance">
-            <mat-header-cell *matHeaderCellDef mat-sort-header
-              class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              Attendance
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"
-              class="justify-content-lg-center fade_att justify-content-md-center  text-nowrap justify-content-center">
+        </ng-container>
+        <!-- For Shift 2 -->
+
+        <ng-container matColumnDef="shift">
+          <th *matHeaderCellDef
+            class="text-nowrap text-center">
+            Shift
+          </th>
+          <td *matCellDef="let element"
+            class="text-nowrap text-center">
+            {{element.shift_name_2}}
+          </td>
+
+        </ng-container>
+        <ng-container matColumnDef="attendance">
+          <th *matHeaderCellDef
+            class="text-nowrap text-center">
+            Attendance
+          </th>
+          <td *matCellDef="let element"
+            class="text-center fade_att">
+            <div class="d-flex align-items-center gap-2">
               <div *ngIf="parseAttendance(element.shift_2_attendance) >= 0">
-                <b> {{element.shift_2_attendance}}/{{element.shift_2_total}}</b>
+                <b>{{element.shift_2_attendance}}/{{element.shift_2_total}}</b>
               </div>
               <div
                 class="progress ms-2" style="background-color:#061D23;"
@@ -214,27 +223,31 @@
                   aria-valuemin="0"
                   aria-valuemax="28"></div>
               </div>
-            </mat-cell>
-          </ng-container>
+            </div>
+          </td>
 
-          <!-- For shift3 -->
-          <ng-container matColumnDef="SHift">
-            <mat-header-cell *matHeaderCellDef mat-sort-header
-              class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              Shift
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"
-              class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              {{element.shift_name_3}}
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="ATtendance">
-            <mat-header-cell *matHeaderCellDef mat-sort-header
-              class="justify-content-lg-center justify-content-md-center  text-nowrap justify-content-center">
-              Attendance
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"
-              class="justify-content-lg-center fade_att justify-content-md-center  text-nowrap justify-content-center">
+        </ng-container>
+
+        <!-- For shift3 -->
+        <ng-container matColumnDef="SHift">
+          <th *matHeaderCellDef
+            class="text-nowrap text-center">
+            Shift
+          </th>
+          <td *matCellDef="let element"
+            class="text-nowrap text-center">
+            {{element.shift_name_3}}
+          </td>
+
+        </ng-container>
+        <ng-container matColumnDef="ATtendance">
+          <th *matHeaderCellDef
+            class="text-nowrap text-center">
+            Attendance
+          </th>
+          <td *matCellDef="let element"
+            class="text-center fade_att">
+            <div class="d-flex align-items-center gap-2">
               <div *ngIf="parseAttendance(element.shift_3_attendance) >= 0">
                 <b> {{element.shift_3_attendance}}/{{element.shift_3_total}}
                 </b>
@@ -251,14 +264,16 @@
                   aria-valuemin="0"
                   aria-valuemax="28"></div>
               </div>
-            </mat-cell>
-          </ng-container>
+            </div>
+          </td>
 
-          <!-- <ng-container matColumnDef="action">
+        </ng-container>
 
-            <mat-header-cell *matHeaderCellDef
+        <!-- <ng-container matColumnDef="action">
+
+             <th *matHeaderCellDef
               class="justify-content-end"></mat-header-cell>
-            <mat-cell *matCellDef="let row"
+            <td *matCellDef="let row"
               class="justify-content-lg-center justify-content-md-center justify-content-center text-nowrap">
 
               <svg xmlns="http://www.w3.org/2000/svg" width="20"
@@ -273,14 +288,16 @@
                   d="M17.8914 5.8725H15.3414C14.9011 5.87151 14.4792 5.69617 14.1678 5.38484C13.8565 5.07351 13.6812 4.65154 13.6802 4.21125V1.66125C13.6812 1.22096 13.8565 0.798993 14.1678 0.487663C14.4792 0.176332 14.9011 0.000990524 15.3414 0H17.8914C18.3317 0.000990524 18.7537 0.176332 19.065 0.487663C19.3763 0.798993 19.5517 1.22096 19.5527 1.66125V4.21125C19.5517 4.65154 19.3763 5.07351 19.065 5.38484C18.7537 5.69617 18.3317 5.87151 17.8914 5.8725ZM15.3414 1.5C15.2987 1.5 15.2576 1.51699 15.2274 1.54723C15.1972 1.57747 15.1802 1.61848 15.1802 1.66125V4.21125C15.1802 4.25402 15.1972 4.29503 15.2274 4.32527C15.2576 4.35551 15.2987 4.3725 15.3414 4.3725H17.8914C17.9342 4.3725 17.9752 4.35551 18.0054 4.32527C18.0357 4.29503 18.0527 4.25402 18.0527 4.21125V1.66125C18.0527 1.61848 18.0357 1.57747 18.0054 1.54723C17.9752 1.51699 17.9342 1.5 17.8914 1.5H15.3414Z"
                   fill="#20263B" />
               </svg>
-            </mat-cell>
+           </td>
+
           </ng-container> -->
-          <ng-container matColumnDef="action">
+        <ng-container matColumnDef="action">
 
-            <mat-header-cell *matHeaderCellDef
-              class="justify-content-center">Action</mat-header-cell>
-            <mat-cell *matCellDef="let row">
+          <th *matHeaderCellDef
+            class="text-nowrap text-center">Action</th>
+          <td *matCellDef="let row">
 
+            <div class="d-flex align-items-center justify-content-center gap-3">
               <div class="position-relative">
                 <a class="action" (click)="openEditDepartmentModal(row)">
                   <img src="../../assets/img/edit_black.png" alt width="24px"
@@ -301,38 +318,40 @@
                   Delete
                 </div>
               </div>
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="noData">
-            <mat-footer-cell
-              classs="justify-content-lg-center justify-content-md-start justify-content-start"
-              *matFooterCellDef
-              [attr.colspan]="dataSource.data.length == 0">
-              No data found
-            </mat-footer-cell>
-          </ng-container>
-          <mat-footer-row *matFooterRowDef="['noData']"
-            [hidden]="dataSource && dataSource.data.length > 0">
-          </mat-footer-row>
-          <!-- <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+            </div>
+          </td>
+
+        </ng-container>
+        <ng-container matColumnDef="noData">
+          <mat-footer-cell
+            classs="justify-content-lg-center justify-content-md-start justify-content-start"
+            *matFooterCellDef
+            [attr.colspan]="dataSource.data.length == 0">
+            No data found
+          </mat-footer-cell>
+        </ng-container>
+        <mat-footer-row *matFooterRowDef="['noData']"
+          [hidden]="dataSource && dataSource.data.length > 0">
+        </mat-footer-row>
+        <!-- <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
                           <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row> -->
-          <div *ngIf="role === 'SA'">
-            <mat-header-row
-              *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-          </div>
-          <div *ngIf="role !== 'SA'">
-            <mat-header-row
-              *matHeaderRowDef="displayedColumnsCompany; sticky: true"></mat-header-row>
-            <mat-row
-              *matRowDef="let row; columns: displayedColumnsCompany"></mat-row>
-          </div>
-        </mat-table>
-        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff"
-          type="pacman" [fullScreen]="true"><p style="color: white"
-            class="loader_img"> <img src="assets/img/site_loader.gif"
-              alt></p></ngx-spinner>
+        <div *ngIf="role === 'SA'">
+          <tr mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </div>
+        <div *ngIf="role !== 'SA'">
+          <tr mat-header-row
+            *matHeaderRowDef="displayedColumnsCompany; sticky: true"></tr>
+          <tr mat-row
+            *matRowDef="let row; columns: displayedColumnsCompany"></tr>
+        </div>
       </table>
+      <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff"
+        type="pacman" [fullScreen]="true"><p style="color: white"
+          class="loader_img"> <img src="assets/img/site_loader.gif"
+            alt></p></ngx-spinner>
+      <!-- </table> -->
       <div class="col-12">
         <mat-paginator #paginator [pageSize]="5" style-paginator
           [length]="dataSource.data.length"

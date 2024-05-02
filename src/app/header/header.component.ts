@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { SharedService } from '../shared.service';
 // import { SidenavComponent } from '../sidenav/sidenav.component';
 @Component({
   selector: 'app-header',
@@ -15,7 +16,8 @@ export class HeaderComponent implements OnInit {
   today: string;
   currentTime: string;
   constructor(private router: Router,
-    private datePipe: DatePipe,) {
+    private datePipe: DatePipe,
+    private sharedService: SharedService) {
     this.sort_arrow = true;
     this.up_arrow = false;
     this.down_arrow = false;
@@ -52,6 +54,11 @@ export class HeaderComponent implements OnInit {
   }
   toggleSidebar() {
     this.toggleSidebarForMe.emit();
+  }
+
+  sidebershideShow:boolean = false;
+  toggleSidebarNew() {
+    this.sharedService.toggleSidebarVisibility(!this.sidebershideShow); // Toggle sidebar visibility to true
   }
 
   logout() {

@@ -28,7 +28,8 @@
                 <div class="col-12">
                     <div class="d-flex page_Operationswrapper flex-xl-row flex-lg-column flex-md-column flex-column align-items-start" [ngClass]="{'gap-lg-4': !isReportPage, 'gap-md-4': !isReportPage, 'gap-lg-0': isReportPage, 'gap-md-0': isReportPage}">
                         <!-- gap-lg-0 gap-md-0 report if normal page gap-lg-4 gap-md-4 -->
-                        <app-sidenav class="sidenav"></app-sidenav>
+                        <!-- <app-sidenav class="sidenav"></app-sidenav> -->
+                        <app-sidenav class="sidenav" [ngClass]="{'show': sidebarVisible}"></app-sidenav>
                         <div class="page_body w-100" [ngClass]="{'ms-0': isReportPage, 'w-100': isReportPage}">
                             <!-- ms-0 w-100 for report else hide -->
                             <router-outlet></router-outlet>

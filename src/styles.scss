@@ -3030,7 +3030,7 @@ table.table.card_table tr th,
   opacity: 0.2;
   padding: 0;
   border: none;
-  padding: 0 0 0px 0 !important;
+  // padding: 0 0 0px 0 !important;
   white-space: nowrap;
   vertical-align: middle;
 }
@@ -3664,6 +3664,10 @@ table.table.card_table.employee_table thead tr th:first-child {
   padding-left: 0;
 }
 
+table.table.shift_table.withou_check.employee_table.card_table tr th:first-child {
+  padding: 0 11px 22px 11px;
+}
+
 table.table.card_table.employee_table tbody tr td {
   padding-top: 22px;
   padding-bottom: 22px;
@@ -3671,6 +3675,23 @@ table.table.card_table.employee_table tbody tr td {
 
 table.table.card_table.employee_table tbody tr td:first-child {
   padding-right: 24px;
+  border: none;
+}
+
+.table.employee_table.location_label.card_table tr th:nth-child(4),
+.table.employee_table.location_label.card_table tr td:nth-child(4) {
+  max-width: 182px;
+}
+
+.table.employee_table.location_label.card_table .mat-checkbox-inner-container {
+  height: 20px;
+  width: 20px;
+  // border: 2px solid #061D23 !important;
+}
+
+.table.shift_table.employee_table.card_table tr th:nth-child(3),
+.table.shift_table.employee_table.card_table tr td:nth-child(3) {
+  max-width: 150px;
 }
 
 table.table.card_table.employee_table tbody tr td:not(:first-child) {
@@ -4495,6 +4516,21 @@ th.month.drp-animate {
 mat-dialog-container#mat-dialog-0 {
   border-radius: 32px;
 }
+table.table.shift_table.withou_check.employee_table.card_table tr th:first-child
+{
+  width: auto !important;
+}
+table.table.shift_table.withou_check.employee_table.card_table tr td:first-child {
+  background-color: #FCFCFC !important;
+  padding: 22px 11px !important;
+  border-bottom: 1px solid #D9D9D9 !important;
+  border-radius: 8px 0 0 8px;
+  width: auto !important;
+}
+
+table.table.shift_table.withou_check.employee_table.card_table tbody tr td:nth-child(2) {
+  border-radius: 0px 0 0 0px;
+}
 
 @media (max-width:1700px) {
   table.table.card_table tbody tr td {
@@ -5113,6 +5149,7 @@ mat-dialog-container#mat-dialog-0 {
 }
 
 @media (max-width:780px) {
+
   table.table.employee_table.card_table mat-table mat-cell:nth-child(2),
   table.table.card_table.employee_table mat-header-row mat-header-cell:nth-child(2) {
     width: auto;

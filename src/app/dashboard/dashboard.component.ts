@@ -12,7 +12,8 @@ import { SharedService } from '../shared.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  sideBarOpen: boolean = true;
+  // sideBarOpen: boolean = true;
+  sidebarVisible: boolean = false;
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild('paginatorOperations') paginatorOperations: MatPaginator;
   dataSource = new MatTableDataSource<any>([]);
@@ -42,6 +43,9 @@ export class DashboardComponent implements OnInit {
       console.log("sharedServicesharedService called",this.lastUrl);
     });
     
+    this.sharedService.sidebarVisible$.subscribe((visible: boolean) => {
+      this.sidebarVisible = visible;
+    });
   }
 
 }
