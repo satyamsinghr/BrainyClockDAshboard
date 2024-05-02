@@ -20,23 +20,40 @@
 <div class="row mt-4 g-4">
     <div class="col-lg-7 col-md-12 col-sm-12 col-12 mt-0">
         <div class="cards manhattan_card h-100">
-            <div class="card_header d-flex align-items-start justify-content-between">
+            <div
+                class="card_header d-flex align-items-start justify-content-between">
                 <div class="card_header">
                     <!-- <h3>CleanCorp Solutions -
                         Manhattan</h3>
                     <p>123 Park Avenue, Suite
                                 500 New York, NY 10017</p> -->
-                            <h3>{{departmentName1}}</h3>
-                            <!-- <h3>{{locationData?.location_name}}</h3> -->
-                            <p>{{locationData?.address}}</p>
-                        </div>
-                        <div class="arrow d-flex align-items-center gap-3">
-                            <!-- <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
-                            <button (click)="backwardButtonClick1()">&lt;</button>
-                            <button (click)="forwardButtonClick1()">&gt;</button>
-                           
-                        </div>
-                    </div>
+                    <h3>{{departmentName1}}</h3>
+                    <!-- <h3>{{locationData?.location_name}}</h3> -->
+                    <p>{{locationData?.address}}</p>
+                </div>
+                <div class="arrow d-flex align-items-center gap-3">
+                    <!-- <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+                    <button (click)="backwardButtonClick1()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M14.4001 16.8L9.6001 12L14.4001 7.19999"
+                                stroke="#061D23" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button (click)="forwardButtonClick1()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M9.5999 7.20001L14.3999 12L9.5999 16.8"
+                                stroke="#061D23" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+
+                </div>
+            </div>
             <div class="card_body mt-4  pt-2">
                 <table class="table card_table">
                     <mat-table #table [dataSource]="dataSource" matSort>
@@ -65,36 +82,44 @@
                                 class="text-center justify-content-center">
                                 SHIFT STATUS
                             </mat-header-cell>
-                            <mat-cell *matCellDef="let element" class="text-center justify-content-center">
-                                {{ (element.InProgress && element.InProgress.toLowerCase()) === "yes" ? "In Progress" :
+                            <mat-cell *matCellDef="let element"
+                                class="text-center justify-content-center">
+                                {{ (element.InProgress &&
+                                element.InProgress.toLowerCase()) === "yes" ?
+                                "In Progress" :
                                 "Pending" }}
                             </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="attendance">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header class="justify-content-start">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header
+                                class="justify-content-start">
                                 ATTENDANCE
                             </mat-header-cell>
-                            <mat-cell *matCellDef="let element" class="text-nowrap">
+                            <mat-cell *matCellDef="let element"
+                                class="text-nowrap">
                                 {{ element.attendedEmp}} / {{employeelength}}
 
                                 <!-- <mat-progress-bar mode="determinate" class="ms-4 me-3 progress-bar"
                                     [value]="element.progressBar"></mat-progress-bar>
                             </mat-cell> -->
-                                <mat-progress-bar mode="determinate" class="ms-4 me-3 progress-bar"
+                                <mat-progress-bar mode="determinate"
+                                    class="ms-4 me-3 progress-bar"
                                     [value]="calculateProgressBarValue(element.attendedEmp, employeelength)">
                                 </mat-progress-bar>
                             </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="progressBar">
-                            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                            <mat-header-cell
+                                *matHeaderCellDef></mat-header-cell>
                             <mat-cell *matCellDef="let element">
                             </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="noData">
-                            <mat-footer-cell classs="justify-content-center" *matFooterCellDef
+                            <mat-footer-cell classs="justify-content-center"
+                                *matFooterCellDef
                                 [attr.colspan]="dataSource.data.length == 0">
                                 No data found
                             </mat-footer-cell>
@@ -102,10 +127,13 @@
                         <mat-footer-row *matFooterRowDef="['noData']"
                             [hidden]="dataSource && dataSource.data.length > 0">
                         </mat-footer-row>
-                        <mat-header-row *matHeaderRowDef="displayedColumn; sticky: true"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: displayedColumn"></mat-row>
+                        <mat-header-row
+                            *matHeaderRowDef="displayedColumn; sticky: true"></mat-header-row>
+                        <mat-row
+                            *matRowDef="let row; columns: displayedColumn"></mat-row>
                     </mat-table>
-                    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    <mat-paginator #paginator [pageSize]="5"
+                        [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
                 </table>
             </div>
         </div>
@@ -114,7 +142,8 @@
         <div class="row g-4">
             <div class="col-lg-5 col-md-5 col-sm-12 col-12">
                 <div class="cards attendance_week_card">
-                    <div class="card_header d-flex flex-column align-items-start justify-content-between">
+                    <div
+                        class="card_header d-flex flex-column align-items-start justify-content-between">
                         <!-- <h3 class="mb-0">November
                             16, 2023</h3>
                         <h3 class="mb-0">Thursday</h3> -->
@@ -122,39 +151,47 @@
                         <h3 class="mb-0">{{ dayName }}</h3>
                     </div>
                     <div class="mt-4 card_body week_days">
-                        <ul class="d-flex align-items-center justify-content-between">
+                        <ul
+                            class="d-flex align-items-center justify-content-between">
                             <li [class.current_day]="dayName === 'Sunday'">
-                                <div class="week_days" (click)="onSelectWeek('Sunday')">
+                                <div class="week_days"
+                                    (click)="onSelectWeek('Sunday')">
                                     S
                                 </div>
                             </li>
                             <li [class.current_day]="dayName === 'Monday'">
-                                <div class="week_days" (click)="onSelectWeek('Monday')">
+                                <div class="week_days"
+                                    (click)="onSelectWeek('Monday')">
                                     M
                                 </div>
                             </li>
                             <li [class.current_day]="dayName === 'Tuesday'">
-                                <div class="week_days" (click)="onSelectWeek('Tuesday')">
+                                <div class="week_days"
+                                    (click)="onSelectWeek('Tuesday')">
                                     T
                                 </div>
                             </li>
                             <li [class.current_day]="dayName === 'Wednesday'">
-                                <div class="week_days" (click)="onSelectWeek('Wednesday')">
+                                <div class="week_days"
+                                    (click)="onSelectWeek('Wednesday')">
                                     W
                                 </div>
                             </li>
                             <li [class.current_day]="dayName === 'Thursday'">
-                                <div class="week_days" (click)="onSelectWeek('Thursday')">
+                                <div class="week_days"
+                                    (click)="onSelectWeek('Thursday')">
                                     T
                                 </div>
                             </li>
                             <li [class.current_day]="dayName === 'Friday'">
-                                <div class="week_days" (click)="onSelectWeek('Friday')">
+                                <div class="week_days"
+                                    (click)="onSelectWeek('Friday')">
                                     F
                                 </div>
                             </li>
                             <li [class.current_day]="dayName === 'Saturday'">
-                                <div class="week_days" (click)="onSelectWeek('Saturday')">
+                                <div class="week_days"
+                                    (click)="onSelectWeek('Saturday')">
                                     S
                                 </div>
                             </li>
@@ -163,7 +200,8 @@
                 </div>
 
                 <div class="cards ration_card mt-4">
-                    <div class="card_header d-flex align-items-start justify-content-between">
+                    <div
+                        class="card_header d-flex align-items-start justify-content-between">
                         <h3>Attendance ratio</h3>
                         <!-- <div class="options">
                             <div class="dropdown">
@@ -190,14 +228,17 @@
                         </div> -->
                     </div>
                     <div class="card_body mt-4">
-                        <div class="d-flex align-items-center justify-content-center" [chart]="donutChart">
+                        <div
+                            class="d-flex align-items-center justify-content-center"
+                            [chart]="donutChart">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-7 col-md-7 col-sm-12 col-12">
                 <div class="cards record_card">
-                    <div class="card_header d-flex align-items-start justify-content-between">
+                    <div
+                        class="card_header d-flex align-items-start justify-content-between">
                         <div>
                             <h3>Attendance
                                 record
@@ -262,11 +303,13 @@
 
                     <div class="card_body mt-lg-5 mt-md-4 mt-4">
                         <ul class="record_progress">
-                            <li [ngClass]="'d-flex ' + getDayClass('Sunday') + ' align-items-center gap-5'">
+                            <li
+                                [ngClass]="'d-flex ' + getDayClass('Sunday') + ' align-items-center gap-5'">
                                 <span>Sunday</span>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar"
-                                        [style.width]="dayRatios['Sunday'] + '%'" aria-valuenow="0" aria-valuemin="0"
+                                        [style.width]="dayRatios['Sunday'] + '%'"
+                                        aria-valuenow="0" aria-valuemin="0"
                                         aria-valuemax="100"></div>
                                 </div>
                             </li>
@@ -275,7 +318,8 @@
                                 <span>Monday</span>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar"
-                                        [style.width]="dayRatios['Monday'] + '%'" aria-valuenow="75" aria-valuemin="0"
+                                        [style.width]="dayRatios['Monday'] + '%'"
+                                        aria-valuenow="75" aria-valuemin="0"
                                         aria-valuemax="100"></div>
                                 </div>
                             </li>
@@ -285,7 +329,8 @@
                                 <span>Tuesday</span>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar"
-                                        [style.width]="dayRatios['Tuesday'] + '%'" aria-valuenow="100" aria-valuemin="0"
+                                        [style.width]="dayRatios['Tuesday'] + '%'"
+                                        aria-valuenow="100" aria-valuemin="0"
                                         aria-valuemax="100"></div>
                                 </div>
                             </li>
@@ -294,8 +339,10 @@
                                 <span>Wednesday</span>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar"
-                                        [style.width]="dayRatios['Wednesday'] + '%'" aria-valuenow="65"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                        [style.width]="dayRatios['Wednesday'] + '%'"
+                                        aria-valuenow="65"
+                                        aria-valuemin="0"
+                                        aria-valuemax="100"></div>
                                 </div>
                             </li>
                             <li
@@ -303,7 +350,8 @@
                                 <span>Thursday</span>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar"
-                                        [style.width]="dayRatios['Thursday'] + '%'" aria-valuenow="80" aria-valuemin="0"
+                                        [style.width]="dayRatios['Thursday'] + '%'"
+                                        aria-valuenow="80" aria-valuemin="0"
                                         aria-valuemax="100"></div>
                                 </div>
                             </li>
@@ -312,7 +360,8 @@
                                 <span>Friday</span>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar"
-                                        [style.width]="dayRatios['Friday'] + '%'" aria-valuenow="80" aria-valuemin="0"
+                                        [style.width]="dayRatios['Friday'] + '%'"
+                                        aria-valuenow="80" aria-valuemin="0"
                                         aria-valuemax="100"></div>
                                 </div>
                             </li>
@@ -321,7 +370,8 @@
                                 <span>Saturday</span>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar"
-                                        [style.width]="dayRatios['Saturday'] + '%'" aria-valuenow="0" aria-valuemin="0"
+                                        [style.width]="dayRatios['Saturday'] + '%'"
+                                        aria-valuenow="0" aria-valuemin="0"
                                         aria-valuemax="100"></div>
                                 </div>
                             </li>
@@ -340,13 +390,14 @@
     </div>
     <div class="col-lg-4 col-md-12 col-sm-12 col-12">
         <div class="cards operaions_card h-100">
-            <div class="card_header d-flex align-items-start justify-content-between">
+            <div
+                class="card_header d-flex align-items-start justify-content-between">
                 <div class="card_header">
                     <!-- <h3>Operations (<span>{{dataSourceOperations.data.length}}</span>)</h3> -->
                     <!-- <h3>{{ filteredEmployees.length > 0 ? filteredEmployees[index]?.departmentName : '' }} -->
-                        <h3>{{departmentName}}
-                        (<span>{{dataSourceOperations.data.length }}</span>)</h3>
-
+                    <h3>{{departmentName}}
+                        (<span>{{dataSourceOperations.data.length
+                            }}</span>)</h3>
 
                     <!-- <p>CleanCorp Solutions |
                         9:30 AM to 5:30 PM</p> -->
@@ -357,13 +408,32 @@
                         9:30 AM to 5:30 PM</p>
                 </div>
                 <div class="arrow d-flex align-items-center gap-3">
-                    <button (click)="backwardButtonClick()">&lt;</button> <!-- Left arrow -->
-                    <button (click)="forwardButtonClick()">&gt;</button> <!-- Right arrow -->
-                </div>              
+                    <button (click)="backwardButtonClick()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M14.4001 16.8L9.6001 12L14.4001 7.19999"
+                                stroke="#061D23" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <!-- Left arrow -->
+                    <button (click)="forwardButtonClick()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M9.5999 7.20001L14.3999 12L9.5999 16.8"
+                                stroke="#061D23" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <!-- Right arrow -->
+                </div>
             </div>
             <div class="card_body operations_card_body mt-0  pt-2">
                 <table class="table card_table m-0">
-                    <mat-table #table [dataSource]="dataSourceOperations" matSort>
+                    <mat-table #table [dataSource]="dataSourceOperations"
+                        matSort>
                         <ng-container matColumnDef="employee">
                             <mat-header-cell *matHeaderCellDef mat-sort-headerS>
                                 EMPLOYEE
@@ -385,7 +455,8 @@
                             <mat-header-cell *matHeaderCellDef mat-sort-header>
                                 STATUS
                             </mat-header-cell>
-                            <mat-cell *matCellDef="let element" class="text-nowrap">
+                            <mat-cell *matCellDef="let element"
+                                class="text-nowrap">
                                 <!-- {{ element.status }} -->
                                 {{ getStatus(element.created_at) }}
                             </mat-cell>
@@ -396,12 +467,14 @@
                                 CLOCK-IN
                             </mat-header-cell>
                             <mat-cell *matCellDef="let element">
-                                {{ element.clock_in_time ? element.clock_in_time : 'N/A' }}
+                                {{ element.clock_in_time ? element.clock_in_time
+                                : 'N/A' }}
                             </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="noData">
-                            <mat-footer-cell classs="justify-content-center" *matFooterCellDef
+                            <mat-footer-cell classs="justify-content-center"
+                                *matFooterCellDef
                                 [attr.colspan]="dataSourceOperations.data.length == 0">
                                 No data found
                             </mat-footer-cell>
@@ -409,13 +482,16 @@
                         <mat-footer-row *matFooterRowDef="['noData']"
                             [hidden]="dataSourceOperations && dataSourceOperations.data.length > 0">
                         </mat-footer-row>
-                        <mat-header-row *matHeaderRowDef="displayedOprationsColumn; sticky: true"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: displayedOprationsColumn" [ngClass]="getRowClass(row)">
+                        <mat-header-row
+                            *matHeaderRowDef="displayedOprationsColumn; sticky: true"></mat-header-row>
+                        <mat-row
+                            *matRowDef="let row; columns: displayedOprationsColumn"
+                            [ngClass]="getRowClass(row)">
                         </mat-row>
                     </mat-table>
-                    <mat-paginator #paginatorOperations [pageSize]="5" [length]="100" [pageIndex]="0"
-                        [pageSizeOptions]="[5, 10, 25, 100]" 
-                        >
+                    <mat-paginator #paginatorOperations [pageSize]="5"
+                        [length]="100" [pageIndex]="0"
+                        [pageSizeOptions]="[5, 10, 25, 100]">
                     </mat-paginator>
                 </table>
             </div>

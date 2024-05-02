@@ -7,38 +7,45 @@
 </div>
 
 <div class="d-flex justify-content-end mb-3">
-  <div class="add-schedule-btn-container mb-3 mt-3">  
-    <button class="btn btn-primary" (click)="openTimeZoneFormDialog(timezoneFormData)" [disabled]="dataSource.data.length > 0">Add Schedule</button>
+  <div class="add-schedule-btn-container mb-3 mt-3">
+    <button class="btn btn-primary"
+      (click)="openTimeZoneFormDialog(timezoneFormData)"
+      [disabled]="dataSource.data.length > 0">Add Schedule</button>
   </div>
 </div>
 <ng-container *ngIf="dataSource && dataSource.data.length">
   <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-0">
     <div class="page_table">
-      <table class="table setting_table employee_table setting_table card_table">
+      <table
+        class="table setting_table employee_table setting_table card_table">
         <mat-table #table [dataSource]="dataSource" matSort>
-  
+
           <!-- Timezone Column -->
           <ng-container matColumnDef="timezone">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Timezone </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.Timezone}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Timezone
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.Timezone}}
+            </mat-cell>
           </ng-container>
-  
+
           <!-- Interval Column -->
           <ng-container matColumnDef="interval">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Interval </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.TimeInterval }} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Interval
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.TimeInterval }}
+            </mat-cell>
           </ng-container>
-  
+
           <!-- Action Column -->
           <ng-container matColumnDef="action">
 
             <mat-header-cell *matHeaderCellDef
-              class="justify-content-end">Action</mat-header-cell>
-            <mat-cell *matCellDef="let element">
-      
+              class="justify-content-center">Action</mat-header-cell>
+            <mat-cell class="justify-content-center" style="justify-content: center !important;" *matCellDef=" let element">
+
               <div class="position-relative">
-                <a class="action"  (click)="openTimeZoneFormDialog(timezoneFormData)"
-               >
+                <a class="action"
+                  (click)="openTimeZoneFormDialog(timezoneFormData)">
                   <img src="../../assets/img/edit_black.png" alt width="24px"
                     height="24px" />
                 </a>
@@ -47,18 +54,19 @@
                 </div>
               </div>
               <div class="position-relative">
-                <a class="action"(click)="ConfirmDeleteDepartment()">
+                <a class="action" (click)="ConfirmDeleteDepartment()">
                   <img src="../../assets/img/delete_gray.png" alt width="24px"
                     height="24px" />
                 </a>
-                  <div class="tooltip_manual">
-                      Delete
-                  </div>
+                <div class="tooltip_manual">
+                  Delete
+                </div>
               </div>
             </mat-cell>
           </ng-container>
-  
-          <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+
+          <mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
       </table>
@@ -74,30 +82,38 @@
   <section class="add_department add-setting">
     <div class="department_card p-3 brand_info">
 
-      <form  [formGroup]="timezoneForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="timezoneForm" (ngSubmit)="onSubmit()">
         <div class="row g-3">
           <div class="col-12">
             <label for="timezone">Timezone:</label>
             <select formControlName="timezone" id="timezone">
               <option *ngFor="let tz of timezones" [value]="tz">{{tz}}</option>
             </select>
-            <div *ngIf="timezoneControl.invalid && (timezoneControl.dirty || timezoneControl.touched)">
-              <div *ngIf="timezoneControl.errors && timezoneControl.errors['required']" class="text-danger">Timezone is
+            <div
+              *ngIf="timezoneControl.invalid && (timezoneControl.dirty || timezoneControl.touched)">
+              <div
+                *ngIf="timezoneControl.errors && timezoneControl.errors['required']"
+                class="text-danger">Timezone is
                 required.</div>
             </div>
           </div>
           <div class="col-12">
             <label for="interval">Interval:</label>
             <select formControlName="interval" id="interval">
-              <option *ngFor="let interval of intervals" [value]="interval">{{interval}}</option>
+              <option *ngFor="let interval of intervals"
+                [value]="interval">{{interval}}</option>
             </select>
-            <div *ngIf="intervalControl.invalid && (intervalControl.dirty || intervalControl.touched)">
-              <div *ngIf="intervalControl.errors && intervalControl.errors['required']" class="text-danger">Interval is
+            <div
+              *ngIf="intervalControl.invalid && (intervalControl.dirty || intervalControl.touched)">
+              <div
+                *ngIf="intervalControl.errors && intervalControl.errors['required']"
+                class="text-danger">Interval is
                 required.</div>
             </div>
           </div>
           <div class="col-12 position-relative login_loader">
-            <button type="submit"  [disabled]="submitButtonDisabled" class="btn btn-primary {{spinnerShow}}  py-3 px-4 h-auto w-100">
+            <button type="submit" [disabled]="submitButtonDisabled"
+              class="btn btn-primary {{spinnerShow}}  py-3 px-4 h-auto w-100">
               {{ dataSource.data.length > 0 ? 'Update' : 'Submit' }}
             </button>
             <div *ngIf="spinner == true" class="loader_img">
