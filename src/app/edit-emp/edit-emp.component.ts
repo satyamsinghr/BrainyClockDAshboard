@@ -281,7 +281,13 @@ export class EditEmpComponent implements OnInit {
           this.spinnerShow = ''
           // this.router.navigate(['/dashboard/employee']);
         }
-      });
+      },
+        (error) => {
+          this.service.handleError(error);
+          this.spinner = false
+          this.spinnerShow = '';
+        }
+      );
     }
   }
   getByUserId(employeeId: number) { }

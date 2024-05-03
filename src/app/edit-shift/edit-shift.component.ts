@@ -212,9 +212,15 @@ export class EditShiftComponent implements OnInit {
             this.spinnerShow = '';
             this.onCancel();
           }
-        });
+        },
+          (error) => {
+            this.service.handleError(error);
+            this.spinner = false
+            this.spinnerShow = '';
+          }
+        );
+      }
     }
-  }
   onCancel(): void {
     // Close the dialog when Cancel button is clicked
     this.dialogRef.close();

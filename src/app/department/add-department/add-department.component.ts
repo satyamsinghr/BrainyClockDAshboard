@@ -119,11 +119,11 @@ export class AddDepartmentComponent implements OnInit {
           this.departmentService.getDepartmentById();
           this.spinner = false
           // this.location.replaceState(this.location.path());
-
         },
         (error) => {
           this.service.handleError(error);
           this.spinner = false
+          this.spinnerShow = '';
         }
       );
     }

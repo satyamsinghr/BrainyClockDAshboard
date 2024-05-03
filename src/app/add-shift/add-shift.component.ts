@@ -210,6 +210,7 @@ export class AddShiftComponent implements OnInit {
         (error) => {
           this.service.handleError(error);
           this.spinner = false;
+          this.spinnerShow = '';
         }
       );
     }
