@@ -61,7 +61,7 @@ export class EditShiftComponent implements OnInit {
     this.initializeForm();
     this.route.params.subscribe((params) => {
       this.id = params['id'];
-      this.getFormDetail(this.id);
+      // this.getFormDetail(this.id);
       // this.getAllCompany();
       // this.getAllDepartment();
       this.getDepartmentById()
@@ -103,36 +103,36 @@ export class EditShiftComponent implements OnInit {
     );
   }
 
-  getFormDetail(id: number) {
-    this.service.getShiftById(id).subscribe({
-      next: (response: any) => {
-        let days = [];
-        if (response.data.days.includes(',')) {
-          days = response.data.days.split(',');
-        } else {
-          days.push(response.data.days);
-        }
-        if (response.success) {
-          this.editShiftForm.patchValue({
-            companyId: response.data.company_id,
-            department_id: response.data.department_id,
-            name: response.data.name,
-            days: days,
-            clockInTime: response.data.clock_in_time,
-            clockOutTime: response.data.clock_out_time,
-            lunchInTime: response.data.lunch_in_time,
-            lunchOutTime: response.data.lunch_out_time,
-          });
-        }
-        this.companyId = response.data.company_id
-        this.onSelectCompany('')
-      },
-      error: (error) => {
-        this.service.handleError(error);
-      },
-      complete: () => {},
-    });
-  }
+  // getFormDetail(id: number) {
+  //   this.service.getShiftById(id).subscribe({
+  //     next: (response: any) => {
+  //       let days = [];
+  //       if (response.data.days.includes(',')) {
+  //         days = response.data.days.split(',');
+  //       } else {
+  //         days.push(response.data.days);
+  //       }
+  //       if (response.success) {
+  //         this.editShiftForm.patchValue({
+  //           companyId: response.data.company_id,
+  //           department_id: response.data.department_id,
+  //           name: response.data.name,
+  //           days: days,
+  //           clockInTime: response.data.clock_in_time,
+  //           clockOutTime: response.data.clock_out_time,
+  //           lunchInTime: response.data.lunch_in_time,
+  //           lunchOutTime: response.data.lunch_out_time,
+  //         });
+  //       }
+  //       this.companyId = response.data.company_id
+  //       this.onSelectCompany('')
+  //     },
+  //     error: (error) => {
+  //       this.service.handleError(error);
+  //     },
+  //     complete: () => {},
+  //   });
+  // }
 
   initializeForm() {
     this.editShiftForm = this.fb.group({

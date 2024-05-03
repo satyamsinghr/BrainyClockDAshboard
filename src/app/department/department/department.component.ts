@@ -140,20 +140,15 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
-  onLocationSelect(e: any) {
-    this.selectedLocationId = e.target.value;
-    if (this.selectedLocationId == "") {
-      this.dataSource.data = this.departmentData;
+  onLocationSelect(locationId: any) {
+    if (this.selectedLocationId === locationId) {
+      this.selectedLocationId = '';
+      this.dataSource.data = this.departmentData; 
+    } else {
+      this.selectedLocationId = locationId;
+      const filteredData = this.departmentData.filter((x: any) => x.location_id === this.selectedLocationId);
+      this.dataSource.data = filteredData.length ? filteredData : [];
     }
-    else {
-      const fileredData = this.departmentData.filter((x: any) => x.location_id == this.selectedLocationId);
-      if (fileredData) {
-        this.dataSource.data = fileredData
-      } else {
-        console.log('No department found for the selected location ID:', this.selectedLocationId);
-      }
-    }
-
   }
   selectedDeptId: any
   onDepartmentSelect(e: any) {
@@ -332,27 +327,19 @@ export class DepartmentComponent implements OnInit {
   openAddDepartmentModal() {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '100%', maxWidth: '420px' // adjust width as needed
-      // You can pass data to the modal if needed
-      // data: { anyData: yourData },
     });
     dialogRef.afterClosed().subscribe(result => {
-      // Handle modal close event if needed
-      console.log('The modal was closed');
     });
   }
 
   openEditDepartmentModal(row: any) {
     const dialogRef = this.dialog.open(EditDepartmentComponent, {
       width: '100%', maxWidth: '420px', // adjust width as needed
-      // Pass department ID to the modal if needed
       data: {
         row: row
       }
     });
-    // this.getAllDepartment() ;
     dialogRef.afterClosed().subscribe(result => {
-      // Handle modal close event if needed
-      console.log('The edit department modal was closed');
     });
   }
 

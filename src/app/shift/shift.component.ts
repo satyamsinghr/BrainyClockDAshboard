@@ -256,8 +256,8 @@ export class ShiftComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       // Handle modal close event if needed
-this.getAllShift();
-      console.log('The modal was closed');
+      this.getAllShift();
+      console.log('The modal was closed111');
     });
   }
 

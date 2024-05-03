@@ -44,7 +44,6 @@ export class AddShiftComponent implements OnInit {
     this.name = JSON.parse(localStorage.getItem('companyName'));
     this.initializeForm();
     this.role = this.service.getRole();
-    this.getAllLocation();
 
     if (this.role != 'SA') {
       this.getDepaetmentById();
@@ -62,6 +61,7 @@ export class AddShiftComponent implements OnInit {
         companyId: this.service.getCompanyId(),
       });
     } else {
+      this.getAllLocation();
       this.getAllCompany();
       // this.getAllDepartment();
     }

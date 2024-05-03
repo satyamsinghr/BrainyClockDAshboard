@@ -1,13 +1,13 @@
 import { LoaderService } from 'src/app/@shared/pipes';
 import { ToastrService } from 'ngx-toastr';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from 'src/app/auth/credentials.service';
 import { Subject } from 'rxjs';
 import { Logger } from '../@shared/logger.service';
 import { AppService } from './../app.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material/dialog';
 import {EmployeeService} from 'src/app/employee.service';
 const log = new Logger('AddEmployee');
 @Component({
@@ -32,7 +32,8 @@ export class AddEmployeeComponent implements OnInit {
     private toastr: ToastrService,
     private service: AppService,
     public dialogRef: MatDialogRef<AddEmployeeComponent> ,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    @Inject(MAT_DIALOG_DATA) private data: any,
   ) { }
   companyName: any
   name: any
@@ -46,7 +47,7 @@ export class AddEmployeeComponent implements OnInit {
     this.getAllLocation();
     this.getAllShift();
     this.getDepaetmentById();
-    this.getAllEmployee();
+    // this.getAllEmployee();
     if (this.role != 'SA') {
       this.isCompanyLoggedIn = true;
       this.companyData = [
@@ -229,29 +230,29 @@ export class AddEmployeeComponent implements OnInit {
     this._onDestroy.next();
     this._onDestroy.complete();
   }
-  employeeLength: any
-  getAllEmployee() {
-    if (this.role == 'SA') {
-      this.service.getAllEmployee().subscribe(
-        (response: any) => {
-          this.employeeLength = response.data.length;
-        },
-        (error) => {
-          this.service.handleError(error);
-        }
-      );
-    } else {
-      this.service.getAllEmployeeByCompany().subscribe(
-        (response: any) => {
-          // this.allEmployee = response.data;
-          this.employeeLength = response.data.length;
-        },
-        (error) => {
-          this.service.handleError(error);
-        }
-      );
-    }
-  }
+  // employeeLength: any
+  // getAllEmployee() {
+  //   if (this.role == 'SA') {
+  //     this.service.getAllEmployee().subscribe(
+  //       (response: any) => {
+  //         this.employeeLength = response.data.length;
+  //       },
+  //       (error) => {
+  //         this.service.handleError(error);
+  //       }
+  //     );
+  //   } else {
+  //     this.service.getAllEmployeeByCompany().subscribe(
+  //       (response: any) => {
+  //         // this.allEmployee = response.data;
+  //         this.employeeLength = response.data.length;
+  //       },
+  //       (error) => {
+  //         this.service.handleError(error);
+  //       }
+  //     );
+  //   }
+  // }
 
   shifts: (number | string)[] = ["", "", ""];
   updateShift(index: number, shiftId: number) {
@@ -270,7 +271,7 @@ export class AddEmployeeComponent implements OnInit {
     //   const companyId = this.service.getCompanyId();
     //   this.addEmployeeForm.get('companyId').setValue(companyId);
     // }
-    if (this.role !== 'SA' && this.noOfEmployees > this.employeeLength) {
+    if (this.role !== 'SA' && this.noOfEmployees > this.data.employeeLength) {
       if (this.addEmployeeForm.valid) {
        this.spinner = true
        this.spinnerShow = 'text-trasparent';
@@ -310,15 +311,10 @@ export class AddEmployeeComponent implements OnInit {
         this.service.addEmployee(this.addEmployeeForm.value,this.shifts).subscribe(
           (response: any) => {
             if (response.data) {
-              // this.toastr.success(response.msg);
               this.addEmployeeForm.reset();
-              // this.router.navigate(['/dashboard/employee']);
-              // this.spinner = false;
             }
           },
           (error) => {
-            // this.service.handleError(error);
-            // this.spinner = false;
           }
         );
       }
