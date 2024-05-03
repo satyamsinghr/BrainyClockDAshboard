@@ -584,6 +584,7 @@
                 <select
                   class="form-control"
                   formControlName="companyId"
+                  [(ngModel)]="company_id"
                   [attr.disabled]="isCompanyLoggedIn == true ? true : null"
                   (change)="onSelectCompany($event)">
                   <option value>Select Company</option>

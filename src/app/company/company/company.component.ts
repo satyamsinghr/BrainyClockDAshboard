@@ -16,6 +16,9 @@ import { Emp_Data } from '../../@shared/models/dataSource';
 import { finalize } from 'rxjs';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { AppService } from '../../app.service';
+import { EditCompanyComponent } from '../edit-company/edit-company.component';
+import { AddCompanyComponent } from '../add-company/add-company.component';
+import { CompanyService } from 'src/app/company.service';
 const log = new Logger('Employee');
 @Component({
   selector: 'app-company',
@@ -44,7 +47,8 @@ export class CompanyComponent implements OnInit {
     public dialog: MatDialog,
     private loader: LoaderService,
     private toastr: ToastrService,
-    private service: AppService
+    private service: AppService,
+    private companyService:CompanyService
   ) {
     paginator1.itemsPerPageLabel = 'The amount of data displayed';
   }
@@ -57,6 +61,7 @@ export class CompanyComponent implements OnInit {
   comapnyId:any
   ngOnInit(): void {
     this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
+    this.companyService.getAllCompany = this.getAllCompany.bind(this);
     this.getAllCompany();
     this.getLocationByCompanyId();
   }
@@ -182,5 +187,32 @@ export class CompanyComponent implements OnInit {
         this.service.handleError(error);
       }
     );
+  }
+  openAddCompanyModal() {
+    const dialogRef = this.dialog.open(AddCompanyComponent, {
+      width: '100%', maxWidth: '420px' // adjust width as needed
+      // You can pass data to the modal if needed
+      // data: { anyData: yourData },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle modal close event if needed
+      console.log('The modal was closed');
+    });
+  }
+
+  openEditCompanyModal(row: any) {
+    debugger
+    const dialogRef = this.dialog.open(EditCompanyComponent, {
+      width: '100%', maxWidth: '420px', // adjust width as needed
+      // Pass department ID to the modal if needed
+      data: {
+        row: row
+      }
+    });
+    // this.getAllDepartment() ;
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle modal close event if needed
+      console.log('The edit company modal was closed');
+    });
   }
 }

@@ -152,6 +152,8 @@ export class EditShiftComponent implements OnInit {
     this.service.getAllCompany().subscribe(
       (response: any) => {
         this.companyData = response.data;
+        // this.company_id = this.companyData.filter({})
+        this.company_id = this.departmentData.find((x: { company_id: any; }) => x.company_id == this.data.row.company_id).id;
       },
       (error) => {
         this.service.handleError(error);

@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class DepartmentService {
-  getDepartmentById: () => void;
-  getAllDepartment :() => void;
+export class CompanyService {
+  getAllCompany: () => void;
   constructor() { }
 }

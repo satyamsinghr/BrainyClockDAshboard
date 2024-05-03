@@ -75,7 +75,6 @@
           <select name="departments" id="departments"
             (change)="onDepartmentSelect($event)">
             <option value>Filter by department</option>
-            <option value>All Department</option>
             <option *ngFor="let dept of departmentData"
               [value]="dept.department_id">{{ dept.department_name }}</option>
           </select>

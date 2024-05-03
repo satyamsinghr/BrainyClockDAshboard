@@ -1,4 +1,4 @@
-<div class="container-fluid page">
+<!-- <div class="container-fluid page">
   <div class="page_box p-3 mt-2">
     <h2 class="mt-5">Edit Company Form</h2>
   </div>
@@ -79,9 +79,9 @@
                     >
                       Name is required
                     </div>
-                    <!-- <div
+                    <div
                           *ngIf="editCompanyFormControl['name'].errors && editCompanyFormControl['name'].errors['pattern']">
-                          Enter Only Alphabetic Value</div> -->
+                          Enter Only Alphabetic Value</div>
                   </small>
                 </div>
               </div>
@@ -103,4 +103,69 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+
+<section class="add_department">
+  <div class="department_card p-3 brand_info">
+    <h2 class="text-center">Edit Company Form</h2>
+    <form (ngSubmit)="editCompany()" [formGroup]="editCompanyForm">
+
+      <div class="row row_container">
+        <!-- <div class="col-12 col_container">
+            <label for="department" class="labelName">Department
+              Name</label>
+          </div> -->
+        <div class="col-12">
+          <input asp-for="email" type="email" [(ngModel)]="email" class="form-control" formControlName="email" placeholder="Enter Email"
+            required="required" />
+          <small *ngIf="(editCompanyFormControl['email'].touched || submitted) &&
+                editCompanyFormControl['email'].invalid" class="form-text text-muted">
+            <div class="text-danger" *ngIf=" editCompanyFormControl['email'].errors &&
+                  editCompanyFormControl['email'].errors['required' ]">
+              *Email is required
+            </div>
+            <div class="text-danger" *ngIf="
+                editCompanyFormControl['email'].errors &&
+                editCompanyFormControl['email'].errors['email']
+              ">
+              Enter Valid Format for Email
+            </div>
+          </small>
+        </div>
+      </div>
+
+      <div class="row row_container">
+        <!-- <div class="col-12 col_container">
+            <label for="department" class="labelName">Department
+              Name</label>
+          </div> -->
+        <div class="col-12">
+          <input asp-for="name" type="name" class="form-control" formControlName="name" placeholder="Enter Name"
+            required="required" [(ngModel)]="name"  />
+          <small *ngIf="(editCompanyFormControl['name'].touched || submitted) &&
+                editCompanyFormControl['name'].invalid" class="form-text text-muted">
+            <div class="text-danger" *ngIf=" editCompanyFormControl['name'].errors &&
+                  editCompanyFormControl['name'].errors['required' ]">
+              *Name is required
+            </div>
+          </small>
+        </div>
+      </div>
+
+      <div class="d-flex flex-lg-row flex-md-row flex-column-reverse align-items-center gap-3 pt-3 ">
+        <button type="button" class="btn btn-outline-primary py-3 h-auto px-4"
+        (click)="onCancel()">
+          Cancel
+        </button>
+        <div class="d-flex location_outer justify-content-center position-relative login_loader">
+          <button type="submit" class="btn btn-primary {{spinnerShow}} py-3 px-4 h-auto w-100">
+            Sumbit</button>
+          <div *ngIf="spinner == true" class="loader_img">
+              <img src="assets/img/site_loader.gif" alt>
+            </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

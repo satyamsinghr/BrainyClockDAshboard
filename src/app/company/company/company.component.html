@@ -97,7 +97,7 @@
               <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef class="justify-content-end">Action</mat-header-cell>
                 <mat-cell *matCellDef="let row">
-                  <a class="action" routerLink="/dashboard/edit-company/{{ row.id }}">
+                  <a class="action" (click)="openEditCompanyModal(row)">
                     <img src="../../assets/img/edit_black.png" alt width="24px" height="24px" />
                   </a>
                   <a class="action" (click)="ConfirmDeleteCompany(row.id)">
@@ -125,7 +125,7 @@
       </div>
       <div class="col-lg-2 col-md-3 col-sm-12 col-12 px-3 ps-lg-0 ps-md-0">
         <div class="add-employe">
-          <a href="javascript:void" class="btn btn-primary" (click)="goto_addCompany()">
+          <a href="javascript:void" class="btn btn-primary" (click)="openAddCompanyModal()">
             + Add Company</a>
           <!-- <a href="javascript:void" class="btn btn-primary bg-white mt-3" (click)="goto_addbulkEmployee()">Add
             in bulk</a> -->

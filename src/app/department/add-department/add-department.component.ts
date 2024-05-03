@@ -59,6 +59,7 @@ export class AddDepartmentComponent implements OnInit {
       });
     } else {
       this.getAllCompany();
+      this.getLocationByCompany();
     }
     // this.departmentService.getAllDepartment();
   }
@@ -74,6 +75,7 @@ export class AddDepartmentComponent implements OnInit {
   selectedCompanyId: any
   onCompanySelect(event: any) {
     this.selectedCompanyId = event.target.value;
+    this.getLocationByCompany();
   }
 
   getAllCompany() {
@@ -117,6 +119,7 @@ export class AddDepartmentComponent implements OnInit {
           this.toastr.success(response.msg);
           this.dialogRef.close();
           this.departmentService.getDepartmentById();
+          this.departmentService.getAllDepartment();
           this.spinner = false
           // this.location.replaceState(this.location.path());
         },
@@ -145,5 +148,16 @@ export class AddDepartmentComponent implements OnInit {
       }
     );
   }
+  getLocationByCompany() {
+    this.service.getLocationByCompany(this.selectedCompanyId).subscribe(
+      (response: any) => {
+        this.locationData = response.data;
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
+  }
+
 
 }

@@ -110,6 +110,7 @@ export class DepartmentComponent implements OnInit {
         this.getLocationByCompanyId();
       } else {
         this.getAllDepartment();
+        this.getAllLocation();
       }
     }
   }
@@ -126,7 +127,7 @@ export class DepartmentComponent implements OnInit {
   }
 
   locationData: any
-  allLocationByCompany: any[] = []; // Assuming you have already fetched this data
+  allLocationByCompany: any[] = [];
   selectedLocationId: any;
   getLocationByCompanyId() {
     this.service.getLocationByCompany(this.comapnyId).subscribe(
@@ -139,6 +140,23 @@ export class DepartmentComponent implements OnInit {
       }
     );
   }
+
+  getAllLocation() {
+    this.service.getAllLocation().subscribe(
+      (response: any) => {
+        this.locationData = response.data[0];
+        this.allLocationByCompany = response.data
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
+  }
+
+
+
+
+
 
   onLocationSelect(e: any) {
     this.selectedLocationId = e.target.value;
@@ -238,7 +256,7 @@ export class DepartmentComponent implements OnInit {
       (response: any) => {
         this.spinner.hide();
         // this.dataSource.data = response.data;
-        this.departments = response.data;
+        this.departmentData = response.data;
         if (this.departments.length > 0) {
           this.activeDepartment = this.departments[0].department_name;
           this.activeDepartmentId = this.departments[0].id;

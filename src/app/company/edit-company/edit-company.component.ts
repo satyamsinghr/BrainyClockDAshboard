@@ -1,6 +1,6 @@
 import { LoaderService } from 'src/app/@shared/pipes';
 import { ToastrService } from 'ngx-toastr';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from 'src/app/auth/credentials.service';
@@ -9,6 +9,8 @@ import { untilDestroyed } from '../../@shared/pipes/until-destroyed';
 import { finalize, Subject } from 'rxjs';
 import { Logger } from '../../@shared/logger.service';
 import { AppService } from '../../app.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CompanyService } from 'src/app/company.service';
 const log = new Logger('AddEmployee');
 @Component({
   selector: 'app-edit-company',
@@ -24,12 +26,23 @@ export class EditCompanyComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private service: AppService
+    private service: AppService,
+    private companyService:CompanyService,
+    public dialogRef: MatDialogRef<EditCompanyComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: any,
   ) {}
   companyId: any;
+  company_id:number;
+  name:string;
+  spinnerShow: string = '';
+  spinner: boolean = false;
+  email:string
   ngOnInit(): void {
+    this.name=this.data.row.name;
+    this.company_id=this.data.row.id;
+    this.email=this.data.row.email;
     this.companyId = this.route.snapshot.params['companyId'];
-    this.getcompanyById(this.companyId);
+    // this.getcompanyById(this.companyId);
     this.initializeForm();
   }
   submitted = false;
@@ -74,19 +87,32 @@ export class EditCompanyComponent implements OnInit {
   editCompany() {
     this.submitted = true;
     if (this.editCompanyForm.valid) {
+      this.spinnerShow = 'text-trasparent';
+      this.spinner = true
       this.submitted = false;
       this.service
-        .editCompany(this.editCompanyForm.value, this.companyId)
+        .editCompany(this.editCompanyForm.value, this.company_id)
         .subscribe(
           (response: any) => {
             // this.toastr.success(response.msg);
-            this.router.navigate(['/dashboard/company']);
+            // this.router.navigate(['/dashboard/company']);
+          this.dialogRef.close();
+          this.spinner = false;
+          this.spinnerShow = '';
+          this.companyService.getAllCompany();
+
           },
           (error) => {
             this.service.handleError(error);
+            this.spinner = false;
+            this.spinnerShow = '';  
           }
         );
     }
   }
-  
+  onCancel(): void {
+    // Close the dialog when Cancel button is clicked
+    this.dialogRef.close();
+  }
+
 }

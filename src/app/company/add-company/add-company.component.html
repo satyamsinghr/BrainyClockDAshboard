@@ -1,112 +1,177 @@
-<div class="container-fluid page">
-  <div class="page_box p-3 mt-2">
-    <h2 class="mt-5">Add Company Form</h2>
-  </div>
-  <div class="page_content shadow p-3 position-relative">
-    <div class="page_content-data">
-      <div class="row">
-        <div class="col-6 mx-auto">
-          <div class="text-center">
-            <form [formGroup]="addCompanyForm" (ngSubmit)="addCompany()">
-              <div class="row row_container">
-                <div class="col-4 col_container">
-                  <label for="email" class="labelName">Email</label>
-                </div>
-                <div class="col-8">
-                  <input
-                    asp-for="email"
-                    type="text"
-                    class="form-control"
-                    formControlName="email"
-                    placeholder="Enter Email"
-                    required="required"
-                  />
-                  <small
-                    *ngIf="
-                      (addCompanyFormControl['email'].touched || submitted) &&
-                      addCompanyFormControl['email'].invalid
-                    "
-                    class="form-text text-muted"
-                  >
-                    <div
-                      class="text-danger"
+<!-- <div class="container-fluid page">
+    <div class="page_box p-3 mt-2">
+      <h2 class="mt-5">Add Company Form</h2>
+    </div>
+    <div class="page_content shadow p-3 position-relative">
+      <div class="page_content-data">
+        <div class="row">
+          <div class="col-6 mx-auto">
+            <div class="text-center">
+              <form [formGroup]="addCompanyForm" (ngSubmit)="addCompany()">
+                <div class="row row_container">
+                  <div class="col-4 col_container">
+                    <label for="email" class="labelName">Email</label>
+                  </div>
+                  <div class="col-8">
+                    <input
+                      asp-for="email"
+                      type="text"
+                      class="form-control"
+                      formControlName="email"
+                      placeholder="Enter Email"
+                      required="required"
+                    />
+                    <small
                       *ngIf="
-                        addCompanyFormControl['email'].errors &&
-                        addCompanyFormControl['email'].errors['required']
+                        (addCompanyFormControl['email'].touched || submitted) &&
+                        addCompanyFormControl['email'].invalid
                       "
+                      class="form-text text-muted"
                     >
-                      Email is required
-                    </div>
-                    <div
-                      class="text-danger"
-                      *ngIf="
-                        addCompanyFormControl['email'].errors &&
-                        addCompanyFormControl['email'].errors['email']
-                      "
-                    >
-                      Enter Valid Format for Email
-                    </div>
-                  </small>
+                      <div
+                        class="text-danger"
+                        *ngIf="
+                          addCompanyFormControl['email'].errors &&
+                          addCompanyFormControl['email'].errors['required']
+                        "
+                      >
+                        Email is required
+                      </div>
+                      <div
+                        class="text-danger"
+                        *ngIf="
+                          addCompanyFormControl['email'].errors &&
+                          addCompanyFormControl['email'].errors['email']
+                        "
+                      >
+                        Enter Valid Format for Email
+                      </div>
+                    </small>
+                  </div>
                 </div>
-              </div>
 
-              <div class="row row_container">
-                <div class="col-4 col_container">
-                  <label for="name" class="labelName">Name</label>
-                </div>
-                <div class="col-8">
-                  <input
-                    asp-for="name"
-                    type="text"
-                    class="form-control"
-                    formControlName="name"
-                    placeholder="Enter Name"
-                    required="required"
-                  />
-                  <small
-                    *ngIf="
-                      (addCompanyFormControl['name'].touched || submitted) &&
-                      addCompanyFormControl['name'].invalid
-                    "
-                    class="form-text text-muted"
-                  >
-                    <div
-                      class="text-danger"
+                <div class="row row_container">
+                  <div class="col-4 col_container">
+                    <label for="name" class="labelName">Name</label>
+                  </div>
+                  <div class="col-8">
+                    <input
+                      asp-for="name"
+                      type="text"
+                      class="form-control"
+                      formControlName="name"
+                      placeholder="Enter Name"
+                      required="required"
+                    />
+                    <small
                       *ngIf="
-                        addCompanyFormControl['name'].errors &&
-                        addCompanyFormControl['name'].errors['required']
+                        (addCompanyFormControl['name'].touched || submitted) &&
+                        addCompanyFormControl['name'].invalid
                       "
+                      class="form-text text-muted"
                     >
-                      Name is required
-                    </div>
-                    <div
-                      class="text-danger"
-                      *ngIf="
-                        addCompanyFormControl['name'].errors &&
-                        addCompanyFormControl['name'].errors['pattern']
-                      "
-                    >
-                      Enter Only Alphabetic Value
-                    </div>
-                  </small>
+                      <div
+                        class="text-danger"
+                        *ngIf="
+                          addCompanyFormControl['name'].errors &&
+                          addCompanyFormControl['name'].errors['required']
+                        "
+                      >
+                        Name is required
+                      </div>
+                      <div
+                        class="text-danger"
+                        *ngIf="
+                          addCompanyFormControl['name'].errors &&
+                          addCompanyFormControl['name'].errors['pattern']
+                        "
+                      >
+                        Enter Only Alphabetic Value
+                      </div>
+                    </small>
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <button
-                  type="button"
-                  class="btn btnCancel"
-                  style="margin: 0 20px"
-                  (click)="gotoEmpPage()"
-                >
-                  Cancel
-                </button>
-                <button type="submit" class="btn btnSubmit">Submit</button>
-              </div>
-            </form>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btnCancel"
+                    style="margin: 0 20px"
+                    (click)="gotoEmpPage()"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" class="btn btnSubmit">Submit</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </div> -->
+
+
+<section class="add_department">
+  <div class="department_card p-3 brand_info">
+    <h2 class="text-center">Add Company Form</h2>
+    <form (ngSubmit)="addCompany()" [formGroup]="addCompanyForm">
+
+      <div class="row row_container">
+        <!-- <div class="col-12 col_container">
+            <label for="department" class="labelName">Department
+              Name</label>
+          </div> -->
+        <div class="col-12">
+          <input asp-for="email" type="email" class="form-control" formControlName="email" placeholder="Enter Email"
+            required="required" />
+          <small *ngIf="(addCompanyFormControl['email'].touched || submitted) &&
+                addCompanyFormControl['email'].invalid" class="form-text text-muted">
+            <div class="text-danger" *ngIf=" addCompanyFormControl['email'].errors &&
+                  addCompanyFormControl['email'].errors['required' ]">
+              *Email is required
+            </div>
+            <div class="text-danger" *ngIf="
+                addCompanyFormControl['email'].errors &&
+                addCompanyFormControl['email'].errors['email']
+              ">
+              Enter Valid Format for Email
+            </div>
+          </small>
+        </div>
+      </div>
+
+      <div class="row row_container">
+        <!-- <div class="col-12 col_container">
+            <label for="department" class="labelName">Department
+              Name</label>
+          </div> -->
+        <div class="col-12">
+          <input asp-for="name" type="name" class="form-control" formControlName="name" placeholder="Enter Name"
+            required="required" />
+          <small *ngIf="(addCompanyFormControl['email'].touched || submitted) &&
+                addCompanyFormControl['name'].invalid" class="form-text text-muted">
+            <div class="text-danger" *ngIf=" addCompanyFormControl['name'].errors &&
+                  addCompanyFormControl['name'].errors['required' ]">
+              *Name is required
+            </div>
+          </small>
+        </div>
+      </div>
+
+      <div class="d-flex flex-lg-row flex-md-row flex-column-reverse align-items-center gap-3 pt-3 ">
+        <button type="button" class="btn btn-outline-primary py-3 h-auto px-4"
+        (click)="onCancel()">
+          Cancel
+        </button>
+        <div class="d-flex location_outer justify-content-center position-relative login_loader">
+          <button type="submit" class="btn btn-primary {{spinnerShow}} py-3 px-4 h-auto w-100">
+            Sumbit</button>
+          <div *ngIf="spinner == true" class="loader_img">
+              <img src="assets/img/site_loader.gif" alt>
+            </div>
+        </div>
+      </div>
+    </form>
   </div>
-</div>
+</section>
