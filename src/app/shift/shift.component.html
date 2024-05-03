@@ -152,14 +152,14 @@
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="noData">
-                  <mat-footer-cell *matFooterCellDef
-                    [attr.colspan]="dataSource.data.length == 0">
+                  <td mat-footer-cell *matFooterCellDef class="text-center"
+                    [attr.colspan]="dataSource.data.length == 0 ? displayedColumns.length : 4">
                     No data found
-                  </mat-footer-cell>
+                </td>
                 </ng-container>
-                <mat-footer-row *matFooterRowDef="['noData']"
+                <tr mat-footer-row *matFooterRowDef="['noData']"
                   [hidden]="dataSource && dataSource.data.length > 0">
-                </mat-footer-row>
+              </tr>
                 <tr mat-header-row
                   *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row

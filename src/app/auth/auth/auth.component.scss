@@ -250,5 +250,10 @@ button.btn.btn-primary.text-trasparent {
 @media (max-width:767px) {
   .login_bg {
     min-height: calc(50vh - 0px);
+    padding: 0 0 10px 10px;
+  }
+
+  .login_bg svg {
+    width: 100px !important;
   }
 }

@@ -323,16 +323,21 @@
 
         </ng-container>
         <ng-container matColumnDef="noData">
-          <mat-footer-cell
+          <!-- <mat-footer-cell
             classs="justify-content-lg-center justify-content-md-start justify-content-start"
             *matFooterCellDef
-            [attr.colspan]="dataSource.data.length == 0">
+            [attr.colspan]="5">
             No data found
-          </mat-footer-cell>
+          </mat-footer-cell> -->
+          <td mat-footer-cell
+            class="text-center" *matFooterCellDef 
+            [attr.colspan]="dataSource.data.length == 0 ? displayedColumns.length : 4">
+            No data found
+          </td>
         </ng-container>
-        <mat-footer-row *matFooterRowDef="['noData']"
+        <tr mat-footer-row *matFooterRowDef="['noData']"
           [hidden]="dataSource && dataSource.data.length > 0">
-        </mat-footer-row>
+        </tr>
         <!-- <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
                           <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row> -->
         <div *ngIf="role === 'SA'">
@@ -352,9 +357,13 @@
           class="loader_img"> <img src="assets/img/site_loader.gif"
             alt></p></ngx-spinner>
       <!-- </table> -->
-      <div class="col-12">
-        <mat-paginator #paginator [pageSize]="5" style-paginator
-          [length]="dataSource.data.length"
-          showFirstLastButtons>
-        </mat-paginator>
-      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <mat-paginator #paginator [pageSize]="5" style-paginator
+      [length]="dataSource.data.length"
+      showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>

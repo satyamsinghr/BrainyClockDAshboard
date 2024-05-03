@@ -1,5 +1,5 @@
 <header class="d-flex align-items-center justify-content-between">
-  <div class="user_icon d-lg-block d-md-block d-none">
+  <div class="user_icon d-lg-block d-md-block d-block">
     <div class="options">
       <div class="dropdown user_icon">
         <button class="btn btn-secondary dropdown-toggle " type="button" data-bs-toggle="dropdown"
@@ -13,7 +13,7 @@
               fill="#061D23" />
           </svg>
         </button>
-        <a class="user_icon">{{name}}</a>
+        <a class="user_icon  d-lg-block d-md-block d-none">{{name}}</a>
         <ul class="dropdown-menu"> 
           <li><a class="dropdown-item" routerLink="/dashboard/profile">Profile</a></li>
         </ul>
@@ -30,8 +30,8 @@
       </svg></span>
       Manage Plan
   </div> -->
-  <div class="harmburger ms-3">
-    <button class="nav_menu_open" (click)="toggleSidebarNew()">
+  <div class="harmburger ms-3" (click)="toggleSidebarNew()">
+    <button class="nav_menu_open" >
       <img src="../../assets/img/hamburger.png" style="width: 20px;" alt>
     </button>
   </div>

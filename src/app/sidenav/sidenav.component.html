@@ -42,7 +42,7 @@
             </svg>
           </a> -->
           <ng-container *ngIf="this.nav_open == true">
-            <a routerLink="/dashboard" routerLinkActive="active">
+            <a routerLink="/dashboard" routerLinkActive="active" (click)="toggleSidebarNew()">
             <span>Dashboard</span>
             </a>
           </ng-container>
@@ -65,7 +65,7 @@
         </a> -->
         <ng-container *ngIf="this.nav_open == true">
           <a routerLink="/dashboard/location" routerLinkActive="active">
-          <span>Office</span>
+          <span (click)="toggleSidebarNew()">Office</span>
           </a>
         </ng-container>
         </li>
@@ -86,7 +86,7 @@
             </svg>
           </a> -->
           <ng-container *ngIf="this.nav_open == true">
-            <a routerLink="/dashboard/department" routerLinkActive="active">
+            <a routerLink="/dashboard/department" routerLinkActive="active" (click)="toggleSidebarNew()">
             <span>Department</span>
             </a>
           </ng-container>
@@ -114,7 +114,7 @@
           </svg>
         </a> -->
         <ng-container *ngIf="this.nav_open == true">
-          <a routerLink="/dashboard/shift" routerLinkActive="active">
+          <a routerLink="/dashboard/shift" routerLinkActive="active" (click)="toggleSidebarNew()">
             <span>Shift</span>
             </a>
         </ng-container>
@@ -137,7 +137,7 @@
         </svg>
       </a> -->
       <ng-container *ngIf="this.nav_open == true">
-        <a routerLink="/dashboard/company" routerLinkActive="active">
+        <a routerLink="/dashboard/company" routerLinkActive="active" (click)="toggleSidebarNew()">
           <span>Location</span>
           </a>
       </ng-container>
@@ -165,7 +165,7 @@
             </svg>
           </a> -->
           <ng-container *ngIf="this.nav_open == true">
-            <a routerLink="/dashboard/employee" routerLinkActive="active">
+            <a routerLink="/dashboard/employee" routerLinkActive="active" (click)="toggleSidebarNew()">
             <span >Employee</span>
             </a>
           </ng-container>
@@ -181,7 +181,7 @@
             </svg>
           </a> -->
           <ng-container *ngIf="this.nav_open == true">
-            <a routerLink="/dashboard/report" routerLinkActive="active">
+            <a routerLink="/dashboard/report" routerLinkActive="active" (click)="toggleSidebarNew()">
             <span>Report</span>
             </a>
           </ng-container>
@@ -197,7 +197,7 @@
           <li [class.active]="isSettingActive" (click)="selectItem('setting')"
           class="nav-item d-flex align-items-center justify-content-start">
           <ng-container *ngIf="this.nav_open == true">
-            <a routerLink="/dashboard/setting" routerLinkActive="active">
+            <a routerLink="/dashboard/setting" routerLinkActive="active" (click)="toggleSidebarNew()">
             <span>Setting</span>
             </a>
           </ng-container>

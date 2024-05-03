@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router, NavigationEnd } from '@angular/router';
 import { AppService } from '../app.service'
-
+import { SharedService } from '../shared.service';
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -21,7 +21,7 @@ export class SidenavComponent implements OnInit {
   public currentURL: any = "";
   nav_open: any = true;
   isReportFilterActive: boolean;
-  constructor(private router: Router, public service: AppService) {
+  constructor(private router: Router, public service: AppService,private sharedService: SharedService) {
     this.currentURL = window.location.pathname;
 
     this.router.events.subscribe((event) => {
@@ -53,6 +53,10 @@ export class SidenavComponent implements OnInit {
     this.selectedItem = item;
   }
 
+  sidebershideShow:boolean = false;
+  toggleSidebarNew() {
+    this.sharedService.toggleSidebarVisibility(this.sidebershideShow);
+  }
   logout() {
     localStorage.removeItem('loginToken');
     localStorage.removeItem('fullName');

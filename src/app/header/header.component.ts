@@ -58,7 +58,9 @@ export class HeaderComponent implements OnInit {
 
   sidebershideShow:boolean = false;
   toggleSidebarNew() {
-    this.sharedService.toggleSidebarVisibility(!this.sidebershideShow); // Toggle sidebar visibility to true
+    this.sidebershideShow = !this.sidebershideShow;
+    
+    this.sharedService.toggleSidebarVisibility(this.sidebershideShow);
   }
 
   logout() {

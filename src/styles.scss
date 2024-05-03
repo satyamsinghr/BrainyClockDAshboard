@@ -4516,10 +4516,11 @@ th.month.drp-animate {
 mat-dialog-container#mat-dialog-0 {
   border-radius: 32px;
 }
-table.table.shift_table.withou_check.employee_table.card_table tr th:first-child
-{
+
+table.table.shift_table.withou_check.employee_table.card_table tr th:first-child {
   width: auto !important;
 }
+
 table.table.shift_table.withou_check.employee_table.card_table tr td:first-child {
   background-color: #FCFCFC !important;
   padding: 22px 11px !important;
@@ -4890,12 +4891,13 @@ table.table.shift_table.withou_check.employee_table.card_table tbody tr td:nth-c
     min-height: auto;
   }
 
-  aside {
-    display: none;
-  }
+  // aside {
+  //   display: none;
+  // }
 
   .brand_info h2 {
     font-size: 17px;
+    line-height: 24px;
   }
 
   .user_icon,
@@ -5021,9 +5023,6 @@ table.table.shift_table.withou_check.employee_table.card_table tbody tr td:nth-c
     width: 100%;
   }
 
-  .harmburger {
-    display: block;
-  }
 
   .harmburger button {
     background: #FCFCFC;
@@ -5135,13 +5134,10 @@ table.table.shift_table.withou_check.employee_table.card_table tbody tr td:nth-c
 }
 
 @media (max-width:840px) {
-  .sidenav {
-    display: none;
-  }
-
   .report_filter {
     padding: 15px 15px;
   }
+
 }
 
 .mat-dialog-container {
@@ -5159,12 +5155,24 @@ table.table.shift_table.withou_check.employee_table.card_table tbody tr td:nth-c
 
 @media (max-width:767px) {
 
-  aside.mobile_nav.show {
+  .sidenav {
+    display: none;
+  }
+
+  .harmburger {
     display: block;
-    position: absolute;
+  }
+
+  app-sidenav.sidenav.show {
+    display: block;
+  }
+
+  app-sidenav.sidenav.show {
+    display: block;
+    position: fixed;
     width: calc(100% - 33px);
     z-index: 999;
-    top: 40px;
+    top: 70px;
   }
 
   aside.mobile_nav .sidebar_menu {
@@ -5212,9 +5220,9 @@ table.table.shift_table.withou_check.employee_table.card_table tbody tr td:nth-c
     padding: 0 !important;
   }
 
-  .brand_info h2 {
-    text-wrap: nowrap;
-  }
+  // .brand_info h2 {
+  //   text-wrap: nowrap;
+  // }
 
   .header_add_button {
     margin-left: 0 !important;
