@@ -264,7 +264,7 @@ export class ReportFilterComponent implements OnInit {
         (name, index) => index !== departmentIndex
       );
     } else {
-      const department = this.departments.find((dep: any) => dep.id === departmentId);
+      const department = this.departments.find((dep: any) => dep.department_id === departmentId);
       if (department) {
         this.selectedDepartmentIds.push(departmentId);
         this.selectedDepartmentNames.push(department.department_name);

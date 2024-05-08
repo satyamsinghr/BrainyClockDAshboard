@@ -155,12 +155,15 @@ export class LocationComponent implements OnInit {
         }
       );
     } else {
+      this.spinner.show();
       this.service.getLocationByCompany(this.companyId).subscribe(
         (response: any) => {
           this.officeData = response.data
           this.dataSource.data = response.data;
+          this.spinner.hide();
         },
         (error) => {
+          this.spinner.hide();
           this.service.handleError(error);
         }
       );

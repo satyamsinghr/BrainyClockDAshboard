@@ -38,6 +38,7 @@ import { DepartmentComponent } from './department/department/department.componen
 import { AddDepartmentComponent } from './department/add-department/add-department.component';
 import { EditDepartmentComponent } from './department/edit-department/edit-department.component';
 import { ChartModule } from 'angular-highcharts';
+import { QRCodeModule } from 'angularx-qrcode';
 // import { RegisterComponent } from './auth/register/register.component';
 import { DatePipe } from '@angular/common';
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -109,6 +110,7 @@ const TOASTER_SETTINGS = {
     MatInputModule,
     MatFormFieldModule,
     NgxDaterangepickerMd.forRoot(),
+    QRCodeModule,
   ],
   providers: [ LoaderService,DatePipe,
   {

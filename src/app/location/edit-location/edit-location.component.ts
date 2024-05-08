@@ -109,14 +109,12 @@ export class EditLocationComponent implements OnInit {
       if (status === 'OK' && results[0]) {
         const location = results[0].geometry.location;
         this.map.setCenter(location);
-        // Update marker position
         this.marker.setPosition(location);
       } else {
         console.error('Geocode was not successful for the following reason:', status);
       }
     });
   }
-
 
   // Update marker position based on address
   geocodeAddress(address: string): void {
@@ -159,6 +157,8 @@ export class EditLocationComponent implements OnInit {
             this.editLocationForm.get('country').setValue(component.long_name);
           }
         }
+        this.editLocationForm.controls['latitude'].setValue(position.lat().toString());
+        this.editLocationForm.controls['longitude'].setValue(position.lng().toString());
       } else {
         console.error('Reverse geocode was not successful for the following reason:', status);
       }
@@ -265,21 +265,24 @@ export class EditLocationComponent implements OnInit {
       this.onAddressChange();
       let address1 = "";  
       let postcode = "";
+      
+      this.editLocationForm.controls['latitude'].setValue(place.geometry.location.lat().toString());
+      this.editLocationForm.controls['longitude'].setValue(place.geometry.location.lng().toString());
   
       if (!place.address_components.some(x => x.types.includes("administrative_area_level_3")))
-        this.editLocationForm.controls['city'].patchValue('');
+        this.editLocationForm.controls['city']?.patchValue('');
 
 
       if (!place.address_components.some(x => x.types.includes("administrative_area_level_1")))
-        this.editLocationForm.controls['state'].patchValue('');
+        this.editLocationForm.controls['state']?.patchValue('');
 
 
       if (!place.address_components.some(x => x.types.includes( "postal_code")))
-        this.editLocationForm.controls['pincode'].patchValue('');
+        this.editLocationForm.controls['pincode']?.patchValue('');
 
 
       if (!place.address_components.some(x => x.types.includes( "country")))
-        this.editLocationForm.controls['country'].patchValue('');
+        this.editLocationForm.controls['country']?.patchValue('');
 
 
       for (const component of place.address_components as google.maps.GeocoderAddressComponent[]) {
@@ -308,8 +311,6 @@ export class EditLocationComponent implements OnInit {
         }
       }
 
-      this.editLocationForm.controls['latitude'].setValue(place.geometry.location.lat().toString());
-      this.editLocationForm.controls['longitude'].setValue(place.geometry.location.lng().toString());
     });
     // this.onAddressChange();
   }

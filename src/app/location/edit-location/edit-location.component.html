@@ -10,15 +10,11 @@
     <div class="container-fluid p-0">
       <div class="row m-0 justify-content-center">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12 ps-lg-0 px-3 pt-lg-3">
-          <!-- <div class="department_card"> -->
-
           <form [formGroup]="editLocationForm" (ngSubmit)="editLocation()">
             <div class="row g-4">
               <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                 <label for="location_name" class="labelName">Company
                   Name</label>
-
-                <!-- <div class="col-12"> -->
                 <select class="form-control" formControlName="companyId"
                   [attr.disabled]="isCompanyLoggedIn == true ? true : null">
                   <option value>Select Company</option>
@@ -27,7 +23,6 @@
                     {{ company.name }}
                   </option>
                 </select>
-                <!-- <div class="col-12"> -->
                 <small *ngIf="
                       (editLocationFormControl['companyId'].touched ||
                         submitted) &&
@@ -43,15 +38,9 @@
                   </div>
                 </small>
               </div>
-              <!-- </div> -->
-              <!-- </div> -->
-
               <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-                <!-- <div class="col-12"> -->
                 <label for="location_name" class="labelName">Office
                   Name</label>
-                <!-- </div> -->
-                <!-- <div class="col-12"> -->
                 <input asp-for="location_name" type="text" class="form-control"
                   formControlName="location_name"
                   placeholder="Enter Name" required="required" />
@@ -68,17 +57,10 @@
                     ">
                     Office Name is required
                   </div>
-                  <!-- <div class="text-danger"
-                        *ngIf="editLocationFormControl['location_name'].errors && editLocationFormControl['location_name'].errors['pattern']">
-                        Enter Only Alphabetic Value</div> -->
                 </small>
-                <!-- </div> -->
               </div>
               <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-                <!-- <div class="col-12"> -->
                 <label for="address" class="labelName">Address</label>
-                <!-- </div> -->
-                <!-- <div class="col-12"> -->
                 <input asp-for="address" type="text" #addresstext
                   [(ngModel)]="address" class="form-control"
                   formControlName="address" placeholder="Enter Address"
@@ -96,14 +78,10 @@
                     Address is required
                   </div>
                 </small>
-                <!-- </div> -->
               </div>
 
               <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-                <!-- <div class="col-12"> -->
                 <label for="city" class="labelName">City</label>
-                <!-- </div> -->
-                <!-- <div class="col-12"> -->
                 <input asp-for="city" type="text" #citytext class="form-control"
                   formControlName="city"
                   placeholder="Enter City" required="required" />
@@ -119,14 +97,10 @@
                     City is required
                   </div>
                 </small>
-                <!-- </div> -->
               </div>
 
               <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-                <!-- <div class="col-12"> -->
                 <label for="state" class="labelName">State</label>
-                <!-- </div> -->
-                <!-- <div class="col-12"> -->
                 <input asp-for="state" type="text" #statetext
                   class="form-control" formControlName="state"
                   placeholder="Enter Address" required="required" />
@@ -142,14 +116,10 @@
                     State is required
                   </div>
                 </small>
-                <!-- </div> -->
               </div>
 
               <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-                <!-- <div class="col-12"> -->
                 <label for="country" class="labelName">Country</label>
-                <!-- </div> -->
-                <!-- <div class="col-12"> -->
                 <input asp-for="country" type="text" #countrytext
                   class="form-control" formControlName="country"
                   placeholder="Enter Country" required="required" />
@@ -165,14 +135,10 @@
                     Country is required
                   </div>
                 </small>
-                <!-- </div> -->
               </div>
 
               <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-                <!-- <div class="col-12"> -->
                 <label for="pinCode" class="labelName">Pin Code</label>
-                <!-- </div> -->
-                <!-- <div class="col-12"> -->
                 <input asp-for="pinCode" type="text" class="form-control"
                   formControlName="pinCode"
                   placeholder="Enter pin Code" required="required" />
@@ -194,14 +160,10 @@
                     Pin code should be numeric
                   </div>
                 </small>
-                <!-- </div> -->
               </div>
 
               <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-                <!-- <div class="col-12"> -->
                 <label for="geofence" class="labelName">Geofence Radius </label>
-                <!-- </div>
-                <div class="col-12"> -->
                 <input asp-for="pinCode" type="text" class="form-control"
                   formControlName="geofence"
                   placeholder="Enter Geofence Radius" required="required" />
@@ -223,8 +185,22 @@
                     Pin code should be numeric
                   </div>
                 </small>
-                <!-- </div> -->
               </div>
+              
+              <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <label for="latitude" class="labelName">Latitude</label>
+                <input asp-for="pinCode" type="text" class="form-control"
+                  formControlName="latitude" [attr.disabled]="true" class="disable-email"
+                  placeholder="Enter Latitude" required="required" />
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <label for="longitude" class="labelName">Longitude</label>
+                <input asp-for="pinCode" type="text" class="form-control"
+                  formControlName="longitude" [attr.disabled]="true" class="disable-email"
+                  placeholder="Enter longitude" required="required" />
+              </div>
+
               <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="location_map">
                   <div #map style="height: 250px; width: 100%;"></div>
@@ -251,7 +227,6 @@
               </div>
             </div>
           </form>
-          <!-- </div> -->
         </div>
       </div>
     </div>

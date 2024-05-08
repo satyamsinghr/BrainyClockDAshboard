@@ -51,7 +51,9 @@ export class EditEmpComponent implements OnInit {
   locations:any ;
   type: number;
   location_name:any;
+  comapnyId:any;
   ngOnInit(): void {
+    this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
     this.employeeId = this.data.row.id;
     this.id = this.data.row.id;
     this.firstName = this.data.row.firstName;
@@ -61,9 +63,10 @@ export class EditEmpComponent implements OnInit {
     this.overTime = this.data.row.overTime;
     // this.employee_id = this.data.row.employee_id;
     this.location_name =this.data.row.location_id;
-    // this.type = this.data.row.type;
+    this.type = this.data.row.type;
     this.selectedCompanyId = this.data.row.company_id;
-    this.department_name = this.data.row.department_name;
+    // this.department_name = this.data.row.department_id;
+    this.department_name = this.data.row.Department.department_name;
     this.role = this.service.getRole();
     this.isCompanyLoggedIn = this.role == 'SA' ? false : true;
     this.selectedShifts.push(
@@ -74,7 +77,8 @@ export class EditEmpComponent implements OnInit {
     console.log("asd",this.selectedShifts)
     // this.employeeId = this.route.snapshot.params['employeeId'];
     this.initializeForm();
-    this. getAllDepartment();
+    // this.getAllDepartment();
+    this.getDepartmentById()
     this.getEmployeeById(this.employeeId);
     if (this.role != 'SA') {
       this.companyData = [
@@ -304,6 +308,17 @@ export class EditEmpComponent implements OnInit {
       (response: any) => {
         this.departmentData = response.data;
         this.department_name = this.departmentData.find((x: { department_name: any; }) => x.department_name == this.data.row.department_name).id;
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
+  }
+  getDepartmentById() {
+    this.service.getDepartmentById(this.comapnyId).subscribe(
+      (response: any) => {
+        this.departmentData = response.data;
+        this.department_name = this.departmentData.find((x:any) => x.department_name == this.data.row.Department.department_name).id;
       },
       (error) => {
         this.service.handleError(error);
