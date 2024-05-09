@@ -99,14 +99,14 @@
                             </mat-header-cell>
                             <mat-cell *matCellDef="let element"
                                 class="text-nowrap">
-                                {{ element.attendedEmp}} / {{employeelength}}
+                                {{ element.attendedEmp}} / {{element.totalEmployee}}
 
                                 <!-- <mat-progress-bar mode="determinate" class="ms-4 me-3 progress-bar"
                                     [value]="element.progressBar"></mat-progress-bar>
                             </mat-cell> -->
                                 <mat-progress-bar mode="determinate"
                                     class="ms-4 me-3 progress-bar"
-                                    [value]="calculateProgressBarValue(element.attendedEmp, employeelength)">
+                                    [value]="calculateProgressBarValue(element.attendedEmp, element.totalEmployee)">
                                 </mat-progress-bar>
                             </mat-cell>
                         </ng-container>
