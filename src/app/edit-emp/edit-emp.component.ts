@@ -65,7 +65,7 @@ export class EditEmpComponent implements OnInit {
     this.location_name =this.data.row.location_id;
     this.type = this.data.row.type;
     this.selectedCompanyId = this.data.row.company_id;
-    // this.department_name = this.data.row.department_id;
+      this.department_id = this.data.row.department_id;
     this.department_name = this.data.row.Department.department_name;
     this.role = this.service.getRole();
     this.isCompanyLoggedIn = this.role == 'SA' ? false : true;
@@ -171,11 +171,13 @@ export class EditEmpComponent implements OnInit {
   matchshift2: any[] = [];
   matchshift3: any[] = [];
   companyId: number
+  departmentId: number
   employeeResponse: any
   getEmployeeById(id: number) {
     this.service.getEmployeeById(id).subscribe({
       next: (response: any) => {
         this.companyId = parseInt(response.data.company.id)
+        this.departmentId = parseInt(response.data.department.id)
         this.employeeResponse = response
         if (response.success) {
           let nameParts = response.data.name.split(' ');
@@ -190,20 +192,21 @@ export class EditEmpComponent implements OnInit {
               this.ShiftData = response.data;
               if (this.ShiftData.length > 0) {
                 if (this.ShiftData.length > 0 && this.companyId !== undefined) {
+                  debugger
                   this.matchingShifts = this.ShiftData.filter(
-                    (x: any) => x.company_id === this.companyId
+                    (x: any) => x.department_id === this.departmentId
                   );
                 }
                 let matchingShift1 = this.ShiftData.find(
-                  (x: any) => x.id === this.employeeResponse.data.shift1.id
+                  (x: any) => x.id === this.employeeResponse.data.shift1?.id
                 );
                 this.matchshift1.push(matchingShift1);
                 let matchingShift2 = this.ShiftData.find(
-                  (x: any) => x.id === this.employeeResponse.data.shift2.id
+                  (x: any) => x.id === this.employeeResponse.data.shift2?.id
                 );
                 this.matchshift2.push(matchingShift2);
                 let matchingShift3 = this.ShiftData.find(
-                  (x: any) => x.id === this.employeeResponse.data.shift3.id
+                  (x: any) => x.id === this.employeeResponse.data.shift3?.id
                 );
                 this.matchshift3.push(matchingShift3);
               }
@@ -231,6 +234,29 @@ export class EditEmpComponent implements OnInit {
     });
   }
 
+  selectedDepartmentId: number; 
+  shiftByDepartmentId: any; 
+  onDepartmentChange(event: any) {
+    if(this.data.row.department_id == parseInt(event.target.value)){
+      this.selectedShifts.push(
+        this.data.row.shift_id_1 !== null ? this.data.row.shift_id_1 : "",
+        this.data.row.shift_id_2 !== null ? this.data.row.shift_id_2 : "",
+        this.data.row.shift_id_3 !== null ? this.data.row.shift_id_3 : ""
+    );
+    }else{
+      this.selectedShifts=[];
+    }
+    this.selectedDepartmentId = parseInt(event.target.value);
+    this.service.getShiftByDepartmentId(this.selectedDepartmentId)
+    .subscribe((response: any) => {
+      this.matchingShifts = response.data
+    },
+      (error) => {
+        this.service.handleError(error);
+        this.locations = []
+      }
+    );
+  }
 
 
   shouldShowError(): boolean {
@@ -318,7 +344,9 @@ export class EditEmpComponent implements OnInit {
     this.service.getDepartmentById(this.comapnyId).subscribe(
       (response: any) => {
         this.departmentData = response.data;
-        this.department_name = this.departmentData.find((x:any) => x.department_name == this.data.row.Department.department_name).id;
+        // const selectedDepartment  = this.departmentData.find((x:any) => x.department_id == this.department_name);
+        // this.department_name =  selectedDepartment ? selectedDepartment.department_name : '';
+        // console.log(" this.department_name this.department_name", this.department_name)
       },
       (error) => {
         this.service.handleError(error);
@@ -339,11 +367,11 @@ export class EditEmpComponent implements OnInit {
     } else {
       this.selectedShifts[i] = null;
     }
-    
     console.log("after", this.selectedShifts);
   }
   isShiftSelected(shiftId: number): boolean {
-    return this.selectedShifts.includes(shiftId);
+    const data = this.selectedShifts.includes(shiftId);
+    return data;
   }
 
   getSelectedShiftsArray(): string[] {

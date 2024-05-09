@@ -548,9 +548,9 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="department_id" class="labelName">Department :</label>
-          <select class="form-control" formControlName="department_id" [(ngModel)]="department_name" required>
+          <select class="form-control" formControlName="department_id" [(ngModel)]="department_id" (change)="onDepartmentChange($event)" required>
             <option value>Select Department</option>
-            <option *ngFor="let department of departmentData" [value]="department.id">
+            <option *ngFor="let department of departmentData" [value]="department.department_id">
               {{ department.department_name }}
             </option>
           </select>
