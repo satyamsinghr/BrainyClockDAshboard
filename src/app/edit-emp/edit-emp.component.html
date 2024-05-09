@@ -426,8 +426,8 @@
 
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="email" class="labelName">Email ID :</label>
-          <input asp-for="email"  class="form-control" formControlName="email" [(ngModel)]="email" class="disable-email"
-            placeholder="Enter Email" required="required" [attr.disabled]="isCompanyLoggedIn == true ? true : null"/>
+          <input asp-for="email" class="form-control" formControlName="email" [(ngModel)]="email" class="disable-email"
+            placeholder="Enter Email" required="required" [attr.disabled]="isCompanyLoggedIn == true ? true : null" />
           <small *ngIf="
                     (editEmployeeFormControl['email'].touched || submitted) &&
                     editEmployeeFormControl['email'].invalid
@@ -524,8 +524,7 @@
 
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="location_id" class="labelName">Office :</label>
-          <select class="form-control" formControlName="location_id"
-          [(ngModel)]="location_name" required>
+          <select class="form-control" formControlName="location_id" [(ngModel)]="location_name" required>
             <option value>Select Office</option>
             <option *ngFor="let location of locations" [value]="location.id">
               {{ location.location_name}}
@@ -548,7 +547,8 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="department_id" class="labelName">Department :</label>
-          <select class="form-control" formControlName="department_id" [(ngModel)]="department_id" (change)="onDepartmentChange($event)" required>
+          <select class="form-control" formControlName="department_id" [(ngModel)]="department_id"
+            (change)="onDepartmentChange($event)" required>
             <option value>Select Department</option>
             <option *ngFor="let department of departmentData" [value]="department.department_id">
               {{ department.department_name }}
@@ -574,7 +574,7 @@
           <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
             <li *ngFor="let shift of matchingShifts; let i = index">
               <input type="checkbox" [checked]="isShiftSelected(shift.id)" (change)="toggleShiftSelection(shift.id,i)">
-              <button type="button" class="d-flex align-items-center gap-2" >
+              <button type="button" class="d-flex align-items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <rect width="20" height="20" rx="10" fill="white" />
                   <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23" stroke-width="2" stroke-linecap="round"
@@ -585,8 +585,10 @@
             </li>
           </ul>
           <small>
-          <div *ngIf="shouldShowError()" class="text-danger">Please select at least one shift.</div>
-        </small>
+            <div *ngIf="matchingShifts.length > 0 && shouldShowError()" class="text-danger">Please select at least one
+              shift.</div>
+            <div *ngIf="matchingShifts.length === 0" class="text-danger">No shift exists for this department.</div>
+          </small>
         </div>
         <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="hourlyRate" class="labelName">Hour Rate</label>
@@ -731,20 +733,18 @@
         </div>
       </div> -->
       <div
-              class="d-flex mt-4 flex-lg-row flex-md-row flex-column-reverse align-items-center justify-content-center gap-3 px-0 position-relative login_loader">
-              <button type="button"
-                class="btn btn-outline-primary py-3 px-4 h-auto"
-                (click)="onCancel()">
-                Cancel
-              </button>
-              <div class="position-relative location_outer">
-              <button type="submit" [disabled]="shouldShowError()"
-                class="btn btn-primary  {{spinnerShow}} py-3 px-4 h-auto" >Update Employee</button>
-              <div *ngIf="spinner == true" class="loader_img">
-                <img src="assets/img/site_loader.gif" alt>
-              </div>
-            </div>
-            </div>
+        class="d-flex mt-4 flex-lg-row flex-md-row flex-column-reverse align-items-center justify-content-center gap-3 px-0 position-relative login_loader">
+        <button type="button" class="btn btn-outline-primary py-3 px-4 h-auto" (click)="onCancel()">
+          Cancel
+        </button>
+        <div class="position-relative location_outer">
+          <button type="submit" [disabled]="shouldShowError()"
+            class="btn btn-primary  {{spinnerShow}} py-3 px-4 h-auto">Update Employee</button>
+          <div *ngIf="spinner == true" class="loader_img">
+            <img src="assets/img/site_loader.gif" alt>
+          </div>
+        </div>
+      </div>
     </form>
 
   </div>
