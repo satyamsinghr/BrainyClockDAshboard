@@ -56,6 +56,7 @@ export class ReportFilterComponent implements OnInit {
   shifts: any = []
   pageSize: number = 10;
   reportNameError: boolean = false;
+  reportTypeError:boolean=false;
   isModelOpen: boolean = false;
   show_modal: string = '';
   startDate: any
@@ -139,6 +140,7 @@ export class ReportFilterComponent implements OnInit {
   onSubmit() {
     if (!this.myForm.value.reportName) {
       this.reportNameError = true;
+      this.reportTypeError = true;
       return;
     } else {
       this.isModelOpen = true;
@@ -165,6 +167,7 @@ export class ReportFilterComponent implements OnInit {
   }
   resetFields() {
     this.reportNameError = false;
+    this.reportTypeError = false;
     this.reportNameValue = null;
     this.selectedLocation = null;
     this.locationName = 'Select Location';
@@ -217,6 +220,7 @@ export class ReportFilterComponent implements OnInit {
   reportNameValue: any
   onReportNameChange() {
     this.reportNameValue = this.myForm.get('reportName').value;
+    this.reportNameValue ? this.reportNameError=false : this.reportNameError=true
   }
 
   onLocationChange(data: any, locationName: any) {
@@ -226,6 +230,8 @@ export class ReportFilterComponent implements OnInit {
 
   onReportTypeChange(data: any) {
     this.selectedReportType = data;
+    this.selectedReportType ? this.reportTypeError=false : this.reportTypeError=true
+
   }
 
   // selectedDepartmentIds: number[] = [];
