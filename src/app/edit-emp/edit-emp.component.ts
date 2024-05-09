@@ -355,7 +355,6 @@ export class EditEmpComponent implements OnInit {
   }
 
   toggleShiftSelection(shiftId: number, i :any): void {
-    console.log("before", this.selectedShifts);
     const index = this.selectedShifts.indexOf(shiftId);
     const nullIndex = this.selectedShifts.indexOf(null);
     if (index === -1) {
@@ -367,7 +366,6 @@ export class EditEmpComponent implements OnInit {
     } else {
       this.selectedShifts[i] = null;
     }
-    console.log("after", this.selectedShifts);
   }
   isShiftSelected(shiftId: number): boolean {
     const data = this.selectedShifts.includes(shiftId);
