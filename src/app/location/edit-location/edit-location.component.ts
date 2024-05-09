@@ -116,20 +116,6 @@ export class EditLocationComponent implements OnInit {
     });
   }
 
-  // Update marker position based on address
-  geocodeAddress(address: string): void {
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ address }, (results, status) => {
-      if (status === 'OK' && results[0]) {
-        const location = results[0].geometry.location;
-        this.marker.setPosition(location);
-        this.map.setCenter(location);
-        // Update form fields if needed
-      } else {
-        console.error('Geocode was not successful for the following reason:', status);
-      }
-    });
-  }
   onMarkerDragEnd(event: google.maps.MouseEvent): void {
     const position = event.latLng;
     const geocoder = new google.maps.Geocoder();
@@ -197,12 +183,15 @@ export class EditLocationComponent implements OnInit {
     this._onDestroy.next();
     this._onDestroy.complete();
   }
-
+  lat:any;
+  long:any;
   getLocationById(locationId: number) {
     this.service.getLocationById(locationId).subscribe({
       next: (response: any) => {
         if (response.data) {
           this.address = response.data.address;
+          this.lat = response.data.latitude;
+          this.long = response.data.longitude;
           this.editLocationForm.patchValue({
             location_name: response.data.location_name,
             address: response.data.address,
@@ -215,13 +204,39 @@ export class EditLocationComponent implements OnInit {
             latitude: response.data.latitude,
             longitude: response.data.longitude
           });
-          this.geocodeAddress(this.address);
+          this.geocodeAddress(this.address, this.lat,this.long);
         }
       },
     });
   }
+  
+geocodeAddress(address: string, latitude: any, longitude: any): void {
+  const position = new google.maps.LatLng(latitude, longitude);
+  const geocoder = new google.maps.Geocoder();
+  
+  geocoder.geocode({ address }, (results, status) => {
+    if (status === 'OK' && results[0]) {
+      const location = results[0].geometry.location;
+      this.map.setCenter(location);
+    } else {
+      console.error('Geocode was not successful for the following reason:', status);
+    }
+  });
+  if (this.marker) {
+    this.marker.setPosition(position);
+  } else {
+    this.marker = new google.maps.Marker({
+      map: this.map,
+      position: position,
+      draggable: true
+    });
+    google.maps.event.addListener(this.marker, 'dragend', (event) => {
+      this.onMarkerDragEnd(event);
+    });
+  }
+}
 
-
+  
   getAllCompany() {
     this.service.getAllCompany().subscribe(
       (response: any) => {
