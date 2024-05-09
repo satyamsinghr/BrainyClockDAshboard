@@ -192,7 +192,6 @@ export class EditEmpComponent implements OnInit {
               this.ShiftData = response.data;
               if (this.ShiftData.length > 0) {
                 if (this.ShiftData.length > 0 && this.companyId !== undefined) {
-                  debugger
                   this.matchingShifts = this.ShiftData.filter(
                     (x: any) => x.department_id === this.departmentId
                   );

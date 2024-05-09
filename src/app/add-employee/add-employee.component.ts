@@ -316,6 +316,7 @@ export class AddEmployeeComponent implements OnInit {
     //   const companyId = this.service.getCompanyId();
     //   this.addEmployeeForm.get('companyId').setValue(companyId);
     // }
+    
     if (this.role !== 'SA' && this.noOfEmployees > this.data.employeeLength) {
       if (this.addEmployeeForm.valid) {
        this.spinner = true
@@ -364,7 +365,7 @@ export class AddEmployeeComponent implements OnInit {
         );
       }
     } else {
-      // this.toastr.error("Please Upgrade Your Plan to add more employees");
+      this.toastr.error("Please Upgrade Your Plan to add more employees");
 
     }
   }

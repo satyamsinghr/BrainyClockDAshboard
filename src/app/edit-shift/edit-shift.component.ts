@@ -214,6 +214,7 @@ export class EditShiftComponent implements OnInit {
           }
         },
           (error) => {
+            this.toastr.error(error.error.msg);
             this.service.handleError(error);
             this.spinner = false
             this.spinnerShow = '';
