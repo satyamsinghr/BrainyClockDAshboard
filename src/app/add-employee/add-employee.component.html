@@ -509,7 +509,7 @@
 
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="department_id" class="labelName">Department :</label>
-          <select class="form-control" formControlName="department_id" required>
+          <select class="form-control" formControlName="department_id" required (change)="onDepartmentSelect($event)">
             <option value>Select Department</option>
             <option *ngFor="let department of departmentData"
               [value]="department.department_id">
@@ -752,12 +752,12 @@
                   shift</span></button>
             </li>
           </ul> -->
-
-          <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
+          
+          <ul  *ngIf="addEmployeeForm.get('department_id').value" class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
             <li *ngFor="let shift of matchingShifts let i = index"
               style="cursor: pointer;">
-              <input class="form-control" formControlName="shifts"
-                type="checkbox" [checked]="shifts[i] !== ''"
+              <input class="form-control"
+                type="checkbox" [checked]="shifts[i] == shift.id"
                 (change)="updateShift(i, shift.id)">
               <button type="button" class="d-flex align-items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -782,8 +782,13 @@
               Shifts is required
             </div>
           </small> -->
-          <div *ngIf=" shouldShowError()" class="text-danger">Please select at
+          <div *ngIf="!addEmployeeForm.get('department_id').value" class="text-danger">
+            Please select a department to view shifts.
+          </div>
+          <div *ngIf="addEmployeeForm.get('department_id').value && shouldShowError()" class="text-danger">Please select at
             least one shift.</div>
+            <!-- <div *ngIf="shift.name==0" class="text-danger">Please select at
+              least one shift.</div> -->
         </div>
         <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="department_id" class="labelName">Department :</label>

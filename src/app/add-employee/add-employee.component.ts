@@ -1,7 +1,7 @@
 import { LoaderService } from 'src/app/@shared/pipes';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,FormArray} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from 'src/app/auth/credentials.service';
 import { Subject } from 'rxjs';
@@ -16,6 +16,7 @@ const log = new Logger('AddEmployee');
   styleUrls: ['./add-employee.component.scss'],
 })
 export class AddEmployeeComponent implements OnInit {
+  isDepartmentSelected: boolean = false;
   isLoading = false;
   submitted = false;
   spinner:boolean = false;
@@ -45,8 +46,8 @@ export class AddEmployeeComponent implements OnInit {
     this.name = JSON.parse(localStorage.getItem('companyName'));
     this.initializeForm();
     this.getAllLocation();
-    this.getAllShift();
-    this.getDepaetmentById();
+    // this.getShiftByDepartmentId();
+        this.getDepaetmentById();
     // this.getAllEmployee();
     if (this.role != 'SA') {
       this.isCompanyLoggedIn = true;
@@ -84,10 +85,11 @@ export class AddEmployeeComponent implements OnInit {
       // shifts1: ['', [Validators.required]],
       // shifts2: [''],
       // shifts3: [''],
-      shifts: ['', [Validators.required]],
+      // shifts: ['', [Validators.required]],
       department_id: ['', [Validators.required]],
       location_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       type: ['', Validators.required],
+      // shift: [[]],
     });
   }
 
@@ -142,22 +144,62 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   ShiftData: [];
-  getAllShift() {
-    this.service.getAllShift().subscribe(
+  // getAllShift() {
+  //   this.service.getAllShift().subscribe(
+  //     (response: any) => {
+  //       this.ShiftData = response.data;
+  //       if (this.role !== 'SA') {
+  //         this.matchingShifts = this.ShiftData.filter(
+  //           (x: any) => x.company_id === parseInt(this.selectedCompanyId)
+  //         );
+  //       }
+  //     },
+  //     (error) => {
+  //       this.service.handleError(error);
+  //     }
+  //   );
+
+  // }
+
+  // getShiftByDepartmentId(departmentId: number) {
+  //   this.service.getShiftByDepartmentId(departmentId).subscribe(
+  //     (response: any) => {
+  //       this.ShiftData = response.data;
+  //       if (this.role !== 'SA') {
+  //         this.matchingShifts = this.ShiftData.filter(
+  //           (x: any) => x.company_id === parseInt(this.selectedCompanyId)
+  //         );
+  //       }
+  //       this.isDepartmentSelected = true; 
+  //     },
+  //     (error) => {
+  //       this.service.handleError(error);
+  //     }
+  //   );
+  // }
+
+  
+  onDepartmentSelect(event: any) {
+    const departmentId = event.target.value; 
+    this.shifts=['', '', ''];
+    this.service.getShiftByDepartmentId(departmentId).subscribe(
       (response: any) => {
-        this.ShiftData = response.data;
-        if (this.role !== 'SA') {
-          this.matchingShifts = this.ShiftData.filter(
-            (x: any) => x.company_id === parseInt(this.selectedCompanyId)
-          );
-        }
+        this.matchingShifts = response.data;
       },
       (error) => {
-        this.service.handleError(error);
+        console.error('Error fetching shifts:', error);
       }
     );
-
   }
+
+  // shouldShowError(): boolean {
+  //   return (
+  //     this.isDepartmentSelected &&
+  //     this.shifts.every(
+  //       (shift) => shift === null || shift === undefined || shift === ''
+  //     )
+  //   );
+  // }
 
   shiftUser() {
 
@@ -255,15 +297,18 @@ export class AddEmployeeComponent implements OnInit {
   // }
 
   shifts: (number | string)[] = ["", "", ""];
+  // updateShift(index: number, shiftId: number) {
+  //   this.shifts[index] = this.shifts[index] === shiftId ? "" : shiftId;
+  //   console.log("shiftsshifts",this.shifts);
+  // }
   updateShift(index: number, shiftId: number) {
-    this.shifts[index] = this.shifts[index] === shiftId ? "" : shiftId;
-    console.log("shiftsshifts",this.shifts);
+    const isChecked = this.shifts[index] === shiftId;
+    this.shifts[index] = isChecked ? "" : shiftId;
   }
 
   shouldShowError(): boolean {
     return this.shifts.every(shift => shift === null || shift === undefined || shift === "");
   }
-  
   
   addEmployee() {
     this.submitted = true;
@@ -327,7 +372,5 @@ export class AddEmployeeComponent implements OnInit {
     // Close the dialog when Cancel button is clicked
     this.dialogRef.close();
   }
-
-
 
 }
