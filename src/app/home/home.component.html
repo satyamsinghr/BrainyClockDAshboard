@@ -443,14 +443,14 @@
                                 {{ element.firstName +" " +element.lastName }}
                             </mat-cell>
                         </ng-container>
-                        <ng-container matColumnDef="shiftName">
+                        <!-- <ng-container matColumnDef="shiftName">
                             <mat-header-cell *matHeaderCellDef mat-sort-headerS>
                                 ShiftName
                             </mat-header-cell>
                             <mat-cell *matCellDef="let element">
                                 {{ element.shiftName }}
                             </mat-cell>
-                        </ng-container>
+                        </ng-container> -->
 
                         <ng-container matColumnDef="status">
                             <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -459,11 +459,12 @@
                             <mat-cell *matCellDef="let element"
                                 class="text-nowrap">
                                 <!-- {{ element.status }} -->
-                                {{ getStatus(element.created_at) }}
+                                <!-- {{ getStatus(element.created_at) }} -->
+                                {{ getStatus(element) }}
                             </mat-cell>
                         </ng-container>
 
-                        <ng-container matColumnDef="clock-in">
+                        <!-- <ng-container matColumnDef="clock-in">
                             <mat-header-cell *matHeaderCellDef mat-sort-header>
                                 CLOCK-IN
                             </mat-header-cell>
@@ -471,7 +472,16 @@
                                 {{ element.clock_in_time ? element.clock_in_time
                                 : 'N/A' }}
                             </mat-cell>
-                        </ng-container>
+                        </ng-container> -->
+                        <ng-container matColumnDef="clock-in">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                              CLOCK-IN
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                              {{ getClockInTime(element) }}
+                            </mat-cell>
+                          </ng-container>
+                          
 
                         <ng-container matColumnDef="noData">
                             <mat-footer-cell classs="justify-content-center"

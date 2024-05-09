@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
   displayedColumn: string[] = ['department', 'shiftStatus', 'attendance'];
   dataSourceOperations = new MatTableDataSource<any>([]);
-  displayedOprationsColumn: string[] = ['employee','shiftName' ,'status', 'clock-in']
+  displayedOprationsColumn: string[] = ['employee','status', 'clock-in']
   @ViewChild('map') mapElement: any;
   @ViewChild('addresstext') addresstext: any;
   map!: google.maps.Map;
@@ -91,15 +91,39 @@ export class HomeComponent implements OnInit {
     this.qrCodeDownloadLink = url;
   }
 
-  getStatus(createdDate: any) {
-    const currentTime = new Date();
-    const formattedCreatedDate = moment(currentTime).format('YYYY-MM-DD');
-    if (createdDate == formattedCreatedDate && createdDate == null) {
-      return 'Inprogress';
+  // getStatus(createdDate: any) {
+  //   const currentTime = new Date();
+  //   const formattedCreatedDate = moment(currentTime).format('YYYY-MM-DD');
+  //   if (createdDate == formattedCreatedDate && createdDate == null) {
+  //     return 'Inprogress';
+  //   } else {
+  //     return 'NA';
+  //   }
+  // }
+
+  
+  getStatus(element: any): string {
+    debugger
+    if ((element.Shift1 && element.Shift1) || (element.Shift3 &&element.Shift2) || (element.Shift3 &&element.Shift3)) {
+        return 'In Shift';
     } else {
-      return 'NA';
+        return 'NA';
+    }
+}
+
+  getClockInTime(element: any): string {
+    debugger
+    if (element.Shift1 && element.Shift1.clock_in_time) {
+      return element.Shift1.clock_in_time;
+    } else if (element.Shift2 && element.Shift2.clock_in_time) {
+      return element.Shift2.clock_in_time;
+    } else if (element.Shift3 && element.Shift3.clock_in_time) {
+      return element.Shift3.clock_in_time;
+    } else {
+      return 'N/A';
     }
   }
+  
 
   onSelectWeek(day: string) {
     const selectedDate = new Date();
