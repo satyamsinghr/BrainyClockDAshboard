@@ -24,9 +24,11 @@ export class DashboardComponent implements OnInit {
   //constructor(public service: AppService, public route: ActivatedRoute) { }
   constructor(private router: Router,public service: AppService,private sharedService: SharedService) {
   }
+
   lastUrl:any
   ngOnInit(): void {
     const Url  = this.router.url;
+    this.isReportPage = Url.includes('reportFilter');
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Check if the current URL contains 'report'
@@ -47,5 +49,6 @@ export class DashboardComponent implements OnInit {
       this.sidebarVisible = visible;
     });
   }
+
 
 }

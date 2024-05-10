@@ -103,7 +103,6 @@ export class HomeComponent implements OnInit {
 
   
   getStatus(element: any): string {
-    debugger
     if ((element.Shift1 && element.Shift1) || (element.Shift3 &&element.Shift2) || (element.Shift3 &&element.Shift3)) {
         return 'In Shift';
     } else {
@@ -112,7 +111,6 @@ export class HomeComponent implements OnInit {
 }
 
   getClockInTime(element: any): string {
-    debugger
     if (element.Shift1 && element.Shift1.clock_in_time) {
       return element.Shift1.clock_in_time;
     } else if (element.Shift2 && element.Shift2.clock_in_time) {

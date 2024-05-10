@@ -138,9 +138,9 @@ export class ReportFilterComponent implements OnInit {
     this.endDate = this.datePipe.transform(event.endDate.$d, 'yyyy-MM-dd');
   }
   onSubmit() {
-    if (!this.myForm.value.reportName) {
-      this.reportNameError = true;
-      this.reportTypeError = true;
+    if (!this.myForm.value.reportName ||!this.myForm.value.reportType) {
+      !this.myForm.value.reportName ? this.reportNameError = true : this.reportNameError = false 
+      !this.myForm.value.reportType ? this.reportTypeError = true : this.reportTypeError = false
       return;
     } else {
       this.isModelOpen = true;
@@ -231,7 +231,7 @@ export class ReportFilterComponent implements OnInit {
   onReportTypeChange(data: any) {
     this.selectedReportType = data;
     this.selectedReportType ? this.reportTypeError=false : this.reportTypeError=true
-
+    this.myForm.value.reportType = this.selectedReportType
   }
 
   // selectedDepartmentIds: number[] = [];
