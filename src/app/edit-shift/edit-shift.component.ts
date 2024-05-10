@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from '../auth/credentials.service';
 import { AppService } from '../app.service';
+import { ShiftsService } from '../shifts.service';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
@@ -39,6 +40,7 @@ export class EditShiftComponent implements OnInit {
     private fb: FormBuilder,
     private service: AppService,
     private toastr: ToastrService,
+    private shiftService:ShiftsService,
     @Inject(MAT_DIALOG_DATA) private data: any,
     public dialogRef: MatDialogRef<EditShiftComponent>
   ) {}
@@ -211,6 +213,7 @@ export class EditShiftComponent implements OnInit {
             this.spinner=false;
             this.spinnerShow = '';
             this.onCancel();
+           this.shiftService.getAllShift();
           }
         },
           (error) => {

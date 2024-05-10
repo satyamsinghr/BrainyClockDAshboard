@@ -20,6 +20,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { AddShiftComponent } from '../add-shift/add-shift.component';
 import { EditShiftComponent } from '../edit-shift/edit-shift.component';
 import { SharedService } from '../shared.service'
+import { ShiftsService } from '../shifts.service';
 const log=new Logger('Employee');
 @Component({
   selector: 'app-shift',
@@ -52,6 +53,7 @@ export class ShiftComponent implements OnInit {
       private appService:AppService,
       private service:AppService,
       private sharedService:SharedService,
+      private shiftsService:ShiftsService,
       private spinner: NgxSpinnerService) {
     paginator1.itemsPerPageLabel = 'The amount of data displayed';
   }
@@ -65,11 +67,11 @@ export class ShiftComponent implements OnInit {
   ngOnInit(): void {
     const Url  = this.router.url;
     console.log("testtt",Url);
-    
     const parts = Url.split('/');
     this.lastUrl = parts[parts.length - 1];
     this.sharedService.setLastUrl(this.lastUrl);
     console.log("deptartmemntLAstURL",this.lastUrl)
+    this.shiftsService.getAllShift = this.getAllShift.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if(this.token == null){
       this.router.navigateByUrl('/');
@@ -104,7 +106,7 @@ export class ShiftComponent implements OnInit {
         this.spinner.hide();
         this.shiftData = response.data
         this.dataSource.data=response.data;
-        // this.getAllShifts=response.data;
+        this.getAllShifts=response.data;
        },
        error => {
         this.service.handleError(error);
@@ -255,9 +257,7 @@ export class ShiftComponent implements OnInit {
       height:'600px' 
     });
     dialogRef.afterClosed().subscribe(result => {
-      // Handle modal close event if needed
-      this.getAllShift();
-      console.log('The modal was closed111');
+    
     });
   }
 
@@ -271,8 +271,6 @@ export class ShiftComponent implements OnInit {
     }); 
 
     dialogRef.afterClosed().subscribe(result => {
-      // Handle modal close event if needed
-      this.getAllShift();
       console.log('The edit department modal was closed');
     });
   }
