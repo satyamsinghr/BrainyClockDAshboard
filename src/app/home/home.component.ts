@@ -81,8 +81,13 @@ export class HomeComponent implements OnInit {
       this.getEmployeeByCompanyId();
       this.getAllLocation();
       this.getLocationByCompanyId();
+      // const todayDate = new Date();
+      // this.presentDate = moment(todayDate).format('YYYY-MM-DD');
       const todayDate = new Date();
-      this.presentDate = moment(todayDate).format('YYYY-MM-DD');
+      const year = todayDate.getFullYear();
+      const month = String(todayDate.getMonth() + 1).padStart(2, '0');
+      const day = String(todayDate.getDate()).padStart(2, '0');
+      this.presentDate = `${year}-${month}-${day}`;
       this.getAttendanceByCompanyId(this.presentDate);
     }
   }
@@ -147,11 +152,23 @@ export class HomeComponent implements OnInit {
     if (this.role != 'SA') {
       this.service.getAttendanceByCompanyId(this.companyId).subscribe(
         (response: any) => {
-          const formattedData = response.map((x: any) => ({
-            ...x,
-            created_at: moment(x.created_at).format('YYYY-MM-DD'),
-            day: moment(x.created_at).format('dddd')
-          }));
+          // const formattedData = response.map((x: any) => ({
+          //   ...x,
+          //   created_at: moment(x.created_at).format('YYYY-MM-DD'),
+          //   day: moment(x.created_at).format('dddd')
+          // }));
+          const formattedData = response.map((x: any) => {
+            const createdAtDate = new Date(x.created_at);
+            const formattedCreatedAt = createdAtDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+            const day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][createdAtDate.getDay()]; // Get day of the week
+            
+            return {
+              ...x,
+              created_at: formattedCreatedAt,
+              day: day
+            };
+          });
+          
           this.attendanceByDate = formattedData.filter(
             (x: any) => x.created_at === formattedCurrentDate
           );
@@ -182,7 +199,8 @@ export class HomeComponent implements OnInit {
           for (const day in dayCounts) {
             if (dayCounts.hasOwnProperty(day)) {
               const count = dayCounts[day];
-              const ratio = (count / this.employeelength) * 100;
+              // const ratio = (count / this.employeelength) * 100;
+              const ratio = (count / response.length) * 100;
               this.dayRatios[day] = ratio;
             }
           }
@@ -199,9 +217,14 @@ export class HomeComponent implements OnInit {
   }
 
   getDayClass(day: any): string {
+    // const currentDate = new Date();
+    // const currentDay = moment(currentDate).format('dddd').toLowerCase();
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const currentDate = new Date();
-    const currentDay = moment(currentDate).format('dddd').toLowerCase();
-    if (day.toLowerCase() === currentDay) {
+    const currentDayIndex = currentDate.getDay();
+    const currentDay = daysOfWeek[currentDayIndex];
+  
+    if (day === currentDay) {
       return 'today';
     } else if (day > currentDay) {
       return 'upcoming_day';
@@ -276,7 +299,6 @@ export class HomeComponent implements OnInit {
   filterEmployeeDataByDepartmentId() {
     if (this.departmentId && this.employee) {
      this.filteredEmployees = this.employee.filter((emp:any) => parseInt(emp.department_id) == this.departmentId);
-     console.log("hshshshhshhsjs",this.filteredEmployees)
      this.dataSourceOperations.data = this.filteredEmployees;
     }
   }
@@ -333,7 +355,7 @@ employeeCount: any
     if (this.role != 'SA') {
       this.service.getEmployeeCount().subscribe(
         (response: any) => {
-          // this.employeeCount = response.data;
+         this.employeeCount = response.data;
            this.dataSource.data = response.data;
         },
         (error) => {
