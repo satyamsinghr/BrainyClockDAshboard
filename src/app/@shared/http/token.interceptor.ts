@@ -28,17 +28,17 @@ export class TokenInterceptorService implements HttpInterceptor {
         if (err.status === 401) {
           //this.authServicce.logout();
           err.statusText="Unauthorized";
-          this.toastr.warning(err.statusText);
+          // this.toastr.warning(err.statusText);
         }
         if(err.status === 404){
          // this.authServicce.logout();
           err.statusText="Not Found";
-          this.toastr.warning(err.statusText);
+          // this.toastr.warning(err.statusText);
         }
         if(err.status===500){
          // this.authServicce.logout();
           err.statusText="Internal Server Error";
-          this.toastr.warning(err.statusText);
+          // this.toastr.warning(err.statusText);
         }
         let error ;
         if(error==null) error=err;
