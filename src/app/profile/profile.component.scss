@@ -39,3 +39,15 @@
     width: 30px !important;
     filter: brightness(100);
   }
+  .hide {
+    display: none;
+  }
+  .password_icon {
+    position: absolute;
+    top: 54px;
+    bottom: auto;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

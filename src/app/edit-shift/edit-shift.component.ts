@@ -32,6 +32,7 @@ export class EditShiftComponent implements OnInit {
   spinnerShow: string = '';
   location_id:any;
   name :any;
+  isDisabled : boolean = true
   id: number = 0;
   constructor(
     private router: Router,
@@ -98,6 +99,7 @@ export class EditShiftComponent implements OnInit {
     this.service.getDepartmentById(this.company_id).subscribe(
       (response: any) => {
         this.departmentData = response.data;
+        this.isDisabled=false;
       },
       (error) => {
         this.service.handleError(error);
@@ -167,7 +169,7 @@ export class EditShiftComponent implements OnInit {
       (response: any) => {
         this.departmentData = response.data;
         this.department_id = this.departmentData.find((x: { department_id: any; }) => x.department_id == this.data.row.department_id).id;
-      
+        this.isDisabled=false;
       },
       (error) => {
         this.service.handleError(error);
@@ -181,6 +183,7 @@ export class EditShiftComponent implements OnInit {
         this.service.getDepartmentById(this.companyId).subscribe(
           (response: any) => {
              this.departmentData = response.data;
+            //  this.isDisabled=false;
           },
           (error) => {
             this.service.handleError(error);

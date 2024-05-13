@@ -787,7 +787,7 @@
           </div>
           <div *ngIf="addEmployeeForm.get('department_id').value && matchingShifts.length > 0 && shouldShowError()" class="text-danger">Please select at
             least one shift.</div>
-            <div *ngIf="addEmployeeForm.get('department_id').value && matchingShifts.length === 0" class="text-danger">No shift exists for this department.</div>
+            <div *ngIf="addEmployeeForm.get('department_id').value && matchingShifts.length === 0" class="text-danger" style="position: relative;top: 23px;">No shift exists for this department.</div>
         </div>
         <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="department_id" class="labelName">Department :</label>

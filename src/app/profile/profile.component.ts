@@ -13,6 +13,9 @@ export class ProfileComponent implements OnInit {
   passwordForm: FormGroup;
   submitted: boolean = false
   email: any
+  public showPassword: boolean;
+  public newPassword: boolean;
+  public confirmPassword: boolean;
   spinner: boolean = false
   spinnerShow: string = '';
   lastUrl: string;

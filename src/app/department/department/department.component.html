@@ -38,8 +38,8 @@
 
   <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-0">
     <form action class="mb-4 pb-lg-2">
-      <ul class="filter_dropdown d-flex align-items-center gap-3">
-        <!-- <li class="position-relative">
+      <!-- <ul class="filter_dropdown d-flex align-items-center gap-3"> -->
+      <!-- <li class="position-relative">
           <select name="locations" id="locations" (change)="onLocationSelect($event)">
             <option value>Filter by office</option>
             <option *ngFor="let location of allLocationByCompany" [value]="location.id">{{ location.location_name }}
@@ -47,26 +47,25 @@
           </select>
         </li> -->
 
-        <!-- <li class="position-relative">
+      <!-- <li class="position-relative">
           <select name="departments" id="departments" (change)="onDepartmentSelect($event)">
             <option value>Filter by department</option>
             <option value>All Department</option>
             <option *ngFor="let dept of departmentData" [value]="dept.department_id">{{ dept.department_name }}</option>
           </select>
-        </li> -->       
-        <ul class="d-flex align-items-center gap-3 overflow-auto add_shifts_c">
-          <li *ngFor="let location of allLocationByCompany " style="cursor: pointer;">
-            <input class="form-control" type="checkbox" [checked]="location.id === selectedLocationId" name="locations" id="locations"
-              (change)="onLocationSelect(location.id)">
-            <button type="button" class="d-flex align-items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <rect width="20" height="20" rx="10" fill="white" />
-                <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>{{ location.location_name }}
-            </button>
-          </li>
-        </ul>
+        </li> -->
+      <ul class="d-flex flex-lg-wrap align-items-center gap-3 overflow-auto add_shifts_c">
+        <li class="text-nowrap" *ngFor="let location of allLocationByCompany " style="cursor: pointer;">
+          <input class="form-control" type="checkbox" [checked]="location.id === selectedLocationId" name="locations"
+            id="locations" (change)="onLocationSelect(location.id)">
+          <button type="button" class="d-flex align-items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <rect width="20" height="20" rx="10" fill="white" />
+              <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>{{ location.location_name }}
+          </button>
+        </li>
       </ul>
     </form>
   </div>

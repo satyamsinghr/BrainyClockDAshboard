@@ -32,6 +32,7 @@ export class AddShiftComponent implements OnInit {
   companyId: any;
   companyName: any;
   spinnerShow: any;
+  isDisabled : boolean = true
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -76,6 +77,7 @@ export class AddShiftComponent implements OnInit {
       this.service.getDepartmentById(this.companyId).subscribe(
         (response: any) => {
           this.departmentData = response.data;
+          this.isDisabled = false
         },
         (error) => {
           this.service.handleError(error);
@@ -114,6 +116,7 @@ export class AddShiftComponent implements OnInit {
     this.service.getAllDepartment().subscribe(
       (response: any) => {
         this.departmentData = response.data;
+        this.isDisabled = false
       },
       (error) => {
         this.service.handleError(error);

@@ -623,7 +623,9 @@
                 <select
                   class="form-control"
                   [(ngModel)]="department_id"
-                  formControlName="department_id">
+                  formControlName="department_id"
+                  class="form-control" formControlName="department_id"
+                  [attr.disabled]="isDisabled === true ? true : null">
                   <option value>Select Department</option>
                   <option
                     *ngFor="let department of departmentData"
