@@ -122,7 +122,6 @@ export class AddLocationComponent implements OnInit {
         const location = results[0].geometry.location;
         this.marker.setPosition(location);
         this.map.setCenter(location);
-        // Update form fields if needed
       } else {
         console.error('Geocode was not successful for the following reason:', status);
       }
@@ -153,6 +152,9 @@ export class AddLocationComponent implements OnInit {
             this.addLocationForm.get('country').setValue(component.long_name);
           }
         }
+        this.addLocationForm.controls['latitude'].setValue(position.lat().toString());
+        this.addLocationForm.controls['longitude'].setValue(position.lng().toString());
+        
       } else {
         console.error('Reverse geocode was not successful for the following reason:', status);
       }
@@ -179,21 +181,21 @@ export class AddLocationComponent implements OnInit {
         switch (componentType) {
 
           case "postal_code": {
-            this.addLocationForm.controls['pinCode'].patchValue(component.long_name);
+            this.addLocationForm.controls['pinCode']?.patchValue(component.long_name);
             break;
           }
 
           case "administrative_area_level_3": {
-            this.addLocationForm.controls['city'].patchValue(component.long_name);
+            this.addLocationForm.controls['city']?.patchValue(component.long_name);
             break;
           }
           case "administrative_area_level_1": {
-            this.addLocationForm.controls['state'].patchValue(component.long_name);
+            this.addLocationForm.controls['state']?.patchValue(component.long_name);
             break;
           }
 
           case "country":
-            this.addLocationForm.controls['country'].patchValue(component.long_name);
+            this.addLocationForm.controls['country']?.patchValue(component.long_name);
             break;
         }
       }

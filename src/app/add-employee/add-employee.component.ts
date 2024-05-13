@@ -1,13 +1,13 @@
 import { LoaderService } from 'src/app/@shared/pipes';
 import { ToastrService } from 'ngx-toastr';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators,FormArray} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from 'src/app/auth/credentials.service';
 import { Subject } from 'rxjs';
 import { Logger } from '../@shared/logger.service';
 import { AppService } from './../app.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material/dialog';
 import {EmployeeService} from 'src/app/employee.service';
 const log = new Logger('AddEmployee');
 @Component({
@@ -16,6 +16,7 @@ const log = new Logger('AddEmployee');
   styleUrls: ['./add-employee.component.scss'],
 })
 export class AddEmployeeComponent implements OnInit {
+  isDepartmentSelected: boolean = false;
   isLoading = false;
   submitted = false;
   spinner:boolean = false;
@@ -32,7 +33,8 @@ export class AddEmployeeComponent implements OnInit {
     private toastr: ToastrService,
     private service: AppService,
     public dialogRef: MatDialogRef<AddEmployeeComponent> ,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    @Inject(MAT_DIALOG_DATA) private data: any,
   ) { }
   companyName: any
   name: any
@@ -44,9 +46,9 @@ export class AddEmployeeComponent implements OnInit {
     this.name = JSON.parse(localStorage.getItem('companyName'));
     this.initializeForm();
     this.getAllLocation();
-    this.getAllShift();
-    this.getDepaetmentById();
-    this.getAllEmployee();
+    // this.getShiftByDepartmentId();
+        this.getDepaetmentById();
+    // this.getAllEmployee();
     if (this.role != 'SA') {
       this.isCompanyLoggedIn = true;
       this.companyData = [
@@ -83,10 +85,11 @@ export class AddEmployeeComponent implements OnInit {
       // shifts1: ['', [Validators.required]],
       // shifts2: [''],
       // shifts3: [''],
-      shifts: ['', [Validators.required]],
+      // shifts: ['', [Validators.required]],
       department_id: ['', [Validators.required]],
       location_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       type: ['', Validators.required],
+      // shift: [[]],
     });
   }
 
@@ -141,22 +144,62 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   ShiftData: [];
-  getAllShift() {
-    this.service.getAllShift().subscribe(
+  // getAllShift() {
+  //   this.service.getAllShift().subscribe(
+  //     (response: any) => {
+  //       this.ShiftData = response.data;
+  //       if (this.role !== 'SA') {
+  //         this.matchingShifts = this.ShiftData.filter(
+  //           (x: any) => x.company_id === parseInt(this.selectedCompanyId)
+  //         );
+  //       }
+  //     },
+  //     (error) => {
+  //       this.service.handleError(error);
+  //     }
+  //   );
+
+  // }
+
+  // getShiftByDepartmentId(departmentId: number) {
+  //   this.service.getShiftByDepartmentId(departmentId).subscribe(
+  //     (response: any) => {
+  //       this.ShiftData = response.data;
+  //       if (this.role !== 'SA') {
+  //         this.matchingShifts = this.ShiftData.filter(
+  //           (x: any) => x.company_id === parseInt(this.selectedCompanyId)
+  //         );
+  //       }
+  //       this.isDepartmentSelected = true; 
+  //     },
+  //     (error) => {
+  //       this.service.handleError(error);
+  //     }
+  //   );
+  // }
+
+  
+  onDepartmentSelect(event: any) {
+    const departmentId = event.target.value; 
+    this.shifts=['', '', ''];
+    this.service.getShiftByDepartmentId(departmentId).subscribe(
       (response: any) => {
-        this.ShiftData = response.data;
-        if (this.role !== 'SA') {
-          this.matchingShifts = this.ShiftData.filter(
-            (x: any) => x.company_id === parseInt(this.selectedCompanyId)
-          );
-        }
+        this.matchingShifts = response.data;
       },
       (error) => {
-        this.service.handleError(error);
+        console.error('Error fetching shifts:', error);
       }
     );
-
   }
+
+  // shouldShowError(): boolean {
+  //   return (
+  //     this.isDepartmentSelected &&
+  //     this.shifts.every(
+  //       (shift) => shift === null || shift === undefined || shift === ''
+  //     )
+  //   );
+  // }
 
   shiftUser() {
 
@@ -229,40 +272,43 @@ export class AddEmployeeComponent implements OnInit {
     this._onDestroy.next();
     this._onDestroy.complete();
   }
-  employeeLength: any
-  getAllEmployee() {
-    if (this.role == 'SA') {
-      this.service.getAllEmployee().subscribe(
-        (response: any) => {
-          this.employeeLength = response.data.length;
-        },
-        (error) => {
-          this.service.handleError(error);
-        }
-      );
-    } else {
-      this.service.getAllEmployeeByCompany().subscribe(
-        (response: any) => {
-          // this.allEmployee = response.data;
-          this.employeeLength = response.data.length;
-        },
-        (error) => {
-          this.service.handleError(error);
-        }
-      );
-    }
-  }
+  // employeeLength: any
+  // getAllEmployee() {
+  //   if (this.role == 'SA') {
+  //     this.service.getAllEmployee().subscribe(
+  //       (response: any) => {
+  //         this.employeeLength = response.data.length;
+  //       },
+  //       (error) => {
+  //         this.service.handleError(error);
+  //       }
+  //     );
+  //   } else {
+  //     this.service.getAllEmployeeByCompany().subscribe(
+  //       (response: any) => {
+  //         // this.allEmployee = response.data;
+  //         this.employeeLength = response.data.length;
+  //       },
+  //       (error) => {
+  //         this.service.handleError(error);
+  //       }
+  //     );
+  //   }
+  // }
 
   shifts: (number | string)[] = ["", "", ""];
+  // updateShift(index: number, shiftId: number) {
+  //   this.shifts[index] = this.shifts[index] === shiftId ? "" : shiftId;
+  //   console.log("shiftsshifts",this.shifts);
+  // }
   updateShift(index: number, shiftId: number) {
-    this.shifts[index] = this.shifts[index] === shiftId ? "" : shiftId;
-    console.log("shiftsshifts",this.shifts);
+    const isChecked = this.shifts[index] === shiftId;
+    this.shifts[index] = isChecked ? "" : shiftId;
   }
 
   shouldShowError(): boolean {
     return this.shifts.every(shift => shift === null || shift === undefined || shift === "");
   }
-  
   
   addEmployee() {
     this.submitted = true;
@@ -270,7 +316,8 @@ export class AddEmployeeComponent implements OnInit {
     //   const companyId = this.service.getCompanyId();
     //   this.addEmployeeForm.get('companyId').setValue(companyId);
     // }
-    if (this.role !== 'SA' && this.noOfEmployees > this.employeeLength) {
+    
+    if (this.role !== 'SA' && this.noOfEmployees > this.data.employeeLength) {
       if (this.addEmployeeForm.valid) {
        this.spinner = true
        this.spinnerShow = 'text-trasparent';
@@ -310,20 +357,15 @@ export class AddEmployeeComponent implements OnInit {
         this.service.addEmployee(this.addEmployeeForm.value,this.shifts).subscribe(
           (response: any) => {
             if (response.data) {
-              // this.toastr.success(response.msg);
               this.addEmployeeForm.reset();
-              // this.router.navigate(['/dashboard/employee']);
-              // this.spinner = false;
             }
           },
           (error) => {
-            // this.service.handleError(error);
-            // this.spinner = false;
           }
         );
       }
     } else {
-      // this.toastr.error("Please Upgrade Your Plan to add more employees");
+      this.toastr.error("Please Upgrade Your Plan to add more employees");
 
     }
   }
@@ -331,7 +373,5 @@ export class AddEmployeeComponent implements OnInit {
     // Close the dialog when Cancel button is clicked
     this.dialogRef.close();
   }
-
-
 
 }

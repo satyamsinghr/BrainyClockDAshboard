@@ -350,27 +350,19 @@ export class DepartmentComponent implements OnInit {
   openAddDepartmentModal() {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '100%', maxWidth: '420px' // adjust width as needed
-      // You can pass data to the modal if needed
-      // data: { anyData: yourData },
     });
     dialogRef.afterClosed().subscribe(result => {
-      // Handle modal close event if needed
-      console.log('The modal was closed');
     });
   }
 
   openEditDepartmentModal(row: any) {
     const dialogRef = this.dialog.open(EditDepartmentComponent, {
       width: '100%', maxWidth: '420px', // adjust width as needed
-      // Pass department ID to the modal if needed
       data: {
         row: row
       }
     });
-    // this.getAllDepartment() ;
     dialogRef.afterClosed().subscribe(result => {
-      // Handle modal close event if needed
-      console.log('The edit department modal was closed');
     });
   }
 

@@ -62,7 +62,8 @@
                                 DEPARTMENT
                             </mat-header-cell>
                             <mat-cell *matCellDef="let element">
-                                {{ element.deptName }}
+                                <!-- {{ element.deptName }} -->
+                                {{element.Department.department_name}}
                             </mat-cell>
                         </ng-container>
 
@@ -98,14 +99,14 @@
                             </mat-header-cell>
                             <mat-cell *matCellDef="let element"
                                 class="text-nowrap">
-                                {{ element.attendedEmp}} / {{employeelength}}
+                                {{ element.attendedEmp}} / {{element.totalEmployee}}
 
                                 <!-- <mat-progress-bar mode="determinate" class="ms-4 me-3 progress-bar"
                                     [value]="element.progressBar"></mat-progress-bar>
                             </mat-cell> -->
                                 <mat-progress-bar mode="determinate"
                                     class="ms-4 me-3 progress-bar"
-                                    [value]="calculateProgressBarValue(element.attendedEmp, employeelength)">
+                                    [value]="calculateProgressBarValue(element.attendedEmp, element.totalEmployee)">
                                 </mat-progress-bar>
                             </mat-cell>
                         </ng-container>
@@ -442,14 +443,14 @@
                                 {{ element.firstName +" " +element.lastName }}
                             </mat-cell>
                         </ng-container>
-                        <ng-container matColumnDef="shiftName">
+                        <!-- <ng-container matColumnDef="shiftName">
                             <mat-header-cell *matHeaderCellDef mat-sort-headerS>
                                 ShiftName
                             </mat-header-cell>
                             <mat-cell *matCellDef="let element">
                                 {{ element.shiftName }}
                             </mat-cell>
-                        </ng-container>
+                        </ng-container> -->
 
                         <ng-container matColumnDef="status">
                             <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -458,11 +459,12 @@
                             <mat-cell *matCellDef="let element"
                                 class="text-nowrap">
                                 <!-- {{ element.status }} -->
-                                {{ getStatus(element.created_at) }}
+                                <!-- {{ getStatus(element.created_at) }} -->
+                                {{ getStatus(element) }}
                             </mat-cell>
                         </ng-container>
 
-                        <ng-container matColumnDef="clock-in">
+                        <!-- <ng-container matColumnDef="clock-in">
                             <mat-header-cell *matHeaderCellDef mat-sort-header>
                                 CLOCK-IN
                             </mat-header-cell>
@@ -470,7 +472,16 @@
                                 {{ element.clock_in_time ? element.clock_in_time
                                 : 'N/A' }}
                             </mat-cell>
-                        </ng-container>
+                        </ng-container> -->
+                        <ng-container matColumnDef="clock-in">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                              CLOCK-IN
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                              {{ getClockInTime(element) }}
+                            </mat-cell>
+                          </ng-container>
+                          
 
                         <ng-container matColumnDef="noData">
                             <mat-footer-cell classs="justify-content-center"
@@ -497,4 +508,7 @@
             </div>
         </div>
     </div>
+<!-- QR Code -->
+    <!-- <qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="qrCodeDownloadLink" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    <a [href]="qrCodeDownloadLink" download="qrcode">Download</a> -->
 </div>

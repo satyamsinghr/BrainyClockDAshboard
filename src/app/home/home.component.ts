@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
   displayedColumn: string[] = ['department', 'shiftStatus', 'attendance'];
   dataSourceOperations = new MatTableDataSource<any>([]);
-  displayedOprationsColumn: string[] = ['employee','shiftName' ,'status', 'clock-in']
+  displayedOprationsColumn: string[] = ['employee','status', 'clock-in']
   @ViewChild('map') mapElement: any;
   @ViewChild('addresstext') addresstext: any;
   map!: google.maps.Map;
@@ -81,23 +81,52 @@ export class HomeComponent implements OnInit {
       this.getEmployeeByCompanyId();
       this.getAllLocation();
       this.getLocationByCompanyId();
+      // const todayDate = new Date();
+      // this.presentDate = moment(todayDate).format('YYYY-MM-DD');
       const todayDate = new Date();
-      this.presentDate = moment(todayDate).format('YYYY-MM-DD');
+      const year = todayDate.getFullYear();
+      const month = String(todayDate.getMonth() + 1).padStart(2, '0');
+      const day = String(todayDate.getDate()).padStart(2, '0');
+      this.presentDate = `${year}-${month}-${day}`;
       this.getAttendanceByCompanyId(this.presentDate);
     }
   }
+  public qrCodeDownloadLink: any = "www.google.com";
+   onChangeURL(url: any) {
+    this.qrCodeDownloadLink = url;
+  }
+
+  // getStatus(createdDate: any) {
+  //   const currentTime = new Date();
+  //   const formattedCreatedDate = moment(currentTime).format('YYYY-MM-DD');
+  //   if (createdDate == formattedCreatedDate && createdDate == null) {
+  //     return 'Inprogress';
+  //   } else {
+  //     return 'NA';
+  //   }
+  // }
 
   
-
-  getStatus(createdDate: any) {
-    const currentTime = new Date();
-    const formattedCreatedDate = moment(currentTime).format('YYYY-MM-DD');
-    if (createdDate == formattedCreatedDate && createdDate == null) {
-      return 'Inprogress';
+  getStatus(element: any): string {
+    if ((element.Shift1 && element.Shift1) || (element.Shift3 &&element.Shift2) || (element.Shift3 &&element.Shift3)) {
+        return 'In Shift';
     } else {
-      return 'NA';
+        return 'NA';
+    }
+}
+
+  getClockInTime(element: any): string {
+    if (element.Shift1 && element.Shift1.clock_in_time) {
+      return element.Shift1.clock_in_time;
+    } else if (element.Shift2 && element.Shift2.clock_in_time) {
+      return element.Shift2.clock_in_time;
+    } else if (element.Shift3 && element.Shift3.clock_in_time) {
+      return element.Shift3.clock_in_time;
+    } else {
+      return 'N/A';
     }
   }
+  
 
   onSelectWeek(day: string) {
     const selectedDate = new Date();
@@ -123,11 +152,23 @@ export class HomeComponent implements OnInit {
     if (this.role != 'SA') {
       this.service.getAttendanceByCompanyId(this.companyId).subscribe(
         (response: any) => {
-          const formattedData = response.map((x: any) => ({
-            ...x,
-            created_at: moment(x.created_at).format('YYYY-MM-DD'),
-            day: moment(x.created_at).format('dddd')
-          }));
+          // const formattedData = response.map((x: any) => ({
+          //   ...x,
+          //   created_at: moment(x.created_at).format('YYYY-MM-DD'),
+          //   day: moment(x.created_at).format('dddd')
+          // }));
+          const formattedData = response.map((x: any) => {
+            const createdAtDate = new Date(x.created_at);
+            const formattedCreatedAt = createdAtDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+            const day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][createdAtDate.getDay()]; // Get day of the week
+            
+            return {
+              ...x,
+              created_at: formattedCreatedAt,
+              day: day
+            };
+          });
+          
           this.attendanceByDate = formattedData.filter(
             (x: any) => x.created_at === formattedCurrentDate
           );
@@ -154,11 +195,11 @@ export class HomeComponent implements OnInit {
           }
 
           // this.dayRatios = {};
-
           for (const day in dayCounts) {
             if (dayCounts.hasOwnProperty(day)) {
               const count = dayCounts[day];
-              const ratio = (count / this.employeelength) * 100;
+              // const ratio = (count / this.employeelength) * 100;
+              const ratio = (count / this.attendanceByDate.length) * 100;
               this.dayRatios[day] = ratio;
             }
           }
@@ -175,9 +216,14 @@ export class HomeComponent implements OnInit {
   }
 
   getDayClass(day: any): string {
+    // const currentDate = new Date();
+    // const currentDay = moment(currentDate).format('dddd').toLowerCase();
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const currentDate = new Date();
-    const currentDay = moment(currentDate).format('dddd').toLowerCase();
-    if (day.toLowerCase() === currentDay) {
+    const currentDayIndex = currentDate.getDay();
+    const currentDay = daysOfWeek[currentDayIndex];
+  
+    if (day === currentDay) {
       return 'today';
     } else if (day > currentDay) {
       return 'upcoming_day';
@@ -252,7 +298,6 @@ export class HomeComponent implements OnInit {
   filterEmployeeDataByDepartmentId() {
     if (this.departmentId && this.employee) {
      this.filteredEmployees = this.employee.filter((emp:any) => parseInt(emp.department_id) == this.departmentId);
-     console.log("hshshshhshhsjs",this.filteredEmployees)
      this.dataSourceOperations.data = this.filteredEmployees;
     }
   }
@@ -309,7 +354,7 @@ employeeCount: any
     if (this.role != 'SA') {
       this.service.getEmployeeCount().subscribe(
         (response: any) => {
-          // this.employeeCount = response.data;
+         this.employeeCount = response.data;
            this.dataSource.data = response.data;
         },
         (error) => {
@@ -325,20 +370,40 @@ employeeCount: any
       late: 0
     };
 
-    this.attendanceByDate.forEach((attendance: any) => {
-      const clockInTime = attendance.clock_in_time;
-      if (clockInTime) {
-        const momentClockInTime = moment(clockInTime, 'HH:mm:ss');
-        if (momentClockInTime.isBefore(moment('09:30:00', 'HH:mm:ss'))) {
-          counts.onTime++;
-        } else {
-          counts.late++;
-        }
-      }
-    });
+  //   this.attendanceByDate.forEach((attendance: any) => {
+  //     const clockInTime = attendance.clock_in_time;
+  //     const shiftClockInTime = attendance.shiftClockInTime;
+    
+  //     if (clockInTime) {
+  //       const momentClockInTime = moment(clockInTime, 'HH:mm:ss');
+  //       if (momentClockInTime.isBefore(moment(shiftClockInTime, 'HH:mm:ss'))) {
+  //         counts.onTime++;
+  //       } else {
+  //         counts.late++;
+  //       }
+  //     }
+  //   });
 
-    return counts;
-  }
+  //   return counts;
+  // }
+
+  this.attendanceByDate.forEach((attendance: any) => {
+    const clockInTime = attendance.clock_in_time;
+    const shiftClockInTime = attendance.shiftClockInTime;
+
+    if (clockInTime && shiftClockInTime) {
+      const momentClockInTime = moment(clockInTime, 'HH:mm:ss');
+      const momentShiftClockInTime = moment(shiftClockInTime, 'HH:mm:ss');
+      if (momentClockInTime.isSameOrBefore(momentShiftClockInTime)) {
+        counts.onTime++;
+      } else {
+        counts.late++;
+      }
+    }
+  });
+
+  return counts;
+}
 
   getRowClass(element: any): string {
     // Customize this logic based on your requirements

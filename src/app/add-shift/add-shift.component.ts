@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '../app.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ShiftsService } from '../shifts.service';
+
 @Component({
   selector: 'app-add-shift',
   templateUrl: './add-shift.component.html',
@@ -30,11 +32,13 @@ export class AddShiftComponent implements OnInit {
   companyId: any;
   companyName: any;
   spinnerShow: any;
+  isDisabled : boolean = true
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private service: AppService,
+    private shiftsService:ShiftsService,
     public dialogRef: MatDialogRef<AddShiftComponent>
   ) { }
   name: any
@@ -44,7 +48,6 @@ export class AddShiftComponent implements OnInit {
     this.name = JSON.parse(localStorage.getItem('companyName'));
     this.initializeForm();
     this.role = this.service.getRole();
-    this.getAllLocation();
 
     if (this.role != 'SA') {
       this.getDepaetmentById();
@@ -62,6 +65,7 @@ export class AddShiftComponent implements OnInit {
         companyId: this.service.getCompanyId(),
       });
     } else {
+      this.getAllLocation();
       this.getAllCompany();
       // this.getAllDepartment();
     }
@@ -73,6 +77,7 @@ export class AddShiftComponent implements OnInit {
       this.service.getDepartmentById(this.companyId).subscribe(
         (response: any) => {
           this.departmentData = response.data;
+          this.isDisabled = false
         },
         (error) => {
           this.service.handleError(error);
@@ -111,6 +116,7 @@ export class AddShiftComponent implements OnInit {
     this.service.getAllDepartment().subscribe(
       (response: any) => {
         this.departmentData = response.data;
+        this.isDisabled = false
       },
       (error) => {
         this.service.handleError(error);
@@ -185,7 +191,6 @@ export class AddShiftComponent implements OnInit {
       this.selectedDays.push(day);
     }
   }
-
   addShift() {
     this.submitted = true;
     if (this.role != 'SA') {
@@ -195,20 +200,20 @@ export class AddShiftComponent implements OnInit {
     if (this.addShiftForm.valid) {
       this.spinner = true
       this.submitted = false;
-
       this.spinnerShow = 'text-trasparent';
       this.service.addShift(this.addShiftForm.value, this.selectedDays).subscribe(
         (response: any) => {
           if (response.success == true) {
             this.dialogRef.close();
+            this.shiftsService.getAllShift();
             this.spinner = false;
-
             this.spinnerShow = '';
-            // this.getAllShifts();
           }
         },
         (error) => {
-          this.service.handleError(error);
+          // this.service.handleError(error);
+          this.toastr.error(error.error.msg);
+          // this. onCancel();
           this.spinner = false;
           this.spinnerShow = '';
         }

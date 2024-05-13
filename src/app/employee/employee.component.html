@@ -31,7 +31,7 @@
                     New Employee
                 </div>
             </div>
-            <button class="btn d-lg-block d-md-none d-none btn-outline-primary">Import</button>
+            <!-- <button class="btn d-lg-block d-md-none d-none btn-outline-primary">Import</button> -->
         </div>
     </div>
     <app-header></app-header>
@@ -131,7 +131,7 @@
                         Department
                     </th>
                     <td mat-cell *matCellDef="let element" class="text-center">
-                        {{ element.department_name }} </td>
+                        {{ element.Department.department_name }} </td>
                 </ng-container>
 
                 <!-- <ng-container matColumnDef="role">

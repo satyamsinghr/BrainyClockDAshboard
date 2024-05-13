@@ -4533,6 +4533,10 @@ table.table.shift_table.withou_check.employee_table.card_table tbody tr td:nth-c
   border-radius: 0px 0 0 0px;
 }
 
+.page_table {
+  overflow: auto;
+}
+
 @media (max-width:1700px) {
   table.table.card_table tbody tr td {
     padding: 14px 0 14px 0;

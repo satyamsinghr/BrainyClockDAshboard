@@ -7,22 +7,18 @@
   <div class="d-flex align-items-center justify-content-between gap-4">
     <div class="header_search d-lg-block d-md-block d-none">
       <div class="search_box">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-          viewBox="0 0 24 24" fill="none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path fill-rule="evenodd" clip-rule="evenodd"
             d="M5 11C5 7.691 7.691 5 11 5C14.309 5 17 7.691 17 11C17 14.309 14.309 17 11 17C7.691 17 5 14.309 5 11ZM20.707 19.293L17.312 15.897C18.365 14.543 19 12.846 19 11C19 6.589 15.411 3 11 3C6.589 3 3 6.589 3 11C3 15.411 6.589 19 11 19C12.846 19 14.543 18.365 15.897 17.312L19.293 20.707C19.488 20.902 19.744 21 20 21C20.256 21 20.512 20.902 20.707 20.707C21.098 20.316 21.098 19.684 20.707 19.293Z"
             fill="#061D23" />
         </svg>
-        <input type="search" placeholder="Search"
-          (keyup)="searchDepartmentData($event)">
+        <input type="search" placeholder="Search" (keyup)="searchDepartmentData($event)">
       </div>
     </div>
     <div class="header_add_button d-flex align-items-center gap-4">
       <div class="position-relative">
-        <button
-          class="btn btn-primary d-flex align-items-center gap-2 justify-content-center"
-          (click)="openAddDepartmentModal()"><svg
-            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+        <button class="btn btn-primary d-flex align-items-center gap-2 justify-content-center"
+          (click)="openAddDepartmentModal()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             viewBox="0 0 24 24" fill="none">
             <path
               d="M19 11H13V5C13 4.73478 12.8946 4.48043 12.7071 4.29289C12.5196 4.10536 12.2652 4 12 4C11.7348 4 11.4804 4.10536 11.2929 4.29289C11.1054 4.48043 11 4.73478 11 5V11H5C4.73478 11 4.48043 11.1054 4.29289 11.2929C4.10536 11.4804 4 11.7348 4 12C4 12.2652 4.10536 12.5196 4.29289 12.7071C4.48043 12.8946 4.73478 13 5 13H11V19C11 19.2652 11.1054 19.5196 11.2929 19.7071C11.4804 19.8946 11.7348 20 12 20C12.2652 20 12.5196 19.8946 12.7071 19.7071C12.8946 19.5196 13 19.2652 13 19V13H19C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11Z"
@@ -42,42 +38,33 @@
 
   <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-0">
     <form action class="mb-4 pb-lg-2">
-      <ul class="filter_dropdown d-flex align-items-center gap-3">
-        <li class="position-relative">
-          <!-- <select name="departments" id="departments">
+      <!-- <ul class="filter_dropdown d-flex align-items-center gap-3"> -->
+      <!-- <li class="position-relative">
+          <select name="locations" id="locations" (change)="onLocationSelect($event)">
             <option value>Filter by office</option>
-            <option value="Filter by Department">Filter by
-              office</option>
-            <option value="Filter by Department">Filter by
-              office</option>
-            <option value="Filter by Department">Filter by
-              office</option>
-          </select> -->
-          <select name="locations" id="locations"
-            (change)="onLocationSelect($event)">
-
-            <option value>Filter by office</option>
-            <option *ngFor="let location of allLocationByCompany"
-              [value]="location.id">{{ location.location_name }}</option>
+            <option *ngFor="let location of allLocationByCompany" [value]="location.id">{{ location.location_name }}
+            </option>
           </select>
-        </li>
+        </li> -->
 
-        <li class="position-relative">
-          <!-- <select name="departments" id="departments">
-            <option value>Filter by department</option>
-            <option value="Filter by Department">Filter by
-              department</option>
-            <option value="Filter by Department">Filter by
-              department</option>
-            <option value="Filter by Department">Filter by
-              department</option>
-          </select> -->
-          <select name="departments" id="departments"
-            (change)="onDepartmentSelect($event)">
+      <!-- <li class="position-relative">
+          <select name="departments" id="departments" (change)="onDepartmentSelect($event)">
             <option value>Filter by department</option>
             <option *ngFor="let dept of departmentData"
               [value]="dept.department_id">{{ dept.department_name }}</option>
           </select>
+        </li> -->
+      <ul class="d-flex flex-lg-wrap align-items-center gap-3 overflow-auto add_shifts_c">
+        <li class="text-nowrap" *ngFor="let location of allLocationByCompany " style="cursor: pointer;">
+          <input class="form-control" type="checkbox" [checked]="location.id === selectedLocationId" name="locations"
+            id="locations" (change)="onLocationSelect(location.id)">
+          <button type="button" class="d-flex align-items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <rect width="20" height="20" rx="10" fill="white" />
+              <path d="M14 7L8.03374 13L6 10.9548" stroke="#061D23" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>{{ location.location_name }}
+          </button>
         </li>
       </ul>
     </form>
@@ -95,18 +82,15 @@
   <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-0">
     <div class="page_table">
       <!-- <table class="table m-0">   -->
-      <table class="table employee_table card_table" mat-table
-        #table [dataSource]="dataSource" matSort>
+      <table class="table employee_table card_table" mat-table #table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="select">
           <th *matHeaderCellDef class="table_checkbox">
-            <mat-checkbox (change)="$event ? masterToggle() : null"
-              [checked]="selection.hasValue() && isAllSelected()"
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
               [indeterminate]="selection.hasValue() && !isAllSelected()">
             </mat-checkbox>
           </th>
           <td *matCellDef="let row" class="table_checkbox">
-            <mat-checkbox (click)="$event.stopPropagation()"
-              (change)="$event ? selection.toggle(row) : null"
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
               [checked]="selection.isSelected(row)">
             </mat-checkbox>
           </td>
@@ -127,12 +111,10 @@
 
         <!-- For location -->
         <ng-container matColumnDef="Location">
-          <th *matHeaderCellDef
-            class="text-nowrap text-center">
+          <th *matHeaderCellDef class="text-nowrap text-center">
             Location
           </th>
-          <td *matCellDef="let element"
-            class="text-center">
+          <td *matCellDef="let element" class="text-center">
             {{element.location_name}}</td>
 
         </ng-container>
@@ -150,38 +132,29 @@
 
         <!-- For Shift 1 -->
         <ng-container matColumnDef="Shift">
-          <th *matHeaderCellDef
-            class="text-nowrap text-center">
+          <th *matHeaderCellDef class="text-nowrap text-center">
             Shift
           </th>
-          <td *matCellDef="let element"
-            class="text-nowrap text-center">
+          <td *matCellDef="let element" class="text-nowrap text-center">
             {{element.shift_name_1}}</td>
 
         </ng-container>
 
         <!-- For shift1 Attandance -->
         <ng-container matColumnDef="Attendance">
-          <th *matHeaderCellDef
-            class="text-nowrap text-center">
+          <th *matHeaderCellDef class="text-nowrap text-center">
             Attendance
           </th>
-          <td *matCellDef="let element"
-            class="text-nowrap text-center">
+          <td *matCellDef="let element" class="text-nowrap text-center">
             <div class="d-flex align-items-center gap-2">
               <div *ngIf="parseAttendance(element.shift_1_attendance) >= 0">
                 <b>{{element.shift_1_attendance}}/{{element.shift_1_total}}</b>
               </div>
-              <div
-                class="progress ms-2" style="background-color:#061D23;"
+              <div class="progress ms-2" style="background-color:#061D23;"
                 *ngIf="parseAttendance(element.shift_1_attendance) >= 0">
-                <div
-                  class="progress-bar"
+                <div class="progress-bar"
                   [style.width.%]="getAttendancePercentage(element.shift_1_attendance, element.shift_1_total)"
-                  role="progressbar"
-                  aria-valuenow="24"
-                  aria-valuemin="0"
-                  aria-valuemax="28"></div>
+                  role="progressbar" aria-valuenow="24" aria-valuemin="0" aria-valuemax="28"></div>
               </div>
             </div>
           </td>
@@ -190,37 +163,28 @@
         <!-- For Shift 2 -->
 
         <ng-container matColumnDef="shift">
-          <th *matHeaderCellDef
-            class="text-nowrap text-center">
+          <th *matHeaderCellDef class="text-nowrap text-center">
             Shift
           </th>
-          <td *matCellDef="let element"
-            class="text-nowrap text-center">
+          <td *matCellDef="let element" class="text-nowrap text-center">
             {{element.shift_name_2}}
           </td>
 
         </ng-container>
         <ng-container matColumnDef="attendance">
-          <th *matHeaderCellDef
-            class="text-nowrap text-center">
+          <th *matHeaderCellDef class="text-nowrap text-center">
             Attendance
           </th>
-          <td *matCellDef="let element"
-            class="text-center fade_att">
+          <td *matCellDef="let element" class="text-center fade_att">
             <div class="d-flex align-items-center gap-2">
               <div *ngIf="parseAttendance(element.shift_2_attendance) >= 0">
                 <b>{{element.shift_2_attendance}}/{{element.shift_2_total}}</b>
               </div>
-              <div
-                class="progress ms-2" style="background-color:#061D23;"
+              <div class="progress ms-2" style="background-color:#061D23;"
                 *ngIf="parseAttendance(element.shift_2_attendance) >= 0">
-                <div
-                  class="progress-bar"
+                <div class="progress-bar"
                   [style.width.%]="getAttendancePercentage(element.shift_2_attendance, element.shift_2_total)"
-                  role="progressbar"
-                  aria-valuenow="24"
-                  aria-valuemin="0"
-                  aria-valuemax="28"></div>
+                  role="progressbar" aria-valuenow="24" aria-valuemin="0" aria-valuemax="28"></div>
               </div>
             </div>
           </td>
@@ -229,39 +193,30 @@
 
         <!-- For shift3 -->
         <ng-container matColumnDef="SHift">
-          <th *matHeaderCellDef
-            class="text-nowrap text-center">
+          <th *matHeaderCellDef class="text-nowrap text-center">
             Shift
           </th>
-          <td *matCellDef="let element"
-            class="text-nowrap text-center">
+          <td *matCellDef="let element" class="text-nowrap text-center">
             {{element.shift_name_3}}
           </td>
 
         </ng-container>
         <ng-container matColumnDef="ATtendance">
-          <th *matHeaderCellDef
-            class="text-nowrap text-center">
+          <th *matHeaderCellDef class="text-nowrap text-center">
             Attendance
           </th>
-          <td *matCellDef="let element"
-            class="text-center fade_att">
+          <td *matCellDef="let element" class="text-center fade_att">
             <div class="d-flex align-items-center gap-2">
               <div *ngIf="parseAttendance(element.shift_3_attendance) >= 0">
                 <b> {{element.shift_3_attendance}}/{{element.shift_3_total}}
                 </b>
               </div>
 
-              <div
-                class="progress ms-2" style="background-color:#061D23;"
+              <div class="progress ms-2" style="background-color:#061D23;"
                 *ngIf="parseAttendance(element.shift_3_attendance) >= 0">
-                <div
-                  class="progress-bar"
+                <div class="progress-bar"
                   [style.width.%]="getAttendancePercentage(element.shift_3_attendance, element.shift_3_total)"
-                  role="progressbar"
-                  aria-valuenow="24"
-                  aria-valuemin="0"
-                  aria-valuemax="28"></div>
+                  role="progressbar" aria-valuenow="24" aria-valuemin="0" aria-valuemax="28"></div>
               </div>
             </div>
           </td>
@@ -292,15 +247,13 @@
           </ng-container> -->
         <ng-container matColumnDef="action">
 
-          <th *matHeaderCellDef
-            class="text-nowrap text-center">Action</th>
+          <th *matHeaderCellDef class="text-nowrap text-center">Action</th>
           <td *matCellDef="let row">
 
             <div class="d-flex align-items-center justify-content-center gap-3">
               <div class="position-relative">
                 <a class="action" (click)="openEditDepartmentModal(row)">
-                  <img src="../../assets/img/edit_black.png" alt width="24px"
-                    height="24px" />
+                  <img src="../../assets/img/edit_black.png" alt width="24px" height="24px" />
                 </a>
                 <!-- routerLink="/dashboard/edit-department/{{ row.id }}/{{row.department_name}}" -->
                 <div class="tooltip_manual">
@@ -308,10 +261,8 @@
                 </div>
               </div>
               <div class="position-relative">
-                <a class="action"
-                  (click)="ConfirmDeleteDepartment(row.department_id)">
-                  <img src="../../assets/img/delete_gray.png" alt width="24px"
-                    height="24px" />
+                <a class="action" (click)="ConfirmDeleteDepartment(row.department_id)">
+                  <img src="../../assets/img/delete_gray.png" alt width="24px" height="24px" />
                 </a>
                 <div class="tooltip_manual">
                   Delete
@@ -328,41 +279,33 @@
             [attr.colspan]="5">
             No data found
           </mat-footer-cell> -->
-          <td mat-footer-cell
-            class="text-center" *matFooterCellDef 
+          <td mat-footer-cell class="text-center" *matFooterCellDef
             [attr.colspan]="dataSource.data.length == 0 ? displayedColumns.length : 4">
             No data found
           </td>
         </ng-container>
-        <tr mat-footer-row *matFooterRowDef="['noData']"
-          [hidden]="dataSource && dataSource.data.length > 0">
+        <tr mat-footer-row *matFooterRowDef="['noData']" [hidden]="dataSource && dataSource.data.length > 0">
         </tr>
         <!-- <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
                           <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row> -->
         <div *ngIf="role === 'SA'">
-          <tr mat-header-row
-            *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </div>
         <div *ngIf="role !== 'SA'">
-          <tr mat-header-row
-            *matHeaderRowDef="displayedColumnsCompany; sticky: true"></tr>
-          <tr mat-row
-            *matRowDef="let row; columns: displayedColumnsCompany"></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsCompany; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsCompany"></tr>
         </div>
       </table>
-      <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff"
-        type="pacman" [fullScreen]="true"><p style="color: white"
-          class="loader_img"> <img src="assets/img/site_loader.gif"
-            alt></p></ngx-spinner>
+      <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="pacman" [fullScreen]="true">
+        <p style="color: white" class="loader_img"> <img src="assets/img/site_loader.gif" alt></p>
+      </ngx-spinner>
       <!-- </table> -->
     </div>
   </div>
 
   <div class="col-12">
-    <mat-paginator #paginator [pageSize]="5" style-paginator
-      [length]="dataSource.data.length"
-      showFirstLastButtons>
+    <mat-paginator #paginator [pageSize]="5" style-paginator [length]="dataSource.data.length" showFirstLastButtons>
     </mat-paginator>
   </div>
 </div>

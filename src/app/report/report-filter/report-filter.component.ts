@@ -56,6 +56,7 @@ export class ReportFilterComponent implements OnInit {
   shifts: any = []
   pageSize: number = 10;
   reportNameError: boolean = false;
+  reportTypeError:boolean=false;
   isModelOpen: boolean = false;
   show_modal: string = '';
   startDate: any
@@ -137,8 +138,9 @@ export class ReportFilterComponent implements OnInit {
     this.endDate = this.datePipe.transform(event.endDate.$d, 'yyyy-MM-dd');
   }
   onSubmit() {
-    if (!this.myForm.value.reportName) {
-      this.reportNameError = true;
+    if (!this.myForm.value.reportName ||!this.myForm.value.reportType) {
+      !this.myForm.value.reportName ? this.reportNameError = true : this.reportNameError = false 
+      !this.myForm.value.reportType ? this.reportTypeError = true : this.reportTypeError = false
       return;
     } else {
       this.isModelOpen = true;
@@ -165,6 +167,7 @@ export class ReportFilterComponent implements OnInit {
   }
   resetFields() {
     this.reportNameError = false;
+    this.reportTypeError = false;
     this.reportNameValue = null;
     this.selectedLocation = null;
     this.locationName = 'Select Location';
@@ -217,6 +220,7 @@ export class ReportFilterComponent implements OnInit {
   reportNameValue: any
   onReportNameChange() {
     this.reportNameValue = this.myForm.get('reportName').value;
+    this.reportNameValue ? this.reportNameError=false : this.reportNameError=true
   }
 
   onLocationChange(data: any, locationName: any) {
@@ -226,6 +230,8 @@ export class ReportFilterComponent implements OnInit {
 
   onReportTypeChange(data: any) {
     this.selectedReportType = data;
+    this.selectedReportType ? this.reportTypeError=false : this.reportTypeError=true
+    this.myForm.value.reportType = this.selectedReportType
   }
 
   // selectedDepartmentIds: number[] = [];
@@ -264,7 +270,7 @@ export class ReportFilterComponent implements OnInit {
         (name, index) => index !== departmentIndex
       );
     } else {
-      const department = this.departments.find((dep: any) => dep.id === departmentId);
+      const department = this.departments.find((dep: any) => dep.department_id === departmentId);
       if (department) {
         this.selectedDepartmentIds.push(departmentId);
         this.selectedDepartmentNames.push(department.department_name);

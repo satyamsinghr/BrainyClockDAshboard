@@ -1,25 +1,31 @@
-<!-- <section class="site_card px-5"> -->
-    <!-- <section class="site_card report_filter_outer px-5"> -->
+<!-- <section class="site_card px-5">
+     <section class="site_card report_filter_outer px-5">  -->
         <!-- bg-white for report else hide -->
-        <!-- <div class="container-fluid px-3">  -->
-            <!-- normal  px-3      if report page then px-0-->
-            <!-- <div class="row">
+         <!-- <div class="container-fluid px-3"> -->
+            <!-- normal  px-3      if report page then px-0 -->
+             <!-- <div class="row">
                 <div class="col-12  ">
                     <div class="d-flex page_Operationswrapper align-items-start gap-lg-4 gap-md-4 gap-0"> -->
                         <!--  gap-lg-0 gap-md-0  report  if normal page  gap-lg-4 gap-md-4 -->
                         <!-- <app-sidenav class="sidenav">
                         </app-sidenav>
-                        <div class="page_body {{this.service.nav_active_class}} "> -->
-                            <!-- ms-0 w-100 for report else hide  -->
-                            <!-- <router-outlet></router-outlet>
+                        <div class="page_body {{this.service.nav_active_class}} ">
+                             ms-0 w-100 for report else hide  -->
+                            <!-- <router-outlet></router-outlet> 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
+  -->
+    
 
 
+
+
+
+    
     <section class="site_card report_filter_outer px-5" [ngClass]="{'bg-white': isReportPage}">
         <!-- bg-white for report else hide -->
         <div class="container-fluid" [ngClass]="{'px-0': isReportPage, 'px-3': !isReportPage}">
@@ -39,7 +45,6 @@
             </div>
         </div>
     </section>
-    
 
 
     

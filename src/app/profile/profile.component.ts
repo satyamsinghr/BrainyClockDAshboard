@@ -13,6 +13,11 @@ export class ProfileComponent implements OnInit {
   passwordForm: FormGroup;
   submitted: boolean = false
   email: any
+  public showPassword: boolean;
+  public newPassword: boolean;
+  public confirmPassword: boolean;
+  spinner: boolean = false
+  spinnerShow: string = '';
   lastUrl: string;
   constructor(
      private service:AppService,
@@ -46,13 +51,19 @@ export class ProfileComponent implements OnInit {
       this.submitted = true
       if (this.passwordForm.valid && (this.passwordForm.controls['confirmPassword'].value === this.passwordForm.controls['newPassword'].value)) {
         this.submitted = false
+        this.spinnerShow = 'text-trasparent';
+        this.spinner = true
         this.service.updatePassword(this.passwordForm.value, this.email ).subscribe((response:any) => {
         if(response.success){
           // this.toastr.success('Password has been updated successfully');
           this.passwordForm.reset()
+          this.spinnerShow = '';
+          this.spinner = false;
         }},
         error => {
           this.service.handleError(error);
+          this.spinnerShow = '';
+          this.spinner = false;
         })
     }
 

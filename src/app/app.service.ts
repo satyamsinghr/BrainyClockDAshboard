@@ -43,6 +43,8 @@ const routes = {
   Post_Schudle:`/company/create-schedule`,
   Delete_Schudle: `/company/delete-schedule`,
   Post_ResetPassword: `/company/reset-password`,
+  Get_ShiftBYDepartmentId: (id: number) => `/admin/get-shifts-by-department/${id}`,
+
 };
 
 
@@ -434,6 +436,12 @@ export class AppService {
     let url_ = this.apiConfig + '/admin/allshifts';
     return this.http.get(url_, { headers });
   }
+  getShiftByDepartmentId(id: number) {
+      const token = JSON.parse(localStorage.getItem('loginToken'));
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<any>(this.apiConfig + routes.Get_ShiftBYDepartmentId(id), { headers });
+    }
+
   getAllCompany() {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
