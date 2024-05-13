@@ -195,12 +195,11 @@ export class HomeComponent implements OnInit {
           }
 
           // this.dayRatios = {};
-
           for (const day in dayCounts) {
             if (dayCounts.hasOwnProperty(day)) {
               const count = dayCounts[day];
               // const ratio = (count / this.employeelength) * 100;
-              const ratio = (count / response.length) * 100;
+              const ratio = (count / this.attendanceByDate.length) * 100;
               this.dayRatios[day] = ratio;
             }
           }
@@ -371,20 +370,40 @@ employeeCount: any
       late: 0
     };
 
-    this.attendanceByDate.forEach((attendance: any) => {
-      const clockInTime = attendance.clock_in_time;
-      if (clockInTime) {
-        const momentClockInTime = moment(clockInTime, 'HH:mm:ss');
-        if (momentClockInTime.isBefore(moment('09:30:00', 'HH:mm:ss'))) {
-          counts.onTime++;
-        } else {
-          counts.late++;
-        }
-      }
-    });
+  //   this.attendanceByDate.forEach((attendance: any) => {
+  //     const clockInTime = attendance.clock_in_time;
+  //     const shiftClockInTime = attendance.shiftClockInTime;
+    
+  //     if (clockInTime) {
+  //       const momentClockInTime = moment(clockInTime, 'HH:mm:ss');
+  //       if (momentClockInTime.isBefore(moment(shiftClockInTime, 'HH:mm:ss'))) {
+  //         counts.onTime++;
+  //       } else {
+  //         counts.late++;
+  //       }
+  //     }
+  //   });
 
-    return counts;
-  }
+  //   return counts;
+  // }
+
+  this.attendanceByDate.forEach((attendance: any) => {
+    const clockInTime = attendance.clock_in_time;
+    const shiftClockInTime = attendance.shiftClockInTime;
+
+    if (clockInTime && shiftClockInTime) {
+      const momentClockInTime = moment(clockInTime, 'HH:mm:ss');
+      const momentShiftClockInTime = moment(shiftClockInTime, 'HH:mm:ss');
+      if (momentClockInTime.isSameOrBefore(momentShiftClockInTime)) {
+        counts.onTime++;
+      } else {
+        counts.late++;
+      }
+    }
+  });
+
+  return counts;
+}
 
   getRowClass(element: any): string {
     // Customize this logic based on your requirements
