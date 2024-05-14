@@ -137,7 +137,7 @@
         </svg>
       </a> -->
       <ng-container *ngIf="this.nav_open == true">
-        <a routerLink="/dashboard/company" routerLinkActive="active">
+        <a routerLink="/dashboard/company" routerLinkActive="active" (click)="toggleSidebarNew()">
           <span>Company</span>
           </a>
       </ng-container>

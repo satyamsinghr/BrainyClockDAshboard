@@ -12,7 +12,7 @@
       [disabled]="dataSource.data.length > 0">Add Schedule</button>
   </div>
 </div>
-<ng-container *ngIf="dataSource && dataSource.data.length">
+<ng-container>
   <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-0">
 
     <div class="page_table">
@@ -56,17 +56,31 @@
           </td>
         </ng-container>
 
+        <!-- <tr mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> -->
+
+        <ng-container matColumnDef="noData">
+          <td mat-footer-cell *matFooterCellDef class="text-center noDataFound"
+            [attr.colspan]="dataSource.data.length == 0 ? displayedColumns.length : 4">
+            No data found
+        </td>
+        </ng-container>
+        <tr mat-footer-row *matFooterRowDef="['noData']"
+          [hidden]="dataSource && dataSource.data.length > 0">
+      </tr>
         <tr mat-header-row
           *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row
+          *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>
   </div>
 </ng-container>
 
-<ng-container *ngIf="dataSource && !dataSource.data.length">
+<!-- <ng-container *ngIf="dataSource && !dataSource.data.length">
   <div class="text-center mt-3">No data found</div>
-</ng-container>
+</ng-container> -->
 
 <ng-template #timezoneFormData>
   <section class="add_department add-setting">

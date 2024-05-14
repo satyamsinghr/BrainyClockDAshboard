@@ -3683,6 +3683,10 @@ table.table.card_table.employee_table tbody tr td:first-child {
   max-width: 182px;
 }
 
+table.table.shift_table.withou_check.employee_table.card_table tr td.noDataFound:first-child {
+  background-color: transparent !important;
+}
+
 .table.employee_table.location_label.card_table .mat-checkbox-inner-container {
   height: 20px;
   width: 20px;

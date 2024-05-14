@@ -59,9 +59,12 @@ export class CompanyComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
   comapnyId:any
+  role:any;
   ngOnInit(): void {
+    this.role = JSON.parse(localStorage.getItem('role'));
     this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
-    this.companyService.getAllCompany = this.getAllCompany.bind(this);
+    if(this.role === null){
+      this.router.navigate(['**'])}
     this.getAllCompany();
     this.getLocationByCompanyId();
   }
