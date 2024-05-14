@@ -508,10 +508,4 @@
             </div>
         </div>
     </div>
-<!-- QR Code -->
-        <div class="qrcodedata">
-            <qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="qrCodeDownloadLink" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
-
-        </div>
-    <a [href]="qrCodeDownloadLink" download="qrcode">Download</a>
 </div>

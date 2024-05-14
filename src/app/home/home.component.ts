@@ -91,11 +91,6 @@ export class HomeComponent implements OnInit {
       this.getAttendanceByCompanyId(this.presentDate);
     }
   }
-  public qrCodeDownloadLink: any = "www.google.com";
-   onChangeURL(url: any) {
-    this.qrCodeDownloadLink = url;
-  }
-
   // getStatus(createdDate: any) {
   //   const currentTime = new Date();
   //   const formattedCreatedDate = moment(currentTime).format('YYYY-MM-DD');
