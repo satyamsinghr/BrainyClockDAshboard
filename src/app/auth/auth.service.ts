@@ -37,6 +37,8 @@ export class AuthService {
    * Logs out the user and clear credentials.
    * @return True if the user was logged out successfully.
    */
+
+
   logout(): Observable<boolean> {
     //Clearing localStorage
     localStorage.removeItem('role');
