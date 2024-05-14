@@ -20,6 +20,7 @@ import { AppService } from '../../app.service';
 import { AddLocationComponent } from '../add-location/add-location.component';
 import { EditLocationComponent } from '../edit-location/edit-location.component';
 import { SharedService } from '../../shared.service'
+import * as jspdf from 'jspdf';
 const log = new Logger('Employee');
 @Component({
   selector: 'app-location',
@@ -97,21 +98,22 @@ export class LocationComponent implements OnInit {
     }
   }
 
-  // locationData: any
-  // getLocationByCompanyId() {
-  //   this.spinner.show();
-  //   this.service.getLocationByCompany(this.comapnyId).subscribe(
-  //     (response: any) => {
-  //       this.spinner.hide();
-  //       this.locationData = response.data[0];
-  //     },
-  //     (error) => {
-  //       this.service.handleError(error);
-  //       this.spinner.hide();
-  //     }
-  //   );
-  // }
+ public qrCodeDownloadLink = "";
+generateQRData(row: any) {
+  this.qrCodeDownloadLink = `https://api.qrserver.com/v1/create-qr-code/?data=${row.company_id}_${row.id}_${row.location_name}`;
+const pdf = new jspdf.jsPDF();
+const img = new Image();
+img.crossOrigin = 'Anonymous'; 
+img.onload = () => {
+  pdf.addImage(img, 'PNG', 10, 10, 100, 100);
+  pdf.save('qrcode.pdf');
+};
+img.src = this.qrCodeDownloadLink;
+return false;
+}
 
+
+ 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
