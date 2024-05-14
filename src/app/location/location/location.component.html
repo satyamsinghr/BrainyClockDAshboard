@@ -128,6 +128,15 @@
                       Delete
                     </div>
                   </div>
+                  <div class="position-relative">
+                    <a class="action" href="#" download="qrcode.png" (click)="generateQRData(row)">
+                      <div class="qrcode_hide">
+                        <qrcode [qrdata]="qrCodeDownloadLink" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+                      </div>
+                      <img src="../../assets/img/download.png" alt="Download QR Code" width="24px" height="24px" />
+                    </a>
+                    <!-- <div class="tooltip_manual">Download QRCode</div> -->
+                  </div>
                 </div>
               </td>
             </ng-container>
