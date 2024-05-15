@@ -16,8 +16,8 @@ export class EditEmpComponent implements OnInit {
   employeeId!: number;
   editEmployeeForm!: FormGroup;
   submitted = false;
-  selectedShifts: any []=[];
-  spinner:boolean = false;
+  selectedShifts: any[] = [];
+  spinner: boolean = false;
   shiftsName: any = ['[2,3]', '[3,4]', '[4,5]', '[5,6]', '[7,8]', '[8,9]'];
   constructor(
     private service: AppService,
@@ -45,13 +45,13 @@ export class EditEmpComponent implements OnInit {
   // shifts1: number;
   // shifts2: number;
   // shifts3: number;
-  employee_id:string;
-  department_id:any;
-  department_name:any;
-  locations:any ;
+  employee_id: string;
+  department_id: any;
+  department_name: any;
+  locations: any;
   type: number;
-  location_name:any;
-  comapnyId:any;
+  location_name: any;
+  comapnyId: any;
   ngOnInit(): void {
     this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
     this.employeeId = this.data.row.id;
@@ -62,10 +62,10 @@ export class EditEmpComponent implements OnInit {
     this.hourlyRate = this.data.row.hourlyRate;
     this.overTime = this.data.row.overTime;
     // this.employee_id = this.data.row.employee_id;
-    this.location_name =this.data.row.location_id;
+    this.location_name = this.data.row.location_id;
     this.type = this.data.row.type;
     this.selectedCompanyId = this.data.row.company_id;
-      this.department_id = this.data.row.department_id;
+    this.department_id = this.data.row.department_id;
     this.department_name = this.data.row.Department.department_name;
     this.role = this.service.getRole();
     this.isCompanyLoggedIn = this.role == 'SA' ? false : true;
@@ -73,8 +73,8 @@ export class EditEmpComponent implements OnInit {
       this.data.row.shift_id_1 !== null ? this.data.row.shift_id_1 : "",
       this.data.row.shift_id_2 !== null ? this.data.row.shift_id_2 : "",
       this.data.row.shift_id_3 !== null ? this.data.row.shift_id_3 : ""
-  );
-    console.log("asd",this.selectedShifts)
+    );
+    console.log("asd", this.selectedShifts)
     // this.employeeId = this.route.snapshot.params['employeeId'];
     this.initializeForm();
     // this.getAllDepartment();
@@ -105,7 +105,7 @@ export class EditEmpComponent implements OnInit {
 
 
 
-  
+
   initializeForm() {
     this.editEmployeeForm = this.fb.group({
       companyId: ['', [Validators.required]],
@@ -121,7 +121,7 @@ export class EditEmpComponent implements OnInit {
   }
 
 
-  
+
   get shiftName() {
     return this.editEmployeeForm.get('shifts');
   }
@@ -144,9 +144,12 @@ export class EditEmpComponent implements OnInit {
   matchingShifts: any;
   onCompanySelect(event: any) {
     this.matchingShifts = [];
-    const selectedCompanyId = event.target.value;
+    this.selectedCompanyId = event.target.value;
+    this.getOfficeLocation();
+    this.getDepartmentById();
+
     this.matchingShifts = this.ShiftData.filter(
-      (x: any) => x.company_id === parseInt(selectedCompanyId)
+      (x: any) => x.company_id === parseInt(this.selectedCompanyId)
     );
     this.editEmployeeForm.get('shifts1').reset('');
     this.editEmployeeForm.get('shifts2').reset('');
@@ -233,36 +236,36 @@ export class EditEmpComponent implements OnInit {
     });
   }
 
-  selectedDepartmentId: number; 
-  shiftByDepartmentId: any; 
+  selectedDepartmentId: number;
+  shiftByDepartmentId: any;
   onDepartmentChange(event: any) {
-    if(this.data.row.department_id == parseInt(event.target.value)){
+    if (this.data.row.department_id == parseInt(event.target.value)) {
       this.selectedShifts.push(
         this.data.row.shift_id_1 !== null ? this.data.row.shift_id_1 : "",
         this.data.row.shift_id_2 !== null ? this.data.row.shift_id_2 : "",
         this.data.row.shift_id_3 !== null ? this.data.row.shift_id_3 : ""
-    );
-    }else{
-      this.selectedShifts=[];
+      );
+    } else {
+      this.selectedShifts = [];
     }
     this.selectedDepartmentId = parseInt(event.target.value);
     this.service.getShiftByDepartmentId(this.selectedDepartmentId)
-    .subscribe((response: any) => {
-      this.matchingShifts = response.data
-    },
-      (error) => {
-        this.service.handleError(error);
-        this.locations = []
-      }
-    );
+      .subscribe((response: any) => {
+        this.matchingShifts = response.data
+      },
+        (error) => {
+          this.service.handleError(error);
+          this.locations = []
+        }
+      );
   }
 
 
   shouldShowError(): boolean {
     return this.selectedShifts.every(shift => shift === null || shift === undefined || shift === "");
   }
-  
-  
+
+
   gotoEmpPage() {
     this.router.navigate(['/dashboard/employee']);
   }
@@ -274,7 +277,7 @@ export class EditEmpComponent implements OnInit {
         .getCompanyOfficeLocation(this.selectedCompanyId)
         .subscribe((response: any) => {
           this.locations = response.data
-          this.location_name = this.locations.find((x: { location_name: any; }) => x.location_name == this.data.row.location_name).id;
+          // this.location_name = this.locations.find((x: { location_name: any; }) => x.location_name == this.data.row.location_name).id;
         },
           (error) => {
             this.service.handleError(error);
@@ -292,7 +295,7 @@ export class EditEmpComponent implements OnInit {
             this.locations = []
           }
         );
-      }
+    }
   }
   editEmployee() {
     this.submitted = true;
@@ -300,7 +303,7 @@ export class EditEmpComponent implements OnInit {
       this.spinnerShow = 'text-trasparent';
       this.spinner = true;
       this.submitted = false;
-      this.service.updateEmployee(this.editEmployeeForm.value, this.id,this.selectedShifts).subscribe((response: any) => {
+      this.service.updateEmployee(this.editEmployeeForm.value, this.id, this.selectedShifts).subscribe((response: any) => {
         if ((response as any).success == true) {
           this.toastr.success((response as any).msg);
           this.editEmployeeForm.reset();
@@ -340,20 +343,35 @@ export class EditEmpComponent implements OnInit {
     );
   }
   getDepartmentById() {
-    this.service.getDepartmentById(this.comapnyId).subscribe(
-      (response: any) => {
-        this.departmentData = response.data;
-        // const selectedDepartment  = this.departmentData.find((x:any) => x.department_id == this.department_name);
-        // this.department_name =  selectedDepartment ? selectedDepartment.department_name : '';
-        // console.log(" this.department_name this.department_name", this.department_name)
-      },
-      (error) => {
-        this.service.handleError(error);
-      }
-    );
+    if (this.role != 'SA') {
+      this.service.getDepartmentById(this.comapnyId).subscribe(
+        (response: any) => {
+          this.departmentData = response.data;
+          // const selectedDepartment  = this.departmentData.find((x:any) => x.department_id == this.department_name);
+          // this.department_name =  selectedDepartment ? selectedDepartment.department_name : '';
+          // console.log(" this.department_name this.department_name", this.department_name)
+        },
+        (error) => {
+          this.service.handleError(error);
+        }
+      )
+    } else {
+      this.service.getDepartmentById(this.selectedCompanyId).subscribe(
+        (response: any) => {
+          this.departmentData = response.data;
+          // const selectedDepartment  = this.departmentData.find((x:any) => x.department_id == this.department_name);
+          // this.department_name =  selectedDepartment ? selectedDepartment.department_name : '';
+          // console.log(" this.department_name this.department_name", this.department_name)
+        },
+        (error) => {
+          this.service.handleError(error);
+        }
+
+      );
+    }
   }
 
-  toggleShiftSelection(shiftId: number, i :any): void {
+  toggleShiftSelection(shiftId: number, i: any): void {
     const index = this.selectedShifts.indexOf(shiftId);
     const nullIndex = this.selectedShifts.indexOf(null);
     if (index === -1) {
@@ -376,7 +394,7 @@ export class EditEmpComponent implements OnInit {
   }
 
 
-  
+
 
 
   atLeastOneShiftSelectedValidator(): ValidatorFn {
@@ -388,7 +406,7 @@ export class EditEmpComponent implements OnInit {
         return { 'noShiftSelected': true }; // No shift selected, return an error
       }
     };
-  
+
   }
 
 }

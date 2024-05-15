@@ -26,6 +26,7 @@ export class AddDepartmentComponent implements OnInit {
   comapnyId: any
   spinnerShow: string = '';
   addDepartmentForm!: FormGroup;
+  isDisabled : boolean = true
   locationData: any = []
   protected _onDestroy = new Subject<void>();
   constructor(
@@ -142,6 +143,9 @@ export class AddDepartmentComponent implements OnInit {
     this.service.getLocationByCompany(this.comapnyId).subscribe(
       (response: any) => {
         this.locationData = response.data;
+        if(response.data.length>0){
+          this.isDisabled = false
+          }
       },
       (error) => {
         this.service.handleError(error);
@@ -152,6 +156,9 @@ export class AddDepartmentComponent implements OnInit {
     this.service.getLocationByCompany(this.selectedCompanyId).subscribe(
       (response: any) => {
         this.locationData = response.data;
+        if(response.data.length>0){
+          this.isDisabled = false
+          }
       },
       (error) => {
         this.service.handleError(error);

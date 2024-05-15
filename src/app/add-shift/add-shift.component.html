@@ -391,7 +391,7 @@
         </div>
         <div class="col-12">
           <div class="select_input position-relative">
-            <select name="location" formControlName="locationId">
+            <select name="location"  class="form-control" formControlName="locationId" [attr.disabled]="isDisabled === true ? true : null">
               <option value defaultSelected>
                 Select Office
               </option>

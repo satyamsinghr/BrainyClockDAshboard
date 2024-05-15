@@ -350,6 +350,19 @@ export class ReportFilterComponent implements OnInit {
     });
   }
 
+  departments: any
+  getAllDepartment() {
+    this.service.getAllDepartment().subscribe(
+      (response: any) => {
+        this.departments = response.data;
+        this.filterDepartments();
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
+  }
+
   getDepartmentById() {
     this.service.getDepartmentById(this.comapnyId).subscribe(
       (response: any) => {
@@ -510,18 +523,6 @@ export class ReportFilterComponent implements OnInit {
       (error) => {
         this.service.handleError(error);
       })
-  }
-
-  departments: any
-  getAllDepartment() {
-    this.service.getAllDepartment().subscribe(
-      (response: any) => {
-        this.departments = response.data;
-      },
-      (error) => {
-        this.service.handleError(error);
-      }
-    );
   }
 
 }

@@ -160,6 +160,7 @@ export class AddShiftComponent implements OnInit {
         .getCompanyOfficeLocation(parseInt(this.selectedCompanyId))
         .subscribe((response: any) => {
           this.locationData = response.data
+          this.isDisabled = false
         },
           (error) => {
             this.service.handleError(error);

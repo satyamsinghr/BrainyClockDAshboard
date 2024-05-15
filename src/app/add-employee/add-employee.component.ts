@@ -1,14 +1,14 @@
 import { LoaderService } from 'src/app/@shared/pipes';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators,FormArray} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from 'src/app/auth/credentials.service';
 import { Subject } from 'rxjs';
 import { Logger } from '../@shared/logger.service';
 import { AppService } from './../app.service';
 import { MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material/dialog';
-import {EmployeeService} from 'src/app/employee.service';
+import { EmployeeService } from 'src/app/employee.service';
 const log = new Logger('AddEmployee');
 @Component({
   selector: 'app-add-employee',
@@ -19,12 +19,13 @@ export class AddEmployeeComponent implements OnInit {
   isDepartmentSelected: boolean = false;
   isLoading = false;
   submitted = false;
-  spinner:boolean = false;
+  spinner: boolean = false;
   addEmployeeForm!: FormGroup;
   role: string = '';
   companyData: any;
   spinnerShow: string = '';
   isCompanyLoggedIn: boolean = false;
+  isDisabled : boolean = true
   noOfEmployees: any
   protected _onDestroy = new Subject<void>();
   constructor(
@@ -32,7 +33,7 @@ export class AddEmployeeComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private service: AppService,
-    public dialogRef: MatDialogRef<AddEmployeeComponent> ,
+    public dialogRef: MatDialogRef<AddEmployeeComponent>,
     private employeeService: EmployeeService,
     @Inject(MAT_DIALOG_DATA) private data: any,
   ) { }
@@ -45,9 +46,9 @@ export class AddEmployeeComponent implements OnInit {
     this.companyName = JSON.parse(localStorage.getItem('nameOfCompany'));
     this.name = JSON.parse(localStorage.getItem('companyName'));
     this.initializeForm();
-    this.getAllLocation();
+    // this.getAllLocation();
     // this.getShiftByDepartmentId();
-        this.getDepaetmentById();
+    this.getDepaetmentById();
     // this.getAllEmployee();
     if (this.role != 'SA') {
       this.isCompanyLoggedIn = true;
@@ -64,8 +65,9 @@ export class AddEmployeeComponent implements OnInit {
       this.selectedCompanyId = this.service.getCompanyId();
       this.shiftUser();
     } else {
+      // this.getAllDepartment();
       this.getAllCompany();
-      this.getAllDepartment();
+
     }
     this.getOfficeLocation();
   }
@@ -100,6 +102,9 @@ export class AddEmployeeComponent implements OnInit {
     this.service.getDepartmentById(this.selectedCompanyId).subscribe(
       (response: any) => {
         this.departmentData = response.data;
+        if(response.data.length>0){
+        this.isDisabled = false
+        }
       },
       (error) => {
         this.service.handleError(error);
@@ -119,29 +124,29 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   departmentData: any;
-  getAllDepartment() {
-    this.service.getAllDepartment().subscribe(
-      (response: any) => {
-        this.departmentData = response.data;
-        console.log("departmentData",this.departmentData);
-      },
-      (error) => {
-        this.service.handleError(error);
-      }
-    );
-  }
+  // getAllDepartment() {
+  //   this.service.getAllDepartment().subscribe(
+  //     (response: any) => {
+  //       this.departmentData = response.data;
+  //       console.log("departmentData",this.departmentData);
+  //     },
+  //     (error) => {
+  //       this.service.handleError(error);
+  //     }
+  //   );
+  // }
 
   locationData: any;
-  getAllLocation() {
-    this.service.getAllLocation().subscribe(
-      (response: any) => {
-        this.locationData = response.data;
-      },
-      (error) => {
-        this.service.handleError(error);
-      }
-    );
-  }
+  // getAllLocation() {
+  //   this.service.getAllLocation().subscribe(
+  //     (response: any) => {
+  //       this.locationData = response.data;
+  //     },
+  //     (error) => {
+  //       this.service.handleError(error);
+  //     }
+  //   );
+  // }
 
   ShiftData: [];
   // getAllShift() {
@@ -178,10 +183,10 @@ export class AddEmployeeComponent implements OnInit {
   //   );
   // }
 
-  
+
   onDepartmentSelect(event: any) {
-    const departmentId = event.target.value; 
-    this.shifts=['', '', ''];
+    const departmentId = event.target.value;
+    this.shifts = ['', '', ''];
     this.service.getShiftByDepartmentId(departmentId).subscribe(
       (response: any) => {
         this.matchingShifts = response.data;
@@ -210,11 +215,12 @@ export class AddEmployeeComponent implements OnInit {
   onCompanySelect(event: any) {
     this.matchingShifts = [];
     this.selectedCompanyId = event.target.value;
+    this.getOfficeLocation();
+    this.getDepaetmentById();
     this.matchingShifts = this.ShiftData.filter(
       (x: any) => x.company_id === parseInt(this.selectedCompanyId)
     );
-    this.getOfficeLocation();
-    this.getDepaetmentById();
+    
 
   }
 
@@ -229,6 +235,9 @@ export class AddEmployeeComponent implements OnInit {
         .getCompanyOfficeLocation(this.selectedCompanyId)
         .subscribe((response: any) => {
           this.locations = response.data
+          if(response.data.length>0){
+            this.isDisabled = false
+            }
         },
           (error) => {
             this.service.handleError(error);
@@ -309,20 +318,20 @@ export class AddEmployeeComponent implements OnInit {
   shouldShowError(): boolean {
     return this.shifts.every(shift => shift === null || shift === undefined || shift === "");
   }
-  
+
   addEmployee() {
     this.submitted = true;
     // if (this.role != 'SA') {
     //   const companyId = this.service.getCompanyId();
     //   this.addEmployeeForm.get('companyId').setValue(companyId);
     // }
-    
+
     if (this.role !== 'SA' && this.noOfEmployees > this.data.employeeLength) {
       if (this.addEmployeeForm.valid) {
-       this.spinner = true
-       this.spinnerShow = 'text-trasparent';
+        this.spinner = true
+        this.spinnerShow = 'text-trasparent';
         this.submitted = false;
-        this.service.addEmployee(this.addEmployeeForm.value,this.shifts).subscribe(
+        this.service.addEmployee(this.addEmployeeForm.value, this.shifts).subscribe(
           (response: any) => {
             if (response.data) {
               this.toastr.success(response.msg);
@@ -335,11 +344,11 @@ export class AddEmployeeComponent implements OnInit {
             }
           },
           (error) => {
-            if(error.status== 409){
+            if (error.status == 409) {
               this.toastr.error(error.error.msg);
               this.spinner = false;
               this.spinnerShow = '';
-            }else{
+            } else {
               this.toastr.error("Intenal Server error");
               this.spinner = false;
               this.spinnerShow = '';
@@ -352,15 +361,18 @@ export class AddEmployeeComponent implements OnInit {
       }
     } else if (this.role == 'SA') {
       if (this.addEmployeeForm.valid) {
-        // this.spinner = true
+        this.spinner = true
         this.submitted = false;
-        this.service.addEmployee(this.addEmployeeForm.value,this.shifts).subscribe(
+        this.service.addEmployee(this.addEmployeeForm.value, this.shifts).subscribe(
           (response: any) => {
             if (response.data) {
               this.addEmployeeForm.reset();
+              this.dialogRef.close();
+              this.spinner = false;
             }
           },
           (error) => {
+            this.spinner = false;
           }
         );
       }

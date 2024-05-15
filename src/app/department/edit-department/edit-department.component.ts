@@ -1,6 +1,6 @@
 import { LoaderService } from 'src/app/@shared/pipes';
 import { ToastrService } from 'ngx-toastr';
-import { Component, OnInit,Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from 'src/app/auth/credentials.service';
@@ -9,8 +9,8 @@ import { untilDestroyed } from '../../@shared/pipes/until-destroyed';
 import { finalize, Subject } from 'rxjs';
 import { Logger } from '../../@shared/logger.service';
 import { AppService } from '../../app.service';
-import { MatDialogRef,MAT_DIALOG_DATA, } from '@angular/material/dialog';
-import {DepartmentService} from 'src/app/department.service';
+import { MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material/dialog';
+import { DepartmentService } from 'src/app/department.service';
 const log = new Logger('AddEmployee');
 @Component({
   selector: 'app-edit-department',
@@ -19,12 +19,14 @@ const log = new Logger('AddEmployee');
 })
 export class EditDepartmentComponent implements OnInit {
   // getDepartmentById();
-  spinner : boolean = false
+  spinner: boolean = false
   isLoading = false;
   department_name: string;
   spinnerShow: string = '';
-  location_id:number;
-  comapnyId:any
+  location_id: number;
+  selectedCompanyId: any;
+  comapnyId: any
+  role: any
   editDepartmentForm!: FormGroup;
   protected _onDestroy = new Subject<void>();
   constructor(
@@ -36,19 +38,21 @@ export class EditDepartmentComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private service: AppService,
-    public dialogRef: MatDialogRef<EditDepartmentComponent>, 
+    public dialogRef: MatDialogRef<EditDepartmentComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private departmentService: DepartmentService
-  ) {}
+  ) { }
 
   departmentId: any;
   departmentName: any;
 
   ngOnInit(): void {
+    this.role = this.service.getRole();
     this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
     this.department_name = this.data.row.department_name;
     this.location_id = this.data.row.location_id;
-    this.departmentId=this.data.row.department_id;
+    this.selectedCompanyId = this.data.row.company_id;
+    this.departmentId = this.data.row.department_id;
     // this.departmentId=this.data.departmentId;
     // this.departmentName=this.data.departmentName;
     // this.getDepartmentById(this.departmentId);
@@ -59,14 +63,14 @@ export class EditDepartmentComponent implements OnInit {
   initializeForm() {
     this.editDepartmentForm = this.fb.group({
       department: ['', [Validators.required]],
-      location_id:['',[Validators.required]]
+      location_id: ['', [Validators.required]]
     });
   }
   get shiftName() {
     return this.editDepartmentForm.get('shifts');
   }
 
-  changeShift(e: any) {}
+  changeShift(e: any) { }
   get editDepartmentFormControl() {
     return this.editDepartmentForm.controls;
   }
@@ -120,10 +124,11 @@ export class EditDepartmentComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  
-  locationData:any=[]
 
-  getLocationByCompanyId() {
+  locationData: any = []
+
+getLocationByCompanyId() {
+  if (this.role != 'SA') {
     this.service.getLocationByCompany(this.comapnyId).subscribe(
       (response: any) => {
         this.locationData = response.data;
@@ -132,7 +137,17 @@ export class EditDepartmentComponent implements OnInit {
         this.service.handleError(error);
       }
     );
+  } else {
+    this.service.getLocationByCompany(this.selectedCompanyId).subscribe(
+      (response: any) => {
+        this.locationData = response.data;
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
   }
+}
 
 
 }

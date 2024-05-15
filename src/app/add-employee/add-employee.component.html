@@ -509,7 +509,7 @@
 
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="department_id" class="labelName">Department :</label>
-          <select class="form-control" formControlName="department_id" required (change)="onDepartmentSelect($event)">
+          <select class="form-control" formControlName="department_id" required (change)="onDepartmentSelect($event)" [attr.disabled]="isDisabled === true ? true : null">
             <option value>Select Department</option>
             <option *ngFor="let department of departmentData"
               [value]="department.department_id">
@@ -577,7 +577,7 @@
 
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="location_id" class="labelName">Office :</label>
-          <select class="form-control" formControlName="location_id" required>
+          <select class="form-control" formControlName="location_id" required [attr.disabled]="isDisabled === true ? true : null">
             <option value>Select Office</option>
             <option *ngFor="let location of locations" [value]="location.id">
               {{ location.location_name}}

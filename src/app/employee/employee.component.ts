@@ -171,6 +171,7 @@ export class EmployeeComponent implements OnInit {
   locationData: any
   allLocationByCompany: any[] = [];
   getLocationByCompanyId() {
+    if (this.role != 'SA') {
     this.service.getLocationByCompany(this.comapanyId).subscribe(
       (response: any) => {
         this.locationData = response.data[0];
@@ -180,7 +181,18 @@ export class EmployeeComponent implements OnInit {
         this.service.handleError(error);
       }
     );
+  }else{
+    this.service.getAllLocation().subscribe(
+      (response: any) => {
+        this.locationData = response.data[0];
+        this.allLocationByCompany = response.data
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
   }
+}
 
   departmentData: any;
   getAllDepartment() {
@@ -214,7 +226,9 @@ export class EmployeeComponent implements OnInit {
           this.spinner.hide();
           // this.allEmployee = response.data;
           this.employeeData = response.data
-          this.dataSource.data = response.data;
+          let dataaa = this.groupAttendanceByShift(response.data);
+          this.dataSource.data = dataaa;
+          // this.employeeLength = response.data.length;
         },
         (error) => {
           this.service.handleError(error);

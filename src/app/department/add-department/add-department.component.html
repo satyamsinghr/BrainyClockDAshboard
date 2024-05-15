@@ -126,7 +126,7 @@
       </div>
       <div class="col-12">
         <select id="location_id" formControlName="location_id"
-          class="form-control">
+          class="form-control" [attr.disabled]="isDisabled === true ? true : null">
           <option value disabled selected>Select Location Name</option>
           <option *ngFor="let location of locationData" [value]="location.id">{{
             location.location_name }}</option>
