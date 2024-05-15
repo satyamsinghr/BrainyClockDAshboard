@@ -128,7 +128,6 @@ export class AddEmployeeComponent implements OnInit {
   //   this.service.getAllDepartment().subscribe(
   //     (response: any) => {
   //       this.departmentData = response.data;
-  //       console.log("departmentData",this.departmentData);
   //     },
   //     (error) => {
   //       this.service.handleError(error);
@@ -308,7 +307,6 @@ export class AddEmployeeComponent implements OnInit {
   shifts: (number | string)[] = ["", "", ""];
   // updateShift(index: number, shiftId: number) {
   //   this.shifts[index] = this.shifts[index] === shiftId ? "" : shiftId;
-  //   console.log("shiftsshifts",this.shifts);
   // }
   updateShift(index: number, shiftId: number) {
     const isChecked = this.shifts[index] === shiftId;

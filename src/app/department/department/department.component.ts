@@ -91,12 +91,10 @@ export class DepartmentComponent implements OnInit {
   lastUrl: any
   ngOnInit(): void {
     const Url  = this.router.url;
-    console.log("testtt",Url);
     
     const parts = Url.split('/');
     this.lastUrl = parts[parts.length - 1];
     this.sharedService.setLastUrl(this.lastUrl);
-    console.log("deptartmemntLAstURL",this.lastUrl);
     this.departmentService.getDepartmentById = this.getDepartmentById.bind(this);
     this.departmentService.getAllDepartment = this.getAllDepartment.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
@@ -169,7 +167,6 @@ export class DepartmentComponent implements OnInit {
   //     if (fileredData) {
   //       this.dataSource.data = fileredData
   //     } else {
-  //       console.log('No department found for the selected location ID:', this.selectedLocationId);
   //     }
   //   }
 

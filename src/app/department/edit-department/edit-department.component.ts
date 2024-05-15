@@ -92,7 +92,6 @@ export class EditDepartmentComponent implements OnInit {
   //       //     department: response.data.department_name,
   //       //   });
   //       // }
-  //       console.log("responce",response);
   //     },
   //   });
   // }

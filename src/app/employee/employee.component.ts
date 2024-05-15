@@ -84,12 +84,10 @@ export class EmployeeComponent implements OnInit {
   token: any
   ngOnInit(): void {
     const Url = this.router.url;
-    console.log("testtt", Url);
 
     const parts = Url.split('/');
     this.lastUrl = parts[parts.length - 1];
     this.sharedService.setLastUrl(this.lastUrl);
-    console.log("LastURL", this.lastUrl)
     this.employeeService.getAllEmployee = this.getAllEmployee.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     this.getAllShift();
@@ -360,7 +358,6 @@ export class EmployeeComponent implements OnInit {
     }
     else {
       const data = this.employeeData.filter((x: any) => x.location_id == this.selectedLocationId)
-      console.log("datadatadatadata", data);
 
       let dataaa = this.groupAttendanceByShift(data);
       this.dataSource.data = dataaa;

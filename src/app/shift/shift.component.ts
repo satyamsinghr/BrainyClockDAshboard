@@ -66,11 +66,9 @@ export class ShiftComponent implements OnInit {
   token:any
   ngOnInit(): void {
     const Url  = this.router.url;
-    console.log("testtt",Url);
     const parts = Url.split('/');
     this.lastUrl = parts[parts.length - 1];
     this.sharedService.setLastUrl(this.lastUrl);
-    console.log("deptartmemntLAstURL",this.lastUrl)
     this.shiftsService.getAllShift = this.getAllShift.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if(this.token == null){

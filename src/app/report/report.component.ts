@@ -62,12 +62,10 @@ export class ReportComponent implements OnInit {
   pageSize: number = 10;
   ngOnInit(): void {
     const Url = this.router.url;
-    console.log("testtt", Url);
 
     const parts = Url.split('/');
     this.lastUrl = parts[parts.length - 1];
     this.sharedService.setLastUrl(this.lastUrl);
-    console.log("LastURL", this.lastUrl)
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if (this.token == null) {
       this.router.navigateByUrl('/');

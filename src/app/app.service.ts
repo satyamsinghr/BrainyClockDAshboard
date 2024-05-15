@@ -585,7 +585,7 @@ export class AppService {
     const companyId = this.getCompanyId()
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    let url_ = this.apiConfig + `/admin/attandance/${companyId}`;
+    let url_ = this.apiConfig + `/admin/allAttandance/${companyId}`;
     return this.http.get(url_, { headers });
   }
 

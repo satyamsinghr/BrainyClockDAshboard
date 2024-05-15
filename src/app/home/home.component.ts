@@ -54,7 +54,6 @@ export class HomeComponent implements OnInit {
   ) {
     const currentDate = new Date();
     this.formattedDate = currentDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-    console.log('formattedDate', this.formattedDate);
 
     const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const dayIndex = currentDate.getDay();
@@ -101,25 +100,41 @@ export class HomeComponent implements OnInit {
   // }
 
   
-  getStatus(element: any): string {
-    if ((element.Shift1 && element.Shift1) || (element.Shift3 &&element.Shift2) || (element.Shift3 &&element.Shift3)) {
-        return 'In Shift';
+//   getStatus(element: any): string {
+//     if ((element.Shift1 && element.Shift1) || (element.Shift3 &&element.Shift2) || (element.Shift3 &&element.Shift3)) {
+//         return 'In Shift';
+//     } else {
+//         return 'NA';
+//     }
+// }
+
+getStatus(element: any): string {
+  if (element.clock_in_time) {
+      return 'In Shift';
+  } else {
+      return 'NA';
+  }
+}
+
+  // getClockInTime(element: any): string {
+  //   if (element.Shift1 && element.Shift1.clock_in_time) {
+  //     return element.Shift1.clock_in_time;
+  //   } else if (element.Shift2 && element.Shift2.clock_in_time) {
+  //     return element.Shift2.clock_in_time;
+  //   } else if (element.Shift3 && element.Shift3.clock_in_time) {
+  //     return element.Shift3.clock_in_time;
+  //   } else {
+  //     return 'N/A';
+  //   }
+  // }
+
+  getClockInTime(element: any): string {
+    if (element && element.clock_in_time) {
+        return element.clock_in_time;
     } else {
         return 'NA';
     }
 }
-
-  getClockInTime(element: any): string {
-    if (element.Shift1 && element.Shift1.clock_in_time) {
-      return element.Shift1.clock_in_time;
-    } else if (element.Shift2 && element.Shift2.clock_in_time) {
-      return element.Shift2.clock_in_time;
-    } else if (element.Shift3 && element.Shift3.clock_in_time) {
-      return element.Shift3.clock_in_time;
-    } else {
-      return 'N/A';
-    }
-  }
   
 
   onSelectWeek(day: string) {
@@ -161,8 +176,6 @@ export class HomeComponent implements OnInit {
           this.attendanceByDate = formattedData.filter(
             (x: any) => x.created_at === formattedCurrentDate
           );
-          console.log("attendanceByDate", this.attendanceByDate);
-
 
           const groupedData = formattedData.reduce((acc: any, entry: any) => {
             const day = entry.day;
@@ -173,7 +186,6 @@ export class HomeComponent implements OnInit {
             return acc;
           }, {});
 
-          console.log(groupedData);
           const dayCounts: Record<string, number> = {};
           for (const day in groupedData) {
             if (groupedData.hasOwnProperty(day)) {
@@ -219,8 +231,6 @@ export class HomeComponent implements OnInit {
           this.attendanceByDate = formattedData.filter(
             (x: any) => x.created_at === formattedCurrentDate
           );
-          console.log("attendanceByDate", this.attendanceByDate);
-
 
           const groupedData = formattedData.reduce((acc: any, entry: any) => {
             const day = entry.day;
@@ -231,7 +241,6 @@ export class HomeComponent implements OnInit {
             return acc;
           }, {});
 
-          console.log(groupedData);
           const dayCounts: Record<string, number> = {};
           for (const day in groupedData) {
             if (groupedData.hasOwnProperty(day)) {
@@ -314,9 +323,9 @@ export class HomeComponent implements OnInit {
       (response: any) => {
          this.departmentData = response.data;
         this.departmentId=this.departmentData[this.index].department_id;
-        debugger
         this.departmentName=this.departmentData[this.index].department_name;
         this.departmentName1=this.departmentData[this.index1].department_name;
+        this.filterEmployeeDataByDepartmentId()
       },
       (error) => {
         this.service.handleError(error);
@@ -341,12 +350,10 @@ export class HomeComponent implements OnInit {
   employee:[]
   department_id:any
   getEmployeeByCompanyId() {
-    debugger
     if (this.role != 'SA') {
       this.service.getEmployeeAttendanceByCompany().subscribe(
         (response: any) => {
           this.employeelength = response.data.length;
-          debugger
           this.employee=response.data;
          this.filterEmployeeDataByDepartmentId() ;
         },
@@ -357,9 +364,7 @@ export class HomeComponent implements OnInit {
     }else{
       this.service.getAllEmployeeAttendance().subscribe(
         (response: any) => {
-          debugger
           this.employeelength = response.data.length;
-          debugger
           this.employee=response.data;
          this.filterEmployeeDataByDepartmentId() ;
         },

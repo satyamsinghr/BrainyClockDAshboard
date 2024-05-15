@@ -74,7 +74,6 @@ export class EditEmpComponent implements OnInit {
       this.data.row.shift_id_2 !== null ? this.data.row.shift_id_2 : "",
       this.data.row.shift_id_3 !== null ? this.data.row.shift_id_3 : ""
     );
-    console.log("asd", this.selectedShifts)
     // this.employeeId = this.route.snapshot.params['employeeId'];
     this.initializeForm();
     // this.getAllDepartment();
@@ -154,7 +153,6 @@ export class EditEmpComponent implements OnInit {
     this.editEmployeeForm.get('shifts1').reset('');
     this.editEmployeeForm.get('shifts2').reset('');
     this.editEmployeeForm.get('shifts3').reset('');
-    console.log("matches", this.matchingShifts);
   }
 
 

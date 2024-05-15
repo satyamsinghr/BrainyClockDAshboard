@@ -28,12 +28,10 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     const Url  = this.router.url;
-    console.log("testtt",Url);
     
     const parts = Url.split('/');
     this.lastUrl = parts[parts.length - 1];
     this.sharedService.setLastUrl(this.lastUrl);
-    console.log("LastURL",this.lastUrl)
     this.email = JSON.parse(localStorage.getItem('email'));
     this.initForm();
   }

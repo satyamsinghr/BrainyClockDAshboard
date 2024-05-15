@@ -79,12 +79,10 @@ export class LocationComponent implements OnInit {
   lastUrl: string
   ngOnInit(): void {
     const Url  = this.router.url;
-    console.log("testtt",Url);
     
     const parts = Url.split('/');
     this.lastUrl = parts[parts.length - 1];
     this.sharedService.setLastUrl(this.lastUrl);
-    console.log("deptartmemntLAstURL",this.lastUrl);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if (this.token == null) {
       this.router.navigateByUrl('/');
@@ -225,7 +223,6 @@ return false;
     dialogRef.componentInstance.locationAdded.subscribe(() => {
       // Handle modal close event if needed
       this.getAllLocation();
-      console.log('The modal was closed');
     });
   }
 
@@ -238,7 +235,6 @@ return false;
     dialogRef.componentInstance.locationEdit.subscribe(() => {
       // dialogRef.afterClosed().subscribe((result) => {
       this.getAllLocation();
-      console.log('The dialog was closed');
     });
   }
 }

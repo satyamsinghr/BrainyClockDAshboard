@@ -33,7 +33,6 @@ export class ResetPasswordComponent implements OnInit {
       this.spinnerShow = 'text-trasparent';
       this.service.resetPassword(this.resetPasswordForm.value).subscribe(
         (response:any) => {
-          console.log('Password reset successfully:', response);
           this.toastr.success(response.msg);
           this.router.navigate(['/']); 
           this.spinner = false;

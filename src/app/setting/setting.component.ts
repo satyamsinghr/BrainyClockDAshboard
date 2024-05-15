@@ -51,12 +51,10 @@ export class SettingComponent implements OnInit {
 
   ngOnInit() {
     const Url  = this.router.url;
-    console.log("testtt",Url);
     
     const parts = Url.split('/');
     this.lastUrl = parts[parts.length - 1];
     this.sharedService.setLastUrl(this.lastUrl);
-    console.log("LastURL",this.lastUrl)
     this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
     // this.scheduleData = JSON.parse(localStorage.getItem('SchudleGetData'));
     this.timezoneForm = this.fb.group({
@@ -91,7 +89,6 @@ export class SettingComponent implements OnInit {
     this.service.getSchudle(this.comapnyId).subscribe(
       (response: any) => {
         this.scheduleData = response.data[0];
-        console.log("scheduleData", this.scheduleData);
         if (this.scheduleData) {
           this.timezoneForm.patchValue({
             id: this.scheduleData.Id,
@@ -129,7 +126,6 @@ export class SettingComponent implements OnInit {
       this.service.updateSchudle(this.timezoneForm.value).subscribe(
         (response: any) => {
           // this.toastr.success(response.msg);
-          console.log("res", response);
           this.getSchudleByCompanyId();
           this.dialog.closeAll();
           this.spinner = false;
@@ -151,7 +147,6 @@ export class SettingComponent implements OnInit {
       this.service.createScheudle(this.timezoneForm.value).subscribe(
         (response: any) => {
           // this.toastr.success(response.msg);
-          console.log("res", response);
           this.getSchudleByCompanyId();
           this.dialog.closeAll();
           this.spinner = false;

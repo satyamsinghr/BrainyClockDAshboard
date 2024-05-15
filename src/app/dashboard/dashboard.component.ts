@@ -35,14 +35,9 @@ export class DashboardComponent implements OnInit {
         this.isReportPage = this.router.url.includes('reportFilter');
       }
     });
-    // console.log("testtt",Url);
     
-    // const parts = Url.split('/');
-    // this.lastUrl = parts[parts.length - 1];
-    // console.log("tttttttttttttttttt",this.lastUrl);
     this.sharedService.lastUrl$.subscribe(url => {
-      this.lastUrl = url; // Retrieve lastUrl value from the service
-      console.log("sharedServicesharedService called",this.lastUrl);
+      this.lastUrl = url;
     });
     
     this.sharedService.sidebarVisible$.subscribe((visible: boolean) => {

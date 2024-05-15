@@ -258,7 +258,6 @@ export class AddLocationComponent implements OnInit {
       this.service.addLocation(this.addLocationForm.value).subscribe(
         (response: any) => {
           this.toastr.success(response.msg);
-          console.log("res", response);
           this.dialogRef.close(true);
           // this.router.navigate(['/dashboard/location']);
           // this.getLocationByCompanyId();

@@ -118,8 +118,6 @@ export class CompanyComponent implements OnInit {
     else if (this.name == "" || this.name === null || this.name === undefined){
       this.filterCompany(this.name,this.email);
       this.suggestionName=[];
-      console.log("this.suggestionName",this.suggestionName);
-      
     }
   }
  
@@ -213,19 +211,14 @@ export class CompanyComponent implements OnInit {
   openAddCompanyModal() {
     const dialogRef = this.dialog.open(AddCompanyComponent, {
       width: '100%', maxWidth: '420px' // adjust width as needed
-      // You can pass data to the modal if needed
-      // data: { anyData: yourData },
     });
     dialogRef.afterClosed().subscribe(result => {
-      // Handle modal close event if needed
-      console.log('The modal was closed');
     });
   }
 
   openEditCompanyModal(row: any) {
     const dialogRef = this.dialog.open(EditCompanyComponent, {
       width: '100%', maxWidth: '420px', // adjust width as needed
-      // Pass department ID to the modal if needed
       data: {
         row: row
       }

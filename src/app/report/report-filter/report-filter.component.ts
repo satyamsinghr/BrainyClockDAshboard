@@ -68,12 +68,10 @@ export class ReportFilterComponent implements OnInit {
 
   ngOnInit(): void {
     const Url  = this.router.url;
-    console.log("testtt",Url);
     
     const parts = Url.split('/');
     this.lastUrl = parts[parts.length - 1];
     this.sharedService.setLastUrl(this.lastUrl);
-    console.log("LastURL",this.lastUrl)
     this.createForm();
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if (this.token == null) {
