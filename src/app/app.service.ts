@@ -575,11 +575,33 @@ export class AppService {
     let url_ = this.apiConfig + `/admin/attandance/${comapanyId}`;
     return this.http.get(url_, { headers });
   }
+  getAllAttendance() {
+    const companyId = this.getCompanyId()
+    const token = JSON.parse(localStorage.getItem('loginToken'));
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    let url_ = this.apiConfig + `/admin/attandance/${companyId}`;
+    return this.http.get(url_, { headers });
+  }
+
   getEmployeeCount() {
     const companyId = this.getCompanyId()
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     let url_ = this.apiConfig + `/admin/attandance/empoyeeCount/${companyId}`;
+    return this.http.get(url_, { headers });
+  }
+  getAllAttendanceAdmin() {
+    const companyId = this.getCompanyId()
+    const token = JSON.parse(localStorage.getItem('loginToken'));
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    let url_ = this.apiConfig + `/admin/attandance/getAllAttendanceAdmin/${companyId}`;
+    return this.http.get(url_, { headers });
+  }
+  getEmployeeAttendanceByCompany() {
+    const companyId = this.getCompanyId()
+    const token = JSON.parse(localStorage.getItem('loginToken'));
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    let url_ = this.apiConfig + `/admin/attandance/getEmployeeAttendanceByCompany/${companyId}`;
     return this.http.get(url_, { headers });
   }
   // getSchudle(id: number) {

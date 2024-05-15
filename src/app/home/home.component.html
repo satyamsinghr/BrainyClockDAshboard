@@ -63,7 +63,7 @@
                             </mat-header-cell>
                             <mat-cell *matCellDef="let element">
                                 <!-- {{ element.deptName }} -->
-                                {{element.Department.department_name}}
+                                {{element.department_name}}
                             </mat-cell>
                         </ng-container>
 
@@ -85,10 +85,11 @@
                             </mat-header-cell>
                             <mat-cell *matCellDef="let element"
                                 class="text-center justify-content-center">
-                                {{ (element.InProgress &&
+                                <!-- {{ (element.InProgress &&
                                 element.InProgress.toLowerCase()) === "yes" ?
                                 "In Progress" :
-                                "Pending" }}
+                                "Pending" }} -->
+                                In Progress
                             </mat-cell>
                         </ng-container>
 
