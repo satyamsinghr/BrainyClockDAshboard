@@ -158,20 +158,31 @@ export class DepartmentComponent implements OnInit {
 
 
 
-  onLocationSelect(e: any) {
-    this.selectedLocationId = e.target.value;
-    if (this.selectedLocationId == "") {
-      this.dataSource.data = this.departmentData;
-    }
-    else {
-      const fileredData = this.departmentData.filter((x: any) => x.location_id == this.selectedLocationId);
-      if (fileredData) {
-        this.dataSource.data = fileredData
-      } else {
-        console.log('No department found for the selected location ID:', this.selectedLocationId);
-      }
-    }
+  // onLocationSelect(e: any) {
+  //   this.selectedLocationId = e.target.value;
+  //   if (this.selectedLocationId == "") {
+  //     this.dataSource.data = this.departmentData;
+  //   }
+  //   else {
+  //     const fileredData = this.departmentData.filter((x: any) => x.location_id == this.selectedLocationId);
+  //     if (fileredData) {
+  //       this.dataSource.data = fileredData
+  //     } else {
+  //       console.log('No department found for the selected location ID:', this.selectedLocationId);
+  //     }
+  //   }
 
+  // }
+
+  onLocationSelect(locationId: any) {
+    if (this.selectedLocationId === locationId) {
+      this.selectedLocationId = '';
+      this.dataSource.data = this.departmentData; 
+    } else {
+      this.selectedLocationId = locationId;
+      const filteredData = this.departmentData.filter((x: any) => x.location_id === this.selectedLocationId);
+      this.dataSource.data = filteredData.length ? filteredData : [];
+    }
   }
   selectedDeptId: any
   onDepartmentSelect(e: any) {
@@ -255,13 +266,14 @@ export class DepartmentComponent implements OnInit {
     this.service.getAllDepartment().subscribe(
       (response: any) => {
         this.spinner.hide();
-        // this.dataSource.data = response.data;
-        this.departmentData = response.data;
-        if (this.departments.length > 0) {
-          this.activeDepartment = this.departments[0].department_name;
-          this.activeDepartmentId = this.departments[0].id;
-          this.getEmployeeNames(this.departments[0].department_name, this.activeDepartmentId);
-        }
+        this.dataSource.data = response.data;
+        this.departmentData = this.dataSource.data
+        this.departments = response;
+        // if (this.departments.length > 0) {
+        //   this.activeDepartment = this.departments[0].department_name;
+        //   this.activeDepartmentId = this.departments[0].id;
+        //   this.getEmployeeNames(this.departments[0].department_name, this.activeDepartmentId);
+        // }
       },
       (error) => {
         this.service.handleError(error);
