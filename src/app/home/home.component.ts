@@ -75,9 +75,8 @@ export class HomeComponent implements OnInit {
     else{
       this.role = this.service.getRole();
       this.companyId = this.service.getCompanyId();
-
-      this.getEmployeeCount();
       this.getDepaetmentById();
+      this.getEmployeeCount();
       this.getEmployeeByCompanyId();
       this.getAllLocation();
       this.getLocationByCompanyId();
@@ -147,11 +146,64 @@ export class HomeComponent implements OnInit {
     if (this.role != 'SA') {
       this.service.getAttendanceByCompanyId(this.companyId).subscribe(
         (response: any) => {
-          // const formattedData = response.map((x: any) => ({
-          //   ...x,
-          //   created_at: moment(x.created_at).format('YYYY-MM-DD'),
-          //   day: moment(x.created_at).format('dddd')
-          // }));
+          const formattedData = response.map((x: any) => {
+            const createdAtDate = new Date(x.created_at);
+            const formattedCreatedAt = createdAtDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+            const day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][createdAtDate.getDay()]; // Get day of the week
+            
+            return {
+              ...x,
+              created_at: formattedCreatedAt,
+              day: day
+            };
+          });
+          
+          this.attendanceByDate = formattedData.filter(
+            (x: any) => x.created_at === formattedCurrentDate
+          );
+          console.log("attendanceByDate", this.attendanceByDate);
+
+
+          const groupedData = formattedData.reduce((acc: any, entry: any) => {
+            const day = entry.day;
+            if (!acc[day]) {
+              acc[day] = [];
+            }
+            acc[day].push(entry);
+            return acc;
+          }, {});
+
+          console.log(groupedData);
+          const dayCounts: Record<string, number> = {};
+          for (const day in groupedData) {
+            if (groupedData.hasOwnProperty(day)) {
+              const entries = groupedData[day];
+              const count = entries.filter((entry: any) => entry.clock_in_time !== null).length;
+              dayCounts[day] = count;
+            }
+          }
+
+          // this.dayRatios = {};
+          for (const day in dayCounts) {
+            if (dayCounts.hasOwnProperty(day)) {
+              const count = dayCounts[day];
+              // const ratio = (count / this.employeelength) * 100;
+              const ratio = (count / this.attendanceByDate.length) * 100;
+              this.dayRatios[day] = ratio;
+            }
+          }
+          this.attandanceCount = this.getCountsOfClockInTime();
+          this.initDonut();
+          // this.dataSourceOperations.data = formattedData;
+
+        },
+        (error) => {
+          this.service.handleError(error);
+        }
+      );
+    }else{
+      this.service.getAllAttendance().subscribe(
+        (response: any) => {
           const formattedData = response.map((x: any) => {
             const createdAtDate = new Date(x.created_at);
             const formattedCreatedAt = createdAtDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
@@ -259,9 +311,9 @@ export class HomeComponent implements OnInit {
   getDepaetmentById() {
     this.service.getDepartmentById(this.selectedCompanyId).subscribe(
       (response: any) => {
-        this.departmentData = response.data;
+         this.departmentData = response.data;
         this.departmentId=this.departmentData[this.index].department_id;
-        console.log("departmenytId",this.departmentId);
+        debugger
         this.departmentName=this.departmentData[this.index].department_name;
         this.departmentName1=this.departmentData[this.index1].department_name;
       },
@@ -276,9 +328,10 @@ export class HomeComponent implements OnInit {
   department_id:any
   getEmployeeByCompanyId() {
     if (this.role != 'SA') {
-      this.service.getAllEmployeeByCompany().subscribe(
+      this.service.getEmployeeAttendanceByCompany().subscribe(
         (response: any) => {
           this.employeelength = response.data.length;
+          debugger
           this.employee=response.data;
          this.filterEmployeeDataByDepartmentId() ;
         },
@@ -292,7 +345,7 @@ export class HomeComponent implements OnInit {
   filteredEmployees: any[] = [];
   filterEmployeeDataByDepartmentId() {
     if (this.departmentId && this.employee) {
-     this.filteredEmployees = this.employee.filter((emp:any) => parseInt(emp.department_id) == this.departmentId);
+     this.filteredEmployees = this.employee.filter((emp:any) => parseInt(emp.departmentId) == this.departmentId);
      this.dataSourceOperations.data = this.filteredEmployees;
     }
   }
@@ -350,7 +403,17 @@ employeeCount: any
       this.service.getEmployeeCount().subscribe(
         (response: any) => {
          this.employeeCount = response.data;
-           this.dataSource.data = response.data;
+           this.dataSource.data = response.data.filter((x:any)=>x.attendedEmp>0);
+        },
+        (error) => {
+          this.service.handleError(error);
+        }
+      );
+    }else{
+      this.service.getAllAttendanceAdmin().subscribe(
+        (response: any) => {
+         this.employeeCount = response.data;
+           this.dataSource.data = response.data.filter((x:any)=>x.attendedEmp>0);
         },
         (error) => {
           this.service.handleError(error);
@@ -413,6 +476,7 @@ employeeCount: any
 
   locationData: any
   getLocationByCompanyId() {
+    if (this.role != 'SA') {
     this.service.getLocationByCompany(this.companyId).subscribe(
       (response: any) => {
         this.locationData = response.data[0];
@@ -421,6 +485,7 @@ employeeCount: any
         this.service.handleError(error);
       }
     );
+  }
   }
 
 
