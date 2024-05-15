@@ -340,6 +340,7 @@ export class HomeComponent implements OnInit {
         }
       );
     }
+    
   }
 
   filteredEmployees: any[] = [];
