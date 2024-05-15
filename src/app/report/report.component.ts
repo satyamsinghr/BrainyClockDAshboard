@@ -30,7 +30,7 @@ export class ReportComponent implements OnInit {
   dataSourceWithPageSize = new MatTableDataSource<viewEmployeeItemDto>(
 
   );
-  displayedColumns = ['select','reportName', 'reportType', 'dateGenerated', 'reportPeriod', 'Action'];
+  displayedColumns = ['select', 'reportName', 'reportType', 'dateGenerated', 'reportPeriod', 'Action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   lastUrl: string;
@@ -41,7 +41,7 @@ export class ReportComponent implements OnInit {
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private datePipe: DatePipe,
-    private sharedService:SharedService
+    private sharedService: SharedService
   ) { }
 
   getCurrentDate(): Date {
@@ -61,13 +61,13 @@ export class ReportComponent implements OnInit {
   shifts: any = []
   pageSize: number = 10;
   ngOnInit(): void {
-    const Url  = this.router.url;
-    console.log("testtt",Url);
-    
+    const Url = this.router.url;
+    console.log("testtt", Url);
+
     const parts = Url.split('/');
     this.lastUrl = parts[parts.length - 1];
     this.sharedService.setLastUrl(this.lastUrl);
-    console.log("LastURL",this.lastUrl)
+    console.log("LastURL", this.lastUrl)
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if (this.token == null) {
       this.router.navigateByUrl('/');
@@ -82,12 +82,12 @@ export class ReportComponent implements OnInit {
       this.getAllShift()
       this.getLocationByCompanyId();
       this.getAllLocation();
-     this.filterReport(this.comapnyId);
+      this.filterReport(this.comapnyId);
     }
   }
 
 
-  generateData:any
+  generateData: any
   filterReport(selectedCompanyId: any) {
     if (this.role !== "SA") {
       this.spinner.show();
@@ -95,39 +95,50 @@ export class ReportComponent implements OnInit {
       this.service.filterAllReports(selectedCompanyId).subscribe((response: any) => {
         this.dataSource.data = response.body.data;
         this.spinner.hide();
-    },
-        (error:any) => {
+      },
+        (error: any) => {
+          this.service.handleError(error);
+          this.spinner.hide();
+        });
+    } else {
+      this.spinner.show();
+      selectedCompanyId = this.service.getCompanyId();
+      this.service.filterAllReportsAdmin().subscribe((response: any) => {
+        this.dataSource.data = response.body.data;
+        this.spinner.hide();
+      },
+        (error: any) => {
           this.service.handleError(error);
           this.spinner.hide();
         });
     }
   }
-  reportName:any
-  reportType:any
-  
+  reportName: any
+  reportType: any
+
   downloadReport(reportId: number): void {
- if (this.role !== "SA") {
+    if (this.role !== "SA") {
       this.service.filterByReportsId(reportId).subscribe((response: any) => {
-        this.generateData= response.body.data.records;
-        this.reportName=response.body.data.reportName;
-        this.reportType=response.body.data.reportType;
-        if( this.generateData.length>0){
+        this.generateData = response.body.data.records;
+        this.reportName = response.body.data.reportName;
+        this.reportType = response.body.data.reportType;
+        if (this.generateData.length > 0) {
           this.downloadExcelReport(this.generateData)
         }
-    },
-        (error:any) => {
+      },
+        (error: any) => {
           this.service.handleError(error);
         });
     }
   }
 
-  downloadExcelReport(generateData:any) {
+  downloadExcelReport(generateData: any) {
     const workbook = new Workbook();
     const worksheet = workbook.addWorksheet('Sheet1');
 
-    this.addBoldTextRow(worksheet, 'Report Name:', this.reportName?this.reportName:"");
-    this.addBoldTextRow(worksheet, 'Report Type:', this.reportType?this.reportType:"");
-    
+    this.addBoldTextRow(worksheet, 'Report Name:', this.reportName ? this.reportName : "");
+    this.addBoldTextRow(worksheet, 'Report Type:', this.reportType ? this.reportType : "");
+
     worksheet.addRow([]);
     const excelData = this.generateExcelData(generateData);
     worksheet.addRow(excelData[0]);
@@ -141,7 +152,7 @@ export class ReportComponent implements OnInit {
   }
   addBoldTextRow(worksheet: any, label: string, value: string) {
     const boldStyle = { bold: true };
-    worksheet.addRow([label, value]).eachCell((cell:any) => {
+    worksheet.addRow([label, value]).eachCell((cell: any) => {
       cell.font = boldStyle;
     });
   }

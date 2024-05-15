@@ -146,7 +146,7 @@ export class ReportFilterComponent implements OnInit {
       this.isModelOpen = true;
       this.show_modal = 'show'
       this.loading = true;
-      if (this.role !== "SA") {
+      // if (this.role !== "SA") {
         this.selectedCompanyId = this.service.getCompanyId();
         this.service.filterReport(this.reportNameValue, this.selectedCompanyId, this.selectedReportType, this.startDate, this.endDate, this.selectedLocation, this.selectedDepartmentIds, this.selectedShift).subscribe((response: any) => {
           this.generatedReports = response.body.data.records;
@@ -161,7 +161,7 @@ export class ReportFilterComponent implements OnInit {
             this.loading = false;
             this.show_modal = '';
           });
-      }
+      // }
     }
 
   }

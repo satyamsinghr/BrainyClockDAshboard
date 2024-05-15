@@ -543,6 +543,12 @@ export class AppService {
     const url_ = `${this.apiConfig}/admin/reportsCriteriasByCompanyId`;
     return this.http.get<any>(url_, { headers: headers, params: queryParams, observe: 'response' })
   }
+  filterAllReportsAdmin() {
+    const token = JSON.parse(localStorage.getItem('loginToken'));
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const url_ = `${this.apiConfig}/admin/reportsCriterias`;
+    return this.http.get<any>(url_, { headers: headers,  observe: 'response' })
+  }
 
   filterCompany(suggestionName: any, suggestionEmail: any) {
     const token = JSON.parse(localStorage.getItem('loginToken'));
