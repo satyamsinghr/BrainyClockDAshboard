@@ -27,14 +27,15 @@ const log = new Logger('Employee');
 })
 export class CompanyComponent implements OnInit {
   displayedColumns: string[] = [
-    // 'select',
+    'select',
     'companyId',
     'name',
     'email',
     'isAccountActivated',
     'actions',
   ];
-
+   
+  
   dataSource = new MatTableDataSource(Emp_Data);
   dataSourceWithPageSize = new MatTableDataSource(Emp_Data);
   selection = new SelectionModel(true, []);
@@ -52,7 +53,8 @@ export class CompanyComponent implements OnInit {
   ) {
     paginator1.itemsPerPageLabel = 'The amount of data displayed';
   }
-
+  
+  nameOfCompany = JSON.parse(localStorage.getItem('nameOfCompany'));
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSourceWithPageSize.paginator = this.paginator;
@@ -62,12 +64,14 @@ export class CompanyComponent implements OnInit {
   role:any;
   ngOnInit(): void {
     this.role = JSON.parse(localStorage.getItem('role'));
+    this.companyService.getAllCompany = this.getAllCompany.bind(this);
     this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
     if(this.role === null){
       this.router.navigate(['**'])}
     this.getAllCompany();
     this.getLocationByCompanyId();
   }
+
 
 
   locationData: any
@@ -81,6 +85,8 @@ export class CompanyComponent implements OnInit {
       }
     );
   }
+
+  
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -108,11 +114,24 @@ export class CompanyComponent implements OnInit {
       this.service.filterCompany(this.name,this.email).subscribe((response:any) => {
         this.suggestionName = response.body.data.map((employee: any) => employee.name);
         })
-    } else{
+    }
+    else if (this.name == "" || this.name === null || this.name === undefined){
       this.filterCompany(this.name,this.email);
       this.suggestionName=[];
+      console.log("this.suggestionName",this.suggestionName);
+      
     }
   }
+ 
+  filterCompanyData(event: any) {
+    const searchData = event.target.value.toLowerCase(); // Convert search data to lowercase
+    this.dataSource.data = this.companyData.filter(
+      (company: any) =>
+        company.name.toLowerCase().includes(searchData) ||
+        company.email.toString().toLowerCase().includes(searchData)
+    );
+  }
+  
 
   selectSuggestionName(suggestion: string) {
     this.name = suggestion;
@@ -204,7 +223,6 @@ export class CompanyComponent implements OnInit {
   }
 
   openEditCompanyModal(row: any) {
-    debugger
     const dialogRef = this.dialog.open(EditCompanyComponent, {
       width: '100%', maxWidth: '420px', // adjust width as needed
       // Pass department ID to the modal if needed

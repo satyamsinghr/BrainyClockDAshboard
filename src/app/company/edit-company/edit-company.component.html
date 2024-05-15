@@ -105,7 +105,6 @@
   </div>
 </div> -->
 
-
 <section class="add_department">
   <div class="department_card p-3 brand_info">
     <h2 class="text-center">Edit Company Form</h2>
@@ -116,7 +115,7 @@
             <label for="department" class="labelName">Department
               Name</label>
           </div> -->
-        <div class="col-12">
+        <div class="col-12 mt-3">
           <input asp-for="email" type="email" [(ngModel)]="email" class="form-control" formControlName="email" placeholder="Enter Email"
             required="required" />
           <small *ngIf="(editCompanyFormControl['email'].touched || submitted) &&
@@ -155,17 +154,20 @@
 
       <div class="d-flex flex-lg-row flex-md-row flex-column-reverse align-items-center gap-3 pt-3 ">
         <button type="button" class="btn btn-outline-primary py-3 h-auto px-4"
-        (click)="onCancel()">
+          (click)="onCancel()">
           Cancel
         </button>
-        <div class="d-flex location_outer justify-content-center position-relative login_loader">
-          <button type="submit" class="btn btn-primary {{spinnerShow}} py-3 px-4 h-auto w-100">
-            Sumbit</button>
+        <div
+          class="d-flex location_outer justify-content-center position-relative login_loader">
+          <button type="submit"
+            class="btn btn-primary  {{spinnerShow}} py-3 px-4 h-auto w-100">Update 
+            Company</button>
           <div *ngIf="spinner == true" class="loader_img">
-              <img src="assets/img/site_loader.gif" alt>
-            </div>
+            <img src="assets/img/site_loader.gif" alt>
+          </div>
         </div>
       </div>
     </form>
   </div>
 </section>
+
