@@ -108,7 +108,11 @@ export class EditDepartmentComponent implements OnInit {
             this.spinnerShow = '';
             this.toastr.success(response.msg);
             this.dialogRef.close();
+            if (this.role != 'SA') {
             this.departmentService.getDepartmentById();
+            }else{
+            this.departmentService.getAllDepartment();
+            }
             this.spinner = false
           },
           (error) => {

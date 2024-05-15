@@ -98,6 +98,7 @@ export class DepartmentComponent implements OnInit {
     this.sharedService.setLastUrl(this.lastUrl);
     console.log("deptartmemntLAstURL",this.lastUrl);
     this.departmentService.getDepartmentById = this.getDepartmentById.bind(this);
+    this.departmentService.getAllDepartment = this.getAllDepartment.bind(this);
     this.token = JSON.parse(localStorage.getItem('loginToken'));
     if (this.token == null) {
       this.router.navigateByUrl('/');
