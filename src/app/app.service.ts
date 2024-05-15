@@ -610,6 +610,13 @@ export class AppService {
     let url_ = this.apiConfig + `/admin/attandance/getEmployeeAttendanceByCompany/${companyId}`;
     return this.http.get(url_, { headers });
   }
+  getAllEmployeeAttendance() {
+    const companyId = this.getCompanyId()
+    const token = JSON.parse(localStorage.getItem('loginToken'));
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    let url_ = this.apiConfig + `/admin/attandance/getAllEmployeeAttendance/${companyId}`;
+    return this.http.get(url_, { headers });
+  }
   // getSchudle(id: number) {
   //   const token = JSON.parse(localStorage.getItem('loginToken'));
   //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

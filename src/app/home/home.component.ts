@@ -309,6 +309,7 @@ export class HomeComponent implements OnInit {
   index :any = 0;
   newFilteredArray: [] 
   getDepaetmentById() {
+    if (this.role != 'SA') {
     this.service.getDepartmentById(this.selectedCompanyId).subscribe(
       (response: any) => {
          this.departmentData = response.data;
@@ -321,15 +322,42 @@ export class HomeComponent implements OnInit {
         this.service.handleError(error);
       }
     );
+  }else{
+    this.service.getAllDepartment().subscribe(
+      (response: any) => {
+         this.departmentData = response.data;
+        this.departmentId=this.departmentData[this.index].department_id;
+        this.departmentName=this.departmentData[this.index].department_name;
+        this.departmentName1=this.departmentData[this.index1].department_name;
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
+  }
   }
   
   employeelength: any
   employee:[]
   department_id:any
   getEmployeeByCompanyId() {
+    debugger
     if (this.role != 'SA') {
       this.service.getEmployeeAttendanceByCompany().subscribe(
         (response: any) => {
+          this.employeelength = response.data.length;
+          debugger
+          this.employee=response.data;
+         this.filterEmployeeDataByDepartmentId() ;
+        },
+        (error) => {
+          this.service.handleError(error);
+        }
+      );
+    }else{
+      this.service.getAllEmployeeAttendance().subscribe(
+        (response: any) => {
+          debugger
           this.employeelength = response.data.length;
           debugger
           this.employee=response.data;
