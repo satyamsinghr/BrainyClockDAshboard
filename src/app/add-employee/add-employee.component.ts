@@ -347,13 +347,11 @@ export class AddEmployeeComponent implements OnInit {
               this.spinner = false;
               this.spinnerShow = '';
             } else {
-              this.toastr.error("Intenal Server error");
+              this.service.handleError(error);
               this.spinner = false;
               this.spinnerShow = '';
             }
-            this.service.handleError(error);
-            this.spinner = false;
-            this.spinnerShow = '';
+           
           }
         );
       }
