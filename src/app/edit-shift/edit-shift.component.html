@@ -100,6 +100,16 @@
                     {{ department.department_name }}
                   </option>
                 </select>
+                <small *ngIf="
+                (editShiftFormControl['department_id'].touched ||
+                  submitted) &&
+                  editShiftFormControl['department_id'].invalid" class="form-text text-muted mt-2">
+                 <div class="text-danger" *ngIf="
+                    editShiftFormControl['department_id'].errors &&
+                    editShiftFormControl['department_id'].errors['required']">
+                    Department is required  
+                 </div>
+                 </small>
                 <span class="down_arrow"><svg xmlns="http://www.w3.org/2000/svg"
                   width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M16.7998 9.5999L11.9998 14.3999L7.19981 9.5999"

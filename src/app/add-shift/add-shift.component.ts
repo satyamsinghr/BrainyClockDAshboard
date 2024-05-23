@@ -75,6 +75,7 @@ export class AddShiftComponent implements OnInit {
   onLocationChange(event:any) {
     const locationId =event.target.value;
     this.deptData = this.departmentData.filter((x:any)=>x.location_id == locationId);
+    this.addShiftForm.get('department_id')?.setValue('');
     this.isDeptDisabled = false;
   }
   getDepaetmentById() {

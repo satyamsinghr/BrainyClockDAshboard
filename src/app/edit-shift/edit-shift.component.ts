@@ -101,6 +101,7 @@ export class EditShiftComponent implements OnInit {
   onLocationChange(event:any) {
     const locationId =event.target.value;
     this.selectedDept = this.departmentData.filter((x:any)=>x.location_id == locationId);
+    this.editShiftForm.get('department_id')?.setValue('');
     this.isDeptDisabled = false;
   }
 selectedDept:any
