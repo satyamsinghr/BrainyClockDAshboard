@@ -119,8 +119,11 @@ export class AddDepartmentComponent implements OnInit {
           this.spinnerShow = '';
           this.toastr.success(response.msg);
           this.dialogRef.close();
+          if(this.role != 'SA'){
           this.departmentService.getDepartmentById();
+          }else{
           this.departmentService.getAllDepartment();
+          }
           this.spinner = false
           // this.location.replaceState(this.location.path());
         },
