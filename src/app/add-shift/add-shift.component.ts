@@ -70,7 +70,13 @@ export class AddShiftComponent implements OnInit {
       // this.getAllDepartment();
     }
   }
-
+  deptData:any;
+  isDeptDisabled = true;
+  onLocationChange(event:any) {
+    const locationId =event.target.value;
+    this.deptData = this.departmentData.filter((x:any)=>x.location_id == locationId);
+    this.isDeptDisabled = false;
+  }
   getDepaetmentById() {
     this.companyId = this.role == 'SA' ? this.selectedCompanyId : this.companyId
     if (this.companyId) {

@@ -58,7 +58,7 @@ export class EditShiftComponent implements OnInit {
     this.clockInTime=this.data.row.clock_in_time;
     this.clockOutTime=this.data.row.clock_out_time;
     this.days=this.data.row.days.split(',');
-    this.location_id=this.data.location_id;
+    this.location_id=this.data.row.location_id;
     this.name=this.data.row.name;
     this.role = this.service.getRole();
     this.initializeForm();
@@ -67,7 +67,8 @@ export class EditShiftComponent implements OnInit {
       // this.getFormDetail(this.id);
       // this.getAllCompany();
       // this.getAllDepartment();
-      this.getDepartmentById()
+      this.getDepartmentById();
+      this.getLocation()
     });
     if (this.role != 'SA') {
       this.isCompanyLoggedIn = true;
@@ -95,10 +96,19 @@ export class EditShiftComponent implements OnInit {
     }
   }
 
+  deptData:any;
+  isDeptDisabled = true;
+  onLocationChange(event:any) {
+    const locationId =event.target.value;
+    this.selectedDept = this.departmentData.filter((x:any)=>x.location_id == locationId);
+    this.isDeptDisabled = false;
+  }
+selectedDept:any
   getDepartmentById() {
     this.service.getDepartmentById(this.company_id).subscribe(
       (response: any) => {
         this.departmentData = response.data;
+        this.selectedDept = response.data.filter((x:any)=>x.location_id ==  this.location_id);
         this.isDisabled=false;
       },
       (error) => {
@@ -146,9 +156,38 @@ export class EditShiftComponent implements OnInit {
       // days: ['', [Validators.required]],
       clockInTime: ['', [Validators.required]],
       clockOutTime: ['', [Validators.required]],
+      locationId: ['', [Validators.required]],
       // lunchInTime: ['', [Validators.required]],
       // lunchOutTime: ['', [Validators.required]],
     });
+  }
+  locationData: any;
+  getLocation() {
+    if (this.role == 'SA') {
+      this.service
+        .getCompanyOfficeLocation(parseInt(this.company_id))
+        .subscribe((response: any) => {
+          this.locationData = response.data
+          this.isDisabled = false
+        },
+          (error) => {
+            this.service.handleError(error);
+            this.locationData = []
+          }
+        );
+    } else {
+      this.service
+        .getCompanyOfficeLocation(this.company_id)
+        .subscribe((response: any) => {
+          this.locationData = response.data
+        },
+          (error) => {
+            this.service.handleError(error);
+            this.locationData = []
+          }
+        );
+    }
+
   }
 
   companyData: any;
