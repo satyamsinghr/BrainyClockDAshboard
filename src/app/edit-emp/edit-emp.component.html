@@ -571,7 +571,7 @@
        
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="shifts" class="labelName">Select shifts :</label>
-          <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c">
+          <ul class="d-flex align-items-center gap-3 flex-wrap add_shifts_c"  *ngIf="department_id" >
             <li *ngFor="let shift of matchingShifts; let i = index">
               <input type="checkbox" [checked]="isShiftSelected(shift.id)" (change)="toggleShiftSelection(shift.id,i)">
               <button type="button" class="d-flex align-items-center gap-2">
