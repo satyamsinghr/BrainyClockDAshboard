@@ -19,6 +19,7 @@ export class EditEmpComponent implements OnInit {
   selectedShifts: any[] = [];
   spinner: boolean = false;
   shiftsName: any = ['[2,3]', '[3,4]', '[4,5]', '[5,6]', '[7,8]', '[8,9]'];
+  deptData: any;
   constructor(
     private service: AppService,
     private router: Router,
@@ -51,6 +52,7 @@ export class EditEmpComponent implements OnInit {
   locations: any;
   type: number;
   location_name: any;
+  location_id: any;
   comapnyId: any;
   ngOnInit(): void {
     this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
@@ -63,6 +65,7 @@ export class EditEmpComponent implements OnInit {
     this.overTime = this.data.row.overTime;
     // this.employee_id = this.data.row.employee_id;
     this.location_name = this.data.row.location_id;
+    this.location_id = this.data.row.location_id;
     this.type = this.data.row.type;
     this.selectedCompanyId = this.data.row.company_id;
     this.department_id = this.data.row.department_id;
@@ -77,7 +80,6 @@ export class EditEmpComponent implements OnInit {
     // this.employeeId = this.route.snapshot.params['employeeId'];
     this.initializeForm();
     // this.getAllDepartment();
-    this.getDepartmentById()
     this.getEmployeeById(this.employeeId);
     if (this.role != 'SA') {
       this.companyData = [
@@ -100,6 +102,8 @@ export class EditEmpComponent implements OnInit {
     // this.matchingShifts = [];
     // this.matchingShifts.push(this.data.row);
     this.getOfficeLocation();
+    this.getDepartmentById()
+
   }
 
 
@@ -295,6 +299,15 @@ export class EditEmpComponent implements OnInit {
         );
     }
   }
+
+  onLocationSelect(event: any) {
+    const locationId = event.target.value;
+    this.departmentData = this.deptData.filter((x:any)=>x.location_id == locationId)
+    this.editEmployeeForm.get('department_id')?.setValue('');
+    this.selectedShifts = [];
+    // this.getDepartmentById(locationId);
+  }
+  
   editEmployee() {
     this.submitted = true;
     if (this.editEmployeeForm.valid) {
@@ -344,7 +357,8 @@ export class EditEmpComponent implements OnInit {
     if (this.role != 'SA') {
       this.service.getDepartmentById(this.comapnyId).subscribe(
         (response: any) => {
-          this.departmentData = response.data;
+          this.deptData = response.data;
+          this.departmentData = response.data.filter((x:any)=>x.location_id ==  this.location_id);
           // const selectedDepartment  = this.departmentData.find((x:any) => x.department_id == this.department_name);
           // this.department_name =  selectedDepartment ? selectedDepartment.department_name : '';
           // console.log(" this.department_name this.department_name", this.department_name)
@@ -356,7 +370,9 @@ export class EditEmpComponent implements OnInit {
     } else {
       this.service.getDepartmentById(this.selectedCompanyId).subscribe(
         (response: any) => {
-          this.departmentData = response.data;
+          this.deptData = response.data;
+          // this.departmentData = this.deptData.filter((x:any)=>x.location_id == locationId)
+          this.departmentData = response.data.filter((x:any)=>x.location_id ==  this.location_id);
           // const selectedDepartment  = this.departmentData.find((x:any) => x.department_id == this.department_name);
           // this.department_name =  selectedDepartment ? selectedDepartment.department_name : '';
           // console.log(" this.department_name this.department_name", this.department_name)

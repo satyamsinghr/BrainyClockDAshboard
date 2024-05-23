@@ -506,10 +506,32 @@
             </div> -->
           </small>
         </div>
-
+        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+          <label for="location_id" class="labelName">Office :</label>
+          <select class="form-control" formControlName="location_id" required [attr.disabled]="isDisabled === true ? true : null" (change)="onLocationSelect($event)">
+            <option value>Select Office</option>
+            <option *ngFor="let location of locations" [value]="location.id">
+              {{ location.location_name}}
+            </option>
+          </select>
+          <small *ngIf="
+                        (addEmployeeFormControl['location_id'].touched ||
+                          submitted) &&
+                        addEmployeeFormControl['location_id'].invalid
+                      " class="form-text text-muted mt-2">
+            <div class="text-danger" *ngIf="
+                          addEmployeeFormControl['location_id'].errors &&
+                          addEmployeeFormControl['location_id'].errors[
+                            'required'
+                          ]
+                        ">
+              Office name is required
+            </div>
+          </small>
+        </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="department_id" class="labelName">Department :</label>
-          <select class="form-control" formControlName="department_id" required (change)="onDepartmentSelect($event)" [attr.disabled]="isDisabled === true ? true : null">
+          <select class="form-control" formControlName="department_id" required (change)="onDepartmentSelect($event)" [attr.disabled]="isDeparmentDisabled === true ? true : null">
             <option value>Select Department</option>
             <option *ngFor="let department of departmentData"
               [value]="department.department_id">
@@ -575,29 +597,7 @@
                 </small>
             </div> -->
 
-        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-          <label for="location_id" class="labelName">Office :</label>
-          <select class="form-control" formControlName="location_id" required [attr.disabled]="isDisabled === true ? true : null">
-            <option value>Select Office</option>
-            <option *ngFor="let location of locations" [value]="location.id">
-              {{ location.location_name}}
-            </option>
-          </select>
-          <small *ngIf="
-                        (addEmployeeFormControl['location_id'].touched ||
-                          submitted) &&
-                        addEmployeeFormControl['location_id'].invalid
-                      " class="form-text text-muted mt-2">
-            <div class="text-danger" *ngIf="
-                          addEmployeeFormControl['location_id'].errors &&
-                          addEmployeeFormControl['location_id'].errors[
-                            'required'
-                          ]
-                        ">
-              Office name is required
-            </div>
-          </small>
-        </div>
+       
         <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-12">
           <label for="hourlyRate" class="labelName">Hour Rate</label>
           <input type="number" class="form-control"

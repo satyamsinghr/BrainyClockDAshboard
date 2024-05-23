@@ -26,8 +26,10 @@ export class AddEmployeeComponent implements OnInit {
   spinnerShow: string = '';
   isCompanyLoggedIn: boolean = false;
   isDisabled : boolean = true
+  isDeparmentDisabled : boolean = true
   noOfEmployees: any
   protected _onDestroy = new Subject<void>();
+  deptData: any;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -48,7 +50,7 @@ export class AddEmployeeComponent implements OnInit {
     this.initializeForm();
     // this.getAllLocation();
     // this.getShiftByDepartmentId();
-    this.getDepaetmentById();
+    // this.getDepaetmentById();
     // this.getAllEmployee();
     if (this.role != 'SA') {
       this.isCompanyLoggedIn = true;
@@ -98,12 +100,13 @@ export class AddEmployeeComponent implements OnInit {
   get shiftName() {
     return this.addEmployeeForm.get('shifts');
   }
-  getDepaetmentById() {
+  getDepaetmentById(locationId: number) {
     this.service.getDepartmentById(this.selectedCompanyId).subscribe(
       (response: any) => {
-        this.departmentData = response.data;
+        this.deptData = response.data;
+         this.departmentData = this.deptData.filter((x:any)=>x.location_id == locationId)
         if(response.data.length>0){
-        this.isDisabled = false
+        this.isDeparmentDisabled = false
         }
       },
       (error) => {
@@ -215,7 +218,7 @@ export class AddEmployeeComponent implements OnInit {
     this.matchingShifts = [];
     this.selectedCompanyId = event.target.value;
     this.getOfficeLocation();
-    this.getDepaetmentById();
+    // this.getDepaetmentById();
     this.matchingShifts = this.ShiftData.filter(
       (x: any) => x.company_id === parseInt(this.selectedCompanyId)
     );
@@ -248,6 +251,7 @@ export class AddEmployeeComponent implements OnInit {
         .getCompanyOfficeLocation(this.companyData[0].id)
         .subscribe((response: any) => {
           this.locations = response.data
+          this.isDisabled = false
         },
           (error) => {
             this.service.handleError(error);
@@ -256,6 +260,14 @@ export class AddEmployeeComponent implements OnInit {
         );
     }
 
+  }
+
+  onLocationSelect(event: any) {
+    const locationId = event.target.value;
+    this.getDepaetmentById(locationId);
+    this.addEmployeeForm.get('department_id')?.setValue('');
+    // this.shifts = ['', '', ''];
+    this.shifts = [];
   }
 
   changeShift1(e: any) {
