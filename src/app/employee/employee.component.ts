@@ -215,6 +215,7 @@ export class EmployeeComponent implements OnInit {
 
   employeeData: any = []
   employeeLength: any
+  employeeCount: any
   selectedShiftIds: number[] = [];
   getAllEmployee() {
     if (this.role == 'SA') {
@@ -249,6 +250,7 @@ export class EmployeeComponent implements OnInit {
           // this.dataSource.data = response.data;
           this.dataSource.data = dataaa;
           this.employeeLength = response.data.length;
+          this.employeeCount = response.employeeCount;
         },
         (error) => {
           this.service.handleError(error);
@@ -511,7 +513,7 @@ export class EmployeeComponent implements OnInit {
     const dialogRef = this.dialog.open(AddEmployeeComponent, {
       width: '728px',
       height: '600px' ,
-      data:{employeeLength:this.employeeLength}// adjust width as needed
+      data:{employeeLength:this.employeeLength,employeeCount:this.employeeCount}// adjust width as needed
       // You can pass data to the modal if needed
       // data: { anyData: yourData },
     });

@@ -336,7 +336,8 @@ export class AddEmployeeComponent implements OnInit {
     //   this.addEmployeeForm.get('companyId').setValue(companyId);
     // }
 
-    if (this.role !== 'SA' && this.noOfEmployees > this.data.employeeLength) {
+    // if (this.role !== 'SA' && this.noOfEmployees > this.data.employeeLength) {
+    if (this.role !== 'SA' && this.data.employeeCount > this.data.employeeLength) {
       if (this.addEmployeeForm.valid) {
         this.spinner = true
         this.spinnerShow = 'text-trasparent';
