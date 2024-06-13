@@ -35,6 +35,7 @@ export class LocationComponent implements OnInit {
     'location_name',
     'address',
     'pincode',
+    'qrCode',
     'actions',
   ];
   displayedColumnsCompany: string[] = [
@@ -43,6 +44,7 @@ export class LocationComponent implements OnInit {
     'location_name',
     'address',
     'pincode',
+    'qrCode',
     'actions',
   ];
 
@@ -96,19 +98,38 @@ export class LocationComponent implements OnInit {
     }
   }
 
- public qrCodeDownloadLink = "";
+//  public qrCodeDownloadLink = "";
+// generateQRData(row: any) {
+//   debugger
+//   this.qrCodeDownloadLink = `https://api.qrserver.com/v1/create-qr-code/?data=${row.company_id}_${row.id}_${row.location_name}`;
+// const pdf = new jspdf.jsPDF();
+// const img = new Image();
+// img.crossOrigin = 'Anonymous'; 
+// img.onload = () => {
+//   pdf.addImage(img, 'PNG', 10, 10, 100, 100);
+//   pdf.save('qrcode.pdf');
+// };
+// img.src = this.qrCodeDownloadLink;
+// return false;
+// }
+public qrCodeDownloadLink = "";
+
 generateQRData(row: any) {
   this.qrCodeDownloadLink = `https://api.qrserver.com/v1/create-qr-code/?data=${row.company_id}_${row.id}_${row.location_name}`;
-const pdf = new jspdf.jsPDF();
-const img = new Image();
-img.crossOrigin = 'Anonymous'; 
-img.onload = () => {
-  pdf.addImage(img, 'PNG', 10, 10, 100, 100);
-  pdf.save('qrcode.pdf');
-};
-img.src = this.qrCodeDownloadLink;
-return false;
+  const pdf = new jspdf.jsPDF();
+  const img = new Image();
+  img.crossOrigin = 'Anonymous';
+  img.onload = () => {
+    pdf.addImage(img, 'PNG', 10, 10, 100, 100);
+    pdf.save('qrcode.pdf');
+  };
+  img.onerror = (error) => {
+    console.error("Image loading error: ", error);
+  };
+  img.src = this.qrCodeDownloadLink;
+  return false;
 }
+
 
 
  
