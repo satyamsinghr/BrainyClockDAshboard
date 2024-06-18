@@ -482,20 +482,24 @@ employeeCount: any
   this.attendanceByDate.forEach((attendance: any) => {
     const clockInTime = attendance.clock_in_time;
     const shiftClockInTime = attendance.shiftClockInTime;
-
+  
     if (clockInTime && shiftClockInTime) {
       const momentClockInTime = moment(clockInTime, 'HH:mm:ss');
       const momentShiftClockInTime = moment(shiftClockInTime, 'HH:mm:ss');
-      if (momentClockInTime.isSameOrBefore(momentShiftClockInTime)) {
+      
+      // Calculate the time difference in minutes
+      const timeDifference = momentClockInTime.diff(momentShiftClockInTime, 'minutes');
+      
+      if (timeDifference <= 10) {
         counts.onTime++;
       } else {
         counts.late++;
       }
     }
   });
-
+  
   return counts;
-}
+  }  
 
   getRowClass(element: any): string {
     // Customize this logic based on your requirements
