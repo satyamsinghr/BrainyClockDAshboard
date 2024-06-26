@@ -6,6 +6,7 @@ import { addShiftItemDto } from './@shared/models/addShift.model';
 import { Observable, catchError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import * as moment from 'moment-timezone';
 const routes = {
   Post_AddEmployee: `/admin/addemployee`,
   Post_AddShift: `/admin/addshift`,
@@ -377,7 +378,9 @@ export class AppService {
   processAttendance(id: number) {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(this.apiConfig + routes.processAttendance(id), { headers });
+    const timezone = moment.tz.guess();
+    const body = { timezone };
+    return this.http.post(this.apiConfig + routes.processAttendance(id),body, { headers });
   }
 
   getShiftByCompany(): Observable<addShiftItemDto> {
