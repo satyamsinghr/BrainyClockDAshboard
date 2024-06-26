@@ -79,6 +79,7 @@ export class AuthComponent implements OnInit {
           localStorage.setItem('comapnyId', JSON.stringify(response.data.company_id));
           localStorage.setItem('email', JSON.stringify(response.data.email));
           this.toastr.success(response.msg);
+          this.processAttendance(response.data.role,response.data.company_id)
           this.router.navigateByUrl('/dashboard');
         }
       },
@@ -95,6 +96,18 @@ export class AuthComponent implements OnInit {
         }
       );
     }
+  }
+  processAttendance(role:any,company_id:any) {
+    if (role != 'SA') {
+    this.service.processAttendance(company_id).subscribe(
+      (response: any) => {
+        console.log("Aresponse",response);
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
+  }
   }
   // register(){
   //    this.router.navigate(['register']);

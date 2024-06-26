@@ -36,6 +36,7 @@ const routes = {
   Get_AllReport: `/admin/getattendance`,
   Post_AddDepartment: `/admin/addDepartment`,
   Get_DepartmentById: (id: number) => `/admin/departments/${id}`,
+  processAttendance: (id: number) => `/admin/process-attendance/${id}`,
   Post_EditDepartment: (id: number) => `/admin/update-department/${id}`,
   Get_companyOfficeById: (id: number) => `/admin/location/companyid/${id}`,
   Get_Schudle: (id: number) => `/company/get-schedule?companyId=${id}`,
@@ -373,6 +374,12 @@ export class AppService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(this.apiConfig + routes.Get_DepartmentById(id), { headers });
   }
+  processAttendance(id: number) {
+    const token = JSON.parse(localStorage.getItem('loginToken'));
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(this.apiConfig + routes.processAttendance(id), { headers });
+  }
+
   getShiftByCompany(): Observable<addShiftItemDto> {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const companyId = this.getCompanyId()

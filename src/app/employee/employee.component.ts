@@ -97,6 +97,7 @@ export class EmployeeComponent implements OnInit {
     else {
       this.role = this.service.getRole();
       this.comapanyId = JSON.parse(localStorage.getItem('comapnyId'));
+      this.processAttendance();
       this.getLocationByCompanyId();
       if (this.role != 'SA') {
         this.service.getDepartmentById(this.comapanyId).subscribe(
@@ -165,6 +166,21 @@ export class EmployeeComponent implements OnInit {
 
     }
   }
+
+  processAttendance() {
+    if (this.role != 'SA') {
+    this.service.processAttendance(this.comapanyId).subscribe(
+      (response: any) => {
+        console.log("Aresponse",response);
+      },
+      (error) => {
+        this.service.handleError(error);
+      }
+    );
+  }
+  }
+
+
 
   locationData: any
   allLocationByCompany: any[] = [];
