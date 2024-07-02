@@ -18,7 +18,7 @@ const routes = {
   Post_UpdateEmployee: (id: number) => `/admin/update-employee/${id}`,
   Post_Shift: `/shift/add`,
   Get_ShiftById: (id: number) => `/shift/get-single-shift/${id}`,
-  Get_ShiftByCompany: (id: number) => `/shift/get-shifts-by-company/${id}`,
+  Get_ShiftByCompany: (id: number) => `/admin/get-shifts-by-company/${id}`,
   Get_AllShift: `/shift/all`,
   Delete_Shift: (id: number) => `/shift/${id}`,
   Update_Shift: (id: number) => `/admin/shift/${id}`,

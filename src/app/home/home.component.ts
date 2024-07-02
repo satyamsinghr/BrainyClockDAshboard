@@ -271,22 +271,41 @@ getStatus(element: any): string {
     }
   }
 
-  getDayClass(day: any): string {
-    // const currentDate = new Date();
-    // const currentDay = moment(currentDate).format('dddd').toLowerCase();
+  // getDayClass(day: any): string {
+  //   // const currentDate = new Date();
+  //   // const currentDay = moment(currentDate).format('dddd').toLowerCase();
+  //   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  //   const currentDate = new Date();
+  //   const currentDayIndex = currentDate.getDay();
+  //   const currentDay = daysOfWeek[currentDayIndex];
+  // debugger
+
+  //   if (day === currentDay) {
+  //     return 'today';
+  //   } else if (day > currentDay) {
+  //     return 'upcoming_day';
+  //   } else {
+  //     return '';
+  //   }
+
+  // }
+  getDayClass(day: string): string {
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const currentDate = new Date();
     const currentDayIndex = currentDate.getDay();
     const currentDay = daysOfWeek[currentDayIndex];
   
+    const dayIndex = daysOfWeek.indexOf(day);
+  
     if (day === currentDay) {
       return 'today';
-    } else if (day > currentDay) {
+    } else if (dayIndex > currentDayIndex || (dayIndex < currentDayIndex && currentDayIndex === 6)) {
       return 'upcoming_day';
     } else {
       return '';
     }
   }
+  
 
   calculateProgressBarValue(attendedEmp: number, totalEmployees: number): number {
     // Ensure that totalEmployees is not 0 to avoid division by zero
@@ -315,6 +334,7 @@ getStatus(element: any): string {
   departmentData: any;
   departmentName:any;
   departmentName1:any;
+  locationName1:any;
   index :any = 0;
   newFilteredArray: [] 
   getDepaetmentById() {
@@ -325,6 +345,7 @@ getStatus(element: any): string {
         this.departmentId=this.departmentData[this.index].department_id;
         this.departmentName=this.departmentData[this.index].department_name;
         this.departmentName1=this.departmentData[this.index1].department_name;
+        this.locationName1=this.departmentData[this.index1].location_name;
         this.filterEmployeeDataByDepartmentId()
       },
       (error) => {
@@ -338,6 +359,7 @@ getStatus(element: any): string {
         this.departmentId=this.departmentData[this.index].department_id;
         this.departmentName=this.departmentData[this.index].department_name;
         this.departmentName1=this.departmentData[this.index1].department_name;
+        this.locationName1=this.departmentData[this.index1].location_name;
       },
       (error) => {
         this.service.handleError(error);
@@ -429,6 +451,7 @@ backwardButtonClick1() {
 
 updateDepartmentName1() {
   this.departmentName1 = this.departmentData[this.index1]?.department_name || '';
+  this.locationName1 = this.departmentData[this.index1]?.location_name || '';
 }
 
 employeeCount: any

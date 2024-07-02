@@ -136,15 +136,16 @@ export class EmployeeComponent implements OnInit {
   getAttendanceClass(attendance: any, day: any) {
     if (attendance.length > 0) {
 
-      const today = new Date().getDay();
-      const currentDayIndex = this.weekDays.indexOf(day);
-      if (day === 'Saturday' || day === 'Sunday') {
+      const shiftDays = attendance[0].shift_days.split(','); // Assuming shift_days is same for all entries in attendance
+      if (!shiftDays.includes(day)) {
         return 'disabled';
       }
-      // if (!Array.isArray(attendance)) {
-      //   console.error('Attendance data is not an array:', attendance);
-      //   return ''; // Handle this case appropriately
+      const today = new Date().getDay();
+      const currentDayIndex = this.weekDays.indexOf(day);
+      // if (day === 'Saturday' || day === 'Sunday') {
+      //   return 'disabled';
       // }
+ 
       if (currentDayIndex + 1 > today) {
         return 'upcoming';
       }

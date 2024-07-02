@@ -3347,6 +3347,11 @@ ul.record_progress li span {
   opacity: 0.25;
 }
 
+
+ul.record_progress li.today span {
+  font-weight: bold;
+}
+
 // tr.late_punch td {
 //   color: #FF6528 !important;
 //   font-weight: 700 !important;

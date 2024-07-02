@@ -29,7 +29,7 @@
                                 500 New York, NY 10017</p> -->
                     <h3>{{departmentName1}}</h3>
                     <!-- <h3>{{locationData?.location_name}}</h3> -->
-                    <p>{{locationData?.address}}</p>
+                    <p>{{locationName1}}</p>
                 </div>
                 <div class="arrow d-flex align-items-center gap-3">
                     <!-- <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
@@ -406,8 +406,9 @@
                     <!-- <p>{{locationData?.location_name}} |   
                         9:30 AM to 5:30 PM</p> -->
                     <!-- <p>{{ filteredEmployees.length > 0 ? filteredEmployees[index].department_name : 'Department' }}  | -->
-                    <p>{{departmentName }} |
-                        9:30 AM to 5:30 PM</p>
+                    <p>{{departmentName }} 
+                        <!-- | 9:30 AM to 5:30 PM -->
+                    </p>
                 </div>
                 <div class="arrow d-flex align-items-center gap-3">
                     <button (click)="backwardButtonClick()">
