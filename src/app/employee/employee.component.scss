@@ -61,3 +61,40 @@
 .absent {
   background-color: #061D23;
 }
+
+button.carouselButton {
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  position: absolute;
+  border-radius: 50px;
+  border: 1px solid #FF6528;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FF6528;
+  left: -4px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 10;
+}
+
+
+button.carouselButton.buttonRight {
+  right: -4px;
+  left: auto;
+}
+
+button.carouselButton svg,
+button.carouselButton svg path {
+  width: 12px;
+  height: 12px;
+  stroke: #fff;
+}
+
+button.carouselButton.disabled
+{
+  opacity: 0.5;
+  pointer-events: none;
+}

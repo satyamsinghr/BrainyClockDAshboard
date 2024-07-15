@@ -22,6 +22,8 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { AppService } from './../app.service';
 import { ViewChildren, QueryList, ElementRef, AfterViewInit } from '@angular/core';
 import { SharedService } from '../shared.service';
+import moment from 'moment';
+
 const log = new Logger('Employee');
 @Component({
   selector: 'app-employee',
@@ -39,6 +41,7 @@ export class EmployeeComponent implements OnInit {
     'clock_in',
     'clock_out',
     'shifts',
+    'weekRange',
     'attandance_this_week',
     // 'primaryLocation',
     'actions',
@@ -82,6 +85,10 @@ export class EmployeeComponent implements OnInit {
   }
   comapanyId: any
   token: any
+  currentWeekIndex: { [key: string]: number } = {}; // Object to track current week index for each row
+  weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+
   ngOnInit(): void {
     const Url = this.router.url;
 
@@ -97,7 +104,7 @@ export class EmployeeComponent implements OnInit {
     else {
       this.role = this.service.getRole();
       this.comapanyId = JSON.parse(localStorage.getItem('comapnyId'));
-      this.processAttendance();
+      // this.processAttendance();
       this.getLocationByCompanyId();
       if (this.role != 'SA') {
         this.service.getDepartmentById(this.comapanyId).subscribe(
@@ -130,10 +137,62 @@ export class EmployeeComponent implements OnInit {
 
   }
 
-  weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  goBackward(element: any): void {
+    const { startDate, endDate } = this.getNewWeekRange(element.weekRange, -1);
+    this.fetchWeekData(element, startDate, endDate);
+  }
+
+  goForward(element: any): void {
+    const { startDate, endDate } = this.getNewWeekRange(element.weekRange, 1);
+    this.fetchWeekData(element, startDate, endDate);
+  }
+
+  getNewWeekRange(weekRange: string, offset: number): { startDate: string, endDate: string } {
+    const [start, end] = weekRange.split(' - ');
+    const startDate = moment(start, 'DD-MM-YYYY').add(7 * offset, 'days');
+    const endDate = moment(end, 'DD-MM-YYYY').add(7 * offset, 'days');
+    return {
+      startDate: startDate.format('DD-MM-YYYY'),
+      endDate: endDate.format('DD-MM-YYYY')
+    };
+  }
+
+  isCurrentWeek(element: viewEmployeeItemDto): boolean {
+    const [start,] = element.weekRange.split(' - ');
+    const startDate = moment(start, 'DD-MM-YYYY');
+    const currentWeek = moment().week();
+    return startDate.week() === currentWeek;
+  }
+
+  fetchWeekData(element: any, startDate: string, endDate: string): void {
+    console.log('forward backward', { element, startDate, endDate });
+    this.service.getEmployeeAttendanceForWeek(element, startDate, endDate).subscribe((response: any) => {
+      const data = this.dataSource.data;
+      const index = data.findIndex(row => row.id === element.id);
+      if (index !== -1) {
+        // const formatedStartDate = moment(startDate, 'DD-MM-YYYY').format('DD/MM/YYYY')
+        // const formatedEndDate = moment(endDate, 'DD-MM-YYYY').format('DD/MM/YYYY')
+        // data[index] = response.data
+        const attandance = [response.data];
+        const groupData = this.groupAttendanceByShift(attandance);
+
+        console.log('groupData', groupData)
+        // data[index] = {
+        //   ...data[index],
+        //   weekRange: `${formatedStartDate} - ${formatedEndDate}`,
+        //   attendance: response.data.attendance
+        // };
+        data[index] = groupData[0]
+        this.dataSource.data = data;
+
+        console.log('this.dataSource.data', this.dataSource.data);
+
+      }
+    });
+  }
 
 
-  getAttendanceClass(attendance: any, day: any) {
+  getAttendanceClass(attendance: any, day: any){
     if (attendance.length > 0) {
 
       const shiftDays = attendance[0].shift_days.split(','); // Assuming shift_days is same for all entries in attendance
@@ -145,10 +204,17 @@ export class EmployeeComponent implements OnInit {
       // if (day === 'Saturday' || day === 'Sunday') {
       //   return 'disabled';
       // }
- 
-      if (currentDayIndex + 1 > today) {
+
+      const createdAtAttendance : string = attendance[0].created_at;
+      const createdAt = new Date(createdAtAttendance);
+      const startOfWeek = moment().startOf('week').toDate();
+      const endOfWeek = moment().endOf('week').toDate();
+      const isThisWeek = createdAt >= startOfWeek && createdAt <= endOfWeek;
+
+      if ((currentDayIndex + 1 > today) && isThisWeek) {
         return 'upcoming';
       }
+
       const attendanceDay = attendance.find((a: any) => a.day == day);
       if (attendanceDay) {
         switch (attendanceDay.attendance_status) {
@@ -170,15 +236,15 @@ export class EmployeeComponent implements OnInit {
 
   processAttendance() {
     if (this.role != 'SA') {
-    this.service.processAttendance(this.comapanyId).subscribe(
-      (response: any) => {
-        console.log("Aresponse",response);
-      },
-      (error) => {
-        this.service.handleError(error);
-      }
-    );
-  }
+      this.service.processAttendance(this.comapanyId).subscribe(
+        (response: any) => {
+          console.log("Aresponse", response);
+        },
+        (error) => {
+          this.service.handleError(error);
+        }
+      );
+    }
   }
 
 
@@ -187,27 +253,27 @@ export class EmployeeComponent implements OnInit {
   allLocationByCompany: any[] = [];
   getLocationByCompanyId() {
     if (this.role != 'SA') {
-    this.service.getLocationByCompany(this.comapanyId).subscribe(
-      (response: any) => {
-        this.locationData = response.data[0];
-        this.allLocationByCompany = response.data
-      },
-      (error) => {
-        this.service.handleError(error);
-      }
-    );
-  }else{
-    this.service.getAllLocation().subscribe(
-      (response: any) => {
-        this.locationData = response.data[0];
-        this.allLocationByCompany = response.data
-      },
-      (error) => {
-        this.service.handleError(error);
-      }
-    );
+      this.service.getLocationByCompany(this.comapanyId).subscribe(
+        (response: any) => {
+          this.locationData = response.data[0];
+          this.allLocationByCompany = response.data
+        },
+        (error) => {
+          this.service.handleError(error);
+        }
+      );
+    } else {
+      this.service.getAllLocation().subscribe(
+        (response: any) => {
+          this.locationData = response.data[0];
+          this.allLocationByCompany = response.data
+        },
+        (error) => {
+          this.service.handleError(error);
+        }
+      );
+    }
   }
-}
 
   departmentData: any;
   getAllDepartment() {
@@ -529,8 +595,8 @@ export class EmployeeComponent implements OnInit {
   openAddEmployeeModal() {
     const dialogRef = this.dialog.open(AddEmployeeComponent, {
       width: '728px',
-      height: '600px' ,
-      data:{employeeLength:this.employeeLength,employeeCount:this.employeeCount}// adjust width as needed
+      height: '600px',
+      data: { employeeLength: this.employeeLength, employeeCount: this.employeeCount }// adjust width as needed
       // You can pass data to the modal if needed
       // data: { anyData: yourData },
     });
@@ -606,7 +672,8 @@ export class EmployeeComponent implements OnInit {
     if (attandance.length > 0) {
       const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
 
-      const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
+      const EmpId = attandance.filter((x: any) => x.created_at);
+      // const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
       return EmpId[0]?.shift_name
     }
   }
@@ -614,7 +681,8 @@ export class EmployeeComponent implements OnInit {
     if (attandance.length > 0) {
       const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
 
-      const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
+      const EmpId = attandance.filter((x: any) => x.created_at);
+      // const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
       return EmpId[0]?.attendance_status
     }
   }
@@ -622,8 +690,9 @@ export class EmployeeComponent implements OnInit {
     if (attandance.length > 0) {
       const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
 
-      const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
-      return EmpId[0]?.clock_in_time ? EmpId[0]?.clock_in_time  : "--"
+      const EmpId = attandance.filter((x: any) => x.created_at);
+      // const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
+      return EmpId[0]?.clock_in_time ? EmpId[0]?.clock_in_time : "--"
 
     }
   }
@@ -631,7 +700,8 @@ export class EmployeeComponent implements OnInit {
     if (attandance.length > 0) {
       const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
 
-      const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
+      const EmpId = attandance.filter((x: any) => x.created_at);
+      // const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
       return EmpId[0]?.clock_out_time ? EmpId[0]?.clock_out_time : "--"
     }
   }

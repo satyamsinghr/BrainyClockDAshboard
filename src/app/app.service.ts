@@ -46,6 +46,7 @@ const routes = {
   Delete_Schudle: `/company/delete-schedule`,
   Post_ResetPassword: `/company/reset-password`,
   Get_ShiftBYDepartmentId: (id: number) => `/admin/get-shifts-by-department/${id}`,
+  GetEmployeeAttandanceForWeek: () => `/admin/get-employees-by-company-week`,
 
 };
 
@@ -375,6 +376,19 @@ export class AppService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(this.apiConfig + routes.Get_DepartmentById(id), { headers });
   }
+
+  getEmployeeAttendanceForWeek(element: any, startDate: string, endDate: string) {
+    const token = JSON.parse(localStorage.getItem('loginToken'));
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const payload = {
+      employeeId : element.id,
+      companyId : element.company_id,
+      startDate: startDate,
+      endDate : endDate
+    }
+    return this.http.post(this.apiConfig + routes.GetEmployeeAttandanceForWeek(),payload, { headers });
+  }
+
   processAttendance(id: number) {
     const token = JSON.parse(localStorage.getItem('loginToken'));
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

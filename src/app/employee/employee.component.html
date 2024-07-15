@@ -214,11 +214,42 @@
                             }} </td>
                     </ng-container> -->
 
+                <ng-container matColumnDef="weekRange">
+                    <th *matHeaderCellDef class="text-center">
+                        Week Range
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="position-relative text-center text-nowrap px-4">
+                        <button type="button" class="carouselButton buttonLeft" (click)="goBackward(element)"><svg
+                                viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M15 7L10 12L15 17" stroke="#000000" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </svg></button>
+                        {{ element.weekRange}}
+                        <button type="button" class="carouselButton buttonRight"
+                            [ngClass]="{ 'disabled': isCurrentWeek(element)}" (click)="goForward(element)"
+                            [disabled]="isCurrentWeek(element)"><svg viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M10 7L15 12L10 17" stroke="#000000" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+                        </button>
+                    </td>
+                </ng-container>
+
                 <ng-container matColumnDef="attandance_this_week">
                     <th *matHeaderCellDef class="text-center">
                         attendance this week
                     </th>
-                    <td mat-cell *matCellDef="let element">
+                    <td mat-cell *matCellDef="let element" class="position-relative">
+
                         <div class="d-flex gap-3 flex-column justify-content-center align-items-center">
                             <ul class="this_week_attendance" *ngFor="let shift of Object.keys(element.attendance)">
                                 <li *ngFor="let day of weekDays"
@@ -227,7 +258,9 @@
                                 </li>
                             </ul>
                         </div>
+
                     </td>
+
                 </ng-container>
 
                 <ng-container matColumnDef="actions">
@@ -287,7 +320,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="noData">
-                    <td mat-footer-cell  *matFooterCellDef class="text-center"
+                    <td mat-footer-cell *matFooterCellDef class="text-center"
                         [attr.colspan]="dataSource.data.length == 0 ? displayedColumns.length : 4">
                         No data found
                     </td>
