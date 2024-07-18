@@ -218,8 +218,9 @@
                     <th *matHeaderCellDef class="text-center">
                         Week Range
                     </th>
-                    <td mat-cell *matCellDef="let element" class="position-relative text-center text-nowrap px-4">
-                        <button type="button" class="carouselButton buttonLeft" (click)="goBackward(element)"><svg
+                    <td mat-cell *matCellDef="let element" class="position-relative text-center text-nowrap dateRangeData">
+                        <button type="button" class="carouselButton buttonLeft" 
+                        [ngClass]="{ 'disabled': previousButton(element)}" (click)="goBackward(element)"><svg
                                 viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

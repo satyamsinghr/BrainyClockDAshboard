@@ -158,15 +158,22 @@ export class EmployeeComponent implements OnInit {
   }
 
   isCurrentWeek(element: viewEmployeeItemDto): boolean {
+    debugger
     const [start,] = element.weekRange.split(' - ');
     const startDate = moment(start, 'DD-MM-YYYY');
     const currentWeek = moment().week();
     return startDate.week() === currentWeek;
   }
 
+  previousButton(element: viewEmployeeItemDto): boolean {
+     return Object.keys(element.attendance).length === 0
+  }
+
   fetchWeekData(element: any, startDate: string, endDate: string): void {
     console.log('forward backward', { element, startDate, endDate });
+  this.spinner.show();
     this.service.getEmployeeAttendanceForWeek(element, startDate, endDate).subscribe((response: any) => {
+
       const data = this.dataSource.data;
       const index = data.findIndex(row => row.id === element.id);
       if (index !== -1) {
@@ -186,6 +193,7 @@ export class EmployeeComponent implements OnInit {
         this.dataSource.data = data;
 
         console.log('this.dataSource.data', this.dataSource.data);
+        this.spinner.hide();
 
       }
     });
@@ -199,11 +207,9 @@ export class EmployeeComponent implements OnInit {
       if (!shiftDays.includes(day)) {
         return 'disabled';
       }
+
       const today = new Date().getDay();
       const currentDayIndex = this.weekDays.indexOf(day);
-      // if (day === 'Saturday' || day === 'Sunday') {
-      //   return 'disabled';
-      // }
 
       const createdAtAttendance : string = attendance[0].created_at;
       const createdAt = new Date(createdAtAttendance);
@@ -326,7 +332,6 @@ export class EmployeeComponent implements OnInit {
       this.spinner.show();
       this.service.getAllEmployeeByCompany(params).subscribe(
         (response: any) => {
-          this.spinner.hide();
           // this.allEmployee = response.data;
           this.employeeData = response.data
           let dataaa = this.groupAttendanceByShift(response.data);
@@ -334,6 +339,7 @@ export class EmployeeComponent implements OnInit {
           this.dataSource.data = dataaa;
           this.employeeLength = response.data.length;
           this.employeeCount = response.employeeCount;
+          this.spinner.hide();
         },
         (error) => {
           this.service.handleError(error);
@@ -681,8 +687,8 @@ export class EmployeeComponent implements OnInit {
     if (attandance.length > 0) {
       const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
 
-      const EmpId = attandance.filter((x: any) => x.created_at);
-      // const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
+      // const EmpId = attandance.filter((x: any) => x.created_at);
+      const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
       return EmpId[0]?.attendance_status
     }
   }
@@ -690,8 +696,8 @@ export class EmployeeComponent implements OnInit {
     if (attandance.length > 0) {
       const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
 
-      const EmpId = attandance.filter((x: any) => x.created_at);
-      // const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
+      // const EmpId = attandance.filter((x: any) => x.created_at);
+      const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
       return EmpId[0]?.clock_in_time ? EmpId[0]?.clock_in_time : "--"
 
     }
@@ -700,8 +706,8 @@ export class EmployeeComponent implements OnInit {
     if (attandance.length > 0) {
       const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
 
-      const EmpId = attandance.filter((x: any) => x.created_at);
-      // const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
+      // const EmpId = attandance.filter((x: any) => x.created_at);
+      const EmpId = attandance.filter((x: any) => x.created_at && x.created_at.slice(0, 10) === currentDate);
       return EmpId[0]?.clock_out_time ? EmpId[0]?.clock_out_time : "--"
     }
   }

@@ -68,11 +68,11 @@ button.carouselButton {
   padding: 0;
   position: absolute;
   border-radius: 50px;
-  border: 1px solid #FF6528;
+  border: 1px solid transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FF6528;
+  background-color: transparent;
   left: -4px;
   top: 0;
   bottom: 0;
@@ -88,13 +88,19 @@ button.carouselButton.buttonRight {
 
 button.carouselButton svg,
 button.carouselButton svg path {
-  width: 12px;
-  height: 12px;
-  stroke: #fff;
+  width: 23px;
+  height: 23px;
+  stroke: #222;
 }
 
 button.carouselButton.disabled
 {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.dateRangeData
+{
+  padding-left: 34px !important;
+  padding-right: 34px !important;
 }
