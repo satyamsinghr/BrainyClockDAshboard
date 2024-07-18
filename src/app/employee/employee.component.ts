@@ -158,7 +158,6 @@ export class EmployeeComponent implements OnInit {
   }
 
   isCurrentWeek(element: viewEmployeeItemDto): boolean {
-    debugger
     const [start,] = element.weekRange.split(' - ');
     const startDate = moment(start, 'DD-MM-YYYY');
     const currentWeek = moment().week();
@@ -166,12 +165,12 @@ export class EmployeeComponent implements OnInit {
   }
 
   previousButton(element: viewEmployeeItemDto): boolean {
-     return Object.keys(element.attendance).length === 0
+    return Object.keys(element.attendance).length === 0
   }
 
   fetchWeekData(element: any, startDate: string, endDate: string): void {
     console.log('forward backward', { element, startDate, endDate });
-  this.spinner.show();
+    this.spinner.show();
     this.service.getEmployeeAttendanceForWeek(element, startDate, endDate).subscribe((response: any) => {
 
       const data = this.dataSource.data;
@@ -200,7 +199,7 @@ export class EmployeeComponent implements OnInit {
   }
 
 
-  getAttendanceClass(attendance: any, day: any){
+  getAttendanceClass(attendance: any, day: any) {
     if (attendance.length > 0) {
 
       const shiftDays = attendance[0].shift_days.split(','); // Assuming shift_days is same for all entries in attendance
@@ -211,7 +210,7 @@ export class EmployeeComponent implements OnInit {
       const today = new Date().getDay();
       const currentDayIndex = this.weekDays.indexOf(day);
 
-      const createdAtAttendance : string = attendance[0].created_at;
+      const createdAtAttendance: string = attendance[0].created_at;
       const createdAt = new Date(createdAtAttendance);
       const startOfWeek = moment().startOf('week').toDate();
       const endOfWeek = moment().endOf('week').toDate();

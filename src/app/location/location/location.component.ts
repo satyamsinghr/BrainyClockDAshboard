@@ -100,7 +100,6 @@ export class LocationComponent implements OnInit {
 
 //  public qrCodeDownloadLink = "";
 // generateQRData(row: any) {
-//   debugger
 //   this.qrCodeDownloadLink = `https://api.qrserver.com/v1/create-qr-code/?data=${row.company_id}_${row.id}_${row.location_name}`;
 // const pdf = new jspdf.jsPDF();
 // const img = new Image();
