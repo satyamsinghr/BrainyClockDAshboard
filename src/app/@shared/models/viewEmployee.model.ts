@@ -13,5 +13,6 @@ export interface viewEmployeeItemDto {
   clockIn:any
   shifts:any,
   attendance:any,
-  weekRange:string
+  weekRange:string,
+  employeeFirstAttendance:any
 }

@@ -163,11 +163,18 @@ export class EmployeeComponent implements OnInit {
     const currentWeek = moment().week();
     return startDate.week() === currentWeek;
   }
-
   previousButton(element: viewEmployeeItemDto): boolean {
-    return Object.keys(element.attendance).length === 0
-  }
+    if (Object.keys(element.attendance).length === 0) {
+      return true;
+    }
 
+    const [start,] = element.weekRange.split(' - ');
+    const weekStartDate = moment(start, 'DD/MM/YYYY');
+    const firstAttendanceDate = moment(element.employeeFirstAttendance);
+
+    // Disable the button if the week start date is before or equal to the first attendance date
+    return weekStartDate.isSameOrBefore(firstAttendanceDate, 'day');
+  }
   fetchWeekData(element: any, startDate: string, endDate: string): void {
     console.log('forward backward', { element, startDate, endDate });
     this.spinner.show();
