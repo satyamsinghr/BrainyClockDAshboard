@@ -411,7 +411,7 @@
                     </p>
                 </div>
                 <div class="arrow d-flex align-items-center gap-3">
-                    <button (click)="backwardButtonClick()">
+                    <button (click)="backwardButtonClick()" [disabled]="true">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
                             height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M14.4001 16.8L9.6001 12L14.4001 7.19999"
@@ -421,7 +421,7 @@
                         </svg>
                     </button>
                     <!-- Left arrow -->
-                    <button (click)="forwardButtonClick()">
+                    <button (click)="forwardButtonClick()" [disabled]="true">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
                             height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M9.5999 7.20001L14.3999 12L9.5999 16.8"

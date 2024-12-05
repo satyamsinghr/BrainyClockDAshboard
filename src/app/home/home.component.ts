@@ -342,10 +342,10 @@ getStatus(element: any): string {
     this.service.getDepartmentById(this.selectedCompanyId).subscribe(
       (response: any) => {
          this.departmentData = response.data;
-        this.departmentId=this.departmentData[this.index].department_id;
-        this.departmentName=this.departmentData[this.index].department_name;
-        this.departmentName1=this.departmentData[this.index1].department_name;
-        this.locationName1=this.departmentData[this.index1].location_name;
+        this.departmentId=this.departmentData[this.index]?.department_id;
+        this.departmentName=this.departmentData[this.index]?.department_name;
+        this.departmentName1=this.departmentData[this.index1]?.department_name;
+        this.locationName1=this.departmentData[this.index1]?.location_name;
         this.filterEmployeeDataByDepartmentId()
       },
       (error) => {
@@ -377,7 +377,8 @@ getStatus(element: any): string {
         (response: any) => {
           this.employeelength = response.data.length;
           this.employee=response.data;
-         this.filterEmployeeDataByDepartmentId() ;
+          this.dataSourceOperations.data=response.data;
+        //  this.filterEmployeeDataByDepartmentId() ;
         },
         (error) => {
           this.service.handleError(error);
