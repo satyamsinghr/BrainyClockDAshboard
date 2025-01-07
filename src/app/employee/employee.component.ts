@@ -44,7 +44,7 @@ export class EmployeeComponent implements OnInit {
     'weekRange',
     'attandance_this_week',
     // 'primaryLocation',
-    'actions',
+    // 'actions',
   ];
   role: string = '';
   dataSource = new MatTableDataSource<viewEmployeeItemDto>(Emp_Data);
@@ -104,6 +104,9 @@ export class EmployeeComponent implements OnInit {
     else {
       this.role = this.service.getRole();
       this.comapanyId = JSON.parse(localStorage.getItem('comapnyId'));
+      if (this.comapanyId !== 414) {
+        this.displayedColumns.push('actions');
+      }
       // this.processAttendance();
       this.getLocationByCompanyId();
       if (this.role != 'SA') {

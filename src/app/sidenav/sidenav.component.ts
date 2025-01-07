@@ -41,8 +41,10 @@ export class SidenavComponent implements OnInit {
   }
 
   role: any
+  companyId:any
   ngOnInit(): void {
-    this.role = this.service.getRole()
+  this.companyId= localStorage.getItem('comapnyId');
+    this.role = this.service.getRole();
   }
 
    navopen() {

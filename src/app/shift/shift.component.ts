@@ -28,13 +28,20 @@ const log=new Logger('Employee');
   styleUrls: ['./shift.component.scss']
 })
 export class ShiftComponent implements OnInit {
+  // displayedColumns: string[] = [
+  //   'select',
+  //   'name',
+  //   'days',
+  //   'clock_in_time',
+  //   'clock_out_time',
+  //   'actions',
+  // ];
   displayedColumns: string[] = [
     'select',
     'name',
     'days',
     'clock_in_time',
     'clock_out_time',
-    'actions',
   ];
   role : string = '';
   nameOfCompany = JSON.parse(localStorage.getItem('nameOfCompany'));
@@ -77,6 +84,9 @@ export class ShiftComponent implements OnInit {
     else{
       this.role = this.service.getRole();
       this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
+      if (this.comapnyId !== 414) {
+        this.displayedColumns.push('actions');
+      }
       this.getAllShift();
       this.getAllCompany();
       this.getAllDepartment();

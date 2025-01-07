@@ -37,7 +37,7 @@ export class SettingComponent implements OnInit {
 
   dataSource = new MatTableDataSource(this.scheduleData);
   // dataSource = new MatTableDataSource<viewEmployeeItemDto>(Emp_Data);
-  displayedColumns: string[] = ['timezone', 'interval', 'action',];
+  displayedColumns: string[] = ['timezone', 'interval'];
   lastUrl: any;
   constructor(private fb: FormBuilder,
     private router:Router, 
@@ -56,6 +56,9 @@ export class SettingComponent implements OnInit {
     this.lastUrl = parts[parts.length - 1];
     this.sharedService.setLastUrl(this.lastUrl);
     this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
+    if (this.comapnyId !== 414) {
+      this.displayedColumns.push('action');
+    }
     // this.scheduleData = JSON.parse(localStorage.getItem('SchudleGetData'));
     this.timezoneForm = this.fb.group({
       id: [''],

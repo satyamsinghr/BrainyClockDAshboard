@@ -93,6 +93,47 @@ export class LocationComponent implements OnInit {
       this.role = this.service.getRole();
       this.companyId = this.service.getCompanyId();
       this.comapnyId = JSON.parse(localStorage.getItem('comapnyId'));
+      if (this.companyId !== 414) {
+        this.displayedColumns = [
+          'select',
+          'locationId',
+          'companyId',
+          'location_name',
+          'address',
+          'pincode',
+          'qrCode',
+          'actions',
+        ];
+    
+        this.displayedColumnsCompany = [
+          'select',
+          'locationId',
+          'location_name',
+          'address',
+          'pincode',
+          'qrCode',
+          'actions',
+        ];
+      } else {
+        this.displayedColumns = [
+          'select',
+          'locationId',
+          'companyId',
+          'location_name',
+          'address',
+          'pincode',
+          'qrCode',
+        ];
+    
+        this.displayedColumnsCompany = [
+          'select',
+          'locationId',
+          'location_name',
+          'address',
+          'pincode',
+          'qrCode',
+        ];
+      }
       // this.getLocationByCompanyId();
       this.getAllLocation();
     }

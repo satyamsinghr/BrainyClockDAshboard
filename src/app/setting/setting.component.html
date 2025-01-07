@@ -31,7 +31,7 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="action">
+        <ng-container matColumnDef="action" *ngIf="this.comapnyId != 414">
           <th *matHeaderCellDef class="text-center">
             Action </th>
           <td mat-cell class="justify-content-center" *matCellDef="let element">
