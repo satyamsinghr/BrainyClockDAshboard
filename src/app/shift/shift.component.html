@@ -21,7 +21,7 @@
       </div>
       <div class="header_add_button d-lg-flex d-md-flex d-flex">
 
-        <div class="position-relative">
+        <div class="position-relative" *ngIf="this.comapnyId != 414">
           <button type="button"
             class="btn btn-primary w-100 d-flex align-items-center gap-2 justify-content-center"
             (click)="openAddShiftModal()"><svg

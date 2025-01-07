@@ -20,10 +20,10 @@
         </div>
       </div>
       <div class="header_add_button d-lg-block d-md-block d-flex">
-        <div class="position-relative pt-2">
+        <div class="position-relative pt-2" *ngIf="this.comapnyId != 414">
           <a href="javascript:void"
             class="btn btn-primary w-100 d-flex align-items-center gap-2 justify-content-center"
-            (click)="openAddOfficeModal()">
+            (click)="openAddOfficeModal()" >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
               viewBox="0 0 24 24" fill="none">
               <path
